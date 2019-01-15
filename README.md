@@ -1,3 +1,3 @@
-# Masterarbeit - Flow ⇒ TypeScript
+# Masterarbeit – Flow ⇒ TypeScript
 
 Masterarbeit von @jogu (WIP)
