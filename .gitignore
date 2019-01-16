@@ -1,0 +1,13 @@
+build/*
+!build/*.pdf
+
+.kile/
+*.kilepr
+
+*~
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
+
+.directory

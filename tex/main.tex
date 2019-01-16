@@ -1,0 +1,158 @@
+\documentclass[
+  abstract=on,
+  BCOR=6mm,
+  bibliography=totoc,
+  listof=totoc,
+  headsepline=on,
+  numbers=noenddot,
+  paper=a4,
+  parskip=on,
+  toc=chapterentrydotfill,
+  twoside=off
+  % DIV=10,
+  % fontsize=10,
+]{scrreprt}
+
+
+\title{Automatisierte Transformation von Flow-basiertem JavaScript-Code nach TypeScript}
+\subtitle{Statische Typsysteme für JavaScript}
+\date{\today}
+\author{Jonathan Gruber}
+
+% "Fix" for KOMA script warning about floats
+\usepackage{scrhack}
+
+% Babel
+\usepackage[ngerman]{babel}
+
+% Font
+\usepackage{fontspec}
+\usepackage[tt=false]{libertine}
+
+% Set headings in serif as well
+\addtokomafont{disposition}{\rmfamily}
+
+% Math font
+\usepackage{unicode-math}
+\setmathfont[Scale=MatchUppercase]{libertinusmath-regular.otf}
+
+% Monospaced font (Code)
+\setmonofont{Roboto Mono}[Scale=MatchLowercase]
+
+% Biber (references)
+\usepackage[
+  backend=biber,
+  backref=true,
+  backrefstyle=three+,
+  sortlocale=de_DE
+]{biblatex}
+\addbibresource{tex/references.bib}
+
+\DefineBibliographyStrings{german}{
+    references = {Quellenverzeichnis}
+}
+
+% Document links
+\usepackage[pdfencoding=auto]{hyperref}
+\hypersetup{
+    hidelinks,
+    pdftitle={Masterarbeit WIP -- Jonathan Gruber},
+    pdfauthor={Jonathan Gruber}
+}
+
+% Use a 1.5 line-height
+\usepackage[onehalfspacing]{setspace}
+
+% Header
+\usepackage[
+  automark,
+  autooneside=false
+]{scrlayer-scrpage}
+\chead{}
+\ihead{\leftmark}
+\ohead{\rightmark}
+\renewcommand\chaptermarkformat{} % Remove chapter number
+
+% Small captions
+\usepackage[font=small]{caption}
+\captionsetup{justification=raggedright,singlelinecheck=false}
+
+% Better spacing in lists
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Images
+\usepackage{graphicx}
+
+% Tables
+\usepackage{ltablex, booktabs}
+
+% Code listings (minted)
+\newcommand{\code}[1]{\small\texttt{#1}}
+\usepackage[outputdir=build]{minted}
+\usemintedstyle{algol_nu}
+\newminted{js}{fontsize=\footnotesize,tabsize=4}
+\newminted{ts}{fontsize=\footnotesize,tabsize=4}
+\renewcommand\listingscaption{Quelltext}
+\renewcommand\listoflistingscaption{Quelltextverzeichnis}
+\setmonofont{Roboto Mono}[
+  Scale=MatchLowercase
+]
+
+% Quotes
+\usepackage{csquotes}
+
+% ----------
+
+\begin{document}
+  \pagenumbering{Roman}
+
+  \input{tex/title/title.tex}
+
+  \tableofcontents
+
+  \pagestyle{headings}
+  \pagenumbering{arabic}
+
+  \input{tex/1_Motivation/1_Motivation}
+  \input{tex/2_Grundlagen/2_Grundlagen}
+  \input{tex/3_Analyse/3_Analyse}
+  \input{tex/4_Prototyp/4_Prototyp}
+  \input{tex/5_Ergebnisse/5_Ergebnisse}
+
+  \clearpage
+  \pagenumbering{Roman}
+
+  \renewcommand{\UrlFont}{\small}
+
+  \listoffigures
+  \listoflistings
+
+  \pagestyle{plain}
+
+  \printbibliography[
+    title={Literatur},
+    nottype=online,
+    notkeyword=software,
+    heading=subbibliography
+  ]
+
+  \printbibliography[
+    title={Online-Quellen},
+    type=online,
+    notkeyword=software,
+    heading=subbibliography
+  ]
+
+  \printbibliography[
+    title={Software},
+    keyword=software,
+    heading=subbibliography
+  ]
+
+  \input{tex/appendix/declaration.tex}
+
+  \begin{appendix}
+    \input{tex/appendix/appendix.tex}
+  \end{appendix}
+\end{document}
