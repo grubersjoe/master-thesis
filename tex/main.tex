@@ -93,8 +93,8 @@
 \usemintedstyle{algol_nu}
 \newminted{js}{fontsize=\footnotesize,tabsize=4}
 \newminted{ts}{fontsize=\footnotesize,tabsize=4}
-\renewcommand\listingscaption{Quelltext}
-\renewcommand\listoflistingscaption{Quelltextverzeichnis}
+\renewcommand\listingscaption{Quellcode}
+\renewcommand\listoflistingscaption{Quellcode-Listings}
 \setmonofont{Roboto Mono}[
   Scale=MatchLowercase
 ]
@@ -125,16 +125,12 @@
 
   \renewcommand{\UrlFont}{\small}
 
-  \listoffigures
-  \listoflistings
-
   \pagestyle{plain}
 
   \printbibliography[
     title={Literatur},
     nottype=online,
-    notkeyword=software,
-    heading=subbibliography
+    notkeyword=software
   ]
 
   \printbibliography[
@@ -149,6 +145,10 @@
     keyword=software,
     heading=subbibliography
   ]
+
+  \listoffigures
+  \listoftables
+  \listoflistings
 
   \input{tex/appendix/declaration.tex}
 
