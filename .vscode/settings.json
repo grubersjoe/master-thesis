@@ -1,0 +1,10 @@
+{
+  "editor.lineHeight": 20,
+  "editor.wordWrapColumn": 100,
+  "editor.rulers": [100],
+  "git.decorations.enabled": false,
+  "latex-workshop.latex.bibDirs": ['/home/jogu/git/ma/tex/'],
+  "explorer.openEditors.visible": 0,
+  "workbench.activityBar.visible": false,
+  "workbench.iconTheme": "vs-minimal"
+}
