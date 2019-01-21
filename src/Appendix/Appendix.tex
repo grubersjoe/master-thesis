@@ -1,6 +1,8 @@
-\chapter{Motivation}
+\chapter{TBA}
 
-\section{Die historische Entwicklung JavaScripts}
+\section{Expose}
+
+\subsection{Die historische Entwicklung JavaScripts}
 
 JavaScript hat als Lingua Franca des World Wide Webs und primäre clientseitige Programmiersprache für Webanwendungen aller Art innerhalb der letzten Jahre enorm an Bedeutung gewonnen. Dies belegt beispielsweise die alljährliche Umfrage \enquote{\emph{Stack Overflow Developer Survey}} der Programmierer-Plattform \emph{Stack Overflow}, welche die Ergebnisse der Befragung von über 100.000 Software-Entwicklern weltweit auswertet~\autocite{stackoverflow:survey:2018}. Bereits das sechste Jahr in Folge führt JavaScript die Rangliste der populärsten Programmiersprachen an. Dies ist nicht verwunderlich hinsichtlich des ungebrochenen Trends, dass immer mehr Software als Webanwendung konzipiert wird~\autocite{taivalsaari:2017}\autocite{casteleyn:2014:ria}. Viele beliebte Applikationen wie \emph{Spotify}, \emph{Slack} oder \emph{Visual Studio Code} basieren z.~B. auf dem Framework \emph{Electron}~\autocite{electron}. Dabei wird die gesamte grafische Oberfläche der Anwendung durch HTML und CSS innerhalb eines Chromium-Webbrowsers realisiert. Derzeitige JavaScript-Frameworks und -Bibliotheken wie Angular~\autocite{angular} oder React~\autocite{react} verdeutlichen den hohen Bedarf an modernen Entwicklungsansätzen und anspruchsvollen Programmierparadigmen, die es ermöglichen, umfangreiche, skalierbare Anwendungen in JavaScript umzusetzen.
 
@@ -9,7 +11,7 @@ Mit Aufkommen des Web 2.0~\autocite{oreilly:2005:web20} und des damit einhergehe
 
 Hierdurch und durch die stetige Weiterentwicklung von ECMA Script wurde der Grundstein für zukunftssichere JavaScript-Anwendungen gelegt. Dennoch stellt insbesondere das dynamische, schwache Typsystems der Programmiersprache ein Hindernis für die Entwicklung umfangreicher Software dar. Unbeabsichtigte, implizite Typumwandlungen zur Laufzeit und falsche Annahmen über vorliegende Datenstrukturen sind häufige Fehlerursachen. Eine starke, statische Typisierung, wie sie beispielsweise in C++ oder Haskell vorliegt ist erstrebenswert, denn sie bietet viele Vorteile für den Software-Entwicklungsprozess: Logik- und Flüchtigkeitsfehler im Quelltext können oftmals bereits vor Ausführung des Programms erkannt und behoben werden. Die Entwickler gewinnen Sicherheit und Zuversicht, dass Änderungen in umfangreichen Projekten keine unerwünschte Nebenwirkung verursachen, wodurch sich die Wartbarkeit der Software erhöht. Eine explizite Typisierung führt darüber hinaus dazu, dass der Programmierer gezwungen ist seine \emph{Intension} klar zu formulieren. Hierdurch verbessert sich die Ausdruckskraft des Codes. Weiterhin wird der Quelltext an Ort und Stelle durch eine vernünftige Typisierung bereits grundlegend dokumentiert (\enquote{\emph{inline documentation}}).
 
-\section{Statische Typsysteme in JavaScript}
+\subsection{Statische Typsysteme in JavaScript}
 
 Derzeit existieren zwei Ansätze, um statische Typsicherheit für JavaScript-Code zu erzielen:
 
@@ -68,20 +70,20 @@ vectorLength({ x: 2, y: 5 });           // Korrekt
 \end{listing}
 
 \pagebreak
-Wie Quelltext \ref{code:example} verdeutlicht, haben Flow und TypeScript eine ähnliche, wenn auch in manchen Fällen nicht völlig identische Syntax:
+Wie Quelltext~\ref{code:example} verdeutlicht, haben Flow und TypeScript eine ähnliche, wenn auch in manchen Fällen nicht völlig identische Syntax:
 
 \begin{itemize}
-    \item Vgl. \enquote{\code{+x: number}} vs. \enquote{\code{readonly x: number}}
-    \item Vgl. \enquote{\code{<T: Vector>}} vs. \enquote{\code{<T extends Vector>}}
+    \item Vgl. \enquote{\code{+x:~number}} vs. \enquote{\code{readonly x:~number}}
+    \item Vgl. \enquote{\code{<T:~Vector>}} vs. \enquote{\code{<T extends Vector>}}
 \end{itemize}
 
-Innerhalb des eCommerce-Unternehmen \textbf{TeamShirts}\footnote{Ein Tochterunternehmen der Spreadshirt AG. Kunden haben die Möglichkeit Textilien und andere geeignete Gegenstände wie Taschen, Mützen, Tassen etc.~mit eigenen und vorgefertigten Bildmotiven zu bedrucken. Hierfür können die Produkte in einer \href{https://wizard.teamshirts.de/de/DE/generic}{Webanwendung} selbstständig gestaltet und im Anschluss bestellt werden.} gibt es strategische Überlegungen, die bestehenden Frontend-Projekte, die im Moment allesamt auf React und Flow basieren, nach TypeScript zu migrieren. Grund hierfür ist die Annahme, dass TypeScript langfristig zukunftsträchtiger und besser geeignet als Flow sein könnte. Es gibt einige Argumente, die für TypeScript sprechen:
+Innerhalb des eCommerce-Unternehmen \textbf{TeamShirts}\footnote{Ein Tochterunternehmen der Spreadshirt AG.\@ Kunden haben die Möglichkeit Textilien und andere geeignete Gegenstände wie Taschen, Mützen, Tassen etc.~mit eigenen und vorgefertigten Bildmotiven zu bedrucken. Hierfür können die Produkte in einer \href{https://wizard.teamshirts.de/de/DE/generic}{Webanwendung} selbstständig gestaltet und im Anschluss bestellt werden.} gibt es strategische Überlegungen, die bestehenden Frontend-Projekte, die im Moment allesamt auf React und Flow basieren, nach TypeScript zu migrieren. Grund hierfür ist die Annahme, dass TypeScript langfristig zukunftsträchtiger und besser geeignet als Flow sein könnte. Es gibt einige Argumente, die für TypeScript sprechen:
 
 \begin{itemize}
     \item
-        \textbf{Performance} -- Während derzeit noch keine verlässlichen Zahlen vorliegen, um diese These stichhaltig zu untermauern, wird TypeScript von vielen Entwicklern im Vergleich zu Flow als schneller hinsichtlich der Typprüfung beschrieben.
+        \textbf{Performance} --- Während derzeit noch keine verlässlichen Zahlen vorliegen, um diese These stichhaltig zu untermauern, wird TypeScript von vielen Entwicklern im Vergleich zu Flow als schneller hinsichtlich der Typprüfung beschrieben.
     \item
-        \textbf{Vorgefertigte Typisierungen} -- Jede Software basiert im Normalfall auf externen Bibliotheken. Sowohl für TypeScript als auch für Flow gibt es von der Gemeinschaft verwaltete Projekte\footnote{\href{https://github.com/flow-typed/flow-typed}{Flow Typed} für Flow und \href{https://github.com/DefinitelyTyped/DefinitelyTyped}{Definetely Typed} für Typescript.\label{github-projects}}, welche die Typisierung dieser Abhängigkeiten bereit stellen. Hierdurch wird beispielsweise die Autovervollständigung in integrierten Entwicklungsumgebungen erheblich verbessert. Jedoch bietet TypeScript dabei eine deutlich vollständigere Unterstützung als Flow\footnote{Vgl. GitHub-Projekte in Fußnote \ref{github-projects}.}.
+        \textbf{Vorgefertigte Typisierungen} --- Jede Software basiert im Normalfall auf externen Bibliotheken. Sowohl für TypeScript als auch für Flow gibt es von der Gemeinschaft verwaltete Projekte\footnote{\href{https://github.com/flow-typed/flow-typed}{Flow Typed} für Flow und \href{https://github.com/DefinitelyTyped/DefinitelyTyped}{Definetely Typed} für Typescript.\label{github-projects}}, welche die Typisierung dieser Abhängigkeiten bereit stellen. Hierdurch wird beispielsweise die Autovervollständigung in integrierten Entwicklungsumgebungen erheblich verbessert. Jedoch bietet TypeScript dabei eine deutlich vollständigere Unterstützung als Flow\footnote{Vgl. GitHub-Projekte in Fußnote~\ref{github-projects}.}.
     \item
         \textbf{Kontinuität / Stabilität} -- Es besteht Unsicherheit darüber, ob Facebook und Microsoft auf lange Sicht daran interessiert bleiben werden Flow bzw. TypeScript weiterzuentwickeln und zu warten. Da TypeScript als eigenständige Programmiersprache in vielen Bereichen eingesetzt wird und stetig an Popularität gewinnt~\autocite{stackoverflow:survey:2018}, erscheint es jedoch unwahrscheinlich, dass Microsoft dieses Produkt in naher Zukunft einstellen wird. Angular~\autocite{angular} ist beispielsweise ein großes, erfolgreiches Framework, welches in TypeScript geschrieben ist und die Verwendung der Sprache fördert.
     \item

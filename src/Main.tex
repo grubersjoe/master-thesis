@@ -46,7 +46,7 @@
   backrefstyle=three+,
   sortlocale=de_DE
 ]{biblatex}
-\addbibresource{tex/references.bib}
+\addbibresource{src/references.bib}
 
 \DefineBibliographyStrings{german}{
     references = {Quellenverzeichnis}
@@ -107,18 +107,18 @@
 \begin{document}
   \pagenumbering{Roman}
 
-  \input{tex/title/title.tex}
+  \input{src/Title}
 
   \tableofcontents
 
   \pagestyle{headings}
   \pagenumbering{arabic}
 
-  \input{tex/1_Motivation/1_Motivation}
-  \input{tex/2_Grundlagen/2_Grundlagen}
-  \input{tex/3_Analyse/3_Analyse}
-  \input{tex/4_Prototyp/4_Prototyp}
-  \input{tex/5_Ergebnisse/5_Ergebnisse}
+  \input{src/1_Motivation/1_Motivation}
+  \input{src/2_Grundlagen/2_Grundlagen}
+  \input{src/3_Analyse/3_Analyse}
+  \input{src/4_Prototyp/4_Prototyp}
+  \input{src/5_Ergebnisse/5_Ergebnisse}
 
   \clearpage
   \pagenumbering{Roman}
@@ -146,13 +146,13 @@
     heading=subbibliography
   ]
 
-  \listoffigures
-  \listoftables
-  \listoflistings
+  \listoffigures{}
+  \listoftables{}
+  \listoflistings{}
 
-  \input{tex/appendix/declaration.tex}
+  \input{src/Appendix/Declaration.tex}
 
   \begin{appendix}
-    \input{tex/appendix/appendix.tex}
+    \input{src/Appendix/Appendix.tex}
   \end{appendix}
 \end{document}
