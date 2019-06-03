@@ -1,11 +1,27 @@
 {
   "editor.lineHeight": 20,
   "editor.rulers": [
-    100
+    86
   ],
-  "editor.wordWrapColumn": 100,
+  "editor.wordWrapColumn": 86,
   "explorer.openEditors.visible": 0,
   "git.decorations.enabled": false,
-  "workbench.activityBar.visible": false,
-  "workbench.iconTheme": "vs-minimal"
+  "todohighlight.keywords": [
+    {
+      "backgroundColor": "#e53935",
+      "text": "FIXME"
+    },
+    {
+      "backgroundColor": "#fbc02d",
+      "text": "TODO"
+    },
+    {
+      "backgroundColor": "#4caf50",
+      "text": "REVIEW"
+    },
+    {
+      "backgroundColor": "#039be5",
+      "text": "CITATION NEEDED"
+    }
+  ]
 }
