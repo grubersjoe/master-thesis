@@ -1,3 +1,3 @@
-# Masterarbeit – Flow ⇒ TypeScript
+# Masterarbeit: Statische Typsysteme in JavaScript
 
-Masterarbeit von @jogu (WIP)
+Entwicklung eines Transpilers von Flow nach TypeScript
