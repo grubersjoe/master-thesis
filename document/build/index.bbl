@@ -1,0 +1,479 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.0 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{casteleyn:2014:ria}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2d56fa2cb2023869f804100eecd65570}{%
+           family={Casteleyn},
+           familyi={C\bibinitperiod},
+           given={Sven},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b59ccc87adfd6c039ae765505004402e}{%
+           family={Garrig'os},
+           familyi={G\bibinitperiod},
+           given={Irene},
+           giveni={I\bibinitperiod}}}%
+        {{hash=380c16214a5e73ad036d808c6f5f6873}{%
+           family={Maz'on},
+           familyi={M\bibinitperiod},
+           given={Jose-Norberto},
+           giveni={J\bibinithyphendelim N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{7e2ddf4abd3539881397578d9624d689}
+      \strng{fullhash}{7e2ddf4abd3539881397578d9624d689}
+      \strng{bibnamehash}{7e2ddf4abd3539881397578d9624d689}
+      \strng{authorbibnamehash}{7e2ddf4abd3539881397578d9624d689}
+      \strng{authornamehash}{7e2ddf4abd3539881397578d9624d689}
+      \strng{authorfullhash}{7e2ddf4abd3539881397578d9624d689}
+      \field{sortinit}{C}
+      \field{sortinithash}{4c244ceae61406cdc0cc2ce1cb1ff703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on the Web (TWEB)}
+      \field{number}{3}
+      \field{title}{Ten years of rich internet applications: A systematic mapping study, and beyond}
+      \field{volume}{8}
+      \field{year}{2014}
+      \field{pages}{18}
+      \range{pages}{1}
+    \endentry
+    \entry{oreilly:2001:js}{online}{}
+      \name{author}{1}{}{%
+        {{hash=5db2fc97115b965d9ccf75296066c015}{%
+           family={Champeon},
+           familyi={C\bibinitperiod},
+           given={Steve},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5db2fc97115b965d9ccf75296066c015}
+      \strng{fullhash}{5db2fc97115b965d9ccf75296066c015}
+      \strng{bibnamehash}{5db2fc97115b965d9ccf75296066c015}
+      \strng{authorbibnamehash}{5db2fc97115b965d9ccf75296066c015}
+      \strng{authornamehash}{5db2fc97115b965d9ccf75296066c015}
+      \strng{authorfullhash}{5db2fc97115b965d9ccf75296066c015}
+      \field{sortinit}{C}
+      \field{sortinithash}{4c244ceae61406cdc0cc2ce1cb1ff703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{title}{JavaScript: How Did We Get Here?}
+      \field{urlday}{25}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2001}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://web.archive.org/web/20160719020828/http://archive.oreilly.com/pub/a/javascript/2001/04/06/js_history.html
+      \endverb
+      \verb{url}
+      \verb https://web.archive.org/web/20160719020828/http://archive.oreilly.com/pub/a/javascript/2001/04/06/js_history.html
+      \endverb
+    \endentry
+    \entry{typescript}{online}{}
+      \name{author}{1}{}{%
+        {{hash=91da9dc9e484daf8dc9ed72055907025}{%
+           family={Corporation},
+           familyi={C\bibinitperiod},
+           given={Microsoft},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{91da9dc9e484daf8dc9ed72055907025}
+      \strng{fullhash}{91da9dc9e484daf8dc9ed72055907025}
+      \strng{bibnamehash}{91da9dc9e484daf8dc9ed72055907025}
+      \strng{authorbibnamehash}{91da9dc9e484daf8dc9ed72055907025}
+      \strng{authornamehash}{91da9dc9e484daf8dc9ed72055907025}
+      \strng{authorfullhash}{91da9dc9e484daf8dc9ed72055907025}
+      \field{sortinit}{C}
+      \field{sortinithash}{4c244ceae61406cdc0cc2ce1cb1ff703}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{TypeScript - JavaScript that scales}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.typescriptlang.org/
+      \endverb
+      \verb{url}
+      \verb https://www.typescriptlang.org/
+      \endverb
+    \endentry
+    \entry{ecmascript:2015}{book}{}
+      \name{author}{1}{}{%
+        {{hash=41c46722588c33c49d98fefc48f47fc6}{%
+           family={{Ecma International}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Geneva}%
+      }
+      \strng{namehash}{41c46722588c33c49d98fefc48f47fc6}
+      \strng{fullhash}{41c46722588c33c49d98fefc48f47fc6}
+      \strng{bibnamehash}{41c46722588c33c49d98fefc48f47fc6}
+      \strng{authorbibnamehash}{41c46722588c33c49d98fefc48f47fc6}
+      \strng{authornamehash}{41c46722588c33c49d98fefc48f47fc6}
+      \strng{authorfullhash}{41c46722588c33c49d98fefc48f47fc6}
+      \field{sortinit}{E}
+      \field{sortinithash}{c554bd1a0b76ea92b9f105fe36d9c7b0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{6th}
+      \field{month}{6}
+      \field{title}{{ECMAScript 2015 Language Specification}}
+      \field{year}{2015}
+      \verb{urlraw}
+      \verb http://www.ecma-international.org/ecma-262/6.0/ECMA-262.pdf
+      \endverb
+      \verb{url}
+      \verb http://www.ecma-international.org/ecma-262/6.0/ECMA-262.pdf
+      \endverb
+    \endentry
+    \entry{garret:ajax}{online}{}
+      \name{author}{1}{}{%
+        {{hash=d061f60676574ea537a62d4635bccf11}{%
+           family={Garrett},
+           familyi={G\bibinitperiod},
+           given={Jesse\bibnamedelima James},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{fullhash}{d061f60676574ea537a62d4635bccf11}
+      \strng{bibnamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authorbibnamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authornamehash}{d061f60676574ea537a62d4635bccf11}
+      \strng{authorfullhash}{d061f60676574ea537a62d4635bccf11}
+      \field{sortinit}{G}
+      \field{sortinithash}{62eb2aa29549e4fdbd3cb154ec5711cb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{2}
+      \field{title}{Ajax: A New Approach to Web Applications}
+      \field{urlday}{21}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2005}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb http://adaptivepath.org/ideas/ajax-new-approach-web-applications/
+      \endverb
+      \verb{url}
+      \verb http://adaptivepath.org/ideas/ajax-new-approach-web-applications/
+      \endverb
+    \endentry
+    \entry{electron}{online}{}
+      \name{author}{1}{}{%
+        {{hash=b79b798b2812cfe1c1431894a617897d}{%
+           family={GitHub},
+           familyi={G\bibinitperiod},
+           given={Inc.},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{fullhash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{bibnamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authorbibnamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authornamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authorfullhash}{b79b798b2812cfe1c1431894a617897d}
+      \field{sortinit}{G}
+      \field{sortinithash}{62eb2aa29549e4fdbd3cb154ec5711cb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Electron - Build cross platform desktop apps with JavaScript, HTML, and CSS}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://electronjs.org/
+      \endverb
+      \verb{url}
+      \verb https://electronjs.org/
+      \endverb
+    \endentry
+    \entry{stackoverflow:survey:2018}{online}{}
+      \name{author}{1}{}{%
+        {{hash=8e19ac2889d2fd4af61d72a4948f5d5f}{%
+           family={Inc},
+           familyi={I\bibinitperiod},
+           given={Stack\bibnamedelima Exchange},
+           giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \strng{fullhash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \strng{bibnamehash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \strng{authorbibnamehash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \strng{authornamehash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \strng{authorfullhash}{8e19ac2889d2fd4af61d72a4948f5d5f}
+      \field{extraname}{1}
+      \field{sortinit}{I}
+      \field{sortinithash}{9417e9a1288a9371e2691d999083ed39}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Stack Overflow Annual Developer Survey}
+      \field{urlday}{21}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://insights.stackoverflow.com/survey/2018
+      \endverb
+      \verb{url}
+      \verb https://insights.stackoverflow.com/survey/2018
+      \endverb
+    \endentry
+    \entry{flow}{online}{}
+      \name{author}{1}{}{%
+        {{hash=6a2c4d8b39538e1ab369a0cf62a49e46}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Facebook},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{fullhash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{bibnamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authorbibnamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authornamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authorfullhash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \field{extraname}{2}
+      \field{sortinit}{I}
+      \field{sortinithash}{9417e9a1288a9371e2691d999083ed39}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Flow: A Static Type Checker For JavaScript}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://flow.org/
+      \endverb
+      \verb{url}
+      \verb https://flow.org/
+      \endverb
+    \endentry
+    \entry{react}{online}{}
+      \name{author}{1}{}{%
+        {{hash=6a2c4d8b39538e1ab369a0cf62a49e46}{%
+           family={Inc.},
+           familyi={I\bibinitperiod},
+           given={Facebook},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{fullhash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{bibnamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authorbibnamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authornamehash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \strng{authorfullhash}{6a2c4d8b39538e1ab369a0cf62a49e46}
+      \field{extraname}{3}
+      \field{sortinit}{I}
+      \field{sortinithash}{9417e9a1288a9371e2691d999083ed39}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{React - A JavaScript library for building user interfaces}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://reactjs.org/
+      \endverb
+      \verb{url}
+      \verb https://reactjs.org/
+      \endverb
+    \endentry
+    \entry{angular}{online}{}
+      \name{author}{1}{}{%
+        {{hash=11bb1d2fc83a61c4b40b81c2f83149db}{%
+           family={LLC},
+           familyi={L\bibinitperiod},
+           given={Google},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \strng{fullhash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \strng{bibnamehash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \strng{authorbibnamehash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \strng{authornamehash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \strng{authorfullhash}{11bb1d2fc83a61c4b40b81c2f83149db}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Angular}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://angular.io/
+      \endverb
+      \verb{url}
+      \verb https://angular.io/
+      \endverb
+    \endentry
+    \entry{babel}{online}{}
+      \name{author}{2}{}{%
+        {{hash=54470e2f859a87753d624c584c5a5d96}{%
+           family={McKenzie},
+           familyi={M\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+        {{hash=fc84ee9ecdb49a352a73e0b3f1402c90}{%
+           family={contributors},
+           familyi={c\bibinitperiod},
+           prefix={other},
+           prefixi={o\bibinitperiod}}}%
+      }
+      \strng{namehash}{936df4361185dee6b905feacfc5a4202}
+      \strng{fullhash}{936df4361185dee6b905feacfc5a4202}
+      \strng{bibnamehash}{936df4361185dee6b905feacfc5a4202}
+      \strng{authorbibnamehash}{936df4361185dee6b905feacfc5a4202}
+      \strng{authornamehash}{936df4361185dee6b905feacfc5a4202}
+      \strng{authorfullhash}{936df4361185dee6b905feacfc5a4202}
+      \field{sortinit}{M}
+      \field{sortinithash}{2e5c2f51f7fa2d957f3206819bf86dc3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Babel - The compiler for next generation JavaScript}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://babeljs.io/
+      \endverb
+      \verb{url}
+      \verb https://babeljs.io/
+      \endverb
+    \endentry
+    \entry{oreilly:2005:web20}{online}{}
+      \name{author}{1}{}{%
+        {{hash=8e9258f2810b1957096f4242713aa2d3}{%
+           family={O'Reilly},
+           familyi={O\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{8e9258f2810b1957096f4242713aa2d3}
+      \strng{fullhash}{8e9258f2810b1957096f4242713aa2d3}
+      \strng{bibnamehash}{8e9258f2810b1957096f4242713aa2d3}
+      \strng{authorbibnamehash}{8e9258f2810b1957096f4242713aa2d3}
+      \strng{authornamehash}{8e9258f2810b1957096f4242713aa2d3}
+      \strng{authorfullhash}{8e9258f2810b1957096f4242713aa2d3}
+      \field{sortinit}{O}
+      \field{sortinithash}{ff8d4eeb5101e3cf3809959b3592d942}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{What Is Web 2.0}
+      \field{urlday}{21}
+      \field{urlmonth}{11}
+      \field{urlyear}{2018}
+      \field{year}{2005}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.oreilly.com/pub/a/web2/archive/what-is-web-20.html
+      \endverb
+      \verb{url}
+      \verb https://www.oreilly.com/pub/a/web2/archive/what-is-web-20.html
+      \endverb
+    \endentry
+    \entry{severance:2012:js10days}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2c8b9da4e951b9bddb8adae99ff74aa4}{%
+           family={Severance},
+           familyi={S\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \strng{fullhash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \strng{bibnamehash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \strng{authorbibnamehash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \strng{authornamehash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \strng{authorfullhash}{2c8b9da4e951b9bddb8adae99ff74aa4}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0018-9162}
+      \field{journaltitle}{Computer}
+      \field{month}{02}
+      \field{title}{JavaScript: Designing a Language in 10 Days}
+      \field{volume}{45}
+      \field{year}{2012}
+      \field{pages}{7\bibrangedash 8}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1109/MC.2012.57
+      \endverb
+      \verb{urlraw}
+      \verb doi.ieeecomputersociety.org/10.1109/MC.2012.57
+      \endverb
+      \verb{url}
+      \verb doi.ieeecomputersociety.org/10.1109/MC.2012.57
+      \endverb
+      \keyw{JavaScript; HTML; Brendan Eich}
+    \endentry
+    \entry{taivalsaari:2017}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=589905c4a0a0935b2fd77abfe437d5f9}{%
+           family={Taivalsaari},
+           familyi={T\bibinitperiod},
+           given={Antero},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5d7740b6e2ec0fb41f72f451e980670b}{%
+           family={Mikkonen},
+           familyi={M\bibinitperiod},
+           given={Tommi},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{21109adb5757ee7304766bf5c94227cc}
+      \strng{fullhash}{21109adb5757ee7304766bf5c94227cc}
+      \strng{bibnamehash}{21109adb5757ee7304766bf5c94227cc}
+      \strng{authorbibnamehash}{21109adb5757ee7304766bf5c94227cc}
+      \strng{authornamehash}{21109adb5757ee7304766bf5c94227cc}
+      \strng{authorfullhash}{21109adb5757ee7304766bf5c94227cc}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 13th International Conference of Web Information Systems and Technologies. INSTICC, SciTePress}
+      \field{title}{The web as a software platform: ten years later}
+      \field{year}{2017}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

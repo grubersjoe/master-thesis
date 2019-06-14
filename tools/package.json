@@ -1,0 +1,16 @@
+{
+  "name": "tools",
+  "version": "0.1.0",
+  "description": "Small helper tools used in the master thesis of Jonathan Gruber",
+  "author": "Jonathan Gruber <gruberjonathan@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "tsc --watch",
+    "format": "prettier --write src/**/*"
+  },
+  "devDependencies": {
+    "@types/node": "^10",
+    "prettier": "^1.18.2"
+  }
+}

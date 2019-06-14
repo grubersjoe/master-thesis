@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs_1 = require("fs");
+var State;
+(function (State) {
+    State[State["NORMAL"] = 0] = "NORMAL";
+    State[State["PROCESSING"] = 1] = "PROCESSING";
+})(State || (State = {}));
+var REGEX = {
+    SPLIT_DATE_AND_MESSAGE: /^\[([\d-:\. ]+)\] (.+)$/,
+    EVENT_RECHECK: /^recheck/,
+    EVENT_DONE: /^Done/
+};
+function getModifiedFile(line) {
+    var modifiedFile = line.match(/ \/.+/);
+    if (modifiedFile && modifiedFile.length > 0) {
+        return modifiedFile[0].trim();
+    }
+    return null;
+}
+function calcElapsedTimes(log, regexStart, regexEnd) {
+    if (regexStart === void 0) { regexStart = REGEX.EVENT_RECHECK; }
+    if (regexEnd === void 0) { regexEnd = REGEX.EVENT_DONE; }
+    var logLines = log.split("\n");
+    var perfData = [];
+    var state = State.NORMAL;
+    var startDate = null;
+    var modifiedFile = null;
+    logLines.forEach(function (line, i) {
+        if (line.length === 0) {
+            return;
+        }
+        var logParts = line.match(REGEX.SPLIT_DATE_AND_MESSAGE);
+        if (!logParts) {
+            throw new Error("Log line could not be parsed: " + line);
+        }
+        var _ = logParts[0], date = logParts[1], message = logParts[2];
+        if (state === State.NORMAL && regexStart.test(message)) {
+            startDate = new Date(date);
+            modifiedFile = getModifiedFile(logLines[i + 2]);
+            state = State.PROCESSING;
+        }
+        if (state === State.PROCESSING && startDate && regexEnd.test(message)) {
+            perfData.push({
+                elapsedTime: new Date(date).getTime() - startDate.getTime(),
+                modifiedFile: modifiedFile
+            });
+            state = State.NORMAL;
+        }
+    });
+    return perfData;
+}
+if (process.argv[2] === undefined) {
+    throw new Error("Required argument log file path missing.");
+}
+var flowLog = process.argv[2];
+if (!fs_1.existsSync(flowLog)) {
+    throw new Error("Specified log file " + flowLog + " does not exist.");
+}
+var log = String(fs_1.readFileSync(flowLog));
+var elapsedTimes = calcElapsedTimes(log);
+console.log(elapsedTimes);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibG9nLXBhcnNlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9mbG93L2xvZy1wYXJzZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQ0EseUJBQThDO0FBTzlDLElBQUssS0FHSjtBQUhELFdBQUssS0FBSztJQUNSLHFDQUFNLENBQUE7SUFDTiw2Q0FBVSxDQUFBO0FBQ1osQ0FBQyxFQUhJLEtBQUssS0FBTCxLQUFLLFFBR1Q7QUFFRCxJQUFNLEtBQUssR0FBRztJQUNaLHNCQUFzQixFQUFFLHlCQUF5QjtJQUNqRCxhQUFhLEVBQUUsVUFBVTtJQUN6QixVQUFVLEVBQUUsT0FBTztDQUNwQixDQUFDO0FBRUYsU0FBUyxlQUFlLENBQUMsSUFBWTtJQUNuQyxJQUFNLFlBQVksR0FBRyxJQUFJLENBQUMsS0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDO0lBRXpDLElBQUksWUFBWSxJQUFJLFlBQVksQ0FBQyxNQUFNLEdBQUcsQ0FBQyxFQUFFO1FBQzNDLE9BQU8sWUFBWSxDQUFDLENBQUMsQ0FBQyxDQUFDLElBQUksRUFBRSxDQUFDO0tBQy9CO0lBRUQsT0FBTyxJQUFJLENBQUM7QUFDZCxDQUFDO0FBRUQsU0FBUyxnQkFBZ0IsQ0FDdkIsR0FBVyxFQUNYLFVBQWdDLEVBQ2hDLFFBQTJCO0lBRDNCLDJCQUFBLEVBQUEsYUFBYSxLQUFLLENBQUMsYUFBYTtJQUNoQyx5QkFBQSxFQUFBLFdBQVcsS0FBSyxDQUFDLFVBQVU7SUFFM0IsSUFBTSxRQUFRLEdBQUcsR0FBRyxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNqQyxJQUFNLFFBQVEsR0FBb0IsRUFBRSxDQUFDO0lBRXJDLElBQUksS0FBSyxHQUFVLEtBQUssQ0FBQyxNQUFNLENBQUM7SUFFaEMsSUFBSSxTQUFTLEdBQWdCLElBQUksQ0FBQztJQUNsQyxJQUFJLFlBQVksR0FBa0IsSUFBSSxDQUFDO0lBRXZDLFFBQVEsQ0FBQyxPQUFPLENBQUMsVUFBQyxJQUFJLEVBQUUsQ0FBQztRQUN2QixJQUFJLElBQUksQ0FBQyxNQUFNLEtBQUssQ0FBQyxFQUFFO1lBQ3JCLE9BQU87U0FDUjtRQUVELElBQU0sUUFBUSxHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsS0FBSyxDQUFDLHNCQUFzQixDQUFDLENBQUM7UUFFMUQsSUFBSSxDQUFDLFFBQVEsRUFBRTtZQUNiLE1BQU0sSUFBSSxLQUFLLENBQUMsbUNBQWlDLElBQU0sQ0FBQyxDQUFDO1NBQzFEO1FBRU0sSUFBQSxlQUFDLEVBQUUsa0JBQUksRUFBRSxxQkFBTyxDQUFhO1FBRXBDLElBQUksS0FBSyxLQUFLLEtBQUssQ0FBQyxNQUFNLElBQUksVUFBVSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsRUFBRTtZQUN0RCxTQUFTLEdBQUcsSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7WUFDM0IsWUFBWSxHQUFHLGVBQWUsQ0FBQyxRQUFRLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQyxDQUFDLENBQUM7WUFFaEQsS0FBSyxHQUFHLEtBQUssQ0FBQyxVQUFVLENBQUM7U0FDMUI7UUFFRCxJQUFJLEtBQUssS0FBSyxLQUFLLENBQUMsVUFBVSxJQUFJLFNBQVMsSUFBSSxRQUFRLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxFQUFFO1lBQ3JFLFFBQVEsQ0FBQyxJQUFJLENBQUM7Z0JBQ1osV0FBVyxFQUFFLElBQUksSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDLE9BQU8sRUFBRSxHQUFHLFNBQVMsQ0FBQyxPQUFPLEVBQUU7Z0JBQzNELFlBQVksY0FBQTthQUNiLENBQUMsQ0FBQztZQUVILEtBQUssR0FBRyxLQUFLLENBQUMsTUFBTSxDQUFDO1NBQ3RCO0lBQ0gsQ0FBQyxDQUFDLENBQUM7SUFFSCxPQUFPLFFBQVEsQ0FBQztBQUNsQixDQUFDO0FBRUQsSUFBSSxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxLQUFLLFNBQVMsRUFBRTtJQUNqQyxNQUFNLElBQUksS0FBSyxDQUFDLDBDQUEwQyxDQUFDLENBQUM7Q0FDN0Q7QUFFRCxJQUFNLE9BQU8sR0FBRyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxDQUFDO0FBRWhDLElBQUksQ0FBQyxlQUFVLENBQUMsT0FBTyxDQUFDLEVBQUU7SUFDeEIsTUFBTSxJQUFJLEtBQUssQ0FBQyx3QkFBc0IsT0FBTyxxQkFBa0IsQ0FBQyxDQUFDO0NBQ2xFO0FBRUQsSUFBTSxHQUFHLEdBQUcsTUFBTSxDQUFDLGlCQUFZLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztBQUMxQyxJQUFNLFlBQVksR0FBRyxnQkFBZ0IsQ0FBQyxHQUFHLENBQUMsQ0FBQztBQUUzQyxPQUFPLENBQUMsR0FBRyxDQUFDLFlBQVksQ0FBQyxDQUFDIn0=
