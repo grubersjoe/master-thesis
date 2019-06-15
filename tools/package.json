@@ -12,5 +12,8 @@
   "devDependencies": {
     "@types/node": "^10",
     "prettier": "^1.18.2"
+  },
+  "dependencies": {
+    "typescript": "^3.5.2"
   }
 }
