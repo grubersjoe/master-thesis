@@ -1,0 +1,13 @@
+diff --git a/packages/components/Flex/index.js b/packages/components/Flex/index.js
+index 09e9946..b235ec8 100644
+--- a/packages/components/Flex/index.js
++++ b/packages/components/Flex/index.js
+@@ -15,7 +15,7 @@ type Props = SharedProps & {
+     | 'space-between'
+     | 'space-around'
+   ),
+-  alignItems?: ?('flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch'),
++  alignItems?: ?('flex-start' | 'flex-end' | 'center' | 'baseline'),
+   column?: boolean,
+   horizontalCenter?: boolean,
+   verticalCenter?: boolean,
