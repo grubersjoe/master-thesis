@@ -1,21 +1,26 @@
 #!/usr/bin/env node
-import { readFileSync, existsSync, writeFileSync } from 'fs';
-import { format } from 'date-fns';
+import { readFileSync } from 'fs';
 
-import { Measurement, State, LogParser } from '../types';
-import { writeCSVFile } from '../util';
+import { Measurement, LogParser } from '../types';
+import { writeCSVFile, getLogArg } from '../util';
 
 const REGEX = {
   VERSION_NUMBER: /version=(\d+\.\d+\.\d+)/,
-  SPLIT_DATE_AND_MESSAGE: /^\[([\d-:\. ]+)\] (.+)$/,
-  EVENT_RECHECK: /^recheck/,
-  EVENT_DONE: /^Done/,
+  LOG_DATE: /^\[([\d-:\. ]+)\]/,
+  EVENT_RECHECK: /recheck \d+ modified, \d+ deleted files/,
+  EVENT_DONE: /Done$/,
 };
 
 function getFlowVersion(log: Buffer): string | null {
   const match = String(log).match(REGEX.VERSION_NUMBER);
 
-  return (match && match.length === 2) ? match[1] : null;
+  return match && match.length === 2 ? match[1] : null;
+}
+
+function getDate(line: string): Date | null {
+  const match = line.match(REGEX.LOG_DATE);
+
+  return match && match.length === 2 ? new Date(`${match[1]}`) : null;
 }
 
 function getModifiedFile(line: string): string | null {
@@ -42,8 +47,6 @@ const calcMeasurements: LogParser = (
   const logLines = String(logFile).split('\n');
   const measurements: Measurement[] = [];
 
-  let state: State = State.NORMAL;
-
   let startDate: Date | null = null;
   let file: string | null = null;
 
@@ -52,46 +55,32 @@ const calcMeasurements: LogParser = (
       return;
     }
 
-    const logParts = line.match(REGEX.SPLIT_DATE_AND_MESSAGE);
+    const date = getDate(line);
 
-    if (!logParts) {
-      throw new Error(`Log line could not be parsed: ${line}`);
+    if (!date) {
+      throw new Error('Log date could not be parsed');
     }
 
-    const [_, date, message] = logParts;
-
-    if (state === State.NORMAL && regexStart.test(message)) {
-      startDate = new Date(date);
+    if (regexStart.test(line)) {
+      startDate = date;
       file = getModifiedFile(logLines[i + 2]);
-
-      state = State.PROCESSING;
     }
 
-    if (state === State.PROCESSING && startDate && regexEnd.test(message)) {
+    if (startDate !== null && regexEnd.test(line)) {
       measurements.push({
-        elapsedTime: new Date(date).getTime() - startDate.getTime(),
-        flowVersion,
+        elapsedTime: date.getTime() - startDate.getTime(),
+        version: flowVersion,
         file,
       });
 
-      state = State.NORMAL;
+      startDate === null;
     }
   });
 
   return measurements;
 };
 
-
-if (process.argv[2] === undefined) {
-  throw new Error('Required argument log file path missing.');
-}
-
-const logArg = process.argv[2];
-
-if (!existsSync(logArg)) {
-  throw new Error(`Specified log file ${logArg} does not exist.`);
-}
-
+const logArg = getLogArg();
 const measurements = calcMeasurements(readFileSync(logArg));
 
 console.log(measurements);

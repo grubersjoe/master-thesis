@@ -1,6 +1,6 @@
 export interface Measurement {
   elapsedTime: number;
-  flowVersion: string;
+  version: string;
   file: string | null;
 }
 
@@ -9,8 +9,3 @@ export type LogParser = (
   regexStart?: RegExp,
   regexEnd?: RegExp,
 ) => Measurement[];
-
-export enum State {
-  NORMAL,
-  PROCESSING,
-}

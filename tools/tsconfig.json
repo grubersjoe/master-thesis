@@ -10,10 +10,11 @@
     ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./build/",
     "strict": true,
     "target": "es5"

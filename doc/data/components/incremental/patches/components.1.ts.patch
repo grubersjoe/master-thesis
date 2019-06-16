@@ -1,0 +1,13 @@
+diff --git a/packages/components/Flex/index.ts b/packages/components/Flex/index.ts
+index a31b3ab..9a5e06f 100644
+--- a/packages/components/Flex/index.ts
++++ b/packages/components/Flex/index.ts
+@@ -13,7 +13,7 @@ type Props = SharedProps & {
+     | null
+     | undefined;
+   alignItems?:
+-    | ('flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch')
++    | ('flex-start' | 'flex-end' | 'center' | 'baseline')
+     | null
+     | undefined;
+   column?: boolean;
