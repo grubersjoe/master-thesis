@@ -1,5 +1,4 @@
 import { existsSync, writeFileSync } from 'fs';
-import { format } from 'date-fns';
 
 import { Measurement } from './types';
 
@@ -17,8 +16,8 @@ export function getLogArg(): string {
   return logArg;
 }
 
-export function writeCSVFile(type: 'flow' | 'typescript', data: Measurement[]) {
-  const header = `file,elapsedTime,${type}Version\n`;
+export function writeCSVFile(type: 'flow' | 'tsserver' | 'tsc', data: Measurement[]) {
+  const header = `file,${type} elapsed time,${type} version\n`;
   const csv = header.concat(
     data.reduce(
       (file, data) =>
@@ -27,8 +26,10 @@ export function writeCSVFile(type: 'flow' | 'typescript', data: Measurement[]) {
     ),
   );
 
-  writeFileSync(
-    `${type}-incremental-${format(new Date(), 'MM-DD_HH:mm')}.cv`,
-    csv,
-  );
+  const date = new Date()
+    .toLocaleString()
+    .slice(0, -3) // remove seconds
+    .replace(', ', '_');
+
+  writeFileSync(`${type}-incremental-${date}.cv`, csv);
 }

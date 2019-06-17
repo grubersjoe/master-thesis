@@ -17,7 +17,7 @@ function getTypeScriptVersion(log: Buffer): string | null {
   return match && match.length === 2 ? match[1] : null;
 }
 
-export function getDate(line: string): Date | null {
+function getDate(line: string): Date | null {
   const dateBits = line.match(REGEX.LOG_DATE);
 
   if (dateBits && dateBits.length === 3) {
@@ -102,4 +102,4 @@ const measurements = calcMeasurements(readFileSync(logArg));
 
 console.log(measurements);
 
-writeCSVFile('typescript', measurements);
+writeCSVFile('tsserver', measurements);

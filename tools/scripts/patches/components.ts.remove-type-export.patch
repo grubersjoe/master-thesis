@@ -1,0 +1,7 @@
+diff --git a/packages/types/form/index.ts b/packages/types/form/index.ts
+index 3ae6532..6164494 100644
+--- a/packages/types/form/index.ts
++++ b/packages/types/form/index.ts
+@@ -1 +1 @@
+-export type ValidationResult = false | string;
++// export type ValidationResult = false | string;

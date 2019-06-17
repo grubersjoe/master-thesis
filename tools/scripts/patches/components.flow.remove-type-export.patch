@@ -1,0 +1,13 @@
+diff --git a/packages/types/form/index.js b/packages/types/form/index.js
+index 052f465..74cfc8c 100644
+--- a/packages/types/form/index.js
++++ b/packages/types/form/index.js
+@@ -4,7 +4,7 @@
+ 
+ import { type Node } from 'react';
+ 
+-export type ValidationResult = false | string;
++// export type ValidationResult = false | string;
+ 
+ export type InputProps = {
+   checked?: boolean,
