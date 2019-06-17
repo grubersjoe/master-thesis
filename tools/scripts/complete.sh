@@ -9,7 +9,7 @@ fi;
 type=$2;
 cwd=$(pwd);
 
-file=$cwd/$type-complete-$(date +%m-%d_%H:%M).data;
+file=$cwd/$type-complete-$(date +%m-%d_%H:%M).cv;
 
 if [ ! -d "$1" ]; then
   echo "Directory $1 does not exist. Exiting."
