@@ -31,5 +31,5 @@ export function writeCSVFile(type: 'flow' | 'tsserver' | 'tsc', data: Measuremen
     .slice(0, -3) // remove seconds
     .replace(', ', '_');
 
-  writeFileSync(`${type}-incremental-${date}.cv`, csv);
+  writeFileSync(`${type}-incremental-${date}.csv`, csv);
 }

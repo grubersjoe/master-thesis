@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-SAMPLES=100
+SAMPLES=50
 
 if [ ! -d "$1" ]; then
   echo "Error. Specify the path to the project as first argument."
@@ -15,7 +15,7 @@ fi;
 type=$2;
 cwd=$(pwd);
 
-file=$cwd/$type-complete-$(date +%m-%d_%H:%M).csv;
+file=$cwd/$type-complete-core-$(date +%m-%d_%H:%M).csv;
 
 cd $1; # cd in project directory
 
@@ -25,15 +25,25 @@ echo "# $(LANG=en lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
 
 if [ $type = "flow" ]; then
   echo "# $(npx flow --version)\n" >> $file;
-
-  for i in {1..$SAMPLES}; do
-    /usr/bin/time -ao $file -f '%e' npx flow check > /dev/null
-  done
-
 else
   echo "# $(npx tsc --version)\n" >> $file;
-
-  for i in {1..$SAMPLES}; do
-    /usr/bin/time -ao $file -f '%e' npx tsc > /dev/null
-  done
 fi
+
+set=0
+
+for i in {1..$(nproc --all)}; do
+  echo "Measuring CPU set $set...";
+  echo "# CPU set $set" >> $file;
+
+  for s in {1..$SAMPLES}; do
+    echo "[$s/$SAMPLES]"
+    if [ $type = "flow" ]; then
+      /usr/bin/time -ao $file -f '%e' taskset -c $set npx flow check > /dev/null
+    else
+      /usr/bin/time -ao $file -f '%e' taskset -c $set npx tsc > /dev/null
+    fi
+  done
+
+  set="$set,$i"
+  echo "--------------------"
+done;
