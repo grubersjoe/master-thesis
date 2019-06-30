@@ -1,0 +1,13 @@
+diff --git a/packages/utils/request/index.ts b/packages/utils/request/index.ts
+index 3e2d903..2c22eca 100644
+--- a/packages/utils/request/index.ts
++++ b/packages/utils/request/index.ts
+@@ -11,7 +11,7 @@ type ResPayload = {
+   timeout: boolean;
+ };
+ 
+-type PromiseRes = (payload: ResPayload) => void;
++// type PromiseRes = (payload: ResPayload) => void;
+ 
+ type Cancelled = {
+   cancelled: boolean;

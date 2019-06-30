@@ -1,0 +1,13 @@
+diff --git a/packages/components/Card/index.tsx b/packages/components/Card/index.tsx
+index 08a6360..9c80b90 100644
+--- a/packages/components/Card/index.tsx
++++ b/packages/components/Card/index.tsx
+@@ -42,7 +42,7 @@ type Props = {
+    * - sets special icon and border style
+    * - opts: 'selected' | 'selectable' | 'deselected' | 'warning' | 'error'
+    */
+-  status?: CardStatusType;
++  status?: string;
+   /** asset url */
+   backgroundImage?: string;
+   backgroundSize?: string;
