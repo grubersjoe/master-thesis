@@ -8,9 +8,8 @@
   paper=a4,
   parskip=on,
   toc=chapterentrydotfill,
-  twoside=off
-  % DIV=10,
-  % fontsize=10,
+  twoside=off,
+  DIV=10,
 ]{scrreprt}
 
 \title{Statische Typsysteme in JavaScript}
@@ -111,7 +110,9 @@
 
   \input{src/title}
 
+  \pagestyle{empty}
   \tableofcontents
+  \clearpage
 
   \pagestyle{headings}
   \pagenumbering{arabic}
@@ -119,8 +120,9 @@
   \input{src/1_Motivation/index}
   \input{src/2_Grundlagen/index}
   \input{src/3_Analyse/index}
-  \input{src/4_Prototyp/index}
+  \input{src/4_Umsetzung/index}
   \input{src/5_Ergebnisse/index}
+  \input{src/6_Zusammenfassung/index}
 
   \clearpage
   \pagenumbering{Roman}
@@ -154,7 +156,6 @@
 
   \input{src/Appendix/declaration.tex}
 
-  \begin{appendix}
-    \input{src/Appendix/index.tex}
-  \end{appendix}
+  \appendix
+  \input{src/Appendix/index.tex}
 \end{document}
