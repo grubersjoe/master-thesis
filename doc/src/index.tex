@@ -7,12 +7,12 @@
   numbers=noenddot,
   paper=a4,
   parskip=on,
-  toc=chapterentrydotfill,
+  % toc=chapterentrydotfill,
   twoside=off,
   DIV=10,
 ]{scrreprt}
 
-\title{Statische Typsysteme in JavaScript}
+\title{Statische Typsysteme für JavaScript}
 \subtitle{Entwicklung eines Transpilers von Flow nach TypeScript}
 \date{\today}
 \author{Jonathan Gruber}
@@ -50,15 +50,15 @@
 \addbibresource{src/references.bib}
 
 \DefineBibliographyStrings{german}{
-    references = {Quellenverzeichnis}
+  references = {Quellenverzeichnis}
 }
 
 % Document links
 \usepackage[pdfencoding=auto]{hyperref}
 \hypersetup{
-    hidelinks,
-    pdftitle={Masterarbeit WIP -- Jonathan Gruber},
-    pdfauthor={Jonathan Gruber}
+  hidelinks,
+  pdftitle={Masterarbeit WIP -- Jonathan Gruber},
+  pdfauthor={Jonathan Gruber}
 }
 
 % Use a 1.5 line-height
@@ -111,6 +111,7 @@
   \input{src/title}
 
   \pagestyle{empty}
+  \setcounter{tocdepth}{2}
   \tableofcontents
   \clearpage
 
