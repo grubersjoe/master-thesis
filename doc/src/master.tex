@@ -57,7 +57,7 @@
 \usepackage[pdfencoding=auto]{hyperref}
 \hypersetup{
   hidelinks,
-  pdftitle={Masterarbeit WIP -- Jonathan Gruber},
+  pdftitle={Statische Typsysteme für JavaScript -- Entwicklung eines Transpilers von Flow nach TypeScript -- Jonathan Gruber},
   pdfauthor={Jonathan Gruber}
 }
 
@@ -106,13 +106,16 @@
 % ----------
 
 \begin{document}
-  \pagenumbering{Roman}
-
-  \input{src/title}
+  \input{src/Title/index}
+  \input{src/Abstract/index}
 
   \pagestyle{empty}
-  \setcounter{tocdepth}{2}
-  \tableofcontents
+  {
+    % Apply empty page style to multiple pages
+    \renewcommand{\thispagestyle}[1]{}
+    \setcounter{tocdepth}{2}
+    \tableofcontents
+  }
   \clearpage
 
   \pagestyle{headings}
@@ -122,8 +125,10 @@
   \input{src/2_Grundlagen/index}
   \input{src/3_Analyse/index}
   \input{src/4_Umsetzung/index}
-  \input{src/5_Ergebnisse/index}
-  \input{src/6_Zusammenfassung/index}
+  \input{src/5_Durchfuehrung/index}
+  \input{src/6_Ergebnisse/index}
+  \input{src/7_Auswertung/index}
+  \input{src/8_Fazit/index}
 
   \clearpage
   \pagenumbering{Roman}
