@@ -38,7 +38,7 @@
 \usepackage{amsmath}
 
 % Monospaced font (Code)
-\setmonofont{Roboto Mono}[Scale=MatchLowercase]
+\setmonofont{Fira Code}[Scale=MatchLowercase]
 
 % Biber (references)
 \usepackage[
@@ -91,17 +91,20 @@
 % Code listings (minted)
 \newcommand{\code}[1]{\small\texttt{#1}}
 \usepackage[outputdir=build]{minted}
-\usemintedstyle{algol_nu}
+\usemintedstyle{perldoc}
 \newminted{js}{fontsize=\footnotesize,tabsize=4}
 \newminted{ts}{fontsize=\footnotesize,tabsize=4}
-\renewcommand\listingscaption{Quellcode}
-\renewcommand\listoflistingscaption{Quellcode-Listings}
-\setmonofont{Roboto Mono}[
+\renewcommand\listingscaption{Quelltext}
+\renewcommand\listoflistingscaption{Quelltextverzeichnis}
+\setmonofont{Fira Code}[
   Scale=MatchLowercase
 ]
 
 % Quotes
 \usepackage{csquotes}
+
+% Hyphenation rules
+\hyphenation{JavaScript}
 
 % ----------
 
@@ -126,9 +129,8 @@
   \input{src/3_Analyse/index}
   \input{src/4_Umsetzung/index}
   \input{src/5_Durchfuehrung/index}
-  \input{src/6_Ergebnisse/index}
-  \input{src/7_Auswertung/index}
-  \input{src/8_Fazit/index}
+  \input{src/6_Auswertung/index}
+  \input{src/7_Fazit/index}
 
   \clearpage
   \pagenumbering{Roman}

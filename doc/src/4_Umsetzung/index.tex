@@ -1,6 +1,38 @@
-\chapter{Umsetzung des Transpilers}
+\chapter{Umsetzung}
+
+Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der entsprechend gewählten Implementierung ausgeführt werden.
+In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Implementierung des Transpilers von Flow nach TypeScript gewählt.
+
+% CITATION NEEDED
+Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript realisiert werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
 \section{Software-Architektur}
+
+\subsection{Funktionsweise von Babel-Plugins}
+
+Der Kern von Babel ist aus einer Vielzahl von Plugins zusammen gesetzt, welche in ihrer Gesamtheit die Funktionalität des Compilers herstellen~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend integrierte Modularität und Flexibilität des Systems. Plugins sind die elementaren Bausteine, die eine Erweiterbarkeit Babels ermöglichen. Durch Wahl dieses Werkzeugs als Basis des Transpilers, ist dessen Grundarchitektur bereits in Teilen vorgegeben, da alle Babel-Plugins die gegebenen Programmschnittstellen implementieren müssen. Der konzeptionelle Ablauf jedes Plugins ist wie folgt~\autocite{BABEL_HANDBOOK}:
+
+% TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären
+\begin{enumerate}
+  \item \textbf{Parsen des Eingabecodes zur Erzeugung des abstrakten Syntaxbaums}
+
+    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu generieren: Hierfür wird der Code als Erstes mittels des \emph{Tokenizers} (Lexer)
+
+  \item \textbf{Transformation des Programms durch Manipulation der AST-Datenstruktur}
+
+    Transformieren alder!
+
+  \item \textbf{Generierung des Ausgabequelltexts}
+
+    Generieren alder!
+\end{enumerate}
+
+
+% Abbildung TODO zeigt den grundsätzlichen Aufbau und Ablauf eines solchen Plugins.
+
+% Visitor-Pattern
+
+\subsection{Konzeptioneller Aufbau des Transpilers}
 
 \section{Entwicklungsprozess}
   Irgendwo sollte wohl geschrieben werden, dass TypeScript, TDD usw. verwendet wurde, um das Plugin zu bauen\dots
@@ -17,6 +49,13 @@
   Mapping der Importe (verschiedene Typnamen in Flow und TS), Umwandlung der Decorators usw.
 
 \section{Erweiterung als Kommandozeilenprogramm}
+
+Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse  verarbeiten zu können, ist eine Erweitung als Kommandozeilenprogramm naheliegend.
+Dieses stellt lediglich eine schmale Ummantelung des Babel-Plugins dar
+% Dieses bietet diverse Optionen, welche dem Benutzer ermöglichen die Transpilierung
+
+
+
 \section{Formatierung des Ausgabequelltexts}
 
   Prettier, synchronisieren der Leerzeilen und Kommentare beschreiben usw.

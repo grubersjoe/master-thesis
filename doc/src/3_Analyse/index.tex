@@ -4,6 +4,8 @@
 
 Was geht so bei TeamShirts? Wie verwenden wir Flow? Wie ist die Typisierung bisher (eher implizit, explizit etc)?
 
+Erläutern, dass es da schon eine Handvoll Ansätze auf GitHub gab, aber die alle nicht einsatzbereit waren.
+
 \section{Ziele der angestrebten Migration zu TypeScript}
 
 Hypothesen, Wünsche, Hoffnungen
@@ -16,6 +18,13 @@ Hypothesen, Wünsche, Hoffnungen
 \section{Anforderungen an den Transpiler}
 
   \subsection{Korrekte Übersetzung der Flow-Typen nach TypeScript}
+  \label{subsection:requirement:correct-translation}
+
   \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
-  \subsection{Programmatische Verarbeitung eines gesamten Projekts}
+  \label{subsection:requirement:semantic-equivalence}
+
+  \subsection{Verarbeitung gesamter Projektverzeichnisse}
+  \label{subsection:requirement:batch-processing}
+
   \subsection{Beibehaltung der Quelltext-Formatierung}
+  \label{subsection:requirement:format}

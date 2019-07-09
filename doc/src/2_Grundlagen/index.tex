@@ -16,19 +16,23 @@
   \subsection{TypeScript}
     TS beschreiben (und zwar mit entsprechender Fachsprache)
 
-\section{Quelltext-Transformation durch Transpilierung}
+\section{Compiler und Transpiler}
 
-  Was macht eigentlich so ein Transpiler? Hier Theorie (AST etc.)
-
-  \subsection{Theoretische Grundlagen}
-
-    Parser, AST etc.
+  Was macht eigentlich so ein Compiler bzw. Transpiler? Hier Theorie (AST etc.)
 
 
-  \subsection{Babel}
+  \subsection{Lexikalische Analyse}
 
-    \dots als populärer Vertreter eines JavaScript-Compilers
+    Quelltext (string) => Tokens
 
-\section{Evaluation bestehender Transpilierungs-Ansätze}
+    Parser, Tokenizer = Lexer
 
-  Erläutern, dass es da schon eine Handvoll Ansätze auf GitHub gab, aber die alle nicht einsatzbereit waren.
+  \subsection{Syntaxanalyse}
+
+    Tokens => AST
+
+
+  \subsection{Parser und Transpiler für JavaScript}
+  \label{subsec:js-transpilers}
+
+    Babel als populärer Vertreter eines JavaScript-Compilers
