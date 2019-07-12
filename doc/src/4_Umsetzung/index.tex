@@ -4,33 +4,35 @@ Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die 
 In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Implementierung des Transpilers von Flow nach TypeScript gewählt.
 
 % CITATION NEEDED
-Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript realisiert werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
+Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
 \section{Software-Architektur}
 
 \subsection{Funktionsweise von Babel-Plugins}
 
-Der Kern von Babel ist aus einer Vielzahl von Plugins zusammen gesetzt, welche in ihrer Gesamtheit die Funktionalität des Compilers herstellen~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend integrierte Modularität und Flexibilität des Systems. Plugins sind die elementaren Bausteine, die eine Erweiterbarkeit Babels ermöglichen. Durch Wahl dieses Werkzeugs als Basis des Transpilers, ist dessen Grundarchitektur bereits in Teilen vorgegeben, da alle Babel-Plugins die gegebenen Programmschnittstellen implementieren müssen. Der konzeptionelle Ablauf jedes Plugins ist wie folgt~\autocite{BABEL_HANDBOOK}:
+Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, welche in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend integrierte Modularität des Systems. Plugins stellen die elementaren Bausteine dar, welche eine flexible Erweiterung des Compilers ermöglichen.
+Mit der Entscheidung den Flow-Transpiler als Babel-Plugin umzusetzen, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel implementieren müssen. Der konzeptionelle Ablauf eines Plugins gliedert sich in folgende drei Phasen~\autocite{BABEL_HANDBOOK}:
 
-% TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären
+% TODO: Tokenizer, Lexer, Tokens und all den Quatsc in den Grundlagen erklären!
 \begin{enumerate}
-  \item \textbf{Parsen des Eingabecodes zur Erzeugung des abstrakten Syntaxbaums}
+  \item \textbf{Parsen des Eingabecodes}
 
-    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu generieren: Hierfür wird der Code als Erstes mittels des \emph{Tokenizers} (Lexer)
+    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert.
+    \\
 
-  \item \textbf{Transformation des Programms durch Manipulation der AST-Datenstruktur}
+  \item \textbf{Transformation des Programms}
 
-    Transformieren alder!
+    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum mittels des \emph{Besucher}"=Entwurfsmusters rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt~\autocite{BABEL_HANDBOOK}. Das Besucher-Entwurfsmuster\footnote{Dieses Entwurfsmuster (\emph{engl. Visitor-Pattern.}) gehört zu den 23 Entwufsmustern, welche im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four} (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben wird~\autocite[306\psqq]{GAMMA:1994}.} beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, realisiert werden können~\autocite[634\psq]{Freeman:2004}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die gewünschte Menge der Knoten des Syntaxbaums individuell zu \enquote{besuchen} und dort gewünschte Transformation des Programms durchzuführen.
+    \\
 
   \item \textbf{Generierung des Ausgabequelltexts}
 
-    Generieren alder!
+    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche dem modifizierten, endgültigen Quelltext entspricht.
 \end{enumerate}
 
+Im Folgenden wird das Hauptaugenmerk der Betrachtung auf die zweite Phase gelegt, da dort die vorliegende Problemstellung der Transpilierung von Flow- nach TypeScript-Code gelöst wird. Das Parsen der Eingabe und das Generieren der Ausgabe kann simpel durch Verwendung der gegebenen Standard-Funktionen von Babel umgesetzt werden.
 
 % Abbildung TODO zeigt den grundsätzlichen Aufbau und Ablauf eines solchen Plugins.
-
-% Visitor-Pattern
 
 \subsection{Konzeptioneller Aufbau des Transpilers}
 
