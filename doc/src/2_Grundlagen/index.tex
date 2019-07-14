@@ -4,17 +4,72 @@
 
 \section{Statische Typsysteme für JavaScript}
 
-  Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
+Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
 
-  \subsection{Flow}
-    Flow beschreiben (und zwar mit entsprechender Fachsprache)
+\subsection{Flow}
+  Flow beschreiben (und zwar mit entsprechender Fachsprache)
 
-    \subsubsection{Basistypen}
-    \subsubsection{Hilfstypen}
-    \subsubsection{Deklarationen}
+\subsubsection{Basistypen}
 
-  \subsection{TypeScript}
-    TS beschreiben (und zwar mit entsprechender Fachsprache)
+\begin{table}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Flow-Typ}               & \textbf{Beispiel}                                                 \\
+    \midrule
+    \texttt{Array type}                 & \texttt{Array<{}number>{}}                               \\
+    \texttt{Boolean literal type}       & \texttt{true}                                            \\
+    \texttt{Boolean type}               & \texttt{boolean}                                         \\
+    \texttt{Empty type}                 & \texttt{empty}                                           \\
+    \texttt{Exact object type}          & \texttt{\{| prop: any |\}}                               \\
+    \texttt{Function type}              & \texttt{(string, \{\}) => number}                        \\
+    \texttt{Generic type annotation}    & \texttt{let v: <{}FlowType>{}}                           \\
+    \texttt{Generics}                   & \texttt{type Generic<{}T: Super> = T}                    \\
+    \texttt{Interface type}             & \texttt{interface \{ +prop: number \}}                   \\
+    \texttt{Intersection type}          & \texttt{type Intersection = T1 \& T2}                    \\
+    \texttt{Mixed type}                 & \texttt{mixed}                                           \\
+    \texttt{Null literal type}          & \texttt{null}                                            \\
+    \texttt{Nullable type (Maybe type)} & \texttt{?number}                                         \\
+    \texttt{Number literal type}        & \texttt{42}                                              \\
+    \texttt{Number type}                & \texttt{number}                                          \\
+    \texttt{Object type}                & \texttt{\{ {[}string{]}: number \}}                      \\
+    \texttt{Opaque type}                & \texttt{opaque type Opaque = number}                     \\
+    \texttt{String literal type}        & \texttt{'literal'}                                       \\
+    \texttt{String type}                & \texttt{string}                                          \\
+    \texttt{This type}                  & \texttt{this}                                            \\
+    \texttt{Tuple type}                 & \texttt{{[}Date, number{]}}                              \\
+    \texttt{Type alias}                 & \texttt{type Type = <{}FlowType>{}}                      \\
+    \texttt{Type casting}               & \texttt{(variable: string)}                              \\
+    \texttt{Typeof type}                & \texttt{typeof undefined}                                \\
+    \texttt{Union type}                 & \texttt{number | null}                                   \\
+    \texttt{Void type}                  & \texttt{void}                                            \\
+    \bottomrule
+  \end{tabular}
+  \caption{Basistypen von Flow mit Beispiel}
+  \label{tab:flow-base-types}
+\end{table}
+
+\subsubsection{Hilfstypen}
+
+
+\subsubsection{Deklarationen}
+
+\subsubsection{Typ-Importe und -Exporte}
+
+\begin{table}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Typ}               & \textbf{Beispiel}                      \\
+    \midrule
+    \texttt{Type imports}     & \texttt{import type T from './types'}   \\
+    \texttt{Type exports}     & \texttt{export type T = number | null}  \\
+  \end{tabular}
+  \caption{Syntax von Typexporten und -importen}
+  \label{tab:flow-base-types}
+\end{table}
+
+
+\subsection{TypeScript}
+  TS beschreiben (und zwar mit entsprechender Fachsprache)
 
 \section{Compiler und Transpiler}
 
