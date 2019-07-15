@@ -1,27 +1,17 @@
 {
   "editor.lineHeight": 20,
   "editor.rulers": [
-    86
+    90
   ],
-  "editor.wordWrapColumn": 86,
+  "editor.wordWrapColumn": 90,
   "explorer.openEditors.visible": 0,
-  "git.decorations.enabled": false,
-  "todohighlight.keywords": [
-    {
-      "backgroundColor": "#e53935",
-      "text": "FIXME"
-    },
-    {
-      "backgroundColor": "#fbc02d",
-      "text": "TODO"
-    },
-    {
-      "backgroundColor": "#4caf50",
-      "text": "REVIEW"
-    },
-    {
-      "backgroundColor": "#039be5",
-      "text": "CITATION NEEDED"
-    }
+  "cSpell.language": "en,de",
+  "cSpell.words": [
+    "Transpilers",
+    "Transpilierung"
+  ],
+  "cSpell.ignoreWords": [
+    "transpilierungsvorgang",
+    "vlissides"
   ]
 }

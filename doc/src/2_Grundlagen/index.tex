@@ -14,42 +14,70 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 \begin{table}
   \begin{tabular}{@{}ll@{}}
     \toprule
-    \textbf{Flow-Typ}               & \textbf{Beispiel}                                                 \\
+    \textbf{Basis-Typ}               & \textbf{Beispiel}                                           \\
     \midrule
-    \texttt{Array type}                 & \texttt{Array<{}number>{}}                               \\
-    \texttt{Boolean literal type}       & \texttt{true}                                            \\
-    \texttt{Boolean type}               & \texttt{boolean}                                         \\
-    \texttt{Empty type}                 & \texttt{empty}                                           \\
-    \texttt{Exact object type}          & \texttt{\{| prop: any |\}}                               \\
-    \texttt{Function type}              & \texttt{(string, \{\}) => number}                        \\
-    \texttt{Generic type annotation}    & \texttt{let v: <{}FlowType>{}}                           \\
-    \texttt{Generics}                   & \texttt{type Generic<{}T: Super> = T}                    \\
-    \texttt{Interface type}             & \texttt{interface \{ +prop: number \}}                   \\
-    \texttt{Intersection type}          & \texttt{type Intersection = T1 \& T2}                    \\
-    \texttt{Mixed type}                 & \texttt{mixed}                                           \\
-    \texttt{Null literal type}          & \texttt{null}                                            \\
-    \texttt{Nullable type (Maybe type)} & \texttt{?number}                                         \\
-    \texttt{Number literal type}        & \texttt{42}                                              \\
-    \texttt{Number type}                & \texttt{number}                                          \\
-    \texttt{Object type}                & \texttt{\{ {[}string{]}: number \}}                      \\
-    \texttt{Opaque type}                & \texttt{opaque type Opaque = number}                     \\
-    \texttt{String literal type}        & \texttt{'literal'}                                       \\
-    \texttt{String type}                & \texttt{string}                                          \\
-    \texttt{This type}                  & \texttt{this}                                            \\
-    \texttt{Tuple type}                 & \texttt{{[}Date, number{]}}                              \\
-    \texttt{Type alias}                 & \texttt{type Type = <{}FlowType>{}}                      \\
-    \texttt{Type casting}               & \texttt{(variable: string)}                              \\
-    \texttt{Typeof type}                & \texttt{typeof undefined}                                \\
-    \texttt{Union type}                 & \texttt{number | null}                                   \\
-    \texttt{Void type}                  & \texttt{void}                                            \\
+    Array type                 & \texttt{Array<{}number>{}}                               \\
+    Boolean literal type       & \texttt{true}                                            \\
+    Boolean type               & \texttt{boolean}                                         \\
+    Empty type                 & \texttt{empty}                                           \\
+    Exact object type          & \texttt{\{| prop: any |\}}                               \\
+    Function type              & \texttt{(string, \{\}) => number}                        \\
+    Generic type annotation    & \texttt{let v: <{}FlowType>{}}                           \\
+    Generics                   & \texttt{type Generic<{}T: Super> = T}                    \\
+    Interface type             & \texttt{interface \{ +prop: number \}}                   \\
+    Intersection type          & \texttt{type Intersection = T1 \& T2}                    \\
+    Mixed type                 & \texttt{mixed}                                           \\
+    Null literal type          & \texttt{null}                                            \\
+    Nullable type (Maybe type) & \texttt{?number}                                         \\
+    Number literal type        & \texttt{42}                                              \\
+    Number type                & \texttt{number}                                          \\
+    Object type                & \texttt{\{ {[}string{]}: number \}}                      \\
+    Opaque type                & \texttt{opaque type Opaque = number}                     \\
+    String literal type        & \texttt{'literal'}                                       \\
+    String type                & \texttt{string}                                          \\
+    This type                  & \texttt{this}                                            \\
+    Tuple type                 & \texttt{{[}Date, number{]}}                              \\
+    Type alias                 & \texttt{type Type = <{}FlowType>{}}                      \\
+    Type casting               & \texttt{(variable: string)}                              \\
+    Typeof type                & \texttt{typeof undefined}                                \\
+    Union type                 & \texttt{number | null}                                   \\
+    Void type                  & \texttt{void}                                            \\
     \bottomrule
   \end{tabular}
-  \caption{Basistypen von Flow mit Beispiel}
+  \caption{Basistypen von Flow~\autocite{FLOW_TYPE_ANNOTATIONS} mit Beispiel}
   \label{tab:flow-base-types}
 \end{table}
 
 \subsubsection{Hilfstypen}
 
+\begin{table}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Flow-Typ}   & \textbf{Beispiel}              \\
+    \midrule
+    Call                & \texttt{\$Call<F, T...>}       \\
+    Class               & \texttt{Class<T>}              \\
+    Difference          & \texttt{\$Diff<A, B>}          \\
+    Element type        & \texttt{\$ElementType<T, K>}   \\
+    Exact               & \texttt{\$Exact<T>}            \\
+    Existential type    & \texttt{*}                     \\
+    Keys                & \texttt{\$Keys<T>}             \\
+    None maybe type     & \texttt{\$NonMaybeType<T>}     \\
+    Object map          & \texttt{\$ObjMap<T, F>}        \\
+    Object map with key & \texttt{\$ObjMapi<T, F>}       \\
+    Property type       & \texttt{\$PropertyType<T, k>}  \\
+    ReadOnly            & \texttt{\$ReadOnly<T>}         \\
+    Rest                & \texttt{\$Rest<A, B>}          \\
+    Shape               & \texttt{\$Shape<T>}            \\
+    Tuple map           & \texttt{\$TupleMap<T, F>}      \\
+    Values              & \texttt{\$Values<T>}           \\
+    Subtype             & \textit{deprecated}            \\
+    Supertype           & \textit{deprecated}            \\
+    \bottomrule
+  \end{tabular}
+  \caption{Flows Hilfstypen~\autocite{FLOW_UTILITY_TYPES} mit Beispiel}
+  \label{tab:flow-utility-types}
+\end{table}
 
 \subsubsection{Deklarationen}
 
@@ -63,8 +91,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     \texttt{Type imports}     & \texttt{import type T from './types'}   \\
     \texttt{Type exports}     & \texttt{export type T = number | null}  \\
   \end{tabular}
-  \caption{Syntax von Typexporten und -importen}
-  \label{tab:flow-base-types}
+  \caption{Weitere Sprachkonstrukte von Flow}
+  \label{tab:flow-other-constructs}
 \end{table}
 
 
