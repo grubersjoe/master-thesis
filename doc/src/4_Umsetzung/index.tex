@@ -1,7 +1,7 @@
 \chapter{Umsetzung}
 
 Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der entsprechend gewählten Implementierung ausgeführt werden.
-In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Implementierung des Transpilers von Flow nach TypeScript gewählt.
+In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
 
 % CITATION NEEDED
 Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
@@ -30,11 +30,28 @@ Mit der Entscheidung den Flow-Transpiler als Babel-Plugin umzusetzen, ist dessen
     Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten, endgültigen Quelltext darstellt.
 \end{enumerate}
 
-Im Folgenden wird das Hauptaugenmerk der Betrachtung auf die zweite Phase gelegt, da hier die Lösung der vorliegenden Problemstellung, die Transpilierung von Flow- nach TypeScript, realisiert wird. Das Parsen der Eingabe und das Generieren der Ausgabe kann durch Verwendung der gegebenen Standard-Funktionen von Babel simpel umgesetzt werden.
+Im weiteren Verlauf wird das Hauptaugenmerk der Betrachtung auf die zweite Phase gelegt, da hier die Lösung der vorliegenden Problemstellung, die Transpilierung von Flow- nach TypeScript, realisiert wird. Das Parsen der Eingabe und das Generieren der Ausgabe kann durch Verwendung der gegebenen Standard-Funktionen von Babel simpel umgesetzt werden.
 
 \subsection{Konzeptioneller Aufbau des Transpilers}
 
-Abbildung~\ref{fig:activity-diagram-transpiler} auf Seite~\pageref{fig:activity-diagram-transpiler} zeigt das Aktivitätsdiagramm\footnote{Aktivitätsdiagramme (engl. \textit{activity diagram}) entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML) und TODO.} der umgesetzten Implementierung als Babel-Plugin.
+Zunächst soll der abstrakte Aufbau der Umsetzung betrachtet werden, bevor deren Details ausgeführt werden. Abbildung~\ref{fig:activity-diagram-transpiler} auf Seite~\pageref{fig:activity-diagram-transpiler} zeigt das Aktivitätsdiagramm\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.} der Implementierung als Babel-Plugin. Jedes Plugin stellt eine JavaScript-Funktion dar, welches ein Objekt zurückliefert, das die Besucher-Funktionen für die verschiedenen Knotentypen des abstrakten Syntaxbaums spezifiziert. Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller \textit{Identifier} eines JavaScript-Programms zu \enquote{bar} abändert:
+
+\begin{listing}[!h]
+\begin{jscode}
+// var foo => var bar
+module.exports = function() {
+  return {
+    visitor: {
+      Identifier(path) {
+        path.node.name = 'bar';
+      },
+    }
+  };
+};
+\end{jscode}
+\caption{Minimalbeispiel eines Babel-Plugins.}
+\label{code:babel-plugin-definition}
+\end{listing}
 
 \begin{figure}[p]
   \centering
