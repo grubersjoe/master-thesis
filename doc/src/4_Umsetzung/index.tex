@@ -69,6 +69,10 @@ Abbildung~\ref{fig:activity-diagram-transpiler-cli} auf Seite~\pageref{fig:activ
 
 \section{Formatierung des Ausgabequelltexts}
 
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des resultierenden Ausgabecodes. Da Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Diese Information wäre innerhalb eines konkreten Syntaxbaums TODO}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der generierten Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach Anwendung des Babel-Plugins nicht präzise beibehalten wird. Die Leerzeilen und Kommentare tragen
+
+Zur Erfüllung der in Abschnitt~\ref{subsection:requirement:format} ausgeführten Anforderung, dass die Formatierung so
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.6\textwidth]{src/4_Umsetzung/img/activity-diagram-formatting.pdf}
