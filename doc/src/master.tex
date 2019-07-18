@@ -86,7 +86,8 @@
 \usepackage{graphicx}
 
 % Tables
-\usepackage{ltablex, booktabs}
+\usepackage{tabularx, booktabs}
+\renewcommand{\arraystretch}{1.2} % More space between table rows
 
 % Code listings (minted)
 \newcommand{\code}[1]{\small\texttt{#1}}
@@ -102,6 +103,9 @@
 
 % Quotes
 \usepackage{csquotes}
+
+% Strike through
+\usepackage[normalem]{ulem}
 
 % Hyphenation rules
 \hyphenation{JavaScript}
@@ -143,15 +147,7 @@
 
   \printbibliography[
     title={Literatur},
-    nottype=online,
     notkeyword=software
-  ]
-
-  \printbibliography[
-    title={Online-Quellen},
-    type=online,
-    notkeyword=software,
-    heading=subbibliography
   ]
 
   \printbibliography[

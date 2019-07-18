@@ -1,37 +1,37 @@
 \chapter{Motivation}
+\label{chap:motiviation}
 
 \section{JavaScripts Typsystem}
 
 Als JavaScript 1995 von Brendan Eich innerhalb von lediglich zehn Tagen als Bestandteils des Webbrowsers \textit{Netscape Communicator} entworfen wurde~\autocite{severance:2012:js10days}, war nicht abzusehen, welch enorme Bedeutung die Sprache über 20 Jahre später inne haben wird: Heute wird JavaScript oft als die am weitesten verbreitete Programmiersprache der Welt betrachtet. Dies belegt beispielsweise die alljährliche Umfrage \enquote{Stack Overflow Developer Survey} der Programmierer-Plattform \enquote{Stack Overflow}, welche die Ergebnisse der weltweiten Befragung von circa 90.000 Software-Entwicklern auswertet~\autocite{stackoverflow:survey:2019}. Bereits das siebte Jahr in Folge führt JavaScript dort die Rangliste der populärsten Programmiersprachen an.
-Der seit vielen Jahren anhaltende Trend, dass zunehmend mehr Software als Webanwendung statt konventioneller Desktop-Anwendung konzipiert wird, hat wesentlich zum Bedeutungszuwachs JavaScripts beigetragen~\autocite{taivalsaari:2017}\autocite{casteleyn:2014:ria}. Mit Aufkommen der Laufzeitumgebung \enquote{Node.js}~\autocite{nodejs} hat sich die JavaScript weiterhin von der Universalsprache des Webbrowsers zu einer ernst zu nehmenden Alternative zu klassischen serverseitigen Programmiersprachen wie Java oder C\# entwickelt~\autocite{TILKOV:NODEJS}.
+Der seit vielen Jahren anhaltende Trend, dass zunehmend mehr Software als Webanwendung statt konventioneller Desktop-Anwendung konzipiert wird, hat wesentlich zum Bedeutungszuwachs JavaScripts beigetragen~\autocite{taivalsaari:2017}\autocite{casteleyn:2014:ria}. Mit Aufkommen der Laufzeitumgebung \enquote{Node.js}~\autocite{nodejs} hat sich die JavaScript weiterhin von der Universalsprache des Webbrowsers zu einer ernsthaften Alternative zu klassischen serverseitigen Programmiersprachen wie Java oder C\# entwickelt~\autocite{TILKOV:NODEJS}.
 
-Die heutige große Beliebtheit der Sprache steht in starken Kontrast zu ihren Anfängen: Aufgrund der zu Beginn schlechten Qualität~\autocite{CROCKFORD:JS_MISUNDERSTOOD} der ECMAScript-Spezifikation~\autocite{ECMASCRIPT:1997}, der sehr uneinheitlichen Implementierung in den verschiedenen Webbrowsern und des dynamischen, inkonsistenten Typsystems wurde JavaScript von professionellen Software-Entwicklern zu Beginn als eine mangelhaft entworfene Programmiersprache betrachtet~\autocite{oreilly:2001:js}. JavaScript galt als eine Sprache, die nur von \enquote{Amateuren}~\autocite{CROCKFORD:JS_MISUNDERSTOOD} genutzt wurde. Das Typsystem der Skriptsprache ist notorisch bekannt für die impliziten, z.~.T inkonsistenten Typumwandlungen von Variablen. Der folgende Quelltext veranschaulicht einige dieser Inkonsistenzen und überraschenden Effekte anhand einiger Beispiele:
+Die heutige große Beliebtheit der Sprache steht in starken Kontrast zu ihren Anfängen: Aufgrund der zu Beginn schlechten Qualität~\autocite{CROCKFORD:JS_MISUNDERSTOOD} der ECMAScript-Spezifikation~\autocite{ECMASCRIPT:1997}, der sehr uneinheitlichen Implementierung in den verschiedenen Webbrowsern und des dynamischen, inkonsistenten Typsystems wurde JavaScript von professionellen Software-Entwicklern zu Beginn als eine mangelhaft entworfene Programmiersprache betrachtet~\autocite{oreilly:2001:js}. JavaScript galt als eine Sprache, die \enquote{nur von Amateuren}~\autocite{CROCKFORD:JS_MISUNDERSTOOD} genutzt wurde. Die Skriptsprache ist notorisch bekannt für die dynamischen, z.~T. inkonsistenten Typumwandlungen. Tabelle~\ref{tab:js-type-coercion} verdeutlicht einige dieser Inkonsistenzen und überraschenden Effekte des Typsystems, indem verschiedene JavaScript-Ausdrücke mit dem jeweiligen Pendant in Python~\autocite{PYTHON3} und Ruby~\autocite{RUBY} verglichen werden\footnote{Verwendet wurde Node 12.6, Python 3.7 und Ruby 2.6.}. Sowohl Python, als auch Ruby sind dynamisch typisierte Skriptsprachen.
 
-\bigskip
-\begin{listing}[!h]
-\begin{jscode}
-// Array-Literal plus Array-Literal
-[] + []  // -> '' (leerer String)
-
-// Array-Literal plus Objekt-Literal
-[] + {}  // -> '[object Object]'
-
-// Erwartung: Plus-Operation sollte kommutativ sein
-{} + []  // -> jedoch: 0
-
-// Objekt-Literal plus Objekt-Literal
-{} + {}  // -> '[object Object][object Object]'
-\end{jscode}
-\caption{Vergleich der zwei Ansätze für statische Typisierung von JavaScript mit Flow (oben) und TypeScript (unten).}
-\label{code:example}
-\end{listing}
-
-
+\begin{table}[htb]
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}p{5.5cm}XX@{}}
+    \midrule
+    \textbf{JavaScript} & \textbf{Python} & \textbf{Ruby}       \\
+    \midrule
+    \texttt{[] + []}~~\Rightarrow~~\texttt{''} & \texttt{[] + []}~~\Rightarrow~~\texttt{[]} & \texttt{[] + []}~~\Rightarrow~~\texttt{[]} \\
+    \texttt{[] + \{\}}~~\Rightarrow~~\texttt{'[object Object]'} & \texttt{[] + \{\}}~~\Rightarrow~~\texttt{TypeError} & \texttt{[] + \{\}}~~\Rightarrow~~\texttt{TypeError} \\
+    \texttt{\{\} + []}~~\Rightarrow~~\texttt{0} & \texttt{\{\} + []}~~\Rightarrow~~\texttt{TypeError} & \texttt{\{\} + []}~~\Rightarrow~~\texttt{TypeError} \\
+    \texttt{\{\} + \{\}}~~\Rightarrow\newline\-\hspace{0.5cm}\texttt{'[object Object][object Object]'} & \texttt{\{\} + []}~~\Rightarrow~~\texttt{TypeError} & \texttt{\{\} + []}~~\Rightarrow~~\texttt{TypeError} \\
+    \texttt{[1, 3] + [5]}~~\Rightarrow~~\texttt{'1,35'} & \texttt{[1, 3] + [5]}~~\Rightarrow~~\texttt{[1, 3, 5]} & \texttt{[1, 3] + [5]}~~\Rightarrow~~\texttt{[1, 3, 5]} \\
+    \texttt{0 == '0'}~~\Rightarrow~~\texttt{true} & \texttt{0 == '0'}~~\Rightarrow~~\texttt{false} & \texttt{0 == '0'}~~\Rightarrow~~\texttt{false} \\
+    \texttt{[] == 0}~~\Rightarrow~~\texttt{true} & \texttt{[] == 0}~~\Rightarrow~~\texttt{false} & \texttt{[] == 0}~~\Rightarrow~~\texttt{false} \\
+    \texttt{typeof null}~~\Rightarrow~~\texttt{'object'} & \texttt{type(None)}~~\Rightarrow~~\texttt{NoneType} & \texttt{nil.class}~~\Rightarrow~~\texttt{NilClass} \\
+    \midrule
+  \end{tabularx}
+  \caption[Dynamische Typumwandlung verschiedener JavaScript-Ausdrücke]{Demonstration der dynamischen Typumwandlung verschiedener Ausdrücke in JavaScript im Vergleich zu Python und Ruby.}
+  \label{tab:js-type-coercion}
+\end{table}
 
 % Ursprünglich war die Skriptsprache lediglich als ergänzendes Werkzeug gedacht, um den Zugriff auf das \emph{Document Object Model} (DOM) von Websites zu ermöglichen und diese dynamischer zu gestalten. Die zu Anfang sehr inkonsistente Implementierung der Sprache in den verschiedenen Webbrowsern und die schwache Typisierung JavaScripts war (und ist) Grund für große Frustration und anfängliche Ablehnung der Sprache seitens professioneller Software-Entwickler~\autocite{oreilly:2001:js}.
 
 
-% Historische Entwicklung usw blabla. Warum ist das Typsystem eher nicht so gut?~\autocite{severance:2012:js10days}
+% Historische Entwicklung usw. Warum ist das Typsystem eher nicht so gut?~\autocite{severance:2012:js10days}
 
 \section{Sinnhaftigkeit statischer Typsysteme}
 
@@ -42,3 +42,5 @@ Logik- und Flüchtigkeitsfehler im Quelltext können oftmals bereits vor Ausfüh
 Überleitung: genau deswegen brauchen wir statische Typsysteme. Da hätten wir zwei...
 
 \section{Zielsetzung und Aufbau der Arbeit}
+
+Die vorliegende Arbeit ist wie folgt strukturiert: Zunächst werden die benötigten Grundlagen hinsichtlich statischer Typsysteme für JavaScript und der Transpilierung von Quelltexten geschaffen. Anschließend wird die Ausgangslage der Projekte bei TeamShirts analysiert und die Ziele der Migration sowie die Anforderungen an den geplanten Flow-Transpiler ausgeführt. Daraufhin werden Architektur und Details der Implementierung des Transpilers ausführlich betrachtet. Kapitel~\ref{chap:execution} beschreibt dann die Durchführung der Migration der realen JavaScript-Projekte mittels des Transpilers und legt die aufgetretenen Schwierigkeiten und gewonnen Erfahrungen darf. Die Ergebnisse der Migration werden im Anschluss ausgewertet und kritisch diskutiert. Weiterhin wird die Umsetzung vergleichbaren Transpilern gegenüber gestellt und hinsichtlich der Zielvorgabe bewertet. Schließlich wird ein Fazit der gesamten Arbeit gezogen und ein Ausblick über mögliche Erweiterungen gegeben.

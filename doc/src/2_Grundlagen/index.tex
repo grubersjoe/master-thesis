@@ -1,4 +1,5 @@
 \chapter{Grundlagen}
+\label{chap:basics}
 
 ... und diese werden nun sogleich näher beschrieben:
 
@@ -12,38 +13,38 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 \subsubsection{Basistypen}
 
 \begin{table}
-  \begin{tabular}{@{}ll@{}}
-    \toprule
-    \textbf{Basis-Typ}               & \textbf{Beispiel}                                           \\
+  \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
-    Array type                 & \texttt{Array<{}number>{}}                               \\
-    Boolean literal type       & \texttt{true}                                            \\
-    Boolean type               & \texttt{boolean}                                         \\
-    Empty type                 & \texttt{empty}                                           \\
-    Exact object type          & \texttt{\{| prop: any |\}}                               \\
-    Function type              & \texttt{(string, \{\}) => number}                        \\
-    Generic type annotation    & \texttt{let v: <{}FlowType>{}}                           \\
-    Generics                   & \texttt{type Generic<{}T: Super> = T}                    \\
-    Interface type             & \texttt{interface \{ +prop: number \}}                   \\
-    Intersection type          & \texttt{type Intersection = T1 \& T2}                    \\
-    Mixed type                 & \texttt{mixed}                                           \\
-    Null literal type          & \texttt{null}                                            \\
-    Nullable type (Maybe type) & \texttt{?number}                                         \\
-    Number literal type        & \texttt{42}                                              \\
-    Number type                & \texttt{number}                                          \\
-    Object type                & \texttt{\{ {[}string{]}: number \}}                      \\
-    Opaque type                & \texttt{opaque type Opaque = number}                     \\
-    String literal type        & \texttt{'literal'}                                       \\
-    String type                & \texttt{string}                                          \\
-    This type                  & \texttt{this}                                            \\
-    Tuple type                 & \texttt{{[}Date, number{]}}                              \\
-    Type alias                 & \texttt{type Type = <{}FlowType>{}}                      \\
-    Type casting               & \texttt{(variable: string)}                              \\
-    Typeof type                & \texttt{typeof undefined}                                \\
-    Union type                 & \texttt{number | null}                                   \\
-    Void type                  & \texttt{void}                                            \\
-    \bottomrule
-  \end{tabular}
+    \textbf{Basis-Typ}         & \textbf{Beispiel}                        \\
+    \midrule
+    Array type                 & \texttt{Array<{}number>{}}               \\
+    Boolean literal type       & \texttt{true}                            \\
+    Boolean type               & \texttt{boolean}                         \\
+    Empty type                 & \texttt{empty}                           \\
+    Exact object type          & \texttt{\{| prop: any |\}}               \\
+    Function type              & \texttt{(string, \{\}) => number}        \\
+    Generic type annotation    & \texttt{let v: <{}FlowType>{}}           \\
+    Generics                   & \texttt{type Generic<{}T: Super> = T}    \\
+    Interface type             & \texttt{interface \{ +prop: number \}}   \\
+    Intersection type          & \texttt{type Intersection = T1 \& T2}    \\
+    Mixed type                 & \texttt{mixed}                           \\
+    Null literal type          & \texttt{null}                            \\
+    Nullable type (Maybe type) & \texttt{?number}                         \\
+    Number literal type        & \texttt{42}                              \\
+    Number type                & \texttt{number}                          \\
+    Object type                & \texttt{\{ {[}string{]}: number \}}      \\
+    Opaque type                & \texttt{opaque type Opaque = number}     \\
+    String literal type        & \texttt{'literal'}                       \\
+    String type                & \texttt{string}                          \\
+    This type                  & \texttt{this}                            \\
+    Tuple type                 & \texttt{{[}Date, number{]}}              \\
+    Type alias                 & \texttt{type Type = <{}FlowType>{}}      \\
+    Type casting               & \texttt{(variable: string)}              \\
+    Typeof type                & \texttt{typeof undefined}                \\
+    Union type                 & \texttt{number | null}                   \\
+    Void type                  & \texttt{void}                            \\
+    \midrule
+  \end{tabularx}
   \caption{Basistypen von Flow~\autocite{FLOW_TYPE_ANNOTATIONS} mit Beispiel}
   \label{tab:flow-base-types}
 \end{table}
@@ -51,30 +52,30 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 \subsubsection{Hilfstypen}
 
 \begin{table}
-  \begin{tabular}{@{}ll@{}}
-    \toprule
-    \textbf{Flow-Typ}   & \textbf{Beispiel}              \\
+  \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
-    Call                & \texttt{\$Call<F, T...>}       \\
-    Class               & \texttt{Class<T>}              \\
-    Difference          & \texttt{\$Diff<A, B>}          \\
-    Element type        & \texttt{\$ElementType<T, K>}   \\
-    Exact               & \texttt{\$Exact<T>}            \\
-    Existential type    & \texttt{*}                     \\
-    Keys                & \texttt{\$Keys<T>}             \\
-    None maybe type     & \texttt{\$NonMaybeType<T>}     \\
-    Object map          & \texttt{\$ObjMap<T, F>}        \\
-    Object map with key & \texttt{\$ObjMapi<T, F>}       \\
-    Property type       & \texttt{\$PropertyType<T, k>}  \\
-    ReadOnly            & \texttt{\$ReadOnly<T>}         \\
-    Rest                & \texttt{\$Rest<A, B>}          \\
-    Shape               & \texttt{\$Shape<T>}            \\
-    Tuple map           & \texttt{\$TupleMap<T, F>}      \\
-    Values              & \texttt{\$Values<T>}           \\
-    Subtype             & \textit{deprecated}            \\
-    Supertype           & \textit{deprecated}            \\
-    \bottomrule
-  \end{tabular}
+    \textbf{Flow-Typ}   & \textbf{Beispiel}               \\
+    \midrule
+    Call                & \texttt{\$Call<F, T...>}        \\
+    Class               & \texttt{Class<T>}               \\
+    Difference          & \texttt{\$Diff<A, B>}           \\
+    Element type        & \texttt{\$ElementType<T, K>}    \\
+    Exact               & \texttt{\$Exact<T>}             \\
+    Existential type    & \texttt{*}                      \\
+    Keys                & \texttt{\$Keys<T>}              \\
+    None maybe type     & \texttt{\$NonMaybeType<T>}      \\
+    Object map          & \texttt{\$ObjMap<T, F>}         \\
+    Object map with key & \texttt{\$ObjMapi<T, F>}        \\
+    Property type       & \texttt{\$PropertyType<T, k>}   \\
+    ReadOnly            & \texttt{\$ReadOnly<T>}          \\
+    Rest                & \texttt{\$Rest<A, B>}           \\
+    Shape               & \texttt{\$Shape<T>}             \\
+    Tuple map           & \texttt{\$TupleMap<T, F>}       \\
+    Values              & \texttt{\$Values<T>}            \\
+    \sout{Subtype}      & \textit{veraltet}               \\
+    \sout{Supertype}    & \textit{veraltet}               \\
+    \midrule
+  \end{tabularx}
   \caption{Flows Hilfstypen~\autocite{FLOW_UTILITY_TYPES} mit Beispiel}
   \label{tab:flow-utility-types}
 \end{table}
@@ -84,13 +85,14 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 \subsubsection{Typ-Importe und -Exporte}
 
 \begin{table}
-  \begin{tabular}{@{}ll@{}}
-    \toprule
+  \begin{tabularx}{\textwidth}{@{}ll@{}}
+    \midrule
     \textbf{Typ}               & \textbf{Beispiel}                      \\
     \midrule
     \texttt{Type imports}     & \texttt{import type T from './types'}   \\
     \texttt{Type exports}     & \texttt{export type T = number | null}  \\
-  \end{tabular}
+    \midrule
+  \end{tabularx}
   \caption{Weitere Sprachkonstrukte von Flow}
   \label{tab:flow-other-constructs}
 \end{table}
@@ -99,23 +101,74 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 \subsection{TypeScript}
   TS beschreiben (und zwar mit entsprechender Fachsprache)
 
-\section{Compiler und Transpiler}
+\section{Transpilierung von Quelltexten}
 
   Was macht eigentlich so ein Compiler bzw. Transpiler? Hier Theorie (AST etc.)
 
+\subsection{Lexikalische Analyse}
 
-  \subsection{Lexikalische Analyse}
+  Quelltext (string) => Tokens
 
-    Quelltext (string) => Tokens
+  Parser, Tokenizer = Lexer
 
-    Parser, Tokenizer = Lexer
+\subsection{Syntaxanalyse}
 
-  \subsection{Syntaxanalyse}
+  Tokens => AST
 
-    Tokens => AST
+\subsection{Evaluation bestehender Transpiler für JavaScript}
+\label{subsec:js-transpilers}
 
+Vergleich von Babel und anderer Späße.
 
-  \subsection{Parser und Transpiler für JavaScript}
-  \label{subsec:js-transpilers}
+Am Ende: es wird Babel eingesetzt werden, um das Dingens zu bauen.
 
-    Babel als populärer Vertreter eines JavaScript-Compilers
+\section{Babel}
+\label{sec:babel}
+
+Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Transpilers in Kapitel \ref{chap:implementation} soll zunächst ein Überblick über die grundsätzliche Funktionsweise von Babel gegeben werden.
+
+\subsection{Funktionsweise von Babel-Plugins}
+
+Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, welche in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems.
+Der konzeptionelle Ablauf eines Plugins gliedert sich in folgende drei Phasen~\autocite{BABEL_HANDBOOK}:
+
+% TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären!
+\begin{enumerate}
+  \item \textbf{Parsen des Eingabecodes}
+
+    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert.
+    \\
+
+  \item \textbf{Transformation des Programms}
+
+    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum mittels des \textit{Besucher}"=Entwurfsmusters rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt~\autocite{BABEL_HANDBOOK}. Das Besucher-Entwurfsmuster\footnote{Dieses Entwurfsmuster (engl. \textit{Visitor-Pattern.}) gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four} (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben werden~\autocite[306\psqq]{GAMMA:1994}.} beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, durchgeführt werden können~\autocite[634\psq]{Freeman:2004}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die gewünschte Menge der Knoten des Syntaxbaums individuell zu \enquote{besuchen} und dort die gewünschte Transformation des Programms umzusetzen.
+    \\
+
+  \item \textbf{Generierung des Ausgabequelltexts}
+
+    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten, endgültigen Quelltext darstellt.
+\end{enumerate}
+
+Jedes Plugin stellt eine JavaScript-Funktion dar, welches ein Objekt zurückliefert, das die Besucher-Funktionen für die verschiedenen Knotentypen des abstrakten Syntaxbaums spezifiziert.
+
+Dabei werden Funktionen definiert, deren Name . Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller \textit{Identifier}\footnote{Siehe Abschnitt 12.1 der ECMAScript-Spezifikation\autocite[187\psqq]{ECMASCRIPT:2019}.} eines JavaScript-Programms zu \enquote{bar} abändert.
+
+\bigskip
+\begin{listing}[!h]
+\begin{jscode}
+// var foo => var bar
+module.exports = function() {
+  return {
+    visitor: {
+      Identifier(path) {
+        path.node.name = 'bar';
+      },
+    }
+  };
+};
+\end{jscode}
+\caption{Minimalbeispiel eines Babel-Plugins.}
+\label{code:babel-plugin-definition}
+\end{listing}
+
+Im weiteren Verlauf wird das Hauptaugenmerk der Betrachtung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, gelegt, da hier die Lösung der vorliegenden Problemstellung, die Transpilierung von Flow- nach TypeScript, realisiert wird. Das Parsen der Eingabe und das Generieren der Ausgabe kann durch Verwendung der gegebenen Standard-Funktionen von Babel simpel umgesetzt werden.
