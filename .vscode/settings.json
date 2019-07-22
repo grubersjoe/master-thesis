@@ -11,8 +11,11 @@
     "Transpilierung"
   ],
   "cSpell.ignoreWords": [
+    "backends",
+    "konkatenationsoperator",
     "mapi",
     "obj",
+    "parsern",
     "transpilern",
     "transpilierungsvorgang",
     "typeof",

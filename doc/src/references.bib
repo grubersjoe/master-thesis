@@ -5,18 +5,6 @@
   URLDATE = {2019-07-01},
 }
 
-@INPROCEEDINGS{taivalsaari:2017,
-  AUTHOR = {Taivalsaari, Antero and Mikkonen, Tommi},
-  ORGANIZATION = {INSTICC},
-  PUBLISHER = {SciTePress},
-  BOOKTITLE = {Proceedings of the 13th International Conference on Web Information Systems and Technologies - Volume 1: WEBIST,},
-  DATE = {2017},
-  DOI = {10.5220/0006234800410050},
-  ISBN = {978-989-758-246-2},
-  PAGES = {41--50},
-  TITLE = {The Web as a Software Platform: Ten Years Later},
-}
-
 @ARTICLE{casteleyn:2014:ria,
   AUTHOR = {Casteleyn, Sven and Garrig'os, Irene and Maz'on, Jose-Norberto},
   PUBLISHER = {ACM},
@@ -65,7 +53,15 @@
   ISSN = {1089-7801},
 }
 
-
+@ARTICLE{THOMAS:2007,
+  AUTHOR = {Thomas, Dave},
+  DATE = {2007-01},
+  PAGES = {25-29},
+  TITLE = {Programming the World in a Browser Real Men Don't Do JavaScript Do They?!},
+  VOLUME = {6},
+  JOURNAL = {Journal of Object Technology},
+  DOI = {10.5381/jot.2007.6.10.c3}
+}
 
 @BOOK{GAMMA:1994,
   AUTHOR = {Gamma, Erich and Helm, Richard and Johnson, Ralph and Vlissides, John M.},
@@ -96,7 +92,54 @@
 	YEAR = {2000},
 }
 
-@STANDARD{OMG:UML,
+@INPROCEEDINGS{THIEMANN:2005,
+  AUTHOR = "Thiemann, Peter",
+  EDITOR = "Sagiv, Mooly",
+  TITLE = "Towards a Type System for Analyzing JavaScript Programs",
+  BOOKTITLE = "Programming Languages and Systems",
+  YEAR = {2005},
+  PUBLISHER = "Springer Berlin Heidelberg",
+  ADDRESS=  "Berlin, Heidelberg",
+  PAGES = "408--422",
+  ISBN = "978-3-540-31987-0"
+}
+
+@INPROCEEDINGS{PRADEL:2015,
+  TITLE = {The Good, the Bad, and the Ugly: An Empirical Study of Implicit Type Conversions in JavaScript},
+  AUTHOR = {Pradel, Michael and Sen, Koushik},
+  BOOKTITLE = {ECOOP},
+  YEAR = {2015}
+}
+
+@INPROCEEDINGS{taivalsaari:2017,
+  AUTHOR = {Taivalsaari, Antero and Mikkonen, Tommi},
+  ORGANIZATION = {INSTICC},
+  PUBLISHER = {SciTePress},
+  BOOKTITLE = {Proceedings of the 13th International Conference on Web Information Systems and Technologies - Volume 1: WEBIST,},
+  DATE = {2017},
+  DOI = {10.5220/0006234800410050},
+  ISBN = {978-989-758-246-2},
+  PAGES = {41--50},
+  TITLE = {The Web as a Software Platform: Ten Years Later},
+}
+
+@INPROCEEDINGS{RICHARDS:2010,
+ AUTHOR = {Richards, Gregor and Lebresne, Sylvain and Burg, Brian and Vitek, Jan},
+ TITLE = {An Analysis of the Dynamic Behavior of JavaScript Programs},
+ BOOKTITLE = {Proceedings of the 31st ACM SIGPLAN Conference on Programming Language Design and Implementation},
+ SERIES = {PLDI '10},
+ YEAR = {2010},
+ ISBN = {978-1-4503-0019-3},
+ LOCATION = {Toronto, Ontario, Canada},
+ PAGES = {1--12},
+ NUMPAGES = {12},
+ URL = {http://doi.acm.org/10.1145/1806596.1806598},
+ DOI = {10.1145/1806596.1806598},
+ PUBLISHER = {ACM},
+ ADDRESS = {New York, NY, USA},
+}
+
+@MANUAL{OMG:UML,
   TITLE = {OMG Unified Modeling Language (OMG UML)},
   AUTHOR = {OGM},
   ORGANIZATION = {Object Management Group},
@@ -105,7 +148,7 @@
   DATE = {2017-08}
 }
 
-@STANDARD{ECMASCRIPT:1997,
+@MANUAL{ECMASCRIPT:1997,
   TITLE = {ECMAScript: A general purpose, cross-platform programming language},
   AUTHOR = {Ecma International},
   ORGANIZATION = {Ecma International},
@@ -115,7 +158,17 @@
   DATE = {1997-06},
 }
 
-@STANDARD{ECMASCRIPT:2019,
+@MANUAL{ECMASCRIPT:1999,
+  TITLE = {ECMAScript Language Specification},
+  AUTHOR = {Ecma International},
+  ORGANIZATION = {Ecma International},
+  LOCATION = {Geneva},
+  REVISION = {1st},
+  URL = {http://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf},
+  DATE = {1999-12},
+}
+
+@MANUAL{ECMASCRIPT:2019,
   TITLE = {ECMAScript 2019 Language Specification},
   AUTHOR = {Ecma International},
   ORGANIZATION = {Ecma International},
@@ -160,15 +213,7 @@
   URLDATE = {2019-07-17},
 }
 
-@ONLINE{oreilly:2005:web20,
-  TITLE = {What Is Web 2.0},
-  AUTHOR = {O'Reilly, Tim},
-  URL = {https://www.oreilly.com/pub/a/web2/archive/what-is-web-20.html},
-  DATE = {2005-09},
-  URLDATE = {2019-03-21},
-}
-
-@ONLINE{oreilly:2001:js,
+@ONLINE{OREILLY:JS_HOW_DID_WE_GET_THERE,
   TITLE = {JavaScript: How Did We Get Here?},
   AUTHOR = {Champeon, Steve},
   URL = {https://web.archive.org/web/20160719020828/http://archive.oreilly.com/pub/a/javascript/2001/04/06/js_history.html},
@@ -184,11 +229,10 @@
   URLDATE = {2019-06-03},
 }
 
-# TODO: use this in introduction
 @ONLINE{GARRET:AJAX,
   TITLE = {Ajax: A New Approach to Web Applications},
   AUTHOR = {Garrett, Jesse James},
-  URL = {http://adaptivepath.org/ideas/ajax-new-approach-web-applications/},
+  URL = {https://web.archive.org/web/20080702075113/http://www.adaptivepath.com/ideas/essays/archives/000385.php},
   DATE = {2005-02},
   URLDATE = {2019-03-21},
 }
@@ -201,12 +245,38 @@
   URLDATE = {2019-07-16},
 }
 
+@ONLINE{CROCKFORD:JS_POPULAR,
+  TITLE = {The World's Most Misunderstood Programming Language Has Become the World's Most Popular Programming Language},
+  AUTHOR = {Crockford, Douglas},
+  URL = {http://crockford.com/javascript/popular.html},
+  DATE = {2008-03},
+  URLDATE = {2019-07-22},
+}
+
+@ONLINE{EICH:POPULARITY,
+  TITLE = {Popularity},
+  AUTHOR = {Eich, Brendan},
+  URL = {https://brendaneich.com/2008/04/popularity/},
+  DATE = {2008-04},
+  URLDATE = {2019-07-22},
+}
+
+
+
 @ONLINE{JEFFRIES:EXTREME_PROGRAMMING,
   TITLE = {What is Extreme Programming?},
   AUTHOR = {Jeffries, Ron},
   URL = {https://ronjeffries.com/xprog/what-is-extreme-programming/},
   DATE = {2011-03},
   URLDATE = {2019-07-15},
+}
+
+@ONLINE{PEYROTT:BRIEF_HISTORY_OF_JS,
+  TITLE = {A Brief History of JavaScript},
+  AUTHOR = {Peyrott, Sebastian},
+  URL = {https://auth0.com/blog/a-brief-history-of-javascript/},
+  DATE = {2017-01},
+  URLDATE = {2019-07-22},
 }
 
 @ONLINE{flow,
@@ -241,6 +311,14 @@
   URLDATE = {2019-03-22},
 }
 
+@ONLINE{BABEL:STATE_OF_BABEL,
+  AUTHOR = {Zhu, Henry},
+  URL = {https://babeljs.io/blog/2016/12/07/the-state-of-babel},
+  DATE = {2016-12},
+  TITLE = {The State of Babel},
+  URLDATE = {2019-07-22},
+}
+
 @ONLINE{SOFTWARE_REACT,
   AUTHOR = {Inc., Facebook},
   URL = {https://reactjs.org},
@@ -250,7 +328,7 @@
   KEYWORDS = {software},
 }
 
-@ONLINE{nodejs,
+@ONLINE{NODEJS,
   AUTHOR = {Node.js Foundation},
   URL = {https://nodejs.org},
   DATE = {2019},

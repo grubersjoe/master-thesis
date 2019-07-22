@@ -1,19 +1,13 @@
 \chapter{Umsetzung}
 \label{chap:implementation}
 
-Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der entsprechend gewählten Implementierung ausgeführt werden.
-In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
-
-% CITATION NEEDED
-Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
+Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der entsprechend gewählten Implementierung als Babel-Plugin ausgeführt werden. In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge im Umfeld der Transpilierung von JavaScript ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
 
 \section{Software-Architektur}
 
-Mit der Entscheidung den Flow-Transpiler als Babel-Plugin umzusetzen, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel implementieren müssen.
-
 \subsection{Konzeptioneller Aufbau des Transpilers}
 
-Zunächst soll der abstrakte Aufbau der Umsetzung betrachtet werden, bevor deren Details ausgeführt werden. Abbildung~\ref{fig:activity-diagram-transpiler} auf Seite~\pageref{fig:activity-diagram-transpiler} zeigt das Aktivitätsdiagramm\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.} der Implementierung als Babel-Plugin.
+Mit der Entscheidung das Werkzeug als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen. Bevor auf Details der Umsetzung eingegangen wird, soll zunächst der grundsätzliche Aufbau der Anwendung erläutert werden. Abbildung~\ref{fig:activity-diagram-transpiler} auf Seite~\pageref{fig:activity-diagram-transpiler} zeigt das Aktivitätsdiagramm\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.} der Implementierung.
 
 \begin{figure}[p]
   \centering
@@ -22,6 +16,8 @@ Zunächst soll der abstrakte Aufbau der Umsetzung betrachtet werden, bevor deren
   \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin).}
   \label{fig:activity-diagram-transpiler}
 \end{figure}
+
+Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher-Funktionen definiert und weiterhin die Plugin-Abhängigkeiten spezifiziert. Bei diesen Abhängigkeiten handelt es sich um Babel-Plugins, die das Parsen der Syntax von Flow, JSX und vorgeschlagener~\footnote{Erweiterungen der ECMAScript-Spezifikation } ECMAScript-Spracherweiterungen wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
 
 \section{Entwicklungsprozess}
 

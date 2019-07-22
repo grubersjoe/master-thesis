@@ -61,6 +61,13 @@
   pdfauthor={Jonathan Gruber}
 }
 
+% Endnotes
+\usepackage[
+  backref=true,
+  counter-format=roman,
+  totoc=chapter,
+]{enotez}
+
 % Use a 1.5 line-height
 \usepackage[onehalfspacing]{setspace}
 
@@ -76,7 +83,10 @@
 
 % Small captions
 \usepackage[font=small]{caption}
-\captionsetup{justification=raggedright,singlelinecheck=false}
+\captionsetup{
+  justification=raggedright,
+  singlelinecheck=false
+}
 
 % Better spacing in lists
 \usepackage{enumitem}
@@ -109,24 +119,34 @@
 
 % Hyphenation rules
 \hyphenation{JavaScript}
+\hyphenation{Python}
+\hyphenation{Ruby}
 \hyphenation{TypeScript}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
+
+% Orphans
+\usepackage[all]{nowidow}
 
 % ----------
 
 \begin{document}
+	% Numbering is invisible, but required for hyperref package
+  \pagestyle{empty}
+  \pagenumbering{Roman}
+
   \input{src/Title/index}
   \input{src/Abstract/index}
 
-  \pagestyle{empty}
   {
     % Apply empty page style to multiple pages
     \renewcommand{\thispagestyle}[1]{}
     \setcounter{tocdepth}{2}
     \tableofcontents
   }
-  \clearpage
 
+  % ------------------------------
+
+  \clearpage
   \pagestyle{headings}
   \pagenumbering{arabic}
 
@@ -138,12 +158,13 @@
   \input{src/6_Auswertung/index}
   \input{src/7_Fazit/index}
 
-  \clearpage
-  \pagenumbering{Roman}
+  % ------------------------------
 
+  \clearpage
+  \pagestyle{plain}
+  \pagenumbering{Roman}
   \renewcommand{\UrlFont}{\small}
 
-  \pagestyle{plain}
 
   \printbibliography[
     title={Literatur},
@@ -156,9 +177,10 @@
     heading=subbibliography
   ]
 
-  \listoffigures{}
-  \listoftables{}
-  \listoflistings{}
+  \listoffigures
+  \listoftables
+  \listoflistings
+  \printendnotes
 
   \input{src/Appendix/declaration.tex}
 
