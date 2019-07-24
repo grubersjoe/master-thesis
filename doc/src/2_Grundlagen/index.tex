@@ -1,8 +1,6 @@
 \chapter{Grundlagen}
 \label{chap:basics}
 
-... und diese werden nun sogleich näher beschrieben:
-
 \section{Statische Typsysteme für JavaScript}
 
 Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
@@ -159,7 +157,7 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, welche in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller \textit{Identifier}\footnote{Siehe Abschnitt 12.1 der ECMAScript-Spezifikation\autocite[187\psqq]{ECMASCRIPT:2019}.} eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen sind
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Siehe Abschnitt 12.1 der ECMAScript-Spezifikation\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen sind
 
 \bigskip
 \begin{listing}[htb]

@@ -5,10 +5,11 @@
   ],
   "editor.wordWrapColumn": 90,
   "explorer.openEditors.visible": 0,
-  "cSpell.language": "en,de",
+  "cSpell.language": ",de",
   "cSpell.words": [
     "Transpilers",
-    "Transpilierung"
+    "Transpilierung",
+    "brendan"
   ],
   "cSpell.ignoreWords": [
     "backends",

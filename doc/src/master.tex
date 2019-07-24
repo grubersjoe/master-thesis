@@ -40,6 +40,9 @@
 % Monospaced font (Code)
 \setmonofont{Fira Code}[Scale=MatchLowercase]
 
+% Orphans
+\usepackage[all]{nowidow}
+
 % Biber (references)
 \usepackage[
   backend=biber,
@@ -61,6 +64,9 @@
   pdfauthor={Jonathan Gruber}
 }
 
+% Use the main font for URLs
+\urlstyle{same}
+
 % Endnotes
 \usepackage[
   backref=true,
@@ -79,7 +85,9 @@
 \chead{}
 \ihead{\leftmark}
 \ohead{\rightmark}
-\renewcommand\chaptermarkformat{} % Remove chapter number
+
+% Remove chapter number
+\renewcommand\chaptermarkformat{}
 
 % Small captions
 \usepackage[font=small]{caption}
@@ -163,6 +171,8 @@
   \clearpage
   \pagestyle{plain}
   \pagenumbering{Roman}
+
+  % Smaller URLs
   \renewcommand{\UrlFont}{\small}
 
 
