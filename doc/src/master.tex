@@ -10,6 +10,7 @@
   % toc=chapterentrydotfill,
   twoside=off,
   DIV=10,
+  ngerman
 ]{scrreprt}
 
 \title{Statische Typsysteme für JavaScript}
@@ -17,28 +18,24 @@
 \date{\today}
 \author{Jonathan Gruber}
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 % "Fix" for KOMA script warning about floats
 \usepackage{scrhack}
 
 % Babel
 \usepackage[ngerman]{babel}
 
-% Font
-\usepackage{fontspec}
+% Fonts
 \usepackage[tt=false]{libertine}
+\usepackage[scale=0.85,lining]{FiraMono}
 
 % Set headings in serif as well
 \addtokomafont{disposition}{\rmfamily}
 
 % Math
-% \usepackage{amsmath}
-% \usepackage{unicode-math}
-% \setmathfont[Scale=MatchUppercase]{Libertinus Math}
-
-% \usepackage{amsmath}
-
-% Monospaced font (Code)
-\setmonofont{Fira Code}[Scale=MatchLowercase]
+\usepackage[libertine]{newtxmath}
 
 % Orphans
 \usepackage[all]{nowidow}
@@ -110,14 +107,11 @@
 % Code listings (minted)
 \newcommand{\code}[1]{\small\texttt{#1}}
 \usepackage[outputdir=build]{minted}
-\usemintedstyle{perldoc}
+\usemintedstyle{bw}
 \newminted{js}{fontsize=\footnotesize,tabsize=4}
 \newminted{ts}{fontsize=\footnotesize,tabsize=4}
 \renewcommand\listingscaption{Quelltext}
 \renewcommand\listoflistingscaption{Quelltextverzeichnis}
-\setmonofont{Fira Code}[
-  Scale=MatchLowercase
-]
 
 % Quotes
 \usepackage{csquotes}
