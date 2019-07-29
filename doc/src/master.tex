@@ -53,14 +53,6 @@
   references = {Quellenverzeichnis}
 }
 
-% Document links
-\usepackage[pdfencoding=auto]{hyperref}
-\hypersetup{
-  hidelinks,
-  pdftitle={Statische Typsysteme für JavaScript -- Entwicklung eines Transpilers von Flow nach TypeScript -- Jonathan Gruber},
-  pdfauthor={Jonathan Gruber}
-}
-
 % Use the main font for URLs
 \urlstyle{same}
 
@@ -128,6 +120,15 @@
 
 % Orphans
 \usepackage[all]{nowidow}
+
+% Document links
+% Should be loaded last!
+\usepackage[pdfencoding=auto]{hyperref}
+\hypersetup{
+  hidelinks,
+  pdftitle={Statische Typsysteme für JavaScript -- Entwicklung eines Transpilers von Flow nach TypeScript -- Jonathan Gruber},
+  pdfauthor={Jonathan Gruber}
+}
 
 % ----------
 
