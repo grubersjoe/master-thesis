@@ -1,0 +1,56 @@
+# these seem to be triggered a more or less any editor interation
+Info 386  [21:5:40.831] response:                                                                                                                                                                                  │
+    {"seq":0,"type":"response","command":"configure","request_seq":11,"success":true}                                                                                                                              │
+Info 388  [21:18:33.454] request:                                                                                                                                                                                  │
+    {"seq":12,"type":"request","command":"getApplicableRefactors","arguments":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","startLine":12,"startOffset":38,"endLine":12,"endOffset│
+Info 390  [21:18:33.458] response:                                                                                                                                                                                 │
+    {"seq":0,"type":"response","command":"getApplicableRefactors","request_seq":12,"success":true,"body":[]}
+
+# updateOpen seems to indicate a modified file. this seems to be the "correct" starting point.
+Info 391  [21:18:35.408] request:                                                                                                                                                                                  │
+    {"seq":13,"type":"request","command":"updateOpen","arguments":{"changedFiles":[{"fileName":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","textChanges":[{"newText":"// ","start":{"line│
+Info 392  [21:18:35.416] Project '/home/joe/git/_teamshirts/components/tsconfig.json' (Configured) 0                                                                                                               │
+Info 392  [21:18:35.418]        Files (986)                                                                                                                                                                        │
+Info 392  [21:18:35.422] -----------------------------------------------                                                                                                                                           │
+Info 392  [21:18:35.422] Open files:                                                                                                                                                                               │
+Info 392  [21:18:35.422]        FileName: /home/joe/git/_teamshirts/components/packages/utils/locale/index.ts ProjectRootPath: /home/joe/git/_teamshirts/components                                                │
+Info 392  [21:18:35.422]                Projects: /home/joe/git/_teamshirts/components/tsconfig.json                                                                                                               │
+Info 392  [21:18:35.422] Project '/home/joe/git/_teamshirts/components/tsconfig.json' (Configured) 0                                                                                                               │
+Info 392  [21:18:35.423]        Files (986)                                                                                                                                                                        │
+Info 392  [21:18:35.430] -----------------------------------------------                                                                                                                                           │
+Info 392  [21:18:35.430] Open files:                                                                                                                                                                               │
+Info 392  [21:18:35.430]        FileName: /home/joe/git/_teamshirts/components/packages/utils/locale/index.ts ProjectRootPath: /home/joe/git/_teamshirts/components                                                │
+Info 392  [21:18:35.431]                Projects: /home/joe/git/_teamshirts/components/tsconfig.json
+# the file has been loaded?                                                                                                         │
+Info 393  [21:18:35.431] response:                                                                                                                                                                                 │
+    {"seq":0,"type":"response","command":"updateOpen","request_seq":13,"success":true,"body":true}                                                                                                                 │
+
+# get the "outline: of the current file
+Info 394  [21:18:35.431] request:                                                                                                                                                                                  │
+    {"seq":14,"type":"request","command":"getOutliningSpans","arguments":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts"}}                                                           │
+Info 396  [21:18:35.459] response:                                                                                                                                                                                 │
+    {"seq":0,"type":"response","command":"getOutliningSpans","request_seq":14,"success":true,"body":[{"textSpan":{"start":{"line":1,"offset":65},"end":{"line":3,"offset":2}},"hintSpan":{"start":{"line":1,"offset│
+
+# get applicable refactors
+Info 397  [21:18:35.480] request:                                                                                                                                                                                  │
+    {"seq":15,"type":"request","command":"getApplicableRefactors","arguments":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","startLine":12,"startOffset":41,"endLine":12,"endOffset│
+Info 398  [21:18:35.480] Starting updateGraphWorker: Project: /home/joe/git/_teamshirts/components/tsconfig.json                                                                                                   │
+Info 399  [21:18:35.587] Finishing updateGraphWorker: Project: /home/joe/git/_teamshirts/components/tsconfig.json Version: 2 structureChanged: false Elapsed: 107ms                                                │
+Info 400  [21:18:35.587] Project '/home/joe/git/_teamshirts/components/tsconfig.json' (Configured)                                                                                                                 │
+Info 401  [21:18:35.587]        Files (986)                                                                                                                                                                        │
+Info 402  [21:18:35.589] -----------------------------------------------                                                                                                                                           │
+Info 404  [21:18:35.590] response:                                                                                                                                                                                 │
+    {"seq":0,"type":"response","command":"getApplicableRefactors","request_seq":15,"success":true,"body":[]}                                                                                                       │
+
+# get the type system errors
+Info 405  [21:18:35.591] request:                                                                                                                                                                                  │
+    {"seq":16,"type":"request","command":"geterr","arguments":{"delay":0,"files":["/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts"]}}                                                         │
+Info 407  [21:18:35.594] event:                                                                                                                                                                                    │
+    {"seq":0,"type":"event","event":"syntaxDiag","body":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","diagnostics":[]}}                                                           │
+Info 408  [21:18:35.668] event:                                                                                                                                                                                    │
+    {"seq":0,"type":"event","event":"semanticDiag","body":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","diagnostics":[{"start":{"line":14,"offset":60},"end":{"line":14,"offset":6│
+Info 409  [21:18:35.670] event:                                                                                                                                                                                    │
+    {"seq":0,"type":"event","event":"suggestionDiag","body":{"file":"/home/joe/git/_teamshirts/components/packages/utils/locale/index.ts","diagnostics":[{"start":{"line":48,"offset":10},"end":{"line":48,"offset"│
+# type system error result
+Info 410  [21:18:35.670] event:                                                                                                                                                                                    │
+    {"seq":0,"type":"event","event":"requestCompleted","body":{"request_seq":16}}
