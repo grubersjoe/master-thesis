@@ -135,7 +135,7 @@ Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die S
 \section{Babel}
 \label{sec:babel}
 
-\subsection{Aufbau und Funktionsweise von Babel}
+\subsection{Funktionsweise von Babel}
 
 Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Transpilers in Kapitel \ref{chap:implementation} soll zunächst die grundsätzliche Funktionsweise von Babel näher betrachtet werden. Die Ausführung von Babel gliedert sich in folgende drei Phasen~\autocite{BABEL_HANDBOOK}:
 
@@ -158,24 +158,33 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, welche in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Siehe Abschnitt 12.1 der ECMAScript-Spezifikation\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen sind
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschnitt 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen werden in der Spezifikation des Parsers von Babel beschrieben~\autocite{BABEL_PARSER_SPEC}.
 
-\bigskip
-\begin{listing}[htb]
-\begin{jscode}
-// var foo; => var FOO;
-module.exports = function() {
-  return {
-    visitor: {
-      Identifier(path) {
-        path.node.name = path.node.name.toUpperCase();
-      },
-    }
-  };
-};
-\end{jscode}
-\caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Name aller \textit{Identifier} werden in Großbuchstaben umgewandelt.}
-\label{code:babel-plugin-definition}
-\end{listing}
+% TODO: fertig machen
+
+\begin{figure}[tbp]
+  \includegraphics[width=0.6\textwidth]{src/2_Grundlagen/fig/minimal-babel-plugin.pdf}
+  \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\textit{Identifier}) werden in Großbuchstaben umgewandelt.}
+  \label{code:babel-plugin-definition}
+\end{figure}
+
+% \begin{listing}[htb]
+% \begin{jscode}
+% // var foo; => var FOO;
+% module.exports = function() {
+%   return {
+%     visitor: {
+%       Identifier(path) {
+%         path.node.name = path.node.name.toUpperCase();
+%       },
+%     }
+%   };
+% };
+% \end{jscode}
+% \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Name aller \textit{Identifier} werden in Großbuchstaben umgewandelt.}
+% \label{code:babel-plugin-definition}
+% \end{listing}
+
+% TODO: Was sind Pfade?
 
 Im weiteren Verlauf wird sich die Untersuchung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, konzentrieren, da hier die Lösung der vorliegenden Problemstellung realisiert wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.

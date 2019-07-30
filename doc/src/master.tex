@@ -81,8 +81,8 @@
 % Small captions
 \usepackage[font=small]{caption}
 \captionsetup{
+  format=hang,
   justification=raggedright,
-  singlelinecheck=false
 }
 
 % Better spacing in lists
@@ -99,7 +99,7 @@
 % Code listings (minted)
 \newcommand{\code}[1]{\small\texttt{#1}}
 \usepackage[outputdir=build]{minted}
-\usemintedstyle{bw}
+\usemintedstyle{perldoc}
 \newminted{js}{fontsize=\footnotesize,tabsize=4}
 \newminted{ts}{fontsize=\footnotesize,tabsize=4}
 \renewcommand\listingscaption{Quelltext}
@@ -117,7 +117,7 @@
 \hyphenation{Ruby}
 \hyphenation{TypeScript}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
-
+\babelhyphenation[ngerman]{Kom-man-do-zei-len-pro-gramm}
 % Orphans
 \usepackage[all]{nowidow}
 

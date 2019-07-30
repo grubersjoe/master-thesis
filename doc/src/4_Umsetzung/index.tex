@@ -1,83 +1,81 @@
 \chapter{Umsetzung}
 \label{chap:implementation}
 
-Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der entsprechend gewählten Implementierung ausgeführt werden. In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge zur Transformation von JavaScript-Quelltexten ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
+Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der Implementierung ausgeführt werden. In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge zur Transformation von JavaScript-Quelltexten ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
 
 \section{Software-Architektur}
+% \subsection{Konzeptioneller Aufbau des Transpilers}
 
-\subsection{Konzeptioneller Aufbau des Transpilers}
-
-Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Bevor auf Details der Umsetzung eingegangen wird, soll zunächst der grundsätzliche Aufbau des Programms skizziert werden. Abbildung~\ref{fig:architecture-overview} verschafft einen Überblick über die verschiedenen Komponenten des Systems und deren Beziehung zueinander.
-
-Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche verschiedene Optionen bereit stellt und die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt. Die zweite Komponente ist ein Babel-Plugin, welches die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts mittels Babel, indem das vorliegende Plugin eingesetzt wird. Anschließend kann der generierte TypeScript-Code in Dateien bzw. auf die Standardausgabe geschrieben werden.
-
-Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich Besucher-Funktionen, welche die gewünschten Pfade des abstrakten Syntaxbaums während dessen Traversierung adressieren. Diese Routinen rufen Konverter"=Funktionen auf, welche die Übersetzung der Flow-Knoten in ihr entsprechendes TypeScript-Pendant umsetzen.
-% TODO: ACHJA? wirklich?
-Bei der Verarbeitung der Knoten kommt es dabei auch zu rekursiven Aufrufen der Konverter. In einigen Fällen werden weiterhin Methoden zur Optimierung des Transformationsresultats ausgeführt.
+Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen. Bevor auf Einzelheiten der Umsetzung näher eingegangen wird, soll zunächst der grundsätzliche Aufbau der Anwendung skizziert werden. Abbildung~\ref{fig:architecture-overview} verschafft einen Überblick über die verschiedenen Komponenten des Systems und deren Beziehung zueinander.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.92\textwidth]{src/4_Umsetzung/img/architecture-overview.pdf}
+  \includegraphics[width=0.92\textwidth]{src/4_Umsetzung/fig/architecture-overview.pdf}
 	\caption{Überblick über Komponenten des Transpilers}
 	\label{fig:architecture-overview}
 \end{figure}
 
+Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen. Die zweite Komponente ist ein Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts mittels Babel, indem das vorliegende Plugin geladen und auf die Eingabe angewendet wird. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
+
+Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums des Eingabe-Programms, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel können so alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt werden. Dabei kann es während der Verarbeitung der Knoten zu rekursiven Aufrufen weiterer Besucher und Konverter kommen. In einigen Fällen liegen Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich beinhaltet das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Plugin-Komponenten überprüfen.
+
 \section{Entwicklungsprozess}
 
-\subsection{Eingesetzte Technologien}
+\subsection{Statische Typisierung des Transpilers}
 
-TypeScript alter und so
+Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
 
 \subsection{Testgetriebene Entwicklung}
 
-Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \enquote{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass alle Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{KENT:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig spezifiziert wurden.
+Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits vor dessen Umsetzung geschrieben werden müssen~\autocite{KENT:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig spezifiziert wurden. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features überprüfen, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
 
+Der Testaufbau wurde wie folgt konzipiert: Pro Testfall wird je eine Eingabe- und eine Ausgabe-Datei angelegt. Die Eingabedatei beinhaltet dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabedatei enthält den äquivalenten, manuell übersetzten TypeScript-Code. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung spezifiziert werden.
 
-
-% Verlagerung des Fokus auf die korrekte Erfüllung der Software-Anforderungen, indem diese .
-
-% Hierdurch wird sicher gestellt, dass der Programmierer sich \emph{zuerst} Gedanken über die konkrete Eingabe und erwartete Ausgabe einer Funktion machen muss und erst danach mit der Umsetzung beginnt.
-
-% da auf diese Weise sichergestellt wird, dass eine hohe Testabdeckung der Transformationsroutinen besteht.
-
-% Irgendwo sollte wohl geschrieben werden, dass TypeScript, TDD usw. verwendet wurde, um das Plugin zu bauen\dots
+Zur Testdurchführung muss lediglich der Transpiler auf die Eingabedatei angewandt werden und der auf diese Weise generierte Code Zeile für Zeile exakt mit der erwarteten Ausgabe verglichen werden. Um dies zu erreichen wurde ein Skript geschrieben, welches ein Verzeichnis mit beliebig tief verschachtelten Unterverzeichnissen mit Fixture-Dateien einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durchführt. Zur Ausführung der Assertionen wurde das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} gewählt.
 
 \section{Implementierung als Babel-Plugin}
-  \subsection{Überblick}
+\subsection{Überblick}
 
-  Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Aufbau des Plugins anhand eines Aktivitätsdiagramms\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.}. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher-Funktionen definiert. Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um Babel-Plugins, die das Parsen der Syntax von Flow, JSX und vorgeschlagener\footnote{Erweiterungen der ECMAScript-Spezifikation } ECMAScript-Spracherweiterungen wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
+Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ablauf des Plugins anhand eines Aktivitätsdiagramms\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.}. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher-Funktionen definiert. Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um Babel-Plugins, die das Parsen der Syntax von Flow, JSX und vorgeschlagener ECMAScript-Spracherweiterungen.
 
-  \begin{figure}[tbp]
-    \centering
-    \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/img/activity-diagram-plugin.pdf}
-    \captionsetup{justification=centering}
-    \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin).}
-    \label{fig:activity-diagram-plugin}
-  \end{figure}
-
-  \subsection{Transpilierung der Basistypen}
-  \subsection{Transpilierung der Hilfstypen}
-  \subsection{Transpilierung der Deklarationen}
-
-  \subsection{Weitere Optimierungen}
-    \subsubsection{Übersetzung gängiger Typimporte}
-    \subsubsection{Konvertierung von Class Decorators}
-
-  Mapping der Importe (verschiedene Typnamen in Flow und TS), Umwandlung der Decorators usw.
-
-\section{Erweiterung als Kommandozeilenprogramm}
-
-Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse zu verarbeiten, ist eine Erweiterung als Kommandozeilenprogramm naheliegend. Hierdurch können beliebige Dateien und Verzeichnisse eingelesen und übersetzt werden.
-
-% Dieses nimmt einzelne Eingabedateien oder -verzeichnisse als Argument entgegen und besitzt weiterhin verschiedene Optionen, um den Transpilierungsvorgang
-
-Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm der Anwendung.
-% Dieses stellt lediglich eine schmale Ummantelung des Babel-Plugins dar
-% Dieses bietet diverse Optionen, welche dem Benutzer ermöglichen die Transpilierung
+% \footnote{Erweiterungen der ECMAScript-Spezifikation }
+% wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/img/activity-diagram-cli.pdf}
+  \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-plugin.pdf}
+  \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin).}
+  \label{fig:activity-diagram-plugin}
+\end{figure}
+
+\subsection{Initialisierung des Plugins}
+\subsection{Transpilierung der Flow-Typen}
+  \subsubsection{Transpilierung der Basistypen}
+  \subsubsection{Transpilierung der Hilfstypen}
+  \subsubsection{Transpilierung der Deklarationen}
+
+\subsection{Weitere Optimierungs-Routinen}
+  \subsubsection{Übersetzung gängiger Typimporte}
+  \subsubsection{Konvertierung von Class Decorators}
+
+Mapping der Importe (verschiedene Typnamen in Flow und TS), Umwandlung der Decorators usw.
+
+\section{Erweiterung als Kommandozeilenprogramm}
+
+Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse zu verarbeiten (Stapelverarbeitung), ist eine Erweiterung als Kommandozeilenprogramm naheliegend. Hierdurch können beliebige Dateien und Verzeichnisse eingelesen und deren Übersetzung durch verschiedene Optionen flexibel gesteuert werden. Wie eingangs erwähnt benutzt die Anwendung intern das Babel-Plugin, um die Transpilierung der Flow-Quelltexte nach TypeScript durchzuführen. Aufgaben des Programms sind das Einlesen der Eingabe, die Delegation dieser an das Babel-Plugin, die Formatierung des generierten TypeScript-Codes und schließlich die Ausgabe desselben.
+% unter Berücksichtigung der gesetzten Optionen.
+
+Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt. Tabelle~\ref{tab:cli-options} listet die verschiedenen Optionen, welche auf der Kommandozeile gesetzt werden können.
+
+% Das Kommandozeilenprogramm wurde in TypeScript geschrieben und kann nach Kompilierung nach JavaScript durch Node.js ausgeführt werden. Es kann wie folgt benutzt werden:
+
+
+
+Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-cli.pdf}
 	\caption[Aktivitätsdiagramm des Kommandozeilenprogramms]{Aktivitätsdiagramm des Kommandozeilenprogramms. Vgl. eingebettete Diagramme~\ref{fig:activity-diagram-plugin} \enquote{Eingabe transpilieren} und~\ref{fig:activity-diagram-formatting} \enquote{Ausgabe formatieren}.}
 	\label{fig:activity-diagram-cli}
 \end{figure}
@@ -90,8 +88,7 @@ Zur Erfüllung der in Abschnitt~\ref{subsection:requirement:format} ausgeführte
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.6\textwidth]{src/4_Umsetzung/img/activity-diagram-formatting.pdf}
-  \captionsetup{justification=centering}
+  \includegraphics[width=0.6\textwidth]{src/4_Umsetzung/fig/activity-diagram-formatting.pdf}
 	\caption[Aktivitätsdiagramm der Formatierung des Ausgabecodes]{Aktivitätsdiagramm der Formatierung des generierten Ausgabecodes.}
 	\label{fig:activity-diagram-formatting}
 \end{figure}
