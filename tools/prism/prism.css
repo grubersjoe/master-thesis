@@ -1,0 +1,139 @@
+code[class*="language-"],
+pre[class*="language-"] {
+    color: black;
+    background: none;
+    font-family: "Fira Code", "Fira Mono", monospace;
+	font-variant-ligatures: none;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+	tab-size: 2;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    padding: 1em;
+    margin: .5em 0;
+    overflow: auto;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: hsl(0, 0%, 45%);
+}
+
+.token.punctuation {
+    color: hsl(0, 0%, 30%);
+}
+
+.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: hsl(327, 100%, 30%);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    /*color: hsl(80, 100%, 30%);*/
+	color: hsl(134, 33%, 27%);
+
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: hsl(134, 33%, 27%);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword,
+.token.parameter {
+	color: hsl(348, 88%, 43%);
+}
+
+.token.function,
+.token.class-name {
+    color: hsl(224, 53%, 47%);
+}
+
+.token.parameter {
+	color: hsl(325, 82%, 39%);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: hsl(39, 100%, 47%);
+}
+
+.token.important,
+.token.bold {
+    font-weight: normal;
+}
+
+.token.italic {
+    font-style: normal;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    /*letter-spacing: -1px;*/
+    user-select: none;
+
+}
+
+.line-numbers-rows > span {
+    pointer-events: none;
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: hsl(0, 0%, 45%);
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+

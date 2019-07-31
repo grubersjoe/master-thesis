@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Prism</title>
+	<link rel="stylesheet" href="prism.css" />
+
+	<style>
+		@media print {
+			.controls {
+				display: none;
+			}
+		}
+	</style>
+</head>
+
+<body class="line-numbers">
+	<p class="controls">
+		<label for="toggle-line-numbers" style="user-select: none; cursor: pointer;">
+			<input id="toggle-line-numbers" type="checkbox" checked>
+			Show line numbers
+		</label>
+	</p>
+
+	<pre><code class="language-typescript">// var foo => var FOO
+module.exports = function() {
+	return {
+		visitor: {
+			Identifier(path) {
+				path.node.name = path.node.name.toUpperCase();
+			}
+		}
+	};
+};</code></pre>
+
+	<script>
+		document
+			.querySelector('#toggle-line-numbers')
+			.addEventListener('change', event => {
+				document.querySelectorAll('.line-numbers-rows').forEach(elem => {
+					elem.style.display = event.target.checked ? 'block' : 'none';
+				});
+			});
+	</script>
+
+	<script src="prism.js"></script>
+</body>
+
+</html>
