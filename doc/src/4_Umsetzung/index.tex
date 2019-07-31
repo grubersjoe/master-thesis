@@ -4,6 +4,7 @@
 Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten Transpiler ausgeführt wurden, soll im Folgenden der Entwurf und die Details der Implementierung ausgeführt werden. In Abschnitt~\ref{subsec:js-transpilers} wurden bereits die verbreitetsten Werkzeuge zur Transformation von JavaScript-Quelltexten ausführlich vorgestellt und verglichen. Auf Basis dieser Gegenüberstellung wurde schließlich Babel~\autocite{BABEL} als Grundlage der vorliegenden Umsetzung des Transpilers von Flow nach TypeScript gewählt.
 
 \section{Software-Architektur}
+\label{sec:software-architecture}
 % \subsection{Konzeptioneller Aufbau des Transpilers}
 
 Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen. Bevor auf Einzelheiten der Umsetzung näher eingegangen wird, soll zunächst der grundsätzliche Aufbau der Anwendung skizziert werden. Abbildung~\ref{fig:architecture-overview} verschafft einen Überblick über die verschiedenen Komponenten des Systems und deren Beziehung zueinander.
@@ -11,27 +12,53 @@ Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist des
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.92\textwidth]{src/4_Umsetzung/fig/architecture-overview.pdf}
-	\caption{Überblick über Komponenten des Transpilers}
+	\caption{Überblick über die Komponenten des Transpilers}
 	\label{fig:architecture-overview}
 \end{figure}
 
-Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen. Die zweite Komponente ist ein Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts mittels Babel, indem das vorliegende Plugin geladen und auf die Eingabe angewendet wird. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
+Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen. Die zweite Komponente ist ein Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts durch Babel. Hierfür wird das vorliegende Plugin geladen und dieses auf die Eingabe angewendet. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
 
-Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums des Eingabe-Programms, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel können so alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt werden. Dabei kann es während der Verarbeitung der Knoten zu rekursiven Aufrufen weiterer Besucher und Konverter kommen. In einigen Fällen liegen Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich beinhaltet das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Plugin-Komponenten überprüfen.
+Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums der Eingabe, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel können alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt werden. Dabei kann es während der Verarbeitung der Knoten zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich beinhaltet das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Plugin-Komponenten überprüfen.
 
 \section{Entwicklungsprozess}
 
-\subsection{Statische Typisierung des Transpilers}
+\subsection{Statische Typisierung des Babel-Plugins}
 
 Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
 
 \subsection{Testgetriebene Entwicklung}
 
-Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits vor dessen Umsetzung geschrieben werden müssen~\autocite{KENT:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig spezifiziert wurden. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features überprüfen, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
+Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits vor dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig spezifiziert wurden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features überprüfen, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
+% TODO: Refactoring?tab:cli-options
 
-Der Testaufbau wurde wie folgt konzipiert: Pro Testfall wird je eine Eingabe- und eine Ausgabe-Datei angelegt. Die Eingabedatei beinhaltet dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabedatei enthält den äquivalenten, manuell übersetzten TypeScript-Code. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung spezifiziert werden.
+Der Testaufbau wurde wie folgt konzipiert: Pro Testfall wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabedatei enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabedatei den äquivalenten, manuell übersetzten TypeScript-Code. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung spezifiziert werden. Wären die Testfälle in Zeichenketten
 
-Zur Testdurchführung muss lediglich der Transpiler auf die Eingabedatei angewandt werden und der auf diese Weise generierte Code Zeile für Zeile exakt mit der erwarteten Ausgabe verglichen werden. Um dies zu erreichen wurde ein Skript geschrieben, welches ein Verzeichnis mit beliebig tief verschachtelten Unterverzeichnissen mit Fixture-Dateien einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durchführt. Zur Ausführung der Assertionen wurde das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} gewählt.
+Zur Testdurchführung muss lediglich der Transpiler auf die Eingabedatei angewandt werden und der auf diese Weise generierte Code Zeile für Zeile exakt mit der erwarteten Ausgabe verglichen werden. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Abbildung~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
+
+\bigskip
+\begin{listing}[htbp]
+  \begin{textcode}
+  tests/fixtures
+  ├── formatting
+  │   ├── comments
+  │   │   ├── input.js
+  │   │   └── output.tsx
+  │   └── index.test.ts
+  └── types
+      ├── any
+      │   ├── input.js
+      │   └── output.ts
+      ├── …
+      ├── utility
+      │   ├── call
+      │   │   ├── input.js
+      │   │   └── output.ts
+      └── index.test.ts
+  \end{textcode}
+  \caption{Verzeichnis-Struktur der Fixture-Tests}
+  \captionsetup{justification=raggedright,singlelinecheck=false}
+  \label{CODE:FIXTURE_TESTS}
+\end{listing}
 
 \section{Implementierung als Babel-Plugin}
 \subsection{Überblick}
@@ -56,16 +83,42 @@ Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ab
 
 \subsection{Weitere Optimierungs-Routinen}
   \subsubsection{Übersetzung gängiger Typimporte}
-  \subsubsection{Konvertierung von Class Decorators}
+  \subsubsection{Konvertierung von Klassendekoratoren}
+  \label{subsec:class-decorators}
 
 Mapping der Importe (verschiedene Typnamen in Flow und TS), Umwandlung der Decorators usw.
 
 \section{Erweiterung als Kommandozeilenprogramm}
 
-Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse zu verarbeiten (Stapelverarbeitung), ist eine Erweiterung als Kommandozeilenprogramm naheliegend. Hierdurch können beliebige Dateien und Verzeichnisse eingelesen und deren Übersetzung durch verschiedene Optionen flexibel gesteuert werden. Wie eingangs erwähnt benutzt die Anwendung intern das Babel-Plugin, um die Transpilierung der Flow-Quelltexte nach TypeScript durchzuführen. Aufgaben des Programms sind das Einlesen der Eingabe, die Delegation dieser an das Babel-Plugin, die Formatierung des generierten TypeScript-Codes und schließlich die Ausgabe desselben.
-% unter Berücksichtigung der gesetzten Optionen.
+Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse zu verarbeiten (Stapelverarbeitung), ist eine Erweiterung als Kommandozeilenprogramm sinnvoll. Hierdurch können beliebige Dateien und Verzeichnisse eingelesen und deren Übersetzung durch verschiedene Optionen flexibel gesteuert werden. Wie bereits in Abschnitt~\ref{sec:software-architecture} erwähnt benutzt die Konsolenanwendung intern das Babel-Plugin, um die Transpilierung der Flow-Quelltexte nach TypeScript durchzuführen. Aufgaben des Programms sind damit das Einlesen der Eingabe, die Delegation dieser an das Babel-Plugin, die Formatierung des generierten TypeScript-Codes und schließlich die Ausgabe desselben.
+Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt und kann durch das Paketsystem von Node.js installiert werden\footnote{Siehe~\autocite{REFLOW_GITHUB} für detaillierte Installations-Anweisungen.}. Tabelle~\ref{tab:cli-options} listet die verschiedenen Kommandozeile-Optionen des Programms.
 
-Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt. Tabelle~\ref{tab:cli-options} listet die verschiedenen Optionen, welche auf der Kommandozeile gesetzt werden können.
+\bigskip
+\begin{table}[tbh]
+  \small
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \midrule
+    \textbf{Option} & \textbf{Beschreibung} \\
+    \midrule
+    \smallskip
+    \texttt{-V -{}-version} & Versionsnummer anzeigen. \\
+    \smallskip
+    \texttt{-d -{}-dry-run} & Testlauf: Generierten TypeScript-Code auf Standardausgabe schreiben statt in Dateien.\\
+    \smallskip
+    \texttt{-e -{}-exclude-dirs <pattern ...>} & Kommaseparierte Liste von Verzeichnissen, die von der Transpilierung rekursiv ausgeschlossen werden sollen. \\
+    \smallskip
+    \texttt{-i -{}-include-pattern <pattern>} & Wildcard-Muster (\textit{glob patterns}) für Eingabedateien. \\
+    \smallskip
+    \texttt{-r -{}-replace} & Originaldateien (Flow) mit generierten TypeScript-Dateien ersetzen, statt diese beizubehalten. \\
+    \smallskip
+    \texttt{-D -{}-replace-decorators} & Klassendekoratoren durch verschachtelte Funktionsaufrufe ersetzen (vgl. Abschnitt~\ref{subsec:class-decorators} für Hintergrund). \\
+    \smallskip
+    \texttt{-h -{}-help} & Hilfe anzeigen. \\
+    \midrule
+  \end{tabularx}
+  \caption{Optionen des Kommandozeilenprogramms}
+  \label{tab:cli-options}
+\end{table}
 
 % Das Kommandozeilenprogramm wurde in TypeScript geschrieben und kann nach Kompilierung nach JavaScript durch Node.js ausgeführt werden. Es kann wie folgt benutzt werden:
 

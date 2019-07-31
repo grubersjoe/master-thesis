@@ -10,7 +10,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
 \subsubsection{Basistypen}
 
-\begin{table}
+\begin{table}[tbp]
+  \footnotesize
   \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
     \textbf{Basistyp}         & \textbf{Beispiel}                        \\
@@ -49,7 +50,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
 \subsubsection{Hilfstypen}
 
-\begin{table}
+\begin{table}[tbp]
+  \footnotesize
   \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
     \textbf{Hilfstyp}   & \textbf{Beispiel}               \\
@@ -82,7 +84,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
 \subsubsection{Typ-Importe und -Exporte}
 
-\begin{table}
+\begin{table}[tbp]
+  \footnotesize
   \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
     \textbf{Typ}               & \textbf{Beispiel}                      \\
@@ -146,7 +149,8 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
     \\
 
   \item \textbf{Transformation des Programms}\\*
-    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum mittels des \textit{Besucher}"=Entwurfsmusters\footnote{Dieses Entwurfsmuster (engl. \textit{Visitor-Pattern.}) gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four} (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben werden~\autocite[306\psqq]{GAMMA:1994}.} rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, durchgeführt werden können~\autocite[634\psq]{Freeman:2004}. Im vorliegenden Fall ermöglicht die Anwendung des Musters eine Untermenge der Knoten des Syntaxbaums individuell zu \enquote{besuchen} und dort die gewünschte Transformation des Programms umzusetzen.
+    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \textit{Besucher"=Entwurfsmusters} (engl. \textit{Visitor-Pattern.}) rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, durchgeführt werden können~\autocite[634\psq]{Freeman:2004}.
+    Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die gewünschte Untermenge der Knoten des Syntaxbaums individuell zu \enquote{besuchen}, um dort die Transformation des Programms umzusetzen.
     \\
 
   \item \textbf{Generierung des Ausgabequelltexts}\\*
@@ -158,7 +162,7 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, welche in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschnitt 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen werden in der Spezifikation des Parsers von Babel beschrieben~\autocite{BABEL_PARSER_SPEC}.
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschn. \textit{Identifier} in \autocite{BABEL_PARSER_SPEC} und Abschn. 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation des Parsers von Babel beschrieben~\autocite{BABEL_PARSER_SPEC}.
 
 % TODO: fertig machen
 
@@ -167,23 +171,6 @@ Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines se
   \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\textit{Identifier}) werden in Großbuchstaben umgewandelt.}
   \label{code:babel-plugin-definition}
 \end{figure}
-
-% \begin{listing}[htb]
-% \begin{jscode}
-% // var foo; => var FOO;
-% module.exports = function() {
-%   return {
-%     visitor: {
-%       Identifier(path) {
-%         path.node.name = path.node.name.toUpperCase();
-%       },
-%     }
-%   };
-% };
-% \end{jscode}
-% \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Name aller \textit{Identifier} werden in Großbuchstaben umgewandelt.}
-% \label{code:babel-plugin-definition}
-% \end{listing}
 
 % TODO: Was sind Pfade?
 

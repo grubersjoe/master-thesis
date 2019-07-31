@@ -29,7 +29,7 @@
 
 % Fonts
 \usepackage[tt=false]{libertine}
-\usepackage[scale=0.85,lining]{FiraMono}
+\usepackage[scale=0.8,lining]{FiraMono}
 
 % Set headings in serif as well
 \addtokomafont{disposition}{\rmfamily}
@@ -83,6 +83,7 @@
 \captionsetup{
   format=hang,
   justification=raggedright,
+  singlelinecheck=false,
 }
 
 % Better spacing in lists
@@ -94,16 +95,21 @@
 
 % Tables
 \usepackage{tabularx, booktabs}
-\renewcommand{\arraystretch}{1.2} % More space between table rows
+\renewcommand{\arraystretch}{1.25} % More space between table rows
 
 % Code listings (minted)
 \newcommand{\code}[1]{\small\texttt{#1}}
 \usepackage[outputdir=build]{minted}
 \usemintedstyle{perldoc}
+\newminted{text}{fontsize=\scriptsize,tabsize=4}
 \newminted{js}{fontsize=\footnotesize,tabsize=4}
 \newminted{ts}{fontsize=\footnotesize,tabsize=4}
 \renewcommand\listingscaption{Quelltext}
 \renewcommand\listoflistingscaption{Quelltextverzeichnis}
+
+% Box drawing characters
+\usepackage{pmboxdraw}
+
 
 % Quotes
 \usepackage{csquotes}
