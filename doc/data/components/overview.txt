@@ -1,0 +1,9 @@
+# Test devices                # Done
+- Spreadshirt (Notebook)
+- Spreadshirt (Desktop)
+- MacBook Pro 2013
+- MacBook Pro 2018
+- Jupiter (Desktop)
+
+TS:    ec76268  (when TS became `master`)
+Flow:  f7e6288  (the commit just before migrating to TS)

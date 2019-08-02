@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-SAMPLES=50
+SAMPLES=100
 
 if [ ! -d "$1" ]; then
   echo "Error. Specify the path to the project as first argument."
