@@ -18,7 +18,7 @@ Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist des
 
 Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen. Die zweite Komponente ist ein Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts durch Babel. Hierfür wird das vorliegende Plugin geladen und dieses auf die Eingabe angewendet. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
 
-Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums der Eingabe, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel können alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt werden. Dabei kann es während der Verarbeitung der Knoten zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich beinhaltet das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Plugin-Komponenten überprüfen.
+Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums der Eingabe, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel werden  alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt. Dabei kann es während der Verarbeitung zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen weiterhin Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich enthält das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Komponenten überprüfen.
 
 \section{Entwicklungsprozess}
 
@@ -28,12 +28,11 @@ Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
 
 \subsection{Testgetriebene Entwicklung}
 
-Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits vor dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig spezifiziert wurden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features überprüfen, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
-% TODO: Refactoring?tab:cli-options
+Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig konstruiert wurden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features betrachten, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
 
-Der Testaufbau wurde wie folgt konzipiert: Pro Testfall wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabedatei enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabedatei den äquivalenten, manuell übersetzten TypeScript-Code. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung spezifiziert werden. Wären die Testfälle in Zeichenketten
+Der Testaufbau wurde wie folgt konzipiert: Pro Modul wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabe enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabe den äquivalenten, manuell übersetzten TypeScript-Code. In den Dateien können beliebig viele Testfälle einer Kategorie spezifiziert werden, um ein bestimmtes Feature des Transpilers zu erproben. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung angelegt werden. Würden die Quelltexte als Zeichenketten innerhalb des Testprogramms angelegt werden, so wäre eine derartige Prüfung durch das statische Typsystem nicht möglich.
 
-Zur Testdurchführung muss lediglich der Transpiler auf die Eingabedatei angewandt werden und der auf diese Weise generierte Code Zeile für Zeile exakt mit der erwarteten Ausgabe verglichen werden. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Abbildung~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
+Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird auf die Eingabedatei angewandt und der auf diese Weise generierte Code wird anschließend Zeile für Zeile mit der erwarteten Ausgabe exakt verglichen. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Abbildung~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
 
 \bigskip
 \begin{listing}[htbp]
@@ -55,15 +54,17 @@ Zur Testdurchführung muss lediglich der Transpiler auf die Eingabedatei angewan
       │   │   └── output.ts
       └── index.test.ts
   \end{textcode}
-  \caption{Verzeichnis-Struktur der Fixture-Tests}
+  \caption{Fixture-Dateien zum Test des Transpilers}
   \captionsetup{justification=raggedright,singlelinecheck=false}
   \label{CODE:FIXTURE_TESTS}
 \end{listing}
 
 \section{Implementierung als Babel-Plugin}
-\subsection{Überblick}
 
-Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ablauf des Plugins anhand eines Aktivitätsdiagramms\footnote{Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf einer Aktivität innerhalb eines Software-Systems.}. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher-Funktionen definiert. Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um Babel-Plugins, die das Parsen der Syntax von Flow, JSX und vorgeschlagener ECMAScript-Spracherweiterungen.
+\subsection{Ablauf der Transpilierung}
+
+
+Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ablauf des Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf eines Prozesses innerhalb eines Software-Systems.
 
 % \footnote{Erweiterungen der ECMAScript-Spezifikation }
 % wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
@@ -75,7 +76,22 @@ Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ab
   \label{fig:activity-diagram-plugin}
 \end{figure}
 
-\subsection{Initialisierung des Plugins}
+% \subsection{Initialisierung des Plugins}
+
+Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher"=Funktionen definiert. Diese realisieren die Übersetzung von Flow nach TypeScript.
+Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX~\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.} und vorgeschlagenen ECMAScript-Erweiterungen\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierung-Prozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.} einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende vorgeschlagene JavaScript-Erweiterungen aktiviert:
+
+\begin{itemize}
+  \item Class field declarations for JavaScript~\autocite{ES_PROPOSAL:CLASS_FIELDS}
+  \item JavaScript decorators~\autocite{ES_PROPOSAL:DECORATORS}
+  \item Dynamic imports~\autocite{ES_PROPOSAL:DYNAMIC_IMPORTS}
+\end{itemize}
+
+Daraufhin beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabe"=datei: Jeder Knoten des Baums wird dabei zunächst \textit{betreten} und danach wieder \textit{verlassen}~\autocite{BABEL_HANDBOOK}. Knoten werden verlassen, wenn bei der Beschreitung eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene fortgesetzt wird. Im vorliegenden Fall werden die Besucher-Funktionen stets nach Betreten der Pfade aufgerufen.
+
+% die für alle Flow-Knotentypen implementiert wurden
+% Da die verschiedenen Knotenarten
+
 \subsection{Transpilierung der Flow-Typen}
   \subsubsection{Transpilierung der Basistypen}
   \subsubsection{Transpilierung der Hilfstypen}
@@ -135,15 +151,19 @@ Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram
 
 \section{Formatierung des Ausgabequelltexts}
 
-Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des resultierenden Ausgabecodes. Da Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Diese Information wäre innerhalb eines konkreten Syntaxbaums TODO}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der generierten Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach Anwendung des Babel-Plugins nicht präzise beibehalten wird. Die Leerzeilen und Kommentare tragen
-
-Zur Erfüllung der in Abschnitt~\ref{subsection:requirement:format} ausgeführten Anforderung, dass die Formatierung so
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Da Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach Anwendung des Babel-Plugins nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungs-Routine implementiert, um diese Vorgabe dennoch zu erfüllen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.6\textwidth]{src/4_Umsetzung/fig/activity-diagram-formatting.pdf}
+  \includegraphics[width=0.55\textwidth]{src/4_Umsetzung/fig/activity-diagram-formatting.pdf}
 	\caption[Aktivitätsdiagramm der Formatierung des Ausgabecodes]{Aktivitätsdiagramm der Formatierung des generierten Ausgabecodes.}
 	\label{fig:activity-diagram-formatting}
 \end{figure}
 
-Prettier, synchronisieren der Leerzeilen und Kommentare beschreiben usw.
+\medskip
+Der konzeptionellen Aufbau der Formatierungs-Funktion wird in Abbildung~\ref{fig:activity-diagram-formatting} dargestellt. Deren Idee ist simpel: Nachdem sowohl die Ein- als auch die Ausgabe in einen vergleichbaren, konsistenten Zustand überführt worden sind, können Leerzeilen und Kommentare einfach übertragen werden.
+Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Stil für Sprachen wie JavaScript, Type"=Script, HTML und weitere erzwingt~\autocite{SOFTWARE:PRETTIER}.
+Da das weitere Verfahren zeilenbasiert arbeitet, ist es entscheidend, dass die Ausdrücke und Anweisungen der Ein- und Ausgabe gleich Umgebrochen werden. So wird sicher gestellt, dass nur sich entsprechende Zeilen während des Vergleichs betrachtet werden. Versuche haben gezeigt, dass dies bei Anwendung von Prettier nicht in allen Situationen gewährleistet ist. Deshalb wurde das Werkzeug geringfügig modifiziert, um eine größere Konsistenz der Ausgabe von Prettier herzustellen.
+Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert und bestehende Leerzeilen an die entsprechende Position in der Ausgabe kopiert werden. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Zuletzt wird Prettier erneut auf die Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
+
+% Prettier, synchronisieren der Leerzeilen und Kommentare beschreiben usw.
