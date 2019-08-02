@@ -18,7 +18,7 @@ Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist des
 
 Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen. Die zweite Komponente ist ein Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Transpilierung des Quelltexts durch Babel. Hierfür wird das vorliegende Plugin geladen und dieses auf die Eingabe angewendet. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
 
-Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums der Eingabe, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel werden  alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt. Dabei kann es während der Verarbeitung zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen weiterhin Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung ggf. angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich enthält das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Komponenten überprüfen.
+Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums der Eingabe, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel werden  alle zugehörigen Pfadknoten durch Ausführung verschiedener Konverter in äquivalentes TypeScript übersetzt. Dabei kann es während der Verarbeitung zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen weiterhin Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung gegebenenfalls angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich enthält das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Komponenten überprüfen.
 
 \section{Entwicklungsprozess}
 
@@ -107,7 +107,13 @@ Mapping der Importe (verschiedene Typnamen in Flow und TS), Umwandlung der Decor
 \section{Erweiterung als Kommandozeilenprogramm}
 
 Aufgrund der in Abschnitt~\ref{subsection:requirement:batch-processing} dargelegten Anforderung, dass der Transpiler in der Lage sein muss gesamte Projektverzeichnisse zu verarbeiten (Stapelverarbeitung), ist eine Erweiterung als Kommandozeilenprogramm sinnvoll. Hierdurch können beliebige Dateien und Verzeichnisse eingelesen und deren Übersetzung durch verschiedene Optionen flexibel gesteuert werden. Wie bereits in Abschnitt~\ref{sec:software-architecture} erwähnt benutzt die Konsolenanwendung intern das Babel-Plugin, um die Transpilierung der Flow-Quelltexte nach TypeScript durchzuführen. Aufgaben des Programms sind damit das Einlesen der Eingabe, die Delegation dieser an das Babel-Plugin, die Formatierung des generierten TypeScript-Codes und schließlich die Ausgabe desselben.
-Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt und kann durch das Paketsystem von Node.js installiert werden\footnote{Siehe~\autocite{REFLOW_GITHUB} für detaillierte Installations-Anweisungen.}. Tabelle~\ref{tab:cli-options} listet die verschiedenen Kommandozeile-Optionen des Programms.
+
+Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflow} benannt. Das Werkzeug kann durch das Paketsystem von Node.js installiert werden und anschließend wie folgt aufgerufen werden\footnote{Siehe~\autocite{REFLOW_GITHUB} für detaillierte Installations-Anweisungen.}. Tabelle~\ref{tab:cli-options} listet alle Kommandozeilenoptionen auf und beschreibt deren Zweck.
+
+{
+  \texttt{reflow [OPTIONEN]… <DATEIEN ODER VERZEICHNISSE…>}\\
+  Beispiel: \texttt{reflow -{}-dry-run -{}-include-pattern "{}*/.js"{} src/}
+}
 
 \bigskip
 \begin{table}[tbh]
@@ -123,7 +129,7 @@ Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt und kann durch das
     \smallskip
     \texttt{-e -{}-exclude-dirs <pattern ...>} & Kommaseparierte Liste von Verzeichnissen, die von der Transpilierung rekursiv ausgeschlossen werden sollen. \\
     \smallskip
-    \texttt{-i -{}-include-pattern <pattern>} & Wildcard-Muster (\textit{glob patterns}) für Eingabedateien. \\
+    \texttt{-i -{}-include-pattern <pattern>} & Wildcard-Muster für Eingabedateien bei Angabe von Verzeichnissen (Standardwert: \texttt{"**/*.{js,jsx}"}). \\
     \smallskip
     \texttt{-r -{}-replace} & Originaldateien (Flow) mit generierten TypeScript-Dateien ersetzen, statt diese beizubehalten. \\
     \smallskip
@@ -132,17 +138,16 @@ Das Werkzeug wurde als ausführbares Node.js-Skript umgesetzt und kann durch das
     \texttt{-h -{}-help} & Hilfe anzeigen. \\
     \midrule
   \end{tabularx}
-  \caption{Optionen des Kommandozeilenprogramms}
+  \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow})}
   \label{tab:cli-options}
 \end{table}
 
-% Das Kommandozeilenprogramm wurde in TypeScript geschrieben und kann nach Kompilierung nach JavaScript durch Node.js ausgeführt werden. Es kann wie folgt benutzt werden:
-
-
-
-Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms.
+Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm der Anwendung. Als Erstes werden die Kommandozeilenargumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaub sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird das Programm mit einer Fehlermeldung beendet.
+Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt (vgl. Option \texttt{include-pattern}).
+Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet.
 
 \begin{figure}[tbp]
+  % TODO: das Ding repräsentiert nicht das tatsächliche Programm!
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-cli.pdf}
 	\caption[Aktivitätsdiagramm des Kommandozeilenprogramms]{Aktivitätsdiagramm des Kommandozeilenprogramms. Vgl. eingebettete Diagramme~\ref{fig:activity-diagram-plugin} \enquote{Eingabe transpilieren} und~\ref{fig:activity-diagram-formatting} \enquote{Ausgabe formatieren}.}
@@ -151,9 +156,9 @@ Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram
 
 \section{Formatierung des Ausgabequelltexts}
 
-Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Da Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach Anwendung des Babel-Plugins nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungs-Routine implementiert, um diese Vorgabe dennoch zu erfüllen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen.
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Transpilierung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} (\enquote{\textit{Zeilen beibehalten}}) des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungs-Routine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Alle Kommentare werden als Konsequenz während der Transpilierung aus dem Quelltext entfernt. Diese werden im Nachhinein manuell eingefügt, um eine korrekte Positionierung zu erzielen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}).
 
-\begin{figure}[htbp]
+\begin{figure}[htb]
   \centering
   \includegraphics[width=0.55\textwidth]{src/4_Umsetzung/fig/activity-diagram-formatting.pdf}
 	\caption[Aktivitätsdiagramm der Formatierung des Ausgabecodes]{Aktivitätsdiagramm der Formatierung des generierten Ausgabecodes.}
@@ -161,9 +166,12 @@ Eine weitere Problematik, die sich während der Entwicklung des Transpilers geze
 \end{figure}
 
 \medskip
-Der konzeptionellen Aufbau der Formatierungs-Funktion wird in Abbildung~\ref{fig:activity-diagram-formatting} dargestellt. Deren Idee ist simpel: Nachdem sowohl die Ein- als auch die Ausgabe in einen vergleichbaren, konsistenten Zustand überführt worden sind, können Leerzeilen und Kommentare einfach übertragen werden.
-Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Stil für Sprachen wie JavaScript, Type"=Script, HTML und weitere erzwingt~\autocite{SOFTWARE:PRETTIER}.
-Da das weitere Verfahren zeilenbasiert arbeitet, ist es entscheidend, dass die Ausdrücke und Anweisungen der Ein- und Ausgabe gleich Umgebrochen werden. So wird sicher gestellt, dass nur sich entsprechende Zeilen während des Vergleichs betrachtet werden. Versuche haben gezeigt, dass dies bei Anwendung von Prettier nicht in allen Situationen gewährleistet ist. Deshalb wurde das Werkzeug geringfügig modifiziert, um eine größere Konsistenz der Ausgabe von Prettier herzustellen.
-Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert und bestehende Leerzeilen an die entsprechende Position in der Ausgabe kopiert werden. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Zuletzt wird Prettier erneut auf die Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
+Der konzeptionellen Aufbau der Formatierungs-Funktion wird in Abbildung~\ref{fig:activity-diagram-formatting} dargestellt. Deren Idee ist simpel: Nachdem sowohl die Ein- als auch die Ausgabe in einen vergleichbaren, konsistenten Zustand überführt worden sind, können Leerzeilen und Kommentare aus dem ursprünglichen Quelltext einfach übertragen werden. Konsistent bedeutet, dass sämtliche Ausdrücke und Anweisungen innerhalb beider Quelltexte die gleiche Zahl von Zeilen vereinnahmen, d.~h. dass diese gleich umgebrochen werden. Diese Vorassetzung muss insbesondere auch für alle Flow-Konstrukte, nach deren Übersetzung nach TypeScript, gelten.
+Grund für die Herstellung dieser Eigenschaft ist, dass das weitere Verfahren zeilenbasiert arbeitet, um die Originalformatierung in die Ausgabe zu übernehmen
+Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Programmierstil für Sprachen wie JavaScript, TypeScript, HTML und weitere erzwingt~\autocite{SOFTWARE:PRETTIER}.
+% Hierdurch wird sicher gestellt, dass nur sich entsprechende Zeilen während des Vergleichs betrachtet werden.
+% Da das weitere Verfahren zeilenbasiert arbeitet, ist es entscheidend, dass die Ausdrücke und Anweisungen der Ein- und Ausgabe gleich umgebrochen werden.
+Versuche haben gezeigt, dass die Ein- und Ausgabe bei Anwendung von Prettier aufgrund unterschiedlicher Syntax nicht in allen Situationen gleich umgebrochen wird. Deshalb wurde das Werkzeug geringfügig modifiziert, um eine größere Konsistenz der Ausgabe von Prettier herzustellen\footnote{Siehe \url{https://github.com/grubersjoe/prettier-reflow}.}.
+Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert werden, um in jedem Schleifendurchlauf zu prüfen, ob eine Leerzeile vorliegt. Gegebenenfalls wird diese an die entsprechende Position in der Ausgabe kopiert. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Auf diese Weise werden nach und nach alle Leerzeilen und Kommentare übertragen. Zuletzt wird Prettier erneut auf die so formatierte Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
 
 % Prettier, synchronisieren der Leerzeilen und Kommentare beschreiben usw.
