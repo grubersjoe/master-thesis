@@ -22,49 +22,58 @@ Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster 
 
 \section{Entwicklungsprozess}
 
-\subsection{Statische Typisierung des Babel-Plugins}
-
-Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
-
 \subsection{Testgetriebene Entwicklung}
 
-Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{Extreme Programming}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig konstruiert wurden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features betrachten, jedoch die ursprünglichen, möglicherweise abweichenden Anforderungen unzureichend abbilden.
+Die korrekte Übersetzung der Flow-Typen ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsection:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Regressionen während der Entwicklungphase frühzeitig festzustellen. Zur Gewährleistung dieser Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{\textit{Extreme Programming}}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Sicherstellung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig konstruiert werden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features betrachten, jedoch nicht den ursprünglichen, möglicherweise abweichenden Anforderungen gerecht werden.
 
 Der Testaufbau wurde wie folgt konzipiert: Pro Modul wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabe enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabe den äquivalenten, manuell übersetzten TypeScript-Code. In den Dateien können beliebig viele Testfälle einer Kategorie spezifiziert werden, um ein bestimmtes Feature des Transpilers zu erproben. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung angelegt werden. Würden die Quelltexte als Zeichenketten innerhalb des Testprogramms angelegt werden, so wäre eine derartige Prüfung durch das statische Typsystem nicht möglich.
 
-Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird auf die Eingabedatei angewandt und der auf diese Weise generierte Code wird anschließend Zeile für Zeile mit der erwarteten Ausgabe exakt verglichen. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Abbildung~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
+Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird auf die Eingabedatei angewandt und der auf diese Weise generierte Code wird anschließend Zeile für Zeile mit der erwarteten Ausgabe exakt verglichen. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Quelltext~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
 
 \bigskip
 \begin{listing}[htbp]
   \begin{textcode}
   tests/fixtures
-  ├── formatting
-  │   ├── comments
-  │   │   ├── input.js
-  │   │   └── output.tsx
-  │   └── index.test.ts
   └── types
       ├── any
-      │   ├── input.js
-      │   └── output.ts
+      │     ├── input.js
+      │     └── output.ts
       ├── …
-      ├── utility
-      │   ├── call
-      │   │   ├── input.js
-      │   │   └── output.ts
-      └── index.test.ts
+      └── utility
+          └── call
+              ├── input.js
+              └── output.ts
   \end{textcode}
-  \caption{Fixture-Dateien zum Test des Transpilers}
+  \caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen}
   \captionsetup{justification=raggedright,singlelinecheck=false}
   \label{CODE:FIXTURE_TESTS}
 \end{listing}
+
+% TODO: check number of tests
+Während der Entwicklung des Transpilers wurden nach und nach Modultests für alle Funktionen des Programms angelegt. Überprüft wird dabei die Übersetzung aller Flow-Typen, die Korrektheit weiterer Optimierungen und die Formatierung der Ausgabe. Weiterhin wurden Tests zur Erprobung des Kommandozeilenprogramms und der allgemeinen Hilfsfunktionen geschrieben. Damit Regression während der fortlaufenden Entwicklung unmittelbar festgestellt werden, werden die Tests nach Einchecken von Änderungen in das Versionverwaltungssystem automatisch ausgeführt (kontinuierliche Integration). Insgesamt sind 972 Testfälle entstanden und es wurde eine Testabdeckung von 94,4\% erreicht.
+% \footnote{Anmerkung: Diese hohe Zahl ist darin begründet, dass größtenteils Fixture-Tests eingesetzt wurden und jeder Zeilenvergleich hierbei als ein Test betrachtet wird.}
+
+\subsection{Statische Typisierung des Babel-Plugins}
+
+% Ein weiterer Aspekt zur Vebesserung der
+
+Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
 
 \section{Implementierung als Babel-Plugin}
 
 \subsection{Ablauf der Transpilierung}
 
 
-Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ablauf des Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf eines Prozesses innerhalb eines Software-Systems.
+Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ablauf des Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen den Ablauf von Prozessen innerhalb eines Software-Systems.
+% \subsection{Initialisierung des Plugins}
+Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher"=Funktionen definiert. Diese realisieren die Übersetzung von Flow nach TypeScript.
+Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX~\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.} und vorgeschlagenen ECMAScript-Erweiterungen\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierung-Prozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.} einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende vorgeschlagene JavaScript-Erweiterungen aktiviert:
+
+\begin{itemize}
+  \item Class field declarations for JavaScript~\autocite{ES_PROPOSAL:CLASS_FIELDS}
+  \item JavaScript decorators~\autocite{ES_PROPOSAL:DECORATORS}
+  \item Dynamic imports~\autocite{ES_PROPOSAL:DYNAMIC_IMPORTS}
+\end{itemize}
 
 % \footnote{Erweiterungen der ECMAScript-Spezifikation }
 % wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
@@ -76,23 +85,15 @@ Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den detaillierten Ab
   \label{fig:activity-diagram-plugin}
 \end{figure}
 
-% \subsection{Initialisierung des Plugins}
-
-Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen auf Besucher"=Funktionen definiert. Diese realisieren die Übersetzung von Flow nach TypeScript.
-Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Bei diesen Abhängigkeiten handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX~\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.} und vorgeschlagenen ECMAScript-Erweiterungen\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierung-Prozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.} einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende vorgeschlagene JavaScript-Erweiterungen aktiviert:
-
-\begin{itemize}
-  \item Class field declarations for JavaScript~\autocite{ES_PROPOSAL:CLASS_FIELDS}
-  \item JavaScript decorators~\autocite{ES_PROPOSAL:DECORATORS}
-  \item Dynamic imports~\autocite{ES_PROPOSAL:DYNAMIC_IMPORTS}
-\end{itemize}
-
-Daraufhin beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabe"=datei: Jeder Knoten des Baums wird dabei zunächst \textit{betreten} und danach wieder \textit{verlassen}~\autocite{BABEL_HANDBOOK}. Knoten werden verlassen, wenn bei der Beschreitung eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene fortgesetzt wird. Im vorliegenden Fall werden die Besucher-Funktionen stets nach Betreten der Pfade aufgerufen.
+Daraufhin beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabedatei: Jeder Knoten des Baums wird dabei zunächst \textit{betreten} und danach wieder \textit{verlassen}~\autocite{BABEL_HANDBOOK}. Knoten werden verlassen, wenn bei der Beschreitung eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene fortgesetzt wird. Im vorliegenden Fall werden die Besucher-Funktionen stets nach Betreten der Pfade aufgerufen.
 
 % die für alle Flow-Knotentypen implementiert wurden
 % Da die verschiedenen Knotenarten
 
 \subsection{Transpilierung der Flow-Typen}
+
+Im Folgenden soll nun detailierter auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Diese realisieren die Transformation der Flow-Typannotationen nach TypeScript. Aufgrund der großen Zahl von Basis- und Hilfstypen können nicht alle Übersetzungen im Detail betrachtet werden, da dies den Umfang der Arbeit überschreiten würde. Es wurden daher jeweils einige repräsentative Beispiele ausgewählt anhand derer das Prinzip der Knotentransformation erläutert wird.
+
   \subsubsection{Transpilierung der Basistypen}
   \subsubsection{Transpilierung der Hilfstypen}
   \subsubsection{Transpilierung der Deklarationen}
