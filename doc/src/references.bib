@@ -25,14 +25,14 @@
 }
 
 @article{OLAN:2003,
-  title       = {Unit testing: test early, test often},
-  author      = {Olan, Michael},
-  journal     = {Journal of Computing Sciences in Colleges},
-  volume      = {19},
-  number      = {2},
-  pages       = {319--328},
-  year        = {2003},
-  publisher   = {Consortium for Computing Sciences in Colleges}
+  author       = {Olan, Michael},
+  publisher    = {Consortium for Computing Sciences in Colleges},
+  date         = {2003},
+  journaltitle = {Journal of Computing Sciences in Colleges},
+  number       = {2},
+  pages        = {319--328},
+  title        = {Unit testing: test early, test often},
+  volume       = {19},
 }
 
 @article{paulson:dynamiclanguages,
@@ -82,12 +82,29 @@
   volume       = {14},
 }
 
+@book{BECK:EXTREME_PROGRAMMING,
+  author    = {Beck, Kent},
+  location  = {Reading, Mass. [u.a.]},
+  publisher = {Addison-Wesley},
+  date      = {2000},
+  isbn      = {9780201616415},
+  series    = {The XP Series},
+  title     = {Extreme Programming Explained: Embrace Change},
+}
+
+@book{BECK:TDD,
+  author    = {Beck, Kent},
+  publisher = {Addison-Wesley Professional},
+  date      = {2003},
+  title     = {Test-driven development: by example},
+}
+
 @book{CROCKFORD:JS_GOOD_PARTS,
- author     = {Crockford, Douglas},
- title      = {JavaScript: The Good Parts},
- year       = {2008},
- isbn       = {0596517742},
- publisher  = {O'Reilly Media, Inc.},
+  author    = {Crockford, Douglas},
+  publisher = {O'Reilly Media, Inc.},
+  date      = {2008},
+  isbn      = {0596517742},
+  title     = {JavaScript: The Good Parts},
 }
 
 @book{Freeman:2004,
@@ -108,28 +125,23 @@
   title     = {Design Patterns: Elements of Reusable Object-Oriented Software},
 }
 
-@book{BECK:EXTREME_PROGRAMMING,
-  author    = {Beck, Kent},
-  location  = {Reading, Mass. [u.a.]},
-  publisher = {Addison-Wesley},
-  date      = {2000},
-  isbn      = {9780201616415},
-  series    = {The XP Series},
-  title     = {Extreme Programming Explained: Embrace Change},
-}
-
-@book{BECK:TDD,
-  title={Test-driven development: by example},
-  author={Beck, Kent},
-  year={2003},
-  publisher={Addison-Wesley Professional}
-}
-
 @book{MITCHELL:CONCEPTS,
-  title={Concepts in programming languages},
-  author={Mitchell, John C and Apt, Krzysztof},
-  year={2003},
-  publisher={Cambridge University Press}
+  author    = {Mitchell, John C and Apt, Krzysztof},
+  publisher = {Cambridge University Press},
+  date      = {2003},
+  title     = {Concepts in programming languages},
+}
+
+@inproceedings{DOR:SOFTWARE_TEST,
+  author    = {Nir, Dor and Tyszberowicz, Shmuel and Yehudai, Amiram},
+  editor    = {Yorav, Karen},
+  location  = {Berlin, Heidelberg},
+  publisher = {Springer Berlin Heidelberg},
+  booktitle = {Hardware and Software: Verification and Testing},
+  date      = {2008},
+  isbn      = {978-3-540-77966-7},
+  pages     = {218--234},
+  title     = {Locating Regression Bugs},
 }
 
 @inproceedings{PRADEL:2015,
@@ -228,11 +240,11 @@
 }
 
 @manual{HASKELL,
-  author       = {Marlow, Simon},
-  url          = {https://www.haskell.org/definition/haskell2010.pdf},
-  date         = {2010},
-  title        = {Haskell 2010},
-  urldate      = {2019-07-31},
+  author  = {Marlow, Simon},
+  url     = {https://www.haskell.org/definition/haskell2010.pdf},
+  date    = {2010},
+  title   = {Haskell 2010},
+  urldate = {2019-07-31},
 }
 
 @manual{OMG:UML,
@@ -245,12 +257,42 @@
 }
 
 @manual{TYPESCRIPT_SPEC,
-  author       = {Microsoft Corporation},
+  author       = {Corporation, Microsoft},
   organization = {Microsoft Corporation},
   url          = {https://github.com/microsoft/TypeScript/raw/master/doc/TypeScript%20Language%20Specification.pdf},
   date         = {2016-01},
   edition      = {1.8},
   title        = {TypeScript -- Language Specification},
+}
+
+@misc{ES_PROPOSAL:CLASS_FIELDS,
+  author       = {Ehrenberg, Daniel and Morrison, Jeff},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-class-fields},
+  date         = {2019},
+  note         = {Stage 3},
+  title        = {Class field declarations for JavaScript},
+  urldate      = {2019-08-02},
+}
+
+@misc{ES_PROPOSAL:DECORATORS,
+  author       = {Ehrenberg, Daniel},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-decorators},
+  date         = {2019},
+  note         = {Stage 2},
+  title        = {JavaScript Decorators},
+  urldate      = {2019-08-02},
+}
+
+@misc{ES_PROPOSAL:DYNAMIC_IMPORTS,
+  author       = {Denicola, Domenic},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-dynamic-import},
+  date         = {2019},
+  note         = {Stage 4},
+  title        = {import()},
+  urldate      = {2019-08-02},
 }
 
 @misc{LICENSE:MIT,
@@ -261,50 +303,12 @@
   urldate      = {2019-07-01},
 }
 
-@misc{ES_PROPOSAL:CLASS_FIELDS,
-  organization = {Ecma International, Technical Committee 39},
-  author       = {Ehrenberg, Daniel and Morrison, Jeff},
-  url          = {https://github.com/tc39/proposal-class-fields},
-  date         = {2019},
-  title        = {Class field declarations for JavaScript},
-  urldate      = {2019-08-02},
-  note         = {Stage 3},
-}
-
-@misc{ES_PROPOSAL:DECORATORS,
-  organization = {Ecma International, Technical Committee 39},
-  author       = {Ehrenberg, Daniel},
-  url          = {https://github.com/tc39/proposal-decorators},
-  date         = {2019},
-  title        = {JavaScript Decorators},
-  urldate      = {2019-08-02},
-  note         = {Stage 2},
-}
-
-@misc{ES_PROPOSAL:DYNAMIC_IMPORTS,
-  organization = {Ecma International, Technical Committee 39},
-  author       = {Denicola, Domenic},
-  url          = {https://github.com/tc39/proposal-dynamic-import},
-  date         = {2019},
-  title        = {import()},
-  urldate      = {2019-08-02},
-  note         = {Stage 4},
-}
-
 @misc{WALDMANN:PPS,
-  organization  = {Hochschule für Technik, Wirtschaft und Kultur Leipzig},
-  author        = {Waldmann, Johannes},
-  title         = {Prinzipien von Programmiersprachen Vorlesung Wintersemester 2007 – 2018},
-  date          = {2019-01},
-  urldate       = {2019-07-31},
-}
-
-@online{BABEL:STATE_OF_BABEL,
-  author  = {Zhu, Henry},
-  url     = {https://babeljs.io/blog/2016/12/07/the-state-of-babel},
-  date    = {2016-12},
-  title   = {The State of Babel},
-  urldate = {2019-07-22},
+  author       = {Waldmann, Johannes},
+  organization = {Hochschule für Technik, Wirtschaft und Kultur Leipzig},
+  date         = {2019-01},
+  title        = {Prinzipien von Programmiersprachen Vorlesung Wintersemester 2007 – 2018},
+  urldate      = {2019-07-31},
 }
 
 @online{BABEL:GENERATOR,
@@ -315,12 +319,20 @@
   urldate = {2019-08-02},
 }
 
+@online{BABEL:STATE_OF_BABEL,
+  author  = {Zhu, Henry},
+  url     = {https://babeljs.io/blog/2016/12/07/the-state-of-babel},
+  date    = {2016-12},
+  title   = {The State of Babel},
+  urldate = {2019-07-22},
+}
+
 @online{CORNELL:STRONG_TYPING,
   organization = {Cornell University - Department of Computer Science},
-  url     = {http://www.cs.cornell.edu/courses/cs1130/2012sp/1130selfpaced/module1/module1part4/strongtyping.html},
-  date    = {2012},
-  title   = {CS1130. Transition to OO programming.},
-  urldate = {2019-07-31},
+  url          = {http://www.cs.cornell.edu/courses/cs1130/2012sp/1130selfpaced/module1/module1part4/strongtyping.html},
+  date         = {2012},
+  title        = {CS1130. Transition to OO programming.},
+  urldate      = {2019-07-31},
 }
 
 @online{CROCKFORD:JS_MISUNDERSTOOD,
@@ -387,14 +399,6 @@
   urldate = {2019-07-15},
 }
 
-@online{REFLOW_GITHUB,
-  author  = {Gruber, Jonathan},
-  url     = {https://github.com/grubersjoe/reflow},
-  date    = {2019},
-  title   = {Reflow: Babel plugin to transpile a Flow typed codebase to TypeScript},
-  urldate = {2019-07-31},
-}
-
 @online{OREILLY:JS_HOW_DID_WE_GET_THERE,
   author  = {Champeon, Steve},
   url     = {https://web.archive.org/web/20160719020828/http://archive.oreilly.com/pub/a/javascript/2001/04/06/js_history.html},
@@ -419,12 +423,28 @@
   urldate      = {2019-07-18},
 }
 
+@online{REFLOW_GITHUB,
+  author  = {Gruber, Jonathan},
+  url     = {https://github.com/grubersjoe/reflow},
+  date    = {2019},
+  title   = {Reflow: Babel plugin to transpile a Flow typed codebase to TypeScript},
+  urldate = {2019-07-31},
+}
+
 @online{RUBY,
   author  = {Matsumoto, Yukihiro},
   url     = {https://www.ruby-lang.org/en/},
   date    = {2019},
   title   = {Ruby Programming Language},
   urldate = {2019-07-18},
+}
+
+@online{stackoverflow:survey:2019,
+  author  = {Inc, Stack Exchange},
+  url     = {https://insights.stackoverflow.com/survey/2019},
+  date    = {2019},
+  title   = {Stack Overflow Annual Developer Survey},
+  urldate = {2019-06-03},
 }
 
 @online{TC39_COMMITTEE,
@@ -443,14 +463,22 @@
   urldate = {2019-08-02},
 }
 
+@online{TYPESCRIPT_ONLINE,
+  author  = {Corporation, Microsoft},
+  url     = {https://www.typescriptlang.org},
+  date    = {2018},
+  title   = {TypeScript - JavaScript that scales},
+  urldate = {2019-03-22},
+}
+
 @software{BABEL,
   author   = {McKenzie, Sebastian and other contributors},
   url      = {https://babeljs.io/},
   date     = {2018},
   keywords = {software},
   title    = {Babel - The compiler for next generation JavaScript},
-  version  = {7.5},
   urldate  = {2019-03-22},
+  version  = {7.5},
 }
 
 @software{SOFTWARE:JEST,
@@ -459,38 +487,8 @@
   date     = {2019},
   keywords = {software},
   title    = {Jest - Delightful JavaScript Testing},
-  version  = {24.8},
   urldate  = {2019-07-30},
-}
-
-@software{SOFTWARE:PRETTIER,
-  author   = {Duailibe, Lucas},
-  url      = {https://prettier.io/},
-  date     = {2019},
-  keywords = {software},
-  title    = {Prettier · Opinionated Code Formatter},
-  version  = {1.18},
-  urldate  = {2019-08-02},
-}
-
-@software{SOFTWARE:NODEJS,
-  author   = {Foundation, Node.js},
-  url      = {https://nodejs.org},
-  date     = {2019},
-  keywords = {software},
-  title    = {Node.js},
-  version  = {12.6},
-  urldate  = {2019-06-04},
-}
-
-@software{SOFTWARE:REACT,
-  author   = {Inc., Facebook},
-  url      = {https://reactjs.org},
-  date     = {2019},
-  keywords = {software},
-  title    = {React - A JavaScript library for building user interfaces},
-  version  = {16.8},
-  urldate  = {2019-03-22},
+  version  = {24.8},
 }
 
 @software{SOFTWARE:JSX,
@@ -502,19 +500,33 @@
   urldate  = {2019-08-02},
 }
 
-@online{stackoverflow:survey:2019,
-  author  = {Inc, Stack Exchange},
-  url     = {https://insights.stackoverflow.com/survey/2019},
-  date    = {2019},
-  title   = {Stack Overflow Annual Developer Survey},
-  urldate = {2019-06-03},
+@software{SOFTWARE:NODEJS,
+  author   = {Foundation, Node.js},
+  url      = {https://nodejs.org},
+  date     = {2019},
+  keywords = {software},
+  title    = {Node.js},
+  urldate  = {2019-06-04},
+  version  = {12.6},
 }
 
-@online{TYPESCRIPT_ONLINE,
-  author  = {Microsoft Corporation},
-  url     = {https://www.typescriptlang.org},
-  date    = {2018},
-  title   = {TypeScript - JavaScript that scales},
-  urldate = {2019-03-22},
+@software{SOFTWARE:PRETTIER,
+  author   = {Duailibe, Lucas},
+  url      = {https://prettier.io/},
+  date     = {2019},
+  keywords = {software},
+  title    = {Prettier · Opinionated Code Formatter},
+  urldate  = {2019-08-02},
+  version  = {1.18},
+}
+
+@software{SOFTWARE:REACT,
+  author   = {Inc., Facebook},
+  url      = {https://reactjs.org},
+  date     = {2019},
+  keywords = {software},
+  title    = {React - A JavaScript library for building user interfaces},
+  urldate  = {2019-03-22},
+  version  = {16.8},
 }
 
