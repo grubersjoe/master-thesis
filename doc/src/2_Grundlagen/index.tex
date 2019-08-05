@@ -15,7 +15,7 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
   \footnotesize
   \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
-    \textbf{Basistyp}         & \textbf{Beispiel}                        \\
+    \libertineSB{Basistyp}     & \libertineSB{Beispiel}                   \\
     \midrule
     Array type                 & \texttt{Array<{}number>{}}               \\
     Boolean literal type       & \texttt{true}                            \\
@@ -45,7 +45,7 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     Void type                  & \texttt{void}                            \\
     \midrule
   \end{tabularx}
-  \caption{Basistypen von Flow~\autocite{FLOW_TYPE_ANNOTATIONS} mit Beispiel}
+  \caption{Flow Basistypen~\autocite{FLOW_TYPE_ANNOTATIONS} mit Beispiel}
   \label{tab:flow-base-types}
 \end{table}
 
@@ -53,31 +53,31 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
 \begin{table}[tbp]
   \footnotesize
-  \begin{tabularx}{\textwidth}{@{}ll@{}}
+  \begin{tabularx}{\textwidth}{@{}llX@{}}
     \midrule
-    \textbf{Hilfstyp}   & \textbf{Beispiel}               \\
+    \libertineSB{Hilfstyp}   & \libertineSB{Beispiel} &           \libertineSB{Anmerkung}  \\
     \midrule
-    Call                & \texttt{\$Call<F, T...>}        \\
-    Class               & \texttt{Class<T>}               \\
-    Difference          & \texttt{\$Diff<A, B>}           \\
-    Element type        & \texttt{\$ElementType<T, K>}    \\
-    Exact               & \texttt{\$Exact<T>}             \\
-    Existential type    & \texttt{*}                      \\
-    Keys                & \texttt{\$Keys<T>}              \\
-    None maybe type     & \texttt{\$NonMaybeType<T>}      \\
-    Object map          & \texttt{\$ObjMap<T, F>}         \\
-    Object map with key & \texttt{\$ObjMapi<T, F>}        \\
-    Property type       & \texttt{\$PropertyType<T, k>}   \\
-    ReadOnly            & \texttt{\$ReadOnly<T>}          \\
-    Rest                & \texttt{\$Rest<A, B>}           \\
-    Shape               & \texttt{\$Shape<T>}             \\
-    Tuple map           & \texttt{\$TupleMap<T, F>}       \\
-    Values              & \texttt{\$Values<T>}            \\
-    \sout{Subtype}      & \textit{veraltet}               \\
-    \sout{Supertype}    & \textit{veraltet}               \\
+    Call                & \texttt{\$Call<F, T...>}        &   \\
+    Class               & \texttt{Class<T>}               &   \\
+    Difference          & \texttt{\$Diff<A, B>}           &   \\
+    Element type        & \texttt{\$ElementType<T, K>}    &   \\
+    Exact               & \texttt{\$Exact<T>}             &   \\
+    Existential type    & \texttt{*}                      &   \\
+    Keys                & \texttt{\$Keys<T>}              &   \\
+    None maybe type     & \texttt{\$NonMaybeType<T>}      &   \\
+    \sout{Object map}   & \texttt{\$ObjMap<T, F>}         &   \textit{nicht implementiert} \\
+    \sout{Object map with key} & \texttt{\$ObjMapi<T, F>} &   \textit{nicht implementiert} \\
+    Property type       & \texttt{\$PropertyType<T, k>}   &   \\
+    ReadOnly            & \texttt{\$ReadOnly<T>}          &   \\
+    Rest                & \texttt{\$Rest<A, B>}           &   \\
+    Shape               & \texttt{\$Shape<T>}             &   \\
+    Tuple map           & \texttt{\$TupleMap<T, F>}       &   \\
+    Values              & \texttt{\$Values<T>}            &   \\
+    \sout{Subtype}      & \texttt{\$Subtype<T>}           &   \textit{nicht implementiert (veraltet)} \\
+    \sout{Supertype}    & \texttt{\$Supertype<T>}         &   \textit{nicht implementiert (veraltet)} \\
     \midrule
   \end{tabularx}
-  \caption{Flows Hilfstypen~\autocite{FLOW_UTILITY_TYPES} mit Beispiel}
+  \caption{Flow Hilfstypen~\autocite{FLOW_UTILITY_TYPES} mit Beispiel}
   \label{tab:flow-utility-types}
 \end{table}
 
@@ -89,13 +89,13 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
   \footnotesize
   \begin{tabularx}{\textwidth}{@{}ll@{}}
     \midrule
-    \textbf{Typ}               & \textbf{Beispiel}                      \\
+    \libertineSB{Typ}         & \libertineSB{Beispiel}                  \\
     \midrule
     \texttt{Type imports}     & \texttt{import type T from './types'}   \\
     \texttt{Type exports}     & \texttt{export type T = number | null}  \\
     \midrule
   \end{tabularx}
-  \caption{Weitere Sprachkonstrukte von Flow}
+  \caption{Flow Modultypen}
   \label{tab:flow-other-constructs}
 \end{table}
 
@@ -145,29 +145,28 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 % TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären!
 \begin{enumerate}
-  \item \textbf{Parsen des Eingabecodes}\\*
+  \item {\libertineSB Parsen des Eingabecodes}\\*
     Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert.
     \\
 
-  \item \textbf{Transformation des Programms}\\*
+  \item {\libertineSB Transformation des Programms}\\*
     Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \textit{Besucher"=Entwurfsmusters} (engl. \textit{Visitor-Pattern.}) rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, durchgeführt werden können~\autocite[634\psq]{Freeman:2004}.
     Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die gewünschte Untermenge der Knoten des Syntaxbaums individuell zu adressieren, um dort die Transformation des Programms umzusetzen.
     \\
 
-  \item \textbf{Generierung des Ausgabequelltexts}\\*
+  \item {\libertineSB Generierung des Ausgabequelltexts}\\*
     Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten, endgültigen Quelltext darstellt.
 \end{enumerate}
 
 \subsection{Babel-Plugins}
 \label{subsection:babel-plugins}
 
-Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, die in ihrer Gesamtheit die Funktionalität des Compilers realisieren~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
+Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, die in ihrer Gesamtheit die Funktionalität des Compilers umsetzen~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines sehr simplen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschn. \textit{Identifier} in \autocite{BABEL_PARSER_SPEC} und Abschn. 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation des Parsers von Babel beschrieben~\autocite{BABEL_PARSER_SPEC}.
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines simplen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschn. \textit{Identifier} in \autocite{BABEL:PARSER_SPEC} und Abschn. 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation~\autocite{BABEL:PARSER_SPEC} des Babel-Parsers~\autocite{BABEL:PARSER} beschrieben. Diese basiert wiederum auf der Spezifikation \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, welche von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}.
 
-% TODO: fertig machen
-
-\begin{figure}[tbp]
+\medskip
+\begin{figure}[htbp]
   \includegraphics[width=0.6\textwidth]{src/2_Grundlagen/fig/minimal-babel-plugin.pdf}
   \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\textit{Identifier}) werden in Großbuchstaben umgewandelt.}
   \label{code:babel-plugin-definition}
@@ -175,4 +174,4 @@ Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel, eines se
 
 % TODO: Was sind Pfade?
 
-Im weiteren Verlauf wird sich die Untersuchung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, konzentrieren, da hier die Lösung der vorliegenden Problemstellung realisiert wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.
+Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, gelegt, da hier die Lösung der vorliegenden Problemstellung realisiert wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.

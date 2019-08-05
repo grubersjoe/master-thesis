@@ -119,12 +119,12 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
   \small
   \begin{tabularx}{\textwidth}{@{}lX@{}}
     \midrule
-    \textbf{Option} & \textbf{Beschreibung} \\
+    \libertineSB{Option} & \libertineSB{Beschreibung} \\
     \midrule
     \smallskip
     \texttt{-V -{}-version} & Versionsnummer anzeigen. \\
     \smallskip
-    \texttt{-d -{}-dry-run} & Testlauf: Generierten TypeScript-Code auf Standardausgabe schreiben statt in Dateien.\\
+    \texttt{-d -{}-dry-run} & Generierten TypeScript-Code auf Standardausgabe statt in Dateien schreiben (Testlauf).\\
     \smallskip
     \texttt{-e -{}-exclude-dirs <pattern ...>} & Kommaseparierte Liste von Verzeichnissen, die von der Transpilierung rekursiv ausgeschlossen werden sollen. \\
     \smallskip
@@ -141,19 +141,22 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
   \label{tab:cli-options}
 \end{table}
 
-Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Programms. Als Erstes werden die Kommandozeilenargumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaubt sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt (vgl. Option \texttt{include-pattern}). Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet.
-
 \begin{figure}[tbp]
-  % TODO: das Ding repräsentiert nicht das tatsächliche Programm!
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-cli.pdf}
 	\caption[Aktivitätsdiagramm des Kommandozeilenprogramms]{Aktivitätsdiagramm des Kommandozeilenprogramms. Vgl. eingebettete Diagramme~\ref{fig:activity-diagram-plugin} \enquote{Eingabe transpilieren} und~\ref{fig:activity-diagram-formatting} \enquote{Ausgabe formatieren}}
 	\label{fig:activity-diagram-cli}
 \end{figure}
 
+Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms. Als Erstes werden dessen Argumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaubt sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt\footnote{vgl. Option \texttt{include-pattern}.}. Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet. Da unsinnige Wildcard-Muster durch Benutzereingabe möglich sind, wird erneut überprüft, ob die aktuelle Eingabedatei valide ist. Sollte dies nicht der Fall sein, so wird diese übersprungen. Ansonsten wird der Quelltext der Datei durch den Parser von Babel eingelesen und so die Repräsentation des abstrakten Syntaxbaum des Programms erstellt. Daraufhin wird die Transpilierung durch das Babel-Plugin angestoßen. Auch hier kann es zu Laufzeitfehlern kommen, falls beispielsweise Syntaxfehler innerhalb des Eingabequelltexts vorliegen. In diesem Fall wird die aktuelle Datei ebenfalls übersprungen und eine Warnung angegeben.
+
+Nachdem die Transpilierung abgeschlossen ist wird der generierte TypeScript-Code unabhängig von Babel formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen Formatierung der Ausgabe umsetzt. Sollten unerwarteten Fehler auftreten wird auch hier die Datei gegebenenfalls übersprungen. Zuletzt kann der generierte TypeScript-Code ausgegeben werden. Dabei gibt es je nach Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Sofern der Parameter \texttt{-{}-dry-run} gesetzt ist, wird das Resultat einfach auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im Verzeichnis der Eingabedateien erstellt. Falls die Option zum Ersetzen der Originaldateien angegeben wurde, so werden diese zuvor gelöscht.
+
+% TODO: *.ts vs *.tsx vs *.d.ts
+
 \section{Formatierung des Ausgabequelltexts}
 
-Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Transpilierung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} (\enquote{\textit{Zeilen beibehalten}}) des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungs-Routine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Alle Kommentare werden als Konsequenz während der Transpilierung aus dem Quelltext entfernt. Diese werden im Nachhinein manuell eingefügt, um eine korrekte Positionierung zu erzielen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}).
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Transpilierung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} (\enquote{\textit{Zeilen beibehalten}}) des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Alle Kommentare werden als Konsequenz während der Transpilierung aus dem Quelltext entfernt. Diese werden im Nachhinein manuell eingefügt, um eine korrekte Positionierung zu erzielen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}).
 
 \begin{figure}[htb]
   \centering
@@ -166,9 +169,7 @@ Eine weitere Problematik, die sich während der Entwicklung des Transpilers geze
 Der konzeptionellen Aufbau der Formatierungs-Funktion wird in Abbildung~\ref{fig:activity-diagram-formatting} dargestellt. Deren Idee ist simpel: Nachdem sowohl die Ein- als auch die Ausgabe in einen vergleichbaren, konsistenten Zustand überführt worden sind, können Leerzeilen und Kommentare aus dem ursprünglichen Quelltext einfach übertragen werden. Konsistent bedeutet, dass sämtliche Ausdrücke und Anweisungen innerhalb beider Quelltexte die gleiche Zahl von Zeilen vereinnahmen, d.~h. dass diese gleich umgebrochen werden. Diese Voraussetzung muss insbesondere auch für alle Flow-Konstrukte, nach deren Übersetzung nach TypeScript, gelten.
 Grund für die Herstellung dieser Eigenschaft ist, dass das weitere Verfahren zeilenbasiert arbeitet, um die Originalformatierung in die Ausgabe zu übernehmen
 Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Programmierstil für Sprachen wie JavaScript, TypeScript, HTML und weitere erzwingt~\autocite{SOFTWARE:PRETTIER}.
-% Hierdurch wird sicher gestellt, dass nur sich entsprechende Zeilen während des Vergleichs betrachtet werden.
-% Da das weitere Verfahren zeilenbasiert arbeitet, ist es entscheidend, dass die Ausdrücke und Anweisungen der Ein- und Ausgabe gleich umgebrochen werden.
 Versuche haben gezeigt, dass die Ein- und Ausgabe bei Anwendung von Prettier aufgrund unterschiedlicher Syntax nicht in allen Situationen gleich umgebrochen wird. Deshalb wurde das Werkzeug geringfügig modifiziert, um eine größere Konsistenz der Ausgabe von Prettier herzustellen\footnote{Siehe \url{https://github.com/grubersjoe/prettier-reflow}.}.
 Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert werden, um in jedem Schleifendurchlauf zu prüfen, ob eine Leerzeile vorliegt. Gegebenenfalls wird diese an die entsprechende Position in der Ausgabe kopiert. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Auf diese Weise werden nach und nach alle Leerzeilen und Kommentare übertragen. Zuletzt wird Prettier erneut auf die so formatierte Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
 
-% Prettier, synchronisieren der Leerzeilen und Kommentare beschreiben usw.
+% TODO: Beispiel..?

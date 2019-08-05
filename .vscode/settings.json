@@ -7,15 +7,22 @@
   "explorer.openEditors.visible": 0,
   "cSpell.language": ",de",
   "cSpell.words": [
+    "Difference",
     "Intersection",
     "Jest",
+    "Keys",
     "Object",
+    "Parsers",
     "Prettier",
+    "Read",
+    "Shape",
     "Transpilers",
     "Transpilierung",
     "Transpilierungsprozess",
     "Undefined",
-    "brendan"
+    "Values",
+    "brendan",
+    "maybe"
   ],
   "cSpell.ignoreWords": [
     "backends",
