@@ -7,7 +7,6 @@
   numbers=noenddot,
   paper=a4,
   parskip=on,
-  % toc=chapterentrydotfill,
   twoside=off,
   DIV=10,
   ngerman
@@ -124,10 +123,41 @@
 \hyphenation{Reflow}
 \hyphenation{Ruby}
 \hyphenation{TypeScript}
+\hyphenation{retainLines}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
 \babelhyphenation[ngerman]{Kom-man-do-zei-len-pro-gramm}
 % Orphans
 \usepackage[all]{nowidow}
+
+% The following ensures that only straight quotes are used inside of \texttt
+\usepackage{upquote}
+\usepackage{etoolbox}
+
+\robustify{\texttt}
+\let\originaltexttt\texttt
+
+\begingroup
+\catcode`'=\active
+\catcode``=\active
+\globaldefs1
+\makeatletter
+\renewrobustcmd{\texttt}[1]{%
+  {%
+  \everyeof{\noexpand}\endlinechar-1
+  \expandafter\catcode\string``=\active
+  \expandafter\catcode\string`'=\active
+  \let'\textquotesingle
+  \let`\textasciigrave
+  \ifx\encodingdefault\upquote@OTone
+    \ifx\ttdefault\upquote@cmtt
+    \def'{\char13 }\def`{\char18 }%
+    \fi
+  \fi
+  \scantokens{\originaltexttt{#1}}%
+  }%
+}%
+\endgroup
+
 
 % Document links
 % Should be loaded last!
@@ -180,7 +210,7 @@
 
 
   \printbibliography[
-    title={Literatur},
+    title={Quellenverzeichnis},
     notkeyword=software
   ]
 

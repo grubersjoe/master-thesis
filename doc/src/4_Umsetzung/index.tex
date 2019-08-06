@@ -5,7 +5,6 @@ Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die 
 
 \section{Software-Architektur}
 \label{sec:software-architecture}
-% \subsection{Konzeptioneller Aufbau des Transpilers}
 
 Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen. Bevor auf Einzelheiten der Umsetzung näher eingegangen wird, soll zunächst der grundsätzliche Aufbau der Anwendung skizziert werden. Abbildung~\ref{fig:architecture-overview} verschafft einen Überblick über die verschiedenen Komponenten des Systems und deren Beziehung zueinander.
 
@@ -21,6 +20,8 @@ Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt d
 Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucher-Funktionen\footnote{Vgl. Abschnitt~\ref{subsection:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums des Eingabeprogramms, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel werden alle zugehörigen Pfadknoten durch Ausführung verschiedener \emph{Konverter} in äquivalentes TypeScript übersetzt. Dabei kann es während der Verarbeitung zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen weiterhin Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung gegebenenfalls angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Schließlich enthält das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Komponenten überprüfen.
 
 \section{Entwicklungsprozess}
+
+% Bevor die konkrete Implementierung des Transpilers betrachtet wird, sollen zunächst zwei Aspekte des Entwicklungsprozesses, die diesen wesentlich unterstützt haben, näher betrachtet werden.
 
 \subsection{Testgetriebene Entwicklung}
 
@@ -45,18 +46,17 @@ Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird a
               └── output.ts
   \end{textcode}
   \caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen}
-  \captionsetup{justification=raggedright,singlelinecheck=false}
   \label{CODE:FIXTURE_TESTS}
 \end{listing}
 
 % TODO: Check number of tests before publishing
 Während der Entwicklung des Transpilers wurden nach und nach Modultests für alle Funktionen des Programms angelegt. Überprüft wird dabei die Übersetzung aller Flow-Typen, die Korrektheit weiterer Optimierungen und die Formatierung der Ausgabe. Weiterhin wurden Tests zur Erprobung des Kommandozeilenprogramms und der allgemeinen Hilfsfunktionen geschrieben. Damit Regression während der fortlaufenden Entwicklung unmittelbar festgestellt werden, werden die Tests nach Einchecken von Änderungen in das Versionverwaltungssystem automatisch ausgeführt (\textit{kontinuierliche Integration}). Insgesamt sind 972 Testfälle\footnote{Anmerkung: Diese hohe Zahl ist darin begründet, dass größtenteils Fixture-Tests umgesetzt wurden und jeder Zeilenvergleich hierbei als ein Test betrachtet wird.} entstanden und es wurde eine Testabdeckung von 94,4\% erreicht.
 
-\subsection{Statische Typisierung des Babel-Plugins}
+\subsection{Statische Typisierung von Babel}
 
-% Ein weiterer Aspekt zur Vebesserung der
+Der gesamte Transpiler, also sowohl das Babel-Plugin, als auch das zugehörige Kommandozeilenprogramm wurden in TypeScript umgesetzt. Grund dafür ist, dass so die von Babel bereitgestellten TypeScript-Typdefinition während der Entwicklung verwendet werden können. Diese stehen für alle Bibliotheken
 
-Das Babel-Plugin und das zugehörige Kommandozeilenprogramm
+% Ein weiterer Aspekt, der den Entwicklungsprozess erheblich unterstützt und vereinfacht hat, ist die Verfügbarkeit vollständiger TypeScript-Typdefinitionen für Babel. Diese werden vom Babel-Projekt selbst bereit gestellt und nicht durch die Gemeinschaft gepflegt\footnote{\textit{DefinitelyTyped}~\autocite{DEFINITELY_TYPED}.}. Damit ist die Aktualität und Korrektheit der Typisierungen
 
 \section{Implementierung als Babel-Plugin}
 
@@ -72,9 +72,6 @@ Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es 
   \item \textit{Dynamic imports}~\autocite{ES_PROPOSAL:DYNAMIC_IMPORTS}
 \end{itemize}
 
-% \footnote{Erweiterungen der ECMAScript-Spezifikation }
-% wie beispielsweise Klassenattribute~\autocite{} ermöglichen.
-
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-plugin.pdf}
@@ -88,7 +85,7 @@ Sofern eine Besucher-Funktion für den aktuellen Knotentyp existiert, wird diese
 
 \subsection{Transpilierung der Flow-Typen}
 
-Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Aufgrund der großen Zahl von Flow-Typen (Basistypen, Hilfstypen, Typdeklarationen) kann nicht die vollständige Implementierung aller Transformationen ausführlich betrachtet werden, da dies den Umfang der Arbeit überschreiten würde. Daher werden alle Übersetzungen durch Übersichtstabellen beschrieben, welche die Umwandlungen zusammenfassen. Einige repräsentative Beispiele wurden darüber hinaus ausgewählt anhand derer das Prinzip der Transpilierung detailliert erläutert wird.
+Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Aufgrund der großen Zahl von Flow-Typen (Basistypen, Hilfstypen, Typdeklarationen) kann nicht die vollständige Implementierung aller Transformationen ausführlich betrachtet werden, da dies den Umfang der Arbeit überschreiten würde. Daher werden alle Übersetzungen durch Übersichtstabellen beschrieben, welche die Umwandlungen zusammenfassen. Einige repräsentative Beispiele wurden darüber hinaus ausgewählt anhand derer das Prinzip der Transpilierung erklärt wird, indem deren Implementierung detailliert betrachtet wird.
 
 \subsubsection{Transpilierung der Basistypen}
 \subsubsection{Transpilierung der Hilfstypen}
@@ -148,15 +145,20 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
 	\label{fig:activity-diagram-cli}
 \end{figure}
 
+\medskip
 Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms. Als Erstes werden dessen Argumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaubt sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt\footnote{vgl. Option \texttt{include-pattern}.}. Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet. Da unsinnige Wildcard-Muster durch Benutzereingabe möglich sind, wird erneut überprüft, ob die aktuelle Eingabedatei valide ist. Sollte dies nicht der Fall sein, so wird diese übersprungen. Ansonsten wird der Quelltext der Datei durch den Parser von Babel eingelesen und so die Repräsentation des abstrakten Syntaxbaum des Programms erstellt. Daraufhin wird die Transpilierung durch das Babel-Plugin angestoßen. Auch hier kann es zu Laufzeitfehlern kommen, falls beispielsweise Syntaxfehler innerhalb des Eingabequelltexts vorliegen. In diesem Fall wird die aktuelle Datei ebenfalls übersprungen und eine Warnung angegeben.
 
 Nachdem die Transpilierung abgeschlossen ist wird der generierte TypeScript-Code unabhängig von Babel formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen Formatierung der Ausgabe umsetzt. Sollten unerwarteten Fehler auftreten wird auch hier die Datei gegebenenfalls übersprungen. Zuletzt kann der generierte TypeScript-Code ausgegeben werden. Dabei gibt es je nach Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Sofern der Parameter \texttt{-{}-dry-run} gesetzt ist, wird das Resultat einfach auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im Verzeichnis der Eingabedateien erstellt. Falls die Option zum Ersetzen der Originaldateien angegeben wurde, so werden diese zuvor gelöscht.
+Da die Verwendung von JSX-Syntax in TypeScript die Dateierweiterung \texttt{.tsx} vorschreibt~\autocite{TYPESCRIPT_HANDBOOK:JSX}, muss sicher gestellt werden, dass die Ausgabedateien die korrekte Endung erhalten. Analog müssen \emph{globale} Typdeklarationen in Dateien mit der Erweiterung \texttt{.d.ts} geschrieben werden. Zur Bestimmung des korrekten Ausgabedateityps wird innerhalb des Babel-Plugins während der Transpilierung überprüft, ob JSX-Syntax in der Eingabedatei verwendet wird bzw. ob Typdeklarationen vorliegen. Hierfür werden Besucher-Funktionen für diese speziellen AST-Knoten registriert, die eine Lookup-Tabelle aufbauen, welche die Abbildung der Originaldateien auf einen Ausgabetyp darstellt. Das Kommandozeilenprogramm kann diese Information anschließend beim Schreiben der Dateien abfragen und entsprechend reagieren.
+
+
+% Auch Typdeklarationen  \texttt{.d.ts}.
 
 % TODO: *.ts vs *.tsx vs *.d.ts
 
 \section{Formatierung des Ausgabequelltexts}
 
-Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor\footnote{Ein konkreter Syntaxbaum TODO.}. Die Einrückung und die Position der Leerzeichen und -zeilen gehen somit in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Transpilierung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} (\enquote{\textit{Zeilen beibehalten}}) des Codegenerators von Babel erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format Ausgabequelltext erheblich vom Original. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist (vgl. Abschnitt~\ref{subsection:requirement:format}), wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Alle Kommentare werden als Konsequenz während der Transpilierung aus dem Quelltext entfernt. Diese werden im Nachhinein manuell eingefügt, um eine korrekte Positionierung zu erzielen. Die Formatierung der Ausgabe wird nach der Transpilierung durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}).
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor. Im Gegensatz zu einem \emph{konkreten} Syntaxbaum, welcher den Ableitungsbaum einer formalen Grammatik darstellt~\autocite[45]{AHO:COMPILERS}, enthält der abstrakte Syntaxbaum lediglich \enquote{wesentliche Teile}~\autocite[21]{WALDMANN:PPS} davon. Infolgedessen geht die Einrückung und die Position der Leerzeichen und -zeilen in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Übersetzung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Babel-Codegenerators, welche eine Beibehaltung der Zeilen in der Ausgabe bewirken soll, erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format des generierten Quelltexts erheblich von der Eingabe. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist\footnote{Vgl. Abschnitt~\ref{subsection:requirement:format}.}, wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Diese wird nach der Transpilierung aller Eingabedateien durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}) und im Folgenden erläutert. Um die Kommentare korrekt zu positionieren werden diese während der Transpilierung entfernt und nicht ausgegeben. Erst im Nachgang werden diese im Zuge der Formatierung in die Ausgabe eingefügt.
 
 \begin{figure}[htb]
   \centering

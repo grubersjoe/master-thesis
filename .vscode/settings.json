@@ -1,31 +1,27 @@
 {
   "editor.lineHeight": 20,
   "editor.rulers": [
-    90
+    100
   ],
-  "editor.wordWrapColumn": 90,
+  "editor.wordWrapColumn": 100,
   "explorer.openEditors.visible": 0,
-  "cSpell.language": ",de",
+  "cSpell.language": "en,de",
   "cSpell.words": [
-    "Difference",
-    "Intersection",
+    "Esprima",
+    "Franca",
     "Jest",
-    "Keys",
-    "Object",
-    "Parsers",
+    "Klassendekoratoren",
+    "Normungsorganisation",
     "Prettier",
-    "Read",
-    "Shape",
     "Transpilers",
     "Transpilierung",
     "Transpilierungsprozess",
-    "Undefined",
-    "Values",
-    "brendan",
-    "maybe"
+    "unintuitiv"
   ],
   "cSpell.ignoreWords": [
     "backends",
+    "brendan",
+    "lückgen",
     "konkatenationsoperator",
     "mapi",
     "obj",

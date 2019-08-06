@@ -17,7 +17,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     \midrule
     \libertineSB{Basistyp}     & \libertineSB{Beispiel}                   \\
     \midrule
-    Array type                 & \texttt{Array<{}number>{}}               \\
+    Any type                   & \texttt{any}                             \\
+    Array type                 & \texttt{Array<{}number>{}} oder \texttt{number[]} \\
     Boolean literal type       & \texttt{true}                            \\
     Boolean type               & \texttt{boolean}                         \\
     Empty type                 & \texttt{empty}                           \\
@@ -107,17 +108,16 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
   Was macht eigentlich so ein Compiler bzw. Transpiler? Hier Theorie (AST etc.)
 
-\subsection{Lexikalische Analyse}
+\subsection{Lexikalische und syntaktische Analyse}
 
+  % Lexikalische Analayse
   Quelltext (string) => Tokens
-
   Parser, Tokenizer = Lexer
 
-\subsection{Syntaxanalyse}
-
+  % Syntaxanalyse
   Tokens => AST
 
-\subsection{Evaluation bestehender JavaScript-Parser und -Transpiler}
+\subsection{Evaluation bestehender JavaScript-Transpiler}
 \label{subsec:js-transpilers}
 
 Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Transpilern entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Transpilers von Flow nach TypeScript stark vereinfachen können. Im Folgenden sollen die relevantesten Ansätze evaluiert werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage der Umsetzung heran gezogen wird.
@@ -163,15 +163,15 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, die in ihrer Gesamtheit die Funktionalität des Compilers umsetzen~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines simplen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschn. \textit{Identifier} in \autocite{BABEL:PARSER_SPEC} und Abschn. 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation~\autocite{BABEL:PARSER_SPEC} des Babel-Parsers~\autocite{BABEL:PARSER} beschrieben. Diese basiert wiederum auf der Spezifikation \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, welche von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}.
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines simplen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschnitt \textit{Identifier} in \autocite{BABEL:PARSER_SPEC} und Abschnitt 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation~\autocite{BABEL:PARSER_SPEC} des Babel-Parsers~\autocite{BABEL:PARSER} beschrieben. Diese basiert wiederum auf der Spezifikation \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, welche von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}.
 
 \medskip
-\begin{figure}[htbp]
+\begin{figure}[htb]
   \includegraphics[width=0.6\textwidth]{src/2_Grundlagen/fig/minimal-babel-plugin.pdf}
   \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\textit{Identifier}) werden in Großbuchstaben umgewandelt.}
   \label{code:babel-plugin-definition}
 \end{figure}
 
-% TODO: Was sind Pfade?
+% TODO: Pfade beschreiben
 
 Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, gelegt, da hier die Lösung der vorliegenden Problemstellung realisiert wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.
