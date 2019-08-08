@@ -1,0 +1,23 @@
+\begin{table}[tbp]
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}lll@{}}
+    \midrule
+    \libertineSB{Basistyp}     & \libertineSB{Flow}                       &   \libertineSB{TypeScript}                      \\
+    \midrule
+    Exact object type          & \texttt{\{| prop: any |\}}               &   \texttt{\{ prop: any \}}                      \\
+    Function type              & \texttt{(string, \{\}) => number}        &   \texttt{(p1: string, p2: \{\}) => number}     \\
+    Generic type annotation    & \texttt{let v: <{}FlowType>{}}           &   \texttt{let v: <{}TSType>{}}                  \\
+    Generics                   & \texttt{type Generic<{}T: Super> = T}    &   \texttt{type Generic<{}T extends Super> = T}  \\
+    Interface type             & \texttt{interface \{ +prop: number \}}   &   \texttt{interface \{ readonly: number \}}     \\
+    Nullable type (Maybe type) & \texttt{?number}                         &   \texttt{number | null | undefined}            \\
+    Object type                & \texttt{\{ {[}string{]}: number \}}      &   \texttt{\{ {[}key: string{]}: number \}}      \\
+    Opaque type                & \texttt{opaque type Opaque = number}     &   \texttt{type Opaque = number}                 \\
+    Type cast expresssion      & \texttt{(variable: string)}              &   \texttt{(variable as string)}                 \\
+    Type export                & \texttt{export type T = number | null}   &   \texttt{export T = number | null}             \\
+    Type import                & \texttt{import type T from './types'}    &   \texttt{import T from './types'}              \\
+    Typeof type                & \texttt{typeof undefined}                &   \texttt{undefined}                            \\
+    \midrule
+  \end{tabularx}
+  \caption{Komplexe Transformationen der Basistypen von Flow}
+  \label{tab:transformation-base-types-complex}
+\end{table}

@@ -3,13 +3,22 @@
 
 \section{Statische Typsysteme für JavaScript}
 
-Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
+Die Idee JavaScript um ein statisches Typsystem zu erweitern ist nicht neu. Zahlreiche Ansätze sind im Lauf der letzten Jahre entstanden.
+% Dart, Closure
+
+% Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
 
 \subsection{Flow}
 \label{subsection:flow}
 % Flow beschreiben (und zwar mit entsprechender Fachsprache)
 
+Alle Typen werden in der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} erläutert.
+
+Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basistypen, Hilfstypen und Typdeklarationen. Diese werden im Folgenden vorgestellt und beschrieben.
+
 \subsubsection{Basistypen}
+
+Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannotationen von Flow verstanden, welche keine Hilfstypen oder Typdeklarationen darstellen. Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen in allen Übersichtstabellen beibehalten und nicht ins Deutsche übersetzt.
 
 \begin{table}[tbp]
   \footnotesize
@@ -18,7 +27,8 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     \libertineSB{Basistyp}     & \libertineSB{Beispiel}                   \\
     \midrule
     Any type                   & \texttt{any}                             \\
-    Array type                 & \texttt{Array<{}number>{}} oder \texttt{number[]} \\
+    Array type                 & \texttt{Array<{}number>{}}               \\
+    Array type (shorthand)     & \texttt{number[]}                        \\
     Boolean literal type       & \texttt{true}                            \\
     Boolean type               & \texttt{boolean}                         \\
     Empty type                 & \texttt{empty}                           \\
@@ -40,15 +50,19 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     This type                  & \texttt{this}                            \\
     Tuple type                 & \texttt{{[}Date, number{]}}              \\
     Type alias                 & \texttt{type Type = <{}FlowType>{}}      \\
-    Type casting               & \texttt{(variable: string)}              \\
+    Type cast expresssion      & \texttt{(variable: string)}              \\
+    Type export                & \texttt{export type T = number | null}   \\
+    Type import                & \texttt{import type T from './types'}    \\
     Typeof type                & \texttt{typeof undefined}                \\
     Union type                 & \texttt{number | null}                   \\
     Void type                  & \texttt{void}                            \\
     \midrule
   \end{tabularx}
-  \caption{Flow Basistypen~\autocite{FLOW_TYPE_ANNOTATIONS} mit Beispiel}
+  \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel}
   \label{tab:flow-base-types}
 \end{table}
+
+
 
 \subsubsection{Hilfstypen}
 
@@ -74,17 +88,15 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     Shape               & \texttt{\$Shape<T>}             &   \\
     Tuple map           & \texttt{\$TupleMap<T, F>}       &   \\
     Values              & \texttt{\$Values<T>}            &   \\
-    \sout{Subtype}      & \texttt{\$Subtype<T>}           &   \textit{nicht implementiert (veraltet)} \\
-    \sout{Supertype}    & \texttt{\$Supertype<T>}         &   \textit{nicht implementiert (veraltet)} \\
+    \sout{Subtype}      & \texttt{\$Subtype<T>}           &   \textit{nicht implementiert, da veraltet} \\
+    \sout{Supertype}    & \texttt{\$Supertype<T>}         &   \textit{nicht implementiert, da veraltet} \\
     \midrule
   \end{tabularx}
-  \caption{Flow Hilfstypen~\autocite{FLOW_UTILITY_TYPES} mit Beispiel}
+  \caption{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel}
   \label{tab:flow-utility-types}
 \end{table}
 
 \subsubsection{Typdeklarationen}
-
-\subsubsection{Modultypen}
 
 \begin{table}[tbp]
   \footnotesize
@@ -92,12 +104,11 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
     \midrule
     \libertineSB{Typ}         & \libertineSB{Beispiel}                  \\
     \midrule
-    \texttt{Type imports}     & \texttt{import type T from './types'}   \\
-    \texttt{Type exports}     & \texttt{export type T = number | null}  \\
+    TODO                      & \texttt{TODO}   \\
     \midrule
   \end{tabularx}
-  \caption{Flow Modultypen}
-  \label{tab:flow-other-constructs}
+  \caption{Typdeklarationen von Flow}
+  \label{tab:flow-type-declarations}
 \end{table}
 
 
@@ -122,9 +133,9 @@ Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-
 
 Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Transpilern entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Transpilers von Flow nach TypeScript stark vereinfachen können. Im Folgenden sollen die relevantesten Ansätze evaluiert werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage der Umsetzung heran gezogen wird.
 
-Esprima, Acorn, Babel
+% Esprima, Acorn, Babel
+% Babel basiert auf acorn.
 
-Babel basiert auf acorn.
 % http://marijnhaverbeke.nl/blog/acorn.html
 % https://github.com/estree/estree
 % https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API
@@ -133,45 +144,57 @@ Babel basiert auf acorn.
 
 % Am Ende: es wird Babel eingesetzt werden, um das Dingens zu bauen.
 
+Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.
+
 % CITATION NEEDED
-Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und moderner bzw. experimenteller JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}.}. Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
+Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}.}.
+Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
 \section{Babel}
 \label{sec:babel}
 
 \subsection{Funktionsweise von Babel}
 
-Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Transpilers in Kapitel \ref{chap:implementation} soll zunächst die grundsätzliche Funktionsweise von Babel näher betrachtet werden. Die Ausführung von Babel gliedert sich in folgende drei Phasen~\autocite{BABEL_HANDBOOK}:
+Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Transpilers in Kapitel \ref{chap:implementation} soll zunächst die grundsätzliche Funktionsweise von Babel näher betrachtet werden. Die Ausführung von Babel gliedert sich in folgende drei Phasen~\autocite{BABEL:HANDBOOK}:
 
 % TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären!
 \begin{enumerate}
   \item {\libertineSB Parsen des Eingabecodes}\\*
-    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert.
+    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert. Jeder Knoten des Baums erhält dabei einen eindeutigen Typ.
     \\
 
   \item {\libertineSB Transformation des Programms}\\*
-    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \textit{Besucher"=Entwurfsmusters} (engl. \textit{Visitor-Pattern.}) rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt, wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, durchgeführt werden können~\autocite[634\psq]{Freeman:2004}.
-    Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die gewünschte Untermenge der Knoten des Syntaxbaums individuell zu adressieren, um dort die Transformation des Programms umzusetzen.
+    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \emph{Besucher}"=Entwurfsmuster\footnote{engl. \textit{Visitor-Pattern.}.} rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden können~\autocite[634\psq]{Freeman:2004}. Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die individuelle Adressierung einer Untermenge der Knoten des Syntaxbaums, um dort die gewünschte Transformation des Programms umzusetzen.
     \\
 
   \item {\libertineSB Generierung des Ausgabequelltexts}\\*
-    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten, endgültigen Quelltext darstellt.
+    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten Quelltext darstellt.
 \end{enumerate}
 
 \subsection{Babel-Plugins}
 \label{subsection:babel-plugins}
 
-Babel-Plugins sind die elementaren Bausteine, die eine flexible Erweiterung des Compilers um neue Funktionen ermöglichen. Der Kern von Babel selbst setzt sich aus einer Vielzahl von Plugins zusammen, die in ihrer Gesamtheit die Funktionalität des Compilers umsetzen~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität des Systems. Jedes Babel-Plugin ist eine JavaScript-Funktion, welche ein Objekt mit verschiedenen, vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist hierbei die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf die Besucher-Funktionen, welche die jeweilige Quelltext-Transformation realisieren. Typischerweise werden mehrere Plugins eingesetzt, sodass ein Knoten viele, unabhängige Transformationen durchlaufen kann. Hierdurch ist es möglich die erwünschte Transpilierung sehr flexibel durch Verwendung vieler, atomarer Bausteine zusammen zu setzen. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
+Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Der Kern des Compilers besteht selbst aus einer Vielzahl von Plugins, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend verankerte Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, die ein Objekt mit verschiedenen vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucher-Funktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung realisiert die angestrebte Quelltext"=Transformation. Es ist in der Praxis gängig, dass mehrere Plugins eingesetzt werden, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten sehr flexibel durch Verwendung vieler, kleiner Bausteine zusammen gesetzt werden. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines simplen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\textit{Identifier}\footnote{Vgl. Abschnitt \textit{Identifier} in \autocite{BABEL:PARSER_SPEC} und Abschnitt 12.1 der ECMAScript-Spezifikation~\autocite[187\psqq]{ECMASCRIPT:2019}.}) eines JavaScript-Programms in Großbuchstaben setzt. Die Knotentypen des abstrakten Syntaxbaums werden in der Spezifikation~\autocite{BABEL:PARSER_SPEC} des Babel-Parsers~\autocite{BABEL:PARSER} beschrieben. Diese basiert wiederum auf der Spezifikation \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, welche von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}.
+Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines sehr einfachen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucher-Funktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen abbildet und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält weiterhin eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
+Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}\autocite{BABEL:TYPES} beschrieben. Diese basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, der von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
 
 \medskip
-\begin{figure}[htb]
-  \includegraphics[width=0.6\textwidth]{src/2_Grundlagen/fig/minimal-babel-plugin.pdf}
-  \caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\textit{Identifier}) werden in Großbuchstaben umgewandelt.}
+\begin{listing}[htb]
+\begin{textcode}
+// var foo => var FOO
+module.exports = function() {
+  return {
+    visitor: {
+      Identifier(path) {
+        path.node.name = path.node.name.toUpperCase();
+      }
+    }
+  };
+};
+\end{textcode}
+\caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\code{Identifier}) werden in Großbuchstaben umgewandelt.}
   \label{code:babel-plugin-definition}
-\end{figure}
+\end{listing}
 
-% TODO: Pfade beschreiben
-
-Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase, also der Transformation des abstrakten Syntaxbaums, gelegt, da hier die Lösung der vorliegenden Problemstellung realisiert wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.
+Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase gelegt, da hier die vorliegende Problemstellung, die Transformation der Flow-Typannotationen nach TypeScript, behandelt wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheks-Funktionen von Babel simpel umgesetzt werden und bedarf keiner tiefgründigen Betrachtung.

@@ -3,15 +3,56 @@
 
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" href="favicon.png" />
 	<title>Prism</title>
 	<link rel="stylesheet" href="prism.css" />
 
 	<style>
+		body {
+			font-family: sans-serif;
+			font-size: 18px;
+		}
+
+		button {
+			margin-left: 1em;
+			padding: 0.25em 0.75em;
+			text-transform: uppercase;
+		}
+
+		pre {
+			line-height: 1.4;
+		}
+
 		@media print {
-			.controls {
+			html, body, pre {
+				margin: 0;
+			}
+
+			pre {
+				margin: 0;
+				padding-bottom: 10px;
+				border-bottom: solid 1px #000;
+			}
+
+			@page {
+				size: landscape
+			}
+
+			body {
+				width: 29.7cm;
+				height: 21cm;
+				font-size: 24px;
+			}
+
+			.controls,
+			textarea {
 				display: none;
 			}
+		}
+
+		textarea {
+			border: 2px solid #ddd;
+			background: #eee;
+			padding: 1em;
 		}
 	</style>
 </head>
@@ -22,30 +63,55 @@
 			<input id="toggle-line-numbers" type="checkbox" checked>
 			Show line numbers
 		</label>
+
+		<button type="button" id="refresh">
+			Highlight
+		</button>
+
+		<button type="button" id="toggle-language">
+			typescript
+		</button>
 	</p>
 
-	<pre><code class="language-typescript">// var foo => var FOO
-module.exports = function() {
-	return {
-		visitor: {
-			Identifier(path) {
-				path.node.name = path.node.name.toUpperCase();
-			}
-		}
-	};
-};</code></pre>
+	<pre><code id="prism">type TypeScriptType = number;</code></pre>
 
+	<br>
+	<textarea id="input" cols="80" rows="20"></textarea>
+
+	<script src="prism.js"></script>
 	<script>
+		let language = 'typescript';
+		const prism = document.getElementById('prism');
+
 		document
-			.querySelector('#toggle-line-numbers')
+			.getElementById('toggle-line-numbers')
 			.addEventListener('change', event => {
 				document.querySelectorAll('.line-numbers-rows').forEach(elem => {
 					elem.style.display = event.target.checked ? 'block' : 'none';
 				});
 			});
-	</script>
 
-	<script src="prism.js"></script>
+		document
+			.getElementById('refresh')
+			.addEventListener('click', event => {
+				const code = document.getElementById('input').value;
+				if (code.length) {
+					prism.innerHTML = Prism.highlight(code, Prism.languages[language], language);
+				} else {
+					console.warn('No input');
+				}
+			});
+
+		document
+			.getElementById('toggle-language')
+			.addEventListener('click', event => {
+				language = (language === 'typescript') ? 'flow' : 'typescript';
+				event.target.innerHTML = language;
+			});
+
+		// init
+		prism.innerHTML = Prism.highlight(prism.innerHTML, Prism.languages[language], language);
+	</script>
 </body>
 
 </html>

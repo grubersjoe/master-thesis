@@ -5,15 +5,22 @@
 
 \section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
 
-  \subsection{Semantische Äquivalenz des Ausgabeprogramms}
+\subsection{Korrekte Übersetzung der Flow-Typen nach TypeScript}
 
-  \subsection{Erkennung neuer Typ- und Programmfehler}
+\subsubsection{Problematische Übersetzungen}
+% TODO: bessere Überschrift
 
-  \subsection{Verfügbarkeit und Qualität externer Typdefinitionen}
+Für einige, wenige Typen existiert keine vollständig äquivalente Übersetzung, da TypeScript manche der Funktionen von Flow nicht unterstützt. Somit kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{subsection:requirement:correct-translation} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
 
-  \subsection{Performance der Typüberprüfungen mittels TypeScript}
+\subsection{Erkennung neuer Typ- und Programmfehler}
 
-  \subsection{Formatierung des Ausgabequelltexts}
+\subsection{Verfügbarkeit und Qualität externer Typdefinitionen}
+
+\subsection{Semantische Äquivalenz des Ausgabeprogramms}
+
+\subsection{Performance der Typüberprüfungen mittels TypeScript}
+
+\subsection{Formatierung des Ausgabequelltexts}
 
 \section{Vergleich des Transpilers mit konkurrierenden Ansätzen}
 

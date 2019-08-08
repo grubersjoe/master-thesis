@@ -29,24 +29,24 @@ Die korrekte Übersetzung der Flow-Typen nach TypeScript ist die wichtigste Anfo
 
 Der Testaufbau wurde wie folgt konzipiert: Pro Modul wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabe enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabe den äquivalenten, manuell übersetzten TypeScript-Code. In den Dateien können beliebig viele Testfälle einer Kategorie spezifiziert werden, um ein bestimmtes Feature des Transpilers zu erproben. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung angelegt werden. Würden die Quelltexte als Zeichenketten innerhalb des Testprogramms angelegt werden, so wäre eine derartige Prüfung durch das statische Typsystem nicht möglich.
 
-Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird auf die Eingabedatei angewandt und der auf diese Weise generierte Code wird anschließend Zeile für Zeile mit der erwarteten Ausgabe exakt verglichen. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Quelltext~\ref{CODE:FIXTURE_TESTS} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
+Die Testdurchführung kann nun wie folgt umgesetzt werden: Der Transpiler wird auf die Eingabedatei angewandt und der auf diese Weise generierte Code wird anschließend Zeile für Zeile mit der erwarteten Ausgabe exakt verglichen. Um dies zu erreichen wurde ein Skript geschrieben, welches das Verzeichnis mit den Modultests einliest, die Transpilierung anstößt und anschließend den zeilenweisen Vergleich durch das Test-Framework \textit{Jest}~\autocite{SOFTWARE:JEST} durchführt. Das angegebene Verzeichnis kann dabei wie in Quelltext~\ref{code:fixture-tests} veranschaulicht beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
 
-\bigskip
-\begin{listing}[htbp]
-  \begin{textcode}
-  tests/fixtures
-  └── types
-      ├── any
-      │     ├── input.js
-      │     └── output.ts
-      ├── …
-      └── utility
-          └── call
-              ├── input.js
-              └── output.ts
-  \end{textcode}
-  \caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen}
-  \label{CODE:FIXTURE_TESTS}
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+tests/fixtures
+└── types
+    ├── any
+    │     ├── input.js
+    │     └── output.ts
+    ├── …
+    └── utility
+        └── call
+            ├── input.js
+            └── output.ts
+\end{textcode}
+\caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen}
+\label{code:fixture-tests}
 \end{listing}
 
 % TODO: Check number of tests before publishing
@@ -64,7 +64,7 @@ Der gesamte Transpiler, also sowohl das Babel-Plugin, als auch das zugehörige K
 
 
 Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den konzeptionellen Ablauf der Transpilierung innerhalb des Babel-Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen die Arbeitsweise von Prozessen innerhalb eines Software-Systems. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen des abstrakten Syntaxbaums auf Besucher"=Funktionen definiert. Diese realisieren die Transformation aller Flow-Typannotationen in entsprechende TypeScript-Syntax.
-Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX und vorläufiger\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.} ECMAScript-Erweiterungen einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende Erweiterungen aktiviert:
+Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX und vorläufiger ECMAScript-Erweiterungen einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende Erweiterungen aktiviert:
 
 \begin{itemize}
   \item \textit{Class field declarations for JavaScript}~\autocite{ES_PROPOSAL:CLASS_FIELDS}
@@ -72,26 +72,210 @@ Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es 
   \item \textit{Dynamic imports}~\autocite{ES_PROPOSAL:DYNAMIC_IMPORTS}
 \end{itemize}
 
-\begin{figure}[tbp]
+\begin{figure}[p]
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-plugin.pdf}
   \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin)}
   \label{fig:activity-diagram-plugin}
 \end{figure}
 
-Nach der Initialisierung beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabe, um diese umzuformen. Der Syntaxbaum wird von Babel durch Parsen des Flow-Programms erstellt. Jeder Knoten des Baums wird dabei zunächst \enquote{betreten} und daraufhin wieder \enquote{verlassen}~\autocite{BABEL_HANDBOOK}. Knoten werden verlassen, wenn bei der Beschreitung eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene fortgesetzt wird.
+Nach der Initialisierung beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabe, um diese umzuformen. Die Datenstruktur des Syntaxbaums wird von Babel durch Parsen des Flow-Programms aufgebaut. Jeder Knoten des Baums wird dabei zunächst \enquote{betreten} und daraufhin wieder \enquote{verlassen}~\autocite{BABEL:HANDBOOK}. Knoten werden verlassen, wenn bei der Beschreitung eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene fortgesetzt wird.
 
-Sofern eine Besucher-Funktion für den aktuellen Knotentyp existiert, wird diese mit dem zugehörigen Pfad als Argument aufgerufen. Ansonsten wird das nächste Element des Syntaxbaums betreten bzw. die Transpilierung beendet, falls keine weiteren Knoten bestehen. Wenn innerhalb der Besucherfunktion festgestellt wird, dass Kindknoten vorliegen, so wird deren Pfad rekursiv beschritten. Andernfalls wird der Konverter für diesen speziellen Knotentyp ausgeführt, sodass der momentane Pfad anschließend mit dem auf diese Weise berechneten TypeScript-Gegenstück ersetzt werden kann. Gleichzeitig werden für einige Knotenarten Optimierungsfunktionen aufgerufen. Diese korrigieren beispielsweise fehlerhaft verwendete Typen und sind auf die konkreten JavaScript-Projekte abgestimmt (vgl. Abschnitt~\ref{subsec:optimizations}). Da viele der Typannotationen von Flow zusammengesetzt sind (z.~B. \textit{Union}, \textit{Intersection}, usw.), werden derartige Konstrukte durch mehrere, rekursive Aufrufe von Konvertern umgeformt. Schließlich wird der momentane Pfad verlassen und die Prozedur beginnt von vorne, sofern weitere Elemente im abstrakten Syntaxbaum vorliegen. Sobald das gesamte Programm und damit sämtliche Flow-Typen verarbeitet wurden, kann die TypeScript-Ausgabe mittels des Babel Codegenerators~\autocite{BABEL:GENERATOR} erstellt werden.
+Sofern eine Besucher-Funktion für den aktuellen Knotentyp existiert, wird diese mit dem zugehörigen Pfad als Argument aufgerufen. Ansonsten wird das nächste Element des Syntaxbaums betreten bzw. die Transpilierung beendet, falls keine weiteren Knoten bestehen. Wenn innerhalb der Besucherfunktion festgestellt wird, dass Kindknoten vorliegen, so wird deren Pfad rekursiv beschritten. Andernfalls wird der Konverter für diesen speziellen Knotentyp ausgeführt, sodass der momentane Pfad anschließend mit dem auf diese Weise berechneten TypeScript-Gegenstück ersetzt werden kann. Gleichzeitig werden für einige Knotenarten Optimierungsfunktionen aufgerufen. Diese korrigieren beispielsweise fehlerhaft verwendete Typen und sind auf die konkreten JavaScript-Projekte abgestimmt. Da viele der Typannotationen von Flow zusammengesetzt sind (z.~B. \textit{Union}, \textit{Intersection}, usw.), werden derartige Konstrukte durch mehrere, rekursive Aufrufe von Konvertern umgeformt. Zuletzt kann der momentane Pfad verlassen werden und die Prozedur beginnt von neuem, sofern weitere Elemente im abstrakten Syntaxbaum vorliegen. Sobald das gesamte Programm und damit sämtliche Flow-Typen übersetzt wurden, kann die TypeScript-Ausgabe mittels des Babel Codegenerators~\autocite{BABEL:GENERATOR} erzeugt werden.
 
 \subsection{Transpilierung der Flow-Typen}
 
-Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Aufgrund der großen Zahl von Flow-Typen (Basistypen, Hilfstypen, Typdeklarationen) kann nicht die vollständige Implementierung aller Transformationen ausführlich betrachtet werden, da dies den Umfang der Arbeit überschreiten würde. Daher werden alle Übersetzungen durch Übersichtstabellen beschrieben, welche die Umwandlungen zusammenfassen. Einige repräsentative Beispiele wurden darüber hinaus ausgewählt anhand derer das Prinzip der Transpilierung erklärt wird, indem deren Implementierung detailliert betrachtet wird.
+Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Aufgrund der großen Zahl von Flow-Typen kann nicht die vollständige Umsetzung aller Transformationen und sämtlicher Grenzfälle ausführlich behandelt werden, da dies den Umfang der Arbeit überschreiten würde. Deshalb wird nachfolgend lediglich ein Überblick über alle Übersetzungen gegeben. Zur Verbesserung der Anschaulichkeit wurden darüber hinaus einige repräsentative Beispiele ausgewählt, anhand derer das Prinzip der Transpilierung detaillierte erläutert wird, indem die zugrunde liegende Implementierung betrachtet wird.
 
 \subsubsection{Transpilierung der Basistypen}
+
+Die Mehrheit der in Tabelle~\ref{tab:flow-base-types} vorgestellten Basistypen kann innerhalb des Plugins simpel übersetzt werden, da der entsprechende Typ in TypeScript die gleiche Syntax besitzt oder sich lediglich das Schlüsselwort unterscheidet. Von den 30 Basistypen gehören 18 zu dieser einfachen Kategorie. Die verbleibenden zwölf Typen erfordern komplexere Knotentransformationen, um die Flow-Annotationen in entsprechende TypeScript-Konstrukte umzuwandeln.
+
+\paragraph{Simple Übersetzungen}
+
+Tabelle~\ref{tab:transformation-base-types-simple} auf Seite~\pageref{tab:transformation-base-types-simple} listet die 18 Flow-Typen auf, die simpel übersetzt werden können und zeigt beispielhaft deren Entsprechung in TypeScript. Abgesehen von den zwei kursiv hervorgehobenen Zeilen ist die Syntax in TypeScript identisch mit der ursprünglichen Notation der Typen in Flow. Dennoch müssen auch diese Elemente des abstrakten Syntaxbaums während der Transpilierung in ihr korrektes Gegenstück umgewandelt werden, da eine Kombination von Flow- und TypeScript-Knoten gemäß der Spezifikation~\autocite{BABEL:PARSER_SPEC} von Babel unmöglich ist. Diese Einschränkung wird zur Laufzeit durch die im Plugin eingesetzte Bibliothek \code{@babel/types}\,\autocite{BABEL:TYPES} sicher gestellt. Durch die Verwendung von TypeScript und der gegebenen Typisierung
+ von Babel, werden Typfehler dieser Art ohnehin bereits vor Ausführung des Transpilers statisch erkannt.
+
+\input{src/4_Umsetzung/tables/simple}
+
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+// @flow                              // TypeScript
+type Alias = mixed;                  type Alias = unknown;
+\end{textcode}
+\vspace*{-0.2cm}
+\caption{Beispiel für die Übersetzung simpler Flow-Typen}
+\label{code:example-simple}
+\end{listing}
+
+Anhand eines Beispiels wird nachfolgend der Ablauf einer einfachen Übersetzungen und das grundsätzliche Vorgehen bei der Implementierung erläutert. Quelltext~\ref{code:example-simple} zeigt links das mit Flow typisierte Ursprungsprogramm und rechts daneben den äquivalenten TypeScript-Code. In der zweiten Zeile wird ein Typalias definiert, welcher auf den Typ
+\code{mixed}\footnote{Siehe~\autocite[Mixed Types]{FLOW:TYPE_ANNOTATIONS}.} verweist. Gemäß Tabelle~\ref{tab:transformation-base-types-simple} ist der korrespondierende TypeScript-Typ \code{unknown}. Um die notwendigen Schritte der Transformation zu erkennen, ist es hilfreich die abstrakten Syntaxbäume des ursprünglichen und angestrebten Quelltexts zu vergleichen. Abbildung~\ref{ast:example-simple} zeigt den Syntaxbaum des Beispiels für Flow (links) und TypeScript (rechts)\footnote{Anmerkung: Zur Vereinfachung der Nachvollziehbarkeit werden nur wesentliche Teile des Syntaxbaums gezeigt. Tatsächlich besitzen alle Knoten weitere Attribute, die hier jedoch irrelevant sind.}. Die Typen der verschiedenen Knoten werden dabei in \texttt{Festbreitenschrift} abgedruckt, konkrete Werte wie beispielsweise der Name von Bezeichnern dagegen in Serifenschrift. Die Kantenbeschriftungen stehen für Attribute der Knoten.
+
+Die zwei Bäume sind sich sehr ähnlich: In der Wurzel der Datenstruktur befindet sich für alle Quelltexte der \code{Program}-Knoten. Dessen Kindknoten repräsentiert die Deklaration des Typalias aus der zweiten Zeile. Der Typ dieses Knotens ist \code{TypeAlias} in Flow und \code{TSTypeAliasDeclaration} in TypeScript. Auf der linken Seite der Anweisung steht dabei der Bezeichner des Alias und auf der rechten Seite der zugewiesene Datentyp. Da im ursprünglichen Code eine \code{MixedTypeAnnotation} vorliegt, muss dieser Knoten in TypeScript zu \code{unknown} (\code{TSUnknownKeyword}) übersetzt werden, um einen bedeutungsgleichen Ausdruck zu erzeugen. In diesem konkreten Fall sind die zwei notwendigen Transformationschritte damit folgende:
+
+\begin{figure}[htb]
+  \centering
+  \small
+  \ttfamily
+  \begin{minipage}{.5\textwidth}
+      \centering
+      \begin{forest}
+        for tree = {l=1.6cm, s sep=0.5cm}
+        [Program
+          [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
+            [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
+              [\textrm{Alias}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+            ]
+            [MixedTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{right}}]
+          ]
+        ]
+      \end{forest}
+  \end{minipage}%
+  \begin{minipage}{0.5\textwidth}
+      \centering
+      \begin{forest}
+        for tree = {l=1.6cm, s sep=1cm}
+        [Program
+          [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
+            [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
+              [\textrm{Alias}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+            ]
+            [TSUnknownKeyword, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}]
+          ]
+        ]
+      \end{forest}
+  \end{minipage}
+  \vspace{0.25cm}
+  \caption{Abstrakter Syntaxbaum für die Deklaration eines Typalias in Flow (links) und TypeScript (rechts)}
+  \label{ast:example-simple}
+\end{figure}
+
+\begin{itemize}
+  \item Übersetzung aller \code{TypeAlias}-Knoten nach \code{TSTypeAliasDeclaration}
+  \item Übersetzung aller \code{MixedTypeAnnotation}-Knoten nach \code{TSUnknownKeyword}
+\end{itemize}
+
+Da ein \emph{beliebiger} Flow-Typ auf der rechten Seite des Typalias stehen kann, muss bei dessen Transpilierung auch der zugewiesene Typ allgemeingültig umgewandelt werden können. Es wurde deshalb eine Funktion implementiert, die alle Flow-Typen universell auf ihr TypeScript-Gegenstück abbildet. Deren vereinfachter Aufbau ist wie folgt:
+
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+function convertFlowType(node: FlowType): TSType {
+  switch (node.type) {
+    case 'ArrayTypeAnnotation':
+      return tsArrayType(convertFlowType(node.elementType));
+    // …
+    case 'InterfaceTypeAnnotation':
+      return convertInterfaceTypeAnnotation(node);
+    // …
+    case 'MixedTypeAnnotation':
+      return tsUnknownKeyword();
+  }
+}
+\end{textcode}
+\caption{Universelle Transpilierung aller Flow-Typen nach TypeScript durch Umwandlungsfunktion}
+\label{code:convert-flow-type}
+\end{listing}
+
+Zeile zehn zeigt wie der zweite Schritt der AST-Transformation für das Beispiel, also die Übersetzung des \code{mixed}-Schlüsselworts nach \code{unknown}, implementiert ist. Durch Aufruf der durch Babel gegebenen Bibliotheksfunktion \code{tsUnknownKeyword()} kann ein neuer AST-Knoten erzeugt werden, der das entsprechende Schlüsselwort in TypeScript repräsentiert. Babel stellt für sämtliche Knotentypen Methoden mit diversen Parametern bereit, mittels derer alle Elemente des Syntaxbaums erstellt werden können. In Zeile vier wird ein weiteres, wichtiges Konzept innerhalb des Transpilers exemplarisch aufgezeigt: Für Knoten des Typs \code{ArrayTypeAnnotation} wird die Umwandlungsfunktion \emph{rekursiv} aufgerufen, da auch hier beliebige Flow-Typen Argument des Feldtyps sind. Wie die weiteren Ausführungen zeigen werden, spielt die obige Umwandlungsmethode eine zentrale Rolle innerhalb des Transpilers, da sie in nahezu allen Konvertern aufgerufen wird. Zeile sieben verdeutlicht schließlich, dass nicht alle Knoten so einfach wie das Typalias aus dem Beispiel umgewandelt werden können, da der Aufbau vieler Typen komplexer ist. Die Transformation dieser Knoten wird durch jeweilige Konverterfunktionen separat durchgeführt.
+
+\paragraph{Komplexere Übersetzungen}
+
+Die Übersetzung der zwölf komplexen Flow"=Datentypen ist in Tabelle~\ref{tab:transformation-base-types-complex} exemplarisch dargestellt. Im Gegensatz zu den simplen Transformationen unterscheidet sich die Syntax des Ausgabequelltexts hier zum Teil deutlich und es müssen bei der Transpilierung Spezial- und Grenzfälle beachtet werden, um korrekten TypeScript-Code zu erzeugen. Zum Beispiel erlaubt Flow den Typ einer Funktion, die eine Zeichenkette und eine Zahl als Parameter entgegen nimmt, wie folgt anzugeben:\\[.5\baselineskip]
+\texttt{type FunctionType = (string, argName: number) => void;}\\[.5\baselineskip]
+Während die Benennung der Funktionsargumente in Flow optional ist, ist diese in TypeScript verbindlich. Infolgedessen müssen Parameter während der Übersetzung von Funktionstypen nach TypeScript gegebenenfalls automatisch benannt werden, da andernfalls fehlerhafte Syntax entstünde.
+
+\input{src/4_Umsetzung/tables/complex}
+
+Anhand des \enquote{Nullable}-Typs soll das Vorgehen bei der Transformation eines komplizierteren Knoten erläutert werden. Dieser Typ wird in der Flow-Dokumentation auch als \enquote{\textit{Maybe type}} bezeichnet und wird für die Typisierung optionaler, möglicherweise undefinierter Werte verwendet\footnote{Siehe~\autocite[Maybe Types]{FLOW:TYPE_ANNOTATIONS}.}. Konkret stellt der Typ die Vereinigung aus dem angegebenen Datentyp, \code{null} und \code{undef\/ined} dar. In TypeScript existiert keine direkte Entsprechung, aber es kann trivial ein äquivalenter Vereinigungstyps angegeben werden. Quelltext~\ref{code:example-complex} zeigt analog zum vorherigen Beispiel die jeweilige Deklaration eines Typalias in Flow (links) und TypeScript (rechts), das auf diesen Datentyp verweist.
+
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+// @flow                               // TypeScript
+type MaybeNumber = ?number;           type MaybeNumber = number | null | undefined;
+\end{textcode}
+\vspace*{-0.2cm}
+\caption{Beispiel für die Übersetzung komplexer Flow-Typen}
+\label{code:example-complex}
+\end{listing}
+
+Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verglichen werden, um die Einzelschritte der Transpilierung aufzuzeigen. Das Typalias ist analog zum vorherigen Beispiel und dient lediglich der Herstellung korrekter Syntax. Entscheidend ist der zugewiesene Typ des Alias im rechten Teilbaum: Bei Flow liegt hier eine \code{NullableTypeAnnotation} vor, die den Datentyp für Zahlen als Argument erhält. Auf Seite von TypeScript steht dagegen der Knoten des Vereinigungstyps (\code{TSUnionType}). Diesem ist eine Menge von Typen zugeordnet, die den äquivalenten Ausdruck herstellen, indem der Zahlentyp mit den Typen für \code{null} und \code{undefined} vereint wird.
+
+\begin{figure}[htb]
+  \footnotesize
+  \ttfamily
+  \begin{minipage}{.47\textwidth}
+    \centering
+    \vspace{-0.87cm}
+    \begin{forest}
+      for tree = {l=1.6cm, s sep=0.5cm}
+      [Program
+        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
+            [\textrm{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+          ]
+          [NullableTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{right}}
+            [NumberTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}]
+          ]
+        ]
+      ]
+    \end{forest}
+  \end{minipage}%
+  \begin{minipage}{.53\textwidth}
+    \centering
+    \begin{forest}
+      for tree = {l=1.6cm, s sep=1.25cm, align=center}
+      [Program
+        [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
+            [\textrm{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+          ]
+          [TSUnionType, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}
+            [{TSNumberKeyword,\\ TSNullKeyword,\\ TSUndefinedKeyword}, align=left, s sep=0.5cm, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{types}}]
+          ]
+        ]
+      ]
+    \end{forest}
+  \end{minipage}
+  \vspace{0.25cm}
+  \caption{Abstrakter Syntaxbaum für die Deklaration eines \enquote{Maybe type} in Flow (links) und TypeScript (rechts)}
+  \label{ast:example-complex}
+\end{figure}
+
+Quelltext~\ref{code:convert-nullable-type} zeigt die entsprechende Implementierung. Zuerst wird in Zeile zwei das Argument des \code{NullableTypeAnnotation}-Typs durch Aufruf der zentralen Umwandlungsfunktion von Flow in den korrekten TypeScript-Typ übersetzt. Im vorliegenden Fall wird Flows \code{NumberTypeAnnotation} in das Gegenstück \code{TSNumberKeyword} überführt. Anschließend wird eine Liste aufgebaut, die aus diesem Datentyp und der Typen für \code{null} und \code{undefined} besteht. Zu Beachten ist hierbei einerseits, dass der Nullwert nicht doppelt in die Liste aufgenommen werden darf, andererseits dass Funktionstypen in dieser Situationen geklammert werden müssen. Eine Doppelung träte dann auf, wenn in Flow die wenig sinnvolle Typannotation \code{?null} verwendet wird. Zuletzt kann der Vereinigungstyp in TypeScript durch Aufruf der entsprechenden Hilfsfunktion, welche die Typliste als Argument erhält, hergestellt werden.
+
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionType {
+  const tsType = convertFlowType(node.typeAnnotation);
+  const types = [
+    ...(isTSNullKeyword(tsType)
+      ? []
+      : [isTSFunctionType(tsType) ? tsParenthesizedType(tsType) : tsType]),
+    tsNullKeyword(),
+    tsUndefinedKeyword(),
+  ];
+
+  return tsUnionType(types);
+}
+\end{textcode}
+\caption{Transpilierung eines \textit{Maybe types} in äquivalenten Vereinigungstyp in TypeScript}
+\label{code:convert-nullable-type}
+\end{listing}
+
+
 \subsubsection{Transpilierung der Hilfstypen}
+
+% TODO
+
 \subsubsection{Transpilierung der Typdeklarationen}
 
-\subsection{Weitere Optimierungsfunktionen}
+% TODO
+
+\subsection{Weitere Optimierungen}
 \label{subsec:optimizations}
 
 \subsubsection{Übersetzung von React Typimporten}
@@ -111,7 +295,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
   Beispiel: \texttt{reflow -{}-dry-run -{}-include-pattern "{}*/.js"{} src/}
 }
 
-\bigskip
+\bigbreak
 \begin{table}[tbh]
   \small
   \begin{tabularx}{\textwidth}{@{}lX@{}}
@@ -129,7 +313,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
     \smallskip
     \texttt{-r -{}-replace} & Originaldateien (Flow) mit generierten TypeScript-Dateien ersetzen, statt diese beizubehalten. \\
     \smallskip
-    \texttt{-D -{}-replace-decorators} & Klassendekoratoren durch verschachtelte Funktionsaufrufe ersetzen (vgl. Abschnitt~\ref{subsec:class-decorators} für Hintergrund). \\
+    \texttt{-D -{}-replace-decorators} & Klassendekoratoren durch verschachtelte Funktionsaufrufe ersetzen (vgl. Abschnitt~\ref{subsec:class-decorators}). \\
     \smallskip
     \texttt{-h -{}-help} & Hilfe anzeigen. \\
     \midrule
@@ -145,11 +329,10 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
 	\label{fig:activity-diagram-cli}
 \end{figure}
 
-\medskip
-Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms. Als Erstes werden dessen Argumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaubt sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt\footnote{vgl. Option \texttt{include-pattern}.}. Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet. Da unsinnige Wildcard-Muster durch Benutzereingabe möglich sind, wird erneut überprüft, ob die aktuelle Eingabedatei valide ist. Sollte dies nicht der Fall sein, so wird diese übersprungen. Ansonsten wird der Quelltext der Datei durch den Parser von Babel eingelesen und so die Repräsentation des abstrakten Syntaxbaum des Programms erstellt. Daraufhin wird die Transpilierung durch das Babel-Plugin angestoßen. Auch hier kann es zu Laufzeitfehlern kommen, falls beispielsweise Syntaxfehler innerhalb des Eingabequelltexts vorliegen. In diesem Fall wird die aktuelle Datei ebenfalls übersprungen und eine Warnung angegeben.
+Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram-cli} zeigt das Aktivitätsdiagramm des Kommandozeilenprogramms. Als Erstes werden dessen Argumente eingelesen und validiert. Dabei wird überprüft, ob alle Eingabeverzeichnisse bzw. -dateien existieren und ob der Dateityp korrekt ist. Erlaubt sind lediglich JavaScript und JSX-Dateien. Sofern die Validierung fehlschlägt, wird die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin die Liste aller zu übersetzenden Flow-Dateien aufgebaut. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien innerhalb dieser, die dem Wildcard-Muster für Eingabedateien entsprechen, zur Verarbeitungsliste hinzugefügt\footnote{vgl. Option \code{-{}-include-pattern}.}. Anschließend wird eine Schleife gestartet, welche alle Elemente der Liste nach und nach verarbeitet. Da unsinnige Wildcard-Muster durch Benutzereingabe möglich sind, wird erneut überprüft, ob die aktuelle Eingabedatei valide ist. Sollte dies nicht der Fall sein, so wird diese übersprungen. Ansonsten wird der Quelltext der Datei durch den Parser von Babel eingelesen und so die Repräsentation des abstrakten Syntaxbaum des Programms erstellt. Daraufhin wird die Transpilierung durch das Babel-Plugin angestoßen. Auch hier kann es zu Laufzeitfehlern kommen, falls beispielsweise Syntaxfehler innerhalb des Eingabequelltexts vorliegen. In diesem Fall wird die aktuelle Datei ebenfalls übersprungen und eine Warnung ausgegeben.
 
-Nachdem die Transpilierung abgeschlossen ist wird der generierte TypeScript-Code unabhängig von Babel formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen Formatierung der Ausgabe umsetzt. Sollten unerwarteten Fehler auftreten wird auch hier die Datei gegebenenfalls übersprungen. Zuletzt kann der generierte TypeScript-Code ausgegeben werden. Dabei gibt es je nach Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Sofern der Parameter \texttt{-{}-dry-run} gesetzt ist, wird das Resultat einfach auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im Verzeichnis der Eingabedateien erstellt. Falls die Option zum Ersetzen der Originaldateien angegeben wurde, so werden diese zuvor gelöscht.
-Da die Verwendung von JSX-Syntax in TypeScript die Dateierweiterung \texttt{.tsx} vorschreibt~\autocite{TYPESCRIPT_HANDBOOK:JSX}, muss sicher gestellt werden, dass die Ausgabedateien die korrekte Endung erhalten. Analog müssen \emph{globale} Typdeklarationen in Dateien mit der Erweiterung \texttt{.d.ts} geschrieben werden. Zur Bestimmung des korrekten Ausgabedateityps wird innerhalb des Babel-Plugins während der Transpilierung überprüft, ob JSX-Syntax in der Eingabedatei verwendet wird bzw. ob Typdeklarationen vorliegen. Hierfür werden Besucher-Funktionen für diese speziellen AST-Knoten registriert, die eine Lookup-Tabelle aufbauen, welche die Abbildung der Originaldateien auf einen Ausgabetyp darstellt. Das Kommandozeilenprogramm kann diese Information anschließend beim Schreiben der Dateien abfragen und entsprechend reagieren.
+Nachdem die Transpilierung abgeschlossen ist wird der generierte TypeScript-Code unabhängig von Babel formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen Formatierung der Ausgabe umsetzt. Sollten unerwarteten Fehler auftreten wird auch hier die Datei gegebenenfalls übersprungen. Zuletzt kann der generierte TypeScript-Code ausgegeben werden. Dabei gibt es je nach Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Sofern der Parameter \code{dry-run} gesetzt ist, wird das Resultat einfach auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im Verzeichnis der Eingabedateien erstellt. Falls die Option zum Ersetzen der Originaldateien angegeben wurde, so werden diese zuvor gelöscht.
+Da die Verwendung von JSX-Syntax in TypeScript die Dateierweiterung \code{.tsx} vorschreibt~\autocite{TYPESCRIPT_HANDBOOK:JSX}, muss sicher gestellt werden, dass die Ausgabedateien die korrekte Endung erhalten. Analog müssen \emph{globale} Typdeklarationen in Dateien mit der Erweiterung \code{.d.ts} geschrieben werden. Zur Bestimmung des korrekten Ausgabedateityps wird innerhalb des Babel-Plugins während der Transpilierung überprüft, ob JSX-Syntax in der Eingabedatei verwendet wird bzw. ob Typdeklarationen vorliegen. Hierfür werden Besucher-Funktionen für diese speziellen AST-Knoten registriert, die eine Lookup-Tabelle aufbauen, welche die Abbildung der Originaldateien auf einen Ausgabetyp darstellt. Das Kommandozeilenprogramm kann diese Information anschließend beim Schreiben der Dateien abfragen und entsprechend reagieren.
 
 
 % Auch Typdeklarationen  \texttt{.d.ts}.
@@ -167,11 +350,10 @@ Eine weitere Problematik, die sich während der Entwicklung des Transpilers geze
 	\label{fig:activity-diagram-formatting}
 \end{figure}
 
-\medskip
 Der konzeptionellen Aufbau der Formatierungs-Funktion wird in Abbildung~\ref{fig:activity-diagram-formatting} dargestellt. Deren Idee ist simpel: Nachdem sowohl die Ein- als auch die Ausgabe in einen vergleichbaren, konsistenten Zustand überführt worden sind, können Leerzeilen und Kommentare aus dem ursprünglichen Quelltext einfach übertragen werden. Konsistent bedeutet, dass sämtliche Ausdrücke und Anweisungen innerhalb beider Quelltexte die gleiche Zahl von Zeilen vereinnahmen, d.~h. dass diese gleich umgebrochen werden. Diese Voraussetzung muss insbesondere auch für alle Flow-Konstrukte, nach deren Übersetzung nach TypeScript, gelten.
 Grund für die Herstellung dieser Eigenschaft ist, dass das weitere Verfahren zeilenbasiert arbeitet, um die Originalformatierung in die Ausgabe zu übernehmen
-Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Programmierstil für Sprachen wie JavaScript, TypeScript, HTML und weitere erzwingt~\autocite{SOFTWARE:PRETTIER}.
+Zur Herstellung eines solchen Ausgangszustand wird \textit{Prettier} eingesetzt. Prettier ist ein Quelltext-Formatierer, der einen einheitlichen Programmierstil für Sprachen wie JavaScript, TypeScript, HTML und weitere ermöglicht~\autocite{SOFTWARE:PRETTIER}.
 Versuche haben gezeigt, dass die Ein- und Ausgabe bei Anwendung von Prettier aufgrund unterschiedlicher Syntax nicht in allen Situationen gleich umgebrochen wird. Deshalb wurde das Werkzeug geringfügig modifiziert, um eine größere Konsistenz der Ausgabe von Prettier herzustellen\footnote{Siehe \url{https://github.com/grubersjoe/prettier-reflow}.}.
-Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert werden, um in jedem Schleifendurchlauf zu prüfen, ob eine Leerzeile vorliegt. Gegebenenfalls wird diese an die entsprechende Position in der Ausgabe kopiert. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Auf diese Weise werden nach und nach alle Leerzeilen und Kommentare übertragen. Zuletzt wird Prettier erneut auf die so formatierte Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
+Im ersten Schritt der Routine wird diese angepasste Version des Werkzeugs einerseits auf den Originalcode, andererseits auf den generierte TypeScript-Quelltext angewandt. Im Anschluss kann sukzessive über alle Zeilen der Eingabe iteriert werden, um in jedem Schleifendurchlauf zu prüfen, ob eine Leerzeile vorliegt. Gegebenenfalls wird diese an die entsprechende Position in der Ausgabe kopiert. Gleichzeitig werden Block- und Zeilenkommentare im ursprünglichen Flow-Programm gesucht und an die gleiche Stelle in den TypeScript-Code eingefügt. Auf diese Weise werden nach und nach alle Leerzeilen und Kommentare übertragen, sodass die originalgetreue Formatierung hergestellt wird. Zuletzt wird Prettier erneut auf die so entstandene Ausgabe angewandt, um verbleibende Probleme wie z.~B. doppelte Leerzeilen zu eliminieren.
 
 % TODO: Beispiel..?

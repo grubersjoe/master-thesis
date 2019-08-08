@@ -1,6 +1,6 @@
 \documentclass[
   abstract=on,
-  BCOR=6mm,
+  BCOR=10mm,
   bibliography=totoc,
   listof=totoc,
   headsepline=on,
@@ -8,7 +8,7 @@
   paper=a4,
   parskip=on,
   twoside=off,
-  DIV=10,
+  DIV=11,
   ngerman
 ]{scrreprt}
 
@@ -28,7 +28,7 @@
 
 % Fonts
 \usepackage[tt=false]{libertine}
-\usepackage[scale=0.8,lining]{FiraMono}
+\usepackage[scale=0.8,nomap,lining]{FiraMono}
 
 % Set headings in serif as well
 \addtokomafont{disposition}{\rmfamily}
@@ -77,38 +77,41 @@
 % Remove chapter number
 \renewcommand\chaptermarkformat{}
 
-% Small captions
-\usepackage[font=small]{caption}
-\captionsetup{
-  format=hang,
-  justification=raggedright,
-  % singlelinecheck=false,
-}
-
 % Better spacing in lists
 \usepackage{enumitem}
+% \renewcommand\labelitemi{--}
 \setlist{nosep}
 
-% Images
+% Figures
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{forest}
 
 % Tables
 \usepackage{tabularx, booktabs}
 \renewcommand{\arraystretch}{1.25} % More space between table rows
 
 % Code listings (minted)
-\newcommand{\code}[1]{\small\texttt{#1}}
 \usepackage[outputdir=build]{minted}
-\usemintedstyle{perldoc}
-\newminted{text}{fontsize=\scriptsize,tabsize=4}
-\newminted{js}{fontsize=\footnotesize,tabsize=4}
-\newminted{ts}{fontsize=\footnotesize,tabsize=4}
+\usemintedstyle{vs}
+\newminted{text}{fontsize=\small,tabsize=4,stripall,linenos}
+\newminted{js}{fontsize=\small,tabsize=4,stripall,linenos}
+\newminted{ts}{fontsize=\small,tabsize=4,stripall,linenos}
 \renewcommand\listingscaption{Quelltext}
 \renewcommand\listoflistingscaption{Quelltextverzeichnis}
+\renewcommand{\theFancyVerbLine}{\scriptsize{\arabic{FancyVerbLine}}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+
+% Captions (needs to come after minted)
+\usepackage[font=small]{caption}
+\captionsetup{
+  format=hang,
+  justification=raggedright,
+  singlelinecheck=off
+}
 
 % Box drawing characters
 \usepackage{pmboxdraw}
-
 
 % Quotes
 \usepackage{csquotes}
@@ -117,6 +120,7 @@
 \usepackage[normalem]{ulem}
 
 % Hyphenation rules
+\hyphenation{ECMAScript}
 \hyphenation{JavaScript}
 \hyphenation{Prettier}
 \hyphenation{Python}
@@ -124,6 +128,7 @@
 \hyphenation{Ruby}
 \hyphenation{TypeScript}
 \hyphenation{retainLines}
+\hyphenation{unknow}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
 \babelhyphenation[ngerman]{Kom-man-do-zei-len-pro-gramm}
 % Orphans
