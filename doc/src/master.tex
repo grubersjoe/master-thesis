@@ -85,6 +85,8 @@
 % Figures
 \usepackage{graphicx}
 \usepackage{tikz}
+
+% Trees
 \usepackage{forest}
 
 % Tables
@@ -94,13 +96,15 @@
 % Code listings (minted)
 \usepackage[outputdir=build]{minted}
 \usemintedstyle{vs}
-\newminted{text}{fontsize=\small,tabsize=4,stripall,linenos}
-\newminted{js}{fontsize=\small,tabsize=4,stripall,linenos}
-\newminted{ts}{fontsize=\small,tabsize=4,stripall,linenos}
-\renewcommand\listingscaption{Quelltext}
+\newminted{text}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
+\newminted{js}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
+\newminted{ts}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
+\renewcommand\listingscaption{\textsf Quelltext}
 \renewcommand\listoflistingscaption{Quelltextverzeichnis}
 \renewcommand{\theFancyVerbLine}{\scriptsize{\arabic{FancyVerbLine}}}
+
 \newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
 
 % Captions (needs to come after minted)
 \usepackage[font=small]{caption}
@@ -109,6 +113,7 @@
   justification=raggedright,
   singlelinecheck=off
 }
+\usepackage{subcaption}
 
 % Box drawing characters
 \usepackage{pmboxdraw}

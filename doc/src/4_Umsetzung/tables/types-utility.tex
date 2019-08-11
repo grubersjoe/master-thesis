@@ -1,0 +1,30 @@
+
+\begin{table}[htb]
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}lll@{}}
+    \midrule
+    \libertineSB{Hilfstyp} & \libertineSB{Flow} & \libertineSB{TypeScript}  \\
+    \midrule
+    Call                        & \texttt{\$Call<F, T...>}        & \texttt{ReturnType<F>}        \\
+    Class                       & \texttt{Class<T>}               & \texttt{typeof T}             \\
+    Difference                  & \texttt{\$Diff<A, B>}           & \texttt{Omit<A, keyof B>}     \\
+    Element type                & \texttt{\$ElementType<T, K>}    & \texttt{T[k]}                 \\
+    Exact                       & \texttt{\$Exact<T>}             & \texttt{T}                    \\
+    \textit{Existential type}   & \texttt{*}                      & \texttt{any}                  \\
+    Keys                        & \texttt{\$Keys<T>}              & \texttt{keyof T}              \\
+    None maybe type             & \texttt{\$NonMaybeType<T>}      & \texttt{NonNullable<T>}       \\
+    \sout{Object map}           & \texttt{\$ObjMap<T, F>}         & \textmd{nicht implementiert}  \\
+    \sout{Object map with key}  & \texttt{\$ObjMapi<T, F>}        & \textit{nicht implementiert}  \\
+    Property type               & \texttt{\$PropertyType<T, k>}   & \texttt{T[k]}                 \\
+    ReadOnly                    & \texttt{\$ReadOnly<T>}          & \texttt{ReadOnly<T>}          \\
+    \sout{Rest}                 & \texttt{\$Rest<A, B>}           & \textit{nicht implementiert}  \\
+    Shape                       & \texttt{\$Shape<T>}             & \texttt{Partial<T>}           \\
+    \sout{Tuple map}            & \texttt{\$TupleMap<T, F>}       & \textit{nicht implementiert}  \\
+    Values                      & \texttt{\$Values<T>}            & \texttt{T[keyof T]}           \\
+    \sout{Subtype}              & \texttt{\$Subtype<T>}           & \textit{nicht implementiert (obsolet)} \\
+    \sout{Supertype}            & \texttt{\$Supertype<T>}         & \textit{nicht implementiert (obsolet)} \\
+    \midrule
+  \end{tabularx}
+  \caption{Übersicht über Übersetzungen der Hilfstypen von Flow}
+  \label{tab:transformation-utility-types}
+\end{table}
