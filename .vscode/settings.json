@@ -21,15 +21,16 @@
     "captionsetup",
     "keyof",
     "readonly",
+    "singlelinecheck",
     "textcolor",
     "transpiliert",
+    "konkatenationsoperator",
     "unintuitiv"
   ],
   "cSpell.ignoreWords": [
     "backends",
     "brendan",
     "lückgen",
-    "konkatenationsoperator",
     "mapi",
     "obj",
     "parsern",

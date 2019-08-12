@@ -77,6 +77,12 @@
 % Remove chapter number
 \renewcommand\chaptermarkformat{}
 
+% Adjust skip aftre subsubsections
+% \RedeclareSectionCommand[
+%   runin=false,
+%   afterskip=-.25\baselineskip
+% ]{subsubsection}
+
 % Better spacing in lists
 \usepackage{enumitem}
 % \renewcommand\labelitemi{--}
@@ -108,6 +114,8 @@
 \newcommand{\code}[1]{{\texttt{#1}}}
 \newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
 
+\newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
+
 % Captions (needs to come after minted)
 \usepackage[font=small]{caption}
 \captionsetup{
@@ -131,6 +139,7 @@
 \hyphenation{JavaScript}
 \hyphenation{Prettier}
 \hyphenation{Python}
+\hyphenation{React}
 \hyphenation{Reflow}
 \hyphenation{Ruby}
 \hyphenation{TypeScript}
