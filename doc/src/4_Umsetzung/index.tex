@@ -72,7 +72,7 @@ interface TypeAlias extends BaseNode {
 
 % TODO: Check numb
 
-Da bekannt ist welcher TypeScript-Knoten zu konstruieren ist, um einen Flow-Ausdruck zu übersetzen, ist durch die Typisierung der Methoden zur Erstellung dieses AST-Knotens auch bekannt, welche Typen die Funktionsargumente erwarten. Die Implementierung von Transformationen wird hierdurch erheblich vereinfacht, da so lediglich die Attribute des Ursprungsknoten korrekt auf den Typ des jeweiligen Funktionsparameters abgebildet werden müssen. Es hat sich während der Entwicklung gezeigt, dass dieses Vorgehen sehr hilfreich ist: Wenn keine Typfehler mehr vorliegen, ist die Transformation erfahrungsgemäß mit hoher Wahrscheinlichkeit korrekt.
+Da bekannt ist welcher TypeScript-Knoten zu konstruieren ist, um einen Flow-Ausdruck zu übersetzen, ist durch die Typisierung der Methoden zur Erstellung dieses AST-Knotens auch bekannt, welche Typen die Funktionsargumente erwarten. Die Implementierung von Transformationen wird hierdurch erheblich vereinfacht, da so lediglich die Attribute des Ursprungsknoten korrekt auf den Typ des jeweiligen Funktionsparameters abgebildet werden müssen. Es hat sich während der Entwicklung gezeigt, dass dieses Vorgehen gut funktioniert: Wenn keine Typfehler mehr vorliegen, ist die Transformation erfahrungsgemäß mit hoher Wahrscheinlichkeit korrekt.
 
 \section{Implementierung als Babel-Plugin}
 
@@ -174,7 +174,7 @@ Die zwei Bäume sind sich sehr ähnlich: In der Wurzel der Datenstruktur befinde
 
 Da ein \emph{beliebiger} Flow-Typ auf der rechten Seite des Typalias stehen kann, muss bei dessen Transpilierung auch der zugewiesene Typ allgemeingültig umgewandelt werden können. Es wurde deshalb eine Funktion implementiert, die alle Flow-Typen universell auf ihr TypeScript-Gegenstück abbildet. Deren vereinfachter Aufbau ist wie folgt:
 
-% \bigbreak
+\bigbreak
 \begin{listing}[htb]
 \begin{textcode}
 function convertFlowType(node: FlowType): TSType {
@@ -202,6 +202,7 @@ Die Übersetzung der zwölf komplexen Flow"=Datentypen ist in Tabelle~\ref{tab:t
 \texttt{type FunctionType = (string, argName: number) => void;}\\[.5\baselineskip]
 Während die Benennung der Funktionsargumente in Flow optional ist, ist diese in TypeScript verbindlich. Infolgedessen müssen Parameter während der Übersetzung von Funktionstypen nach TypeScript gegebenenfalls automatisch benannt werden, da andernfalls fehlerhafte Syntax entstünde.
 
+\bigbreak
 \input{src/4_Umsetzung/tables/types-complex}
 
 Anhand des \enquote{Nullable}-Typs soll das Vorgehen bei der Transformation eines komplizierteren Knoten erläutert werden. Dieser Typ wird in der Flow-Dokumentation auch als \enquote{\textit{Maybe type}} bezeichnet und wird für die Typisierung optionaler, möglicherweise undefinierter Werte verwendet\footnote{Siehe~\autocite[Maybe Types]{FLOW:TYPE_ANNOTATIONS}.}. Konkret stellt der Typ die Vereinigung aus dem angegebenen Datentyp, \code{null} und \code{undef\/ined} dar. In TypeScript existiert keine direkte Entsprechung, aber es kann trivial ein äquivalenter Vereinigungstyps angegeben werden. Quelltext~\ref{code:example-complex} zeigt analog zum vorherigen Beispiel die jeweilige Deklaration eines Typalias in Flow (links) und TypeScript (rechts), das auf diesen Datentyp verweist.
@@ -285,14 +286,16 @@ function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionTyp
 \subsubsection{Transpilierung der Hilfstypen}
 
 Auch die in Abschnitt~\ref{subsection:flow:utility-types} eingeführten Hilfstypen von Flow können größtenteils äquivalent nach TypeScript überführt werden. Tabelle~\ref{tab:transformation-utility-types} gibt einen Überblick über alle Übersetzungen. Für einige der Einträge gibt es in in TypeScript bedeutungsgleiche Hilfstypen, andere können leicht durch Verwendung von Typoperatoren abgebildet werden.
+Die Transformation der drei Abbildungstypen \textit{Object map}, \textit{Object map with key} sowie \textit{Rest} wurde nicht umgesetzt, da kein TypeScript-Ausdruck gefunden werden konnte, der diesen exakt entspricht. Da die vorliegenden JavaScript-Projekte bei \textit{TeamShirts} diese Hilfstypen jedoch ohnehin nicht verwenden, stellt dies kein Hindernis für die Migration dar. Die zwei Typen \textit{Subtype} und \textit{Supertype} sind in der Dokumentation von Flow als veraltet (\textit{deprecated}) markiert worden~\autocite{FLOW:UTILITY_TYPES}. Deshalb werden auch diese nicht transpiliert, sondern unverändert in die Ausgabe übernommen. Sollten in der Eingabe einer dieser fünf nicht unterstützen Hilfstypen auftreten, so wird während der Verarbeitung durch das Babel-Plugin eine detaillierte Warnung ausgegeben mit der Aufforderung den Ausgabequelltext an dieser Stelle manuell zu korrigieren.
 
-Die Transformation der drei Abbildungstypen \textit{Object map}, \textit{Object map with key} sowie \textit{Rest} wurde nicht umgesetzt, da kein TypeScript-Ausdruck gefunden werden konnte, der diesen exakt entspricht. Da die vorliegenden JavaScript-Projekte bei \textit{TeamShirts} diese Hilfstypen jedoch ohnehin nicht verwenden, stellt dies kein Hindernis für die Migration dar. Die zwei Typen \textit{Subtype} und \textit{Supertype} sind in der Dokumentation von Flow als veraltet (\textit{deprecated}) markiert worden~\autocite{FLOW:UTILITY_TYPES}. Deshalb werden auch diese nicht transpiliert, sondern unverändert in die Ausgabe übernommen. Sollten in der Eingabe einer dieser fünf nicht unterstützen Hilfstypen auftreten, so wird während der Verarbeitung durch das Babel-Plugin eine detaillierte Warnung ausgegeben mit der Aufforderung den Ausgabequelltext an dieser Stelle manuell zu korrigieren. Zu beachten gilt darüber hinaus, dass der kursiv hervorgehobene Typ \textit{Existential type} von Flow ebenfalls als obsolet gekennzeichnet wurde, da er als unsicher gilt~\autocite{FLOW:LINT_RULE_REFERENCE}. Der Sinn dieses Typs ist die Angabe eines Platzhalters für Typen, die durch das statische Typsystem selbstständig inferiert werden sollen\footnote{Dies ist vergleichbar zum Schlüsselwort \code{auto} in C++~\autocite[151]{CPP11_SPEC}.}. Weil TypeScript einen derartigen Typ nicht unterstützt, wird dieser durch \code{any} ersetzt.
+Zu beachten gilt darüber hinaus, dass der kursiv hervorgehobene Typ \textit{Existential type} von Flow ebenfalls als obsolet gekennzeichnet wurde, da er als unsicher gilt~\autocite{FLOW:LINT_RULE_REFERENCE}. Der Sinn dieses Typs ist die Angabe eines Platzhalters für Typen, die durch das statische Typsystem selbstständig inferiert werden sollen\footnote{Dies ist vergleichbar zum Schlüsselwort \code{auto} in C++~\autocite[151]{CPP11_SPEC}.}. Weil TypeScript einen derartigen Typ nicht unterstützt, wird dieser durch \code{any} ersetzt.
 
 \bigbreak
 \input{src/4_Umsetzung/tables/types-utility}
 
 \subsubsection{Transpilierung der Typdeklarationen}
 
+\bigbreak
 \input{src/4_Umsetzung/tables/types-declaration}
 
 \subsection{Weitere Optimierungen}
@@ -318,8 +321,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
 
 \bigbreak
 \begin{table}[tbh]
-  \small
-  \begin{tabularx}{\textwidth}{@{}lX@{}}
+  \begin{tabu} to \textwidth {@{}lX@{}}
     \midrule
     \libertineSB{Option} & \libertineSB{Beschreibung} \\
     \midrule
@@ -338,7 +340,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
     \smallskip
     \texttt{-h -{}-help} & Hilfe anzeigen. \\
     \midrule
-  \end{tabularx}
+  \end{tabu}
   \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow})}
   \label{tab:cli-options}
 \end{table}

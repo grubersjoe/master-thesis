@@ -21,96 +21,102 @@ Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basi
 
 Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannotationen von Flow verstanden, welche keine Hilfstypen oder Typdeklarationen darstellen. Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen in allen Übersichtstabellen beibehalten und nicht ins Deutsche übersetzt.
 
-\begin{table}[tbp]
-  \footnotesize
-  \begin{tabularx}{\textwidth}{@{}llX@{}}
-    \midrule
-    \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-    \midrule
-    Any type                   & \texttt{any}                             & TODO \\
-    Array type                 & \texttt{Array<{}number>{}}               & TODO \\
-    Array type (shorthand)     & \texttt{number[]}                        & TODO \\
-    Boolean literal type       & \texttt{true}                            & TODO \\
-    Boolean type               & \texttt{boolean}                         & TODO \\
-    Empty type                 & \texttt{empty}                           & TODO \\
-    Exact object type          & \texttt{\{| prop: any |\}}               & TODO \\
-    Function type              & \texttt{(string, \{\}) => number}        & TODO \\
-    Generic type annotation    & \texttt{let v: <{}FlowType>{}}           & TODO \\
-    Generics                   & \texttt{type Generic<{}T: Super> = T}    & TODO \\
-    Interface type             & \texttt{interface \{ +prop: number \}}   & TODO \\
-    Intersection type          & \texttt{type Intersection = T1 \& T2}    & TODO \\
-    Mixed type                 & \texttt{mixed}                           & TODO \\
-    Null literal type          & \texttt{null}                            & TODO \\
-    Nullable type (Maybe type) & \texttt{?number}                         & TODO \\
-    Number literal type        & \texttt{42}                              & TODO \\
-    Number type                & \texttt{number}                          & TODO \\
-    Object type                & \texttt{\{ {[}string{]}: number \}}      & TODO \\
-    Opaque type                & \texttt{opaque type Opaque = number}     & TODO \\
-    String literal type        & \texttt{'literal'}                       & TODO \\
-    String type                & \texttt{string}                          & TODO \\
-    This type                  & \texttt{this}                            & TODO \\
-    Tuple type                 & \texttt{{[}Date, number{]}}              & TODO \\
-    Type alias                 & \texttt{type Type = <{}FlowType>{}}      & TODO \\
-    Type cast expresssion      & \texttt{(variable: string)}              & TODO \\
-    Type export                & \texttt{export type T = number | null}   & TODO \\
-    Type import                & \texttt{import type T from './types'}    & TODO \\
-    Typeof type                & \texttt{typeof undefined}                & TODO \\
-    Union type                 & \texttt{number | null}                   & TODO \\
-    Void type                  & \texttt{void}                            & TODO \\
-    \midrule
-  \end{tabularx}
+\begin{footnotesize}
+\begin{longtabu} to \textwidth {@{}llX@{}}
+  \midrule
+  \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+  \midrule
+  \endhead
+  Any type                   & \texttt{any}                             & TODO \\
+  Array type                 & \texttt{Array<{}number>{}}               & TODO \\
+  Array type (shorthand)     & \texttt{number[]}                        & TODO \\
+  Boolean literal type       & \texttt{true}                            & TODO \\
+  Boolean type               & \texttt{boolean}                         & TODO \\
+  Empty type                 & \texttt{empty}                           & TODO \\
+  Exact object type          & \texttt{\{| prop: any |\}}               & TODO \\
+  Function type              & \texttt{(string, \{\}) => number}        & TODO \\
+  Generic type annotation    & \texttt{let v: <{}FlowType>{}}           & TODO \\
+  Generics                   & \texttt{type Generic<{}T: Super> = T}    & TODO \\
+  Interface type             & \texttt{interface \{ +prop: number \}}   & TODO \\
+  Intersection type          & \texttt{type Intersection = T1 \& T2}    & TODO \\
+  Mixed type                 & \texttt{mixed}                           & TODO \\
+  Null literal type          & \texttt{null}                            & TODO \\
+  Nullable type (Maybe type) & \texttt{?number}                         & TODO \\
+  Number literal type        & \texttt{42}                              & TODO \\
+  Number type                & \texttt{number}                          & TODO \\
+  Object type                & \texttt{\{ {[}string{]}: number \}}      & TODO \\
+  Opaque type                & \texttt{opaque type Opaque = number}     & TODO \\
+  String literal type        & \texttt{'literal'}                       & TODO \\
+  String type                & \texttt{string}                          & TODO \\
+  This type                  & \texttt{this}                            & TODO \\
+  Tuple type                 & \texttt{{[}Date, number{]}}              & TODO \\
+  Type alias                 & \texttt{type Type = <{}FlowType>{}}      & TODO \\
+  Type cast expresssion      & \texttt{(variable: string)}              & TODO \\
+  Type export                & \texttt{export type T = number | null}   & TODO \\
+  Type import                & \texttt{import type T from './types'}    & TODO \\
+  Typeof type                & \texttt{typeof undefined}                & TODO \\
+  Union type                 & \texttt{number | null}                   & TODO \\
+  Void type                  & \texttt{void}                            & TODO \\
+  \midrule
   \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel}
   \label{tab:flow-base-types}
-\end{table}
+\end{longtabu}
+\end{footnotesize}
 
 \subsubsection{Hilfstypen}
 \label{subsection:flow:utility-types}
 
-\begin{table}[tbp]
-  \footnotesize
-  \begin{tabularx}{\textwidth}{@{}llX@{}}
-    \midrule
-    \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-    \midrule
-    Call                & \texttt{\$Call<F, T...>}        & TODO   \\
-    Class               & \texttt{Class<T>}               & TODO   \\
-    Difference          & \texttt{\$Diff<A, B>}           & TODO   \\
-    Element type        & \texttt{\$ElementType<T, K>}    & TODO   \\
-    Exact               & \texttt{\$Exact<T>}             & TODO   \\
-    Existential type    & \texttt{*}                      & TODO   \\
-    Keys                & \texttt{\$Keys<T>}              & TODO   \\
-    None maybe type     & \texttt{\$NonMaybeType<T>}      & TODO   \\
-    Object map          & \texttt{\$ObjMap<T, F>}         & TODO   \\
-    Object map with key & \texttt{\$ObjMapi<T, F>}        & TODO   \\
-    Property type       & \texttt{\$PropertyType<T, k>}   & TODO   \\
-    ReadOnly            & \texttt{\$ReadOnly<T>}          & TODO   \\
-    Rest                & \texttt{\$Rest<A, B>}           & TODO   \\
-    Shape               & \texttt{\$Shape<T>}             & TODO   \\
-    Tuple map           & \texttt{\$TupleMap<T, F>}       & TODO   \\
-    Values              & \texttt{\$Values<T>}            & TODO   \\
-    Subtype             & \texttt{\$Subtype<T>}           & TODO   \\
-    Supertype           & \texttt{\$Supertype<T>}         & TODO   \\
-    \midrule
-  \end{tabularx}
+\begin{footnotesize}
+\begin{longtabu} to \textwidth {@{}llX@{}}
+  \midrule
+  \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+  \midrule
+  \endhead
+  Call                & \texttt{\$Call<F, T...>}        & TODO   \\
+  Class               & \texttt{Class<T>}               & TODO   \\
+  Difference          & \texttt{\$Diff<A, B>}           & TODO   \\
+  Element type        & \texttt{\$ElementType<T, K>}    & TODO   \\
+  Exact               & \texttt{\$Exact<T>}             & TODO   \\
+  Existential type    & \texttt{*}                      & TODO   \\
+  Keys                & \texttt{\$Keys<T>}              & TODO   \\
+  None maybe type     & \texttt{\$NonMaybeType<T>}      & TODO   \\
+  Object map          & \texttt{\$ObjMap<T, F>}         & TODO   \\
+  Object map with key & \texttt{\$ObjMapi<T, F>}        & TODO   \\
+  Property type       & \texttt{\$PropertyType<T, k>}   & TODO   \\
+  ReadOnly            & \texttt{\$ReadOnly<T>}          & TODO   \\
+  Rest                & \texttt{\$Rest<A, B>}           & TODO   \\
+  Shape               & \texttt{\$Shape<T>}             & TODO   \\
+  Tuple map           & \texttt{\$TupleMap<T, F>}       & TODO   \\
+  Values              & \texttt{\$Values<T>}            & TODO   \\
+  Subtype             & \texttt{\$Subtype<T>}           & TODO   \\
+  Supertype           & \texttt{\$Supertype<T>}         & TODO   \\
+  \midrule
   \caption{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel}
   \label{tab:flow-utility-types}
-\end{table}
+\end{longtabu}
+\end{footnotesize}
 
 \subsubsection{Typdeklarationen}
 
-\begin{table}[tbp]
-  \footnotesize
-  \begin{tabularx}{\textwidth}{@{}llX@{}}
-    \midrule
-    \libertineSB{Deklartion} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-    \midrule
-    TODO                      & \texttt{TODO} & TODO   \\
-    \midrule
-  \end{tabularx}
+\begin{footnotesize}
+\begin{longtabu} to \textwidth {@{}lXX@{}}
+  \midrule
+  \libertineSB{Deklartion} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+  \midrule
+  \endhead
+  Class       & \code{declare class C {}}               & TODO \\
+  Export      & \code{declare export default () => any} & TODO \\
+              &                                         & TODO \\
+  Function    & \code{declare function f(number): any}  & TODO \\
+  Interface   & \code{declare interface I {}}           & TODO \\
+  Module      & \code{declare module 'esmodule' {}}     & TODO \\
+  Type alias  & \code{declare type T = number}          & TODO \\
+  Variable    & \code{declare var v: string}            & TODO \\
+  \midrule
   \caption{Typdeklarationen von Flow}
   \label{tab:flow-type-declarations}
-\end{table}
-
+\end{longtabu}
+\end{footnotesize}
 
 \subsection{TypeScript}
 % TS beschreiben (und zwar mit entsprechender Fachsprache)
