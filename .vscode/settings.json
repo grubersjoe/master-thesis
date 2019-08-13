@@ -7,6 +7,7 @@
   "explorer.openEditors.visible": 0,
   "cSpell.language": "en,de",
   "cSpell.words": [
+    "Dekoratoren",
     "Esprima",
     "Franca",
     "Jest",
@@ -20,11 +21,11 @@
     "Traversierung",
     "captionsetup",
     "keyof",
+    "konkatenationsoperator",
     "readonly",
     "singlelinecheck",
     "textcolor",
     "transpiliert",
-    "konkatenationsoperator",
     "unintuitiv"
   ],
   "cSpell.ignoreWords": [

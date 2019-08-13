@@ -77,11 +77,11 @@
 % Remove chapter number
 \renewcommand\chaptermarkformat{}
 
-% Adjust skip aftre subsubsections
-% \RedeclareSectionCommand[
-%   runin=false,
-%   afterskip=-.25\baselineskip
-% ]{subsubsection}
+% Decrease space after subsubsections
+\RedeclareSectionCommand[
+  runin=false,
+  afterskip=-.25\baselineskip
+]{subsubsection}
 
 % Better spacing in lists
 \usepackage{enumitem}
@@ -94,8 +94,6 @@
 
 % Trees
 \usepackage{forest}
-
-
 
 % Tables
 \usepackage{longtable, tabu, booktabs}
@@ -178,7 +176,6 @@
   }%
 }%
 \endgroup
-
 
 % Document links
 % Should be loaded last!

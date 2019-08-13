@@ -11,7 +11,7 @@ Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist des
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.92\textwidth]{src/4_Umsetzung/fig/architecture-overview.pdf}
-	\caption{Überblick über die Komponenten des Transpilers}
+	\caption{Überblick über die Komponenten des Transpilers.}
 	\label{fig:architecture-overview}
 \end{figure}
 
@@ -46,12 +46,12 @@ tests/fixtures
             └── output.ts
 \end{textcode}
 \listingvspace
-\caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen}
+\caption{Fixture-Dateien zum Test der korrekten Transpilierung der Flow-Typen.}
 \label{code:fixture-tests}
 \end{listing}
 
-% TODO: Check number of tests before publishing
 Während der Entwicklung des Transpilers wurden nach und nach Modultests für alle Funktionen des Programms angelegt. Überprüft wird dabei die Übersetzung aller Flow-Typen, die Korrektheit weiterer Optimierungen und die Formatierung der Ausgabe. Weiterhin wurden Tests zur Erprobung des Kommandozeilenprogramms und der allgemeinen Hilfsfunktionen geschrieben. Damit Regression während der fortlaufenden Entwicklung unmittelbar festgestellt werden, werden die Tests nach Einchecken von Änderungen in das Versionverwaltungssystem automatisch ausgeführt (\textit{kontinuierliche Integration}). Insgesamt sind 972 Testfälle\footnote{Anmerkung: Diese hohe Zahl ist darin begründet, dass größtenteils Fixture-Tests umgesetzt wurden und jeder Zeilenvergleich hierbei als ein Test betrachtet wird.} entstanden und es wurde eine Testabdeckung von 94,4\% erreicht.
+% TODO: check those numbers at the end
 
 \subsection{Statische Typisierung von Babel}
 
@@ -68,11 +68,9 @@ interface TypeAlias extends BaseNode {
 }
 \end{textcode}
 \listingvspace
-\caption{Externe Definition des Typen des AST-Knotens \textit{TypeAlias} in Babel}
+\caption{Externe Definition des Typen des AST-Knotens \textit{TypeAlias} in Babel.}
 \label{code:babel:static-types}
 \end{listing}
-
-% TODO: Check numb
 
 Da bekannt ist welcher TypeScript-Knoten zu konstruieren ist, um einen Flow-Ausdruck zu übersetzen, ist durch die Typisierung der Methoden zur Erstellung dieses AST-Knotens auch bekannt, welche Typen die Funktionsargumente erwarten. Die Implementierung von Transformationen wird hierdurch erheblich vereinfacht, da so lediglich die Attribute des Ursprungsknoten korrekt auf den Typ des jeweiligen Funktionsparameters abgebildet werden müssen. Es hat sich während der Entwicklung gezeigt, dass dieses Vorgehen gut funktioniert: Wenn keine Typfehler mehr vorliegen, ist die Transformation erfahrungsgemäß mit hoher Wahrscheinlichkeit korrekt.
 
@@ -93,7 +91,7 @@ Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es 
 \begin{figure}[p]
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-plugin.pdf}
-  \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin)}
+  \caption{Aktivitätsdiagramm des Transpilers (Babel-Plugin).}
   \label{fig:activity-diagram-plugin}
 \end{figure}
 
@@ -122,7 +120,7 @@ Tabelle~\ref{tab:transformation-base-types-simple} auf Seite~\pageref{tab:transf
 type Alias = mixed;                  type Alias = unknown;
 \end{textcode}
 \listingvspace
-\caption{Beispiel für die Übersetzung simpler Flow-Typen}
+\caption{Beispiel für die Übersetzung simpler Flow-Typen.}
 \label{code:example-simple}
 \end{listing}
 
@@ -170,7 +168,7 @@ Die zwei Bäume sind sich sehr ähnlich: In der Wurzel der Datenstruktur befinde
       \end{forest}
   \end{subfigure}
   \vspace{0.25cm}
-  \caption{Abstrakter Syntaxbaum für die Deklaration eines Typalias in Flow und TypeScript}
+  \caption{Abstrakter Syntaxbaum für die Deklaration eines Typalias in Flow und TypeScript.}
   \label{ast:example-simple}
 \end{figure}
 
@@ -193,7 +191,7 @@ function convertFlowType(node: FlowType): TSType {
 }
 \end{textcode}
 \listingvspace
-\caption{Universelle Transpilierung aller Flow-Typen nach TypeScript durch Umwandlungsfunktion}
+\caption{Universelle Transpilierung aller Flow-Typen nach TypeScript durch Umwandlungsfunktion.}
 \label{code:convert-flow-type}
 \end{listing}
 
@@ -217,7 +215,7 @@ Anhand des \enquote{Nullable}-Typs soll das Vorgehen bei der Transformation eine
 type MaybeNumber = ?number;           type MaybeNumber = number | null | undefined;
 \end{textcode}
 \listingvspace
-\caption{Beispiel für die Übersetzung komplexer Flow-Typen}
+\caption{Beispiel für die Übersetzung komplexer Flow-Typen.}
 \label{code:example-complex}
 \end{listing}
 
@@ -260,7 +258,7 @@ Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verg
     \end{forest}
   \end{minipage}
   \vspace{0.25cm}
-  \caption{Abstrakter Syntaxbaum für die Deklaration eines \enquote{Maybe type} in Flow (links) und TypeScript (rechts)}
+  \caption{Abstrakter Syntaxbaum für die Deklaration eines \enquote{Maybe type} in Flow (links) und TypeScript (rechts).}
   \label{ast:example-complex}
 \end{figure}
 
@@ -283,7 +281,7 @@ function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionTyp
 }
 \end{textcode}
 \listingvspace
-\caption{Transpilierung eines \textit{Maybe types} in äquivalenten Vereinigungstyp in TypeScript}
+\caption{Transpilierung eines \textit{Maybe types} in äquivalenten Vereinigungstyp in TypeScript.}
 \label{code:convert-nullable-type}
 \end{listing}
 
@@ -322,15 +320,32 @@ import React, { type Node } from 'react';       import React, { ReactNode } from
 type FunctionType = () => Node;                 type FunctionType = () => ReactNode;
 \end{textcode}
 \listingvspace
-\caption{Import und Benutzung des durch \textit{React} extern definierten Typs \textit{Node}}
+\caption{Import und Benutzung des durch die Bibliothek \textit{React} extern definierten Typs \enquote{Node}.}
 \label{code:react-imports}
 \end{listing}
 
-Quelltext~\ref{code:react-imports} veranschaulicht wie die Transpilierung richtig durchgeführt wird. Einerseits muss die Syntax des Typimport als solche transformiert werden, andererseits sollten sämtliche React"=Typen korrekt auf ihre Entsprechung in TypeScript übersetzt werden. Dabei müssen auch alle Stellen, die diese importierten Typen verwenden entsprechend angepasst werden. Da bekannt ist, welche Typen durch React definiert sind und was deren Gegenstück in TypeScript ist, konnte eine solche Transformation mittels einer Abbildungstabelle implementiert werden.
+Quelltext~\ref{code:react-imports} veranschaulicht wie die Transpilierung richtig durchgeführt werden sollte. Einerseits muss die Syntax des Typimport als solche transformiert werden, andererseits sollten sämtliche React"=Typen korrekt auf ihre Entsprechung in TypeScript übersetzt werden. Dabei müssen auch alle Stellen, die diese importierten Typen verwenden entsprechend angepasst werden. Da bekannt ist, welche Typen durch React definiert sind und was deren Gegenstück in TypeScript ist, konnte eine solche Transformation mittels einer Abbildungstabelle implementiert werden.
 
 \subsubsection{Konvertierung von Klassendekoratoren}
 \label{subsec:class-decorators}
 
+\textit{Dekoratoren} sind eine vorgeschlagene Spracherweiterung von ECMAScript, die es ermöglichen Klassen oder deren Attribute, unabhängig von der zugrunde liegenden Implementierung, zu erweitern~\autocite{ES_PROPOSAL:DECORATORS}. Hierfür werden Annotationen in den Quelltext unmittelbar vor der Deklaration der Klassen bzw. Attribute eingefügt. Klassendekoratoren stellen Funktionen höherer Ordnung dar, die den Konstruktor der Klasse als Argument erhalten, diesen gegebenenfalls modifizieren und daraufhin eine Funktion zurück liefern, die den Konstruktor intern aufruft. Auf diese Weise kann die Instanziierung aller Objekten dieser Klasse beeinflusst werden, indem beispielsweise weitere Methoden vor oder nach Aufruf des Konstruktors ausgeführt werden. Damit Dekoratoren eingesetzt werdenk können, muss ein Transpiler wie Babel eingesetzt werden, um die Syntax in standardkonformes JavaScript zu übersetzen. Dies ist bei TypeScript nicht nötig, da die Sprache Dekoratoren nativ unterstützt~\autocite{TYPESCRIPT_HANDBOOK:DECORATORS}.
+
+\bigbreak
+\begin{listing}[htb]
+\begin{textcode}
+// @flow                                        // TypeScript
+@d1(arg)
+@d2
+class C {}                                      class C {}
+export default C;                               export default d1(arg)(d2(C));
+\end{textcode}
+\listingvspace
+\caption{Optionale Übersetzung von Klassendekoratoren in verschachtelte Funktionsaufrufe.}
+\label{code:class-decorators}
+\end{listing}
+
+In den Projekten von \textit{TeamShirts} werden Klassendekoratoren verwendet, um React"=Komponenten um verschiedene Funktionen zu erweitern. Es wurde bei Tests festgestellt, dass die Verwendung von Dekoratoren in TypeScript problematisch ist, da dies zu zahlreichen Typfehlern führt und eine korrekte Typisierung sehr aufwändig ist. Deshalb wurde ein \emph{optionales} Feature in das Babel-Plugin integriert, dass die Klassendekoratoren durch äquivalente, verschachtelte Funktionsaufrufe ersetzt. Es hat sich gezeigt, dass diese hinsichtlich der Typisierung weitaus weniger Schwierigkeiten verursachen. In Quelltext~\ref{code:class-decorators} wird eine derartige Transpilierung demonstriert. Die Transformation der Klassendekoratoren kann durch Setzen der Option \code{-{}-replace-decorators} des Kommandozeilenprogramms aktiviert werden.
 
 \section{Erweiterung als Kommandozeilenprogramm}
 \label{sec:cli-program}
@@ -365,14 +380,14 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
     \texttt{-h -{}-help} & Hilfe anzeigen. \\
     \midrule
   \end{tabu}
-  \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow})}
+  \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow}).}
   \label{tab:cli-options}
 \end{table}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\textwidth]{src/4_Umsetzung/fig/activity-diagram-cli.pdf}
-	\caption[Aktivitätsdiagramm des Kommandozeilenprogramms]{Aktivitätsdiagramm des Kommandozeilenprogramms. Vgl. eingebettete Diagramme~\ref{fig:activity-diagram-plugin} \enquote{Eingabe transpilieren} und~\ref{fig:activity-diagram-formatting} \enquote{Ausgabe formatieren}}
+	\caption[Aktivitätsdiagramm des Kommandozeilenprogramms]{Aktivitätsdiagramm des Kommandozeilenprogramms. Vgl. eingebettete Diagramme~\ref{fig:activity-diagram-plugin} \enquote{Eingabe transpilieren} und~\ref{fig:activity-diagram-formatting} \enquote{Ausgabe formatieren}.}
 	\label{fig:activity-diagram-cli}
 \end{figure}
 
@@ -381,11 +396,6 @@ Abbildung~\ref{fig:activity-diagram-cli} auf Seite~\pageref{fig:activity-diagram
 Nachdem die Transpilierung abgeschlossen ist wird der generierte TypeScript-Code unabhängig von Babel formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen Formatierung der Ausgabe umsetzt. Sollten unerwarteten Fehler auftreten wird auch hier die Datei gegebenenfalls übersprungen. Zuletzt kann der generierte TypeScript-Code ausgegeben werden. Dabei gibt es je nach Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Sofern der Parameter \code{dry-run} gesetzt ist, wird das Resultat einfach auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im Verzeichnis der Eingabedateien erstellt. Falls die Option zum Ersetzen der Originaldateien angegeben wurde, so werden diese zuvor gelöscht.
 Da die Verwendung von JSX-Syntax in TypeScript die Dateierweiterung \code{.tsx} vorschreibt~\autocite{TYPESCRIPT_HANDBOOK:JSX}, muss sicher gestellt werden, dass die Ausgabedateien die korrekte Endung erhalten. Analog müssen \emph{globale} Typdeklarationen in Dateien mit der Erweiterung \code{.d.ts} geschrieben werden. Zur Bestimmung des korrekten Ausgabedateityps wird innerhalb des Babel-Plugins während der Transpilierung überprüft, ob JSX-Syntax in der Eingabedatei verwendet wird bzw. ob Typdeklarationen vorliegen. Hierfür werden Besucher-Funktionen für diese speziellen AST-Knoten registriert, die eine Lookup-Tabelle aufbauen, welche die Abbildung der Originaldateien auf einen Ausgabetyp darstellt. Das Kommandozeilenprogramm kann diese Information anschließend beim Schreiben der Dateien abfragen und entsprechend reagieren.
 
-
-% Auch Typdeklarationen  \texttt{.d.ts}.
-
-% TODO: *.ts vs *.tsx vs *.d.ts
-
 \section{Formatierung des Ausgabequelltexts}
 
 Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor. Im Gegensatz zu einem \emph{konkreten} Syntaxbaum, welcher den Ableitungsbaum einer formalen Grammatik darstellt~\autocite[45]{AHO:COMPILERS}, enthält der abstrakte Syntaxbaum lediglich \enquote{wesentliche Teile}~\autocite[21]{WALDMANN:PPS} davon. Infolgedessen geht die Einrückung und die Position der Leerzeichen und -zeilen in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Übersetzung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Babel-Codegenerators, welche eine Beibehaltung der Zeilen in der Ausgabe bewirken soll, erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format des generierten Quelltexts erheblich von der Eingabe. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist\footnote{Vgl. Abschnitt~\ref{subsection:requirement:format}.}, wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Diese wird nach der Transpilierung aller Eingabedateien durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}) und im Folgenden erläutert. Um die Kommentare korrekt zu positionieren werden diese während der Transpilierung entfernt und nicht ausgegeben. Erst im Nachgang werden diese im Zuge der Formatierung in die Ausgabe eingefügt.
@@ -393,7 +403,7 @@ Eine weitere Problematik, die sich während der Entwicklung des Transpilers geze
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.55\textwidth]{src/4_Umsetzung/fig/activity-diagram-formatting.pdf}
-	\caption[Aktivitätsdiagramm der Formatierung des Ausgabecodes]{Aktivitätsdiagramm der Formatierung des generierten Ausgabecodes}
+	\caption[Aktivitätsdiagramm der Formatierung des Ausgabecodes]{Aktivitätsdiagramm der Formatierung des generierten Ausgabecodes.}
 	\label{fig:activity-diagram-formatting}
 \end{figure}
 
