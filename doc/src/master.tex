@@ -109,11 +109,6 @@
 \renewcommand\listoflistingscaption{Quelltextverzeichnis}
 \renewcommand{\theFancyVerbLine}{\scriptsize{\arabic{FancyVerbLine}}}
 
-\newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
-
-\newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
-
 % Captions (needs to come after minted)
 \usepackage[font=small]{caption}
 \captionsetup{
@@ -135,6 +130,7 @@
 % Hyphenation rules
 \hyphenation{ECMAScript}
 \hyphenation{JavaScript}
+\hyphenation{Node}
 \hyphenation{Prettier}
 \hyphenation{Python}
 \hyphenation{React}
@@ -145,37 +141,17 @@
 \hyphenation{unknow}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
 \babelhyphenation[ngerman]{Kom-man-do-zei-len-pro-gramm}
-% Orphans
-\usepackage[all]{nowidow}
 
-% The following ensures that only straight quotes are used inside of \texttt
-\usepackage{upquote}
-\usepackage{etoolbox}
+% Orphans TODO
+% \usepackage[all]{nowidow}
 
-\robustify{\texttt}
-\let\originaltexttt\texttt
+% Commands
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\dquote}[1]{\enquote{\textit{#1}}}
+\newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
+\newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
 
-\begingroup
-\catcode`'=\active
-\catcode``=\active
-\globaldefs1
-\makeatletter
-\renewrobustcmd{\texttt}[1]{%
-  {%
-  \everyeof{\noexpand}\endlinechar-1
-  \expandafter\catcode\string``=\active
-  \expandafter\catcode\string`'=\active
-  \let'\textquotesingle
-  \let`\textasciigrave
-  \ifx\encodingdefault\upquote@OTone
-    \ifx\ttdefault\upquote@cmtt
-    \def'{\char13 }\def`{\char18 }%
-    \fi
-  \fi
-  \scantokens{\originaltexttt{#1}}%
-  }%
-}%
-\endgroup
+\input{src/fixes}
 
 % Document links
 % Should be loaded last!

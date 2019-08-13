@@ -1,6 +1,26 @@
 \chapter{Grundlagen}
 \label{chap:basics}
 
+\section{Typsysteme}
+
+\subsection{Konzepte und Begrifflichkeit}
+
+TODO
+
+\subsection{Vorteile statischer Typsysteme}
+
+Eine explizite, statische Typisierung wie sie beispielsweise in C++ oder Java vorliegt, bietet viele Vorteile für den Software-Entwicklungsprozess: Im Gegensatz zu einer dynamischen Typsystem wird der Typ einer Variable in statischen Systemen \emph{explizit} deklariert oder kann selbstständig inferiert (abgeleitet) werden. Damit wird die Wertebereich einer Variable durch ihren Typ bestimmt und dynamische Typumwandlungen eingeschränkt.
+% TODO: CITATION NEEDED (like a lot)
+% TODO: Überarbeiten
+Ein gewichtiges Argument für den Einsatz statischer Typsysteme ist die erhöhte Sicherheit während des Programmierens~\autocite{CORNELL:STRONG_TYPING}. Da der Compiler mittels statischer Analyse überprüfen kann, ob bei Zuweisungen, Funktionsaufrufen und Rückgabewerten Typverletzungen auftreten, können Logik- und Flüchtigkeitsfehler reduziert werden. Wenn alle Datenstrukturen typisiert sind können darüber hinaus irrtümliche Annahmen über diese bereits vor der Ausführung des Programms erkannt und zugehörige Fehler behoben werden. Auf diese Weise können Laufzeitfehler verringert und die Qualität der Software gesteigert werden. Weiterhin ist es möglich die Einschränkungen und Regeln der gegebenen Anwendungsdomäne mittels eines Typsystems präzise zu modellieren und deren Einhaltung zu erzwingen. Durch eine statische Typisierung gewinnen Software"=Entwickler die Sicherheit und Zuversicht, dass Änderungen in umfangreichen Projekten keine unerwünschte Nebenwirkung verursachen (\textit{Refactoring}).
+% TODO: steile Thesen!
+% Mittels statischer Analyse werden Typfehler und damit auch gegebenenfalls semantische Probleme unmittelbar erkannt. Infolgedessen steigert sich die Wartbarkeit der Anwendung.
+% TODO: einfacherer Einstieg für Anfänger
+Des Weiteren zwingt die Deklaration expliziter Typen den Entwickler dazu die \emph{Intension} seines Programms klar zu formulieren~\autocite[96]{WALDMANN:PPS}, wodurch sich die Ausdruckskraft und Lesbarkeit des Codes erhöht. Durch eine vernünftige Typisierung wird der Quelltext darüber hinaus bereits grundlegend an Ort und Stelle dokumentiert (\textit{inline documentation})~\footcite[Abschnitt 6.1.1]{MITCHELL:CONCEPTS}.
+
+Schließlich hat die Verwendung statischer Typsysteme auch Vorteile für die Effizienz und Ausführungsgeschwindigkeit von Software. Da bereits im Vorfeld bekannt ist, welche Typen verschiedene Datenstrukturen besitzen, kann deren Speicherung und Zugriff optimiert werden~\footcite[Abschnitt 6.1.3]{MITCHELL:CONCEPTS}. Damit entfallen aufwändige Überprüfungen des Laufzeitsystems, die eine dynamische Typisierung erlauben.
+
+
 \section{Statische Typsysteme für JavaScript}
 
 Die Idee JavaScript um ein statisches Typsystem zu erweitern ist nicht neu. Zahlreiche Ansätze sind im Lauf der letzten Jahre entstanden.
@@ -21,20 +41,21 @@ Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basi
 
 Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannotationen von Flow verstanden, welche keine Hilfstypen oder Typdeklarationen darstellen. Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen in allen Übersichtstabellen beibehalten und nicht ins Deutsche übersetzt.
 
+\bigbreak
 \begin{footnotesize}
 \begin{longtabu} to \textwidth {@{}llX@{}}
   \midrule
   \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
   \midrule
   \endhead
-  Any type                   & \texttt{any}                             & TODO \\
-  Array type                 & \texttt{Array<{}number>{}}               & TODO \\
-  Array type (shorthand)     & \texttt{number[]}                        & TODO \\
-  Boolean literal type       & \texttt{true}                            & TODO \\
-  Boolean type               & \texttt{boolean}                         & TODO \\
+  Any type                   & \texttt{any}                             & Typ für beliebige Werte. \code{any} ist jedem Typ zuweisbar und jeder Typ ist \code{any} zuweisbar. \\
+  Array type                 & \texttt{Array<{}number>{}}               & Felder \\
+  Array type (shorthand)     & \texttt{number[]}                        & Felder (Kurzschreibweise) \\
+  Boolean literal type       & \texttt{true}                            & Boolesche Literale (entweder \code{true} oder \code{false}) \\
+  Boolean type               & \texttt{boolean}                         & Boolesche Werte \\
   Empty type                 & \texttt{empty}                           & TODO \\
-  Exact object type          & \texttt{\{| prop: any |\}}               & TODO \\
-  Function type              & \texttt{(string, \{\}) => number}        & TODO \\
+  Exact object type          & \texttt{\{| prop: any |\}}               & TODO, \\
+  Function type              & \texttt{(string, \{\}) => number}        & Funktionen: also der Typ der Parameter und des Rückgabewerts \\
   Generic type annotation    & \texttt{let v: <{}FlowType>{}}           & TODO \\
   Generics                   & \texttt{type Generic<{}T: Super> = T}    & TODO \\
   Interface type             & \texttt{interface \{ +prop: number \}}   & TODO \\
@@ -66,6 +87,9 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
 \subsubsection{Hilfstypen}
 \label{subsection:flow:utility-types}
 
+TODO
+
+\bigbreak
 \begin{footnotesize}
 \begin{longtabu} to \textwidth {@{}llX@{}}
   \midrule
@@ -98,6 +122,9 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
 
 \subsubsection{Typdeklarationen}
 
+TODO
+
+\bigbreak
 \begin{footnotesize}
 \begin{longtabu} to \textwidth {@{}lXX@{}}
   \midrule
@@ -125,7 +152,9 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
 
 % Was macht eigentlich so ein Compiler bzw. Transpiler? Hier Theorie (AST etc.)
 
-\subsection{Lexikalische und syntaktische Analyse}
+\subsection{Konzeptioneller Aufbau von Transpilern}
+
+  % TODO Lexikalische und syntaktische Analyse
 
   % Lexikalische Analayse:
   % Quelltext (string) => Tokens
@@ -134,8 +163,10 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
   % Syntaxanalyse:
   % Tokens => AST
 
-\subsection{Evaluation bestehender JavaScript-Transpiler}
+\subsection{Bestehende Transpiler für JavaScript}
 \label{subsec:js-transpilers}
+
+% TODO: Evaluation
 
 Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Transpilern entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Transpilers von Flow nach TypeScript stark vereinfachen können. Im Folgenden sollen die relevantesten Ansätze evaluiert werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage der Umsetzung heran gezogen wird.
 
@@ -156,10 +187,10 @@ Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 3
 Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}.}.
 Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
-\section{Babel}
+\subsection{Babel}
 \label{sec:babel}
 
-\subsection{Funktionsweise von Babel}
+\subsubsection{Funktionsweise von Babel}
 
 Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Transpilers in Kapitel \ref{chap:implementation} soll zunächst die grundsätzliche Funktionsweise von Babel näher betrachtet werden. Die Ausführung von Babel gliedert sich in folgende drei Phasen~\autocite{BABEL:HANDBOOK}:
 
@@ -177,7 +208,7 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
     Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten Quelltext darstellt.
 \end{enumerate}
 
-\subsection{Babel-Plugins}
+\subsubsection{Babel-Plugins}
 \label{subsection:babel-plugins}
 
 Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Der Kern des Compilers besteht selbst aus einer Vielzahl von Plugins, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend verankerte Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, die ein Objekt mit verschiedenen vorgegebenen Attributen zurückliefern muss. Verpflichtend anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucher-Funktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung realisiert die angestrebte Quelltext"=Transformation. Es ist in der Praxis gängig, dass mehrere Plugins eingesetzt werden, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten sehr flexibel durch Verwendung vieler, kleiner Bausteine zusammen gesetzt werden. Auch möglich ist der Aufbau einer hierarchischen Abhängigkeitsstruktur, d.~h. dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
@@ -185,7 +216,7 @@ Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel 
 Quelltext~\ref{code:babel-plugin-definition} zeigt das Minimalbeispiel eines sehr einfachen, vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucher-Funktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen abbildet und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält weiterhin eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
 Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}\autocite{BABEL:TYPES} beschrieben. Diese basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}, der von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript gemeinschaftlich entwickelt wird~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
 
-\medskip
+\bigbreak
 \begin{listing}[htb]
 \begin{textcode}
 // var foo => var FOO

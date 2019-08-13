@@ -79,7 +79,7 @@ Da bekannt ist welcher TypeScript-Knoten zu konstruieren ist, um einen Flow-Ausd
 \subsection{Ablauf der Transpilierung}
 
 
-Abbildung~\ref{fig:activity-diagram-plugin} veranschaulicht den konzeptionellen Ablauf der Transpilierung innerhalb des Babel-Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen die Arbeitsweise von Prozessen innerhalb eines Software-Systems. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen des abstrakten Syntaxbaums auf Besucher"=Funktionen definiert. Diese realisieren die Transformation aller Flow-Typannotationen in entsprechende TypeScript-Syntax.
+Abbildung~\ref{fig:activity-diagram-plugin} auf Seite~\pageref{fig:activity-diagram-plugin} veranschaulicht den konzeptionellen Aufbau der Transpilierung innerhalb des Babel-Plugins anhand eines Aktivitätsdiagramms. Aktivitätsdiagramme entstammen der Modellierungssprache \textit{Unified Modeling Language} (UML)~\autocite{OMG:UML} und veranschaulichen die Arbeitsweise von Prozessen innerhalb eines Software-Systems. Zu Beginn wird das Plugin wie im Grundlagenteil in Quelltext~\ref{code:babel-plugin-definition} bereits exemplarisch gezeigt initialisiert, d.~h. es wird eine Abbildung der Flow-Knotentypen des abstrakten Syntaxbaums auf Besucher"=Funktionen definiert. Diese realisieren die Transformation aller Flow-Typannotationen in entsprechende TypeScript-Syntax.
 Weiterhin werden die Abhängigkeiten des Plugins spezifiziert. Dabei handelt es sich um weitere vorgegebene Babel-Plugins, die benötigt werden, um die Syntax von Flow, JSX und vorläufiger ECMAScript-Erweiterungen einlesen zu können. Auf Grundlage der konkreten Anforderungen bei \textit{TeamShirts} wurden externe Plugins für folgende Erweiterungen aktiviert:
 
 \begin{itemize}
@@ -111,6 +111,7 @@ Die Mehrheit der in Tabelle~\ref{tab:flow-base-types} vorgestellten Basistypen k
 
 Tabelle~\ref{tab:transformation-base-types-simple} auf Seite~\pageref{tab:transformation-base-types-simple} listet die 18 Flow-Typen auf, die simpel übersetzt werden können und zeigt beispielhaft deren Entsprechung in TypeScript. Abgesehen von den zwei kursiv hervorgehobenen Zeilen ist die Syntax in TypeScript identisch mit der ursprünglichen Notation der Typen in Flow. Dennoch müssen auch diese Elemente des abstrakten Syntaxbaums während der Transpilierung in ihr korrektes Gegenstück umgewandelt werden, da eine Kombination von Flow- und TypeScript-Knoten gemäß der Spezifikation~\autocite{BABEL:PARSER_SPEC} von Babel unmöglich ist. Diese Einschränkung wird zur Laufzeit durch die im Plugin eingesetzte Bibliothek \code{@babel/types}\,\autocite{BABEL:TYPES} sicher gestellt. Durch die Verwendung von TypeScript und der gegebenen Typisierung von Babel, werden Typfehler dieser Art wie erwähnt ohnehin bereits vor Ausführung des Transpilers statisch erkannt.
 
+\bigbreak
 \input{src/4_Umsetzung/tables/types-simple}
 
 \bigbreak
@@ -134,7 +135,7 @@ Die zwei Bäume sind sich sehr ähnlich: In der Wurzel der Datenstruktur befinde
   \item Übersetzung aller \code{MixedTypeAnnotation}-Knoten nach \code{TSUnknownKeyword}
 \end{itemize}
 
-\bigskip
+\bigbreak
 \begin{figure}[htb]
   \centering
   \small
@@ -206,7 +207,7 @@ Während die Benennung der Funktionsargumente in Flow optional ist, ist diese in
 \bigbreak
 \input{src/4_Umsetzung/tables/types-complex}
 
-Anhand des \enquote{Nullable}-Typs soll das Vorgehen bei der Transformation eines komplizierteren Knoten erläutert werden. Dieser Typ wird in der Flow-Dokumentation auch als \enquote{\textit{Maybe type}} bezeichnet und wird für die Typisierung optionaler, möglicherweise undefinierter Werte verwendet\footnote{Siehe~\autocite[Maybe Types]{FLOW:TYPE_ANNOTATIONS}.}. Konkret stellt der Typ die Vereinigung aus dem angegebenen Datentyp, \code{null} und \code{undef\/ined} dar. In TypeScript existiert keine direkte Entsprechung, aber es kann trivial ein äquivalenter Vereinigungstyps angegeben werden. Quelltext~\ref{code:example-complex} zeigt analog zum vorherigen Beispiel die jeweilige Deklaration eines Typalias in Flow (links) und TypeScript (rechts), das auf diesen Datentyp verweist.
+Anhand des Typs \enquote{Nullable} soll das Vorgehen bei der Transformation eines komplizierteren Knoten erläutert werden. Dieser Typ wird in der Flow-Dokumentation auch als \enquote{\textit{Maybe type}} bezeichnet und wird für die Typisierung optionaler, möglicherweise undefinierter Werte verwendet\footnote{Siehe~\autocite[Maybe Types]{FLOW:TYPE_ANNOTATIONS}.}. Konkret stellt der Typ die Vereinigung aus dem angegebenen Datentyp, \code{null} und \code{undef\/ined} dar. In TypeScript existiert keine direkte Entsprechung, aber es kann trivial ein äquivalenter Vereinigungstyps angegeben werden. Quelltext~\ref{code:example-complex} zeigt analog zum vorherigen Beispiel die jeweilige Deklaration eines Typalias in Flow (links) und TypeScript (rechts), das auf diesen Datentyp verweist.
 
 \bigbreak
 \begin{listing}[htb]
@@ -221,6 +222,7 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
 
 Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verglichen werden, um die Einzelschritte der Transpilierung aufzuzeigen. Das Typalias ist analog zum vorherigen Beispiel und dient lediglich der Herstellung korrekter Syntax. Entscheidend ist der zugewiesene Typ des Alias im rechten Teilbaum: Bei Flow liegt hier eine \code{NullableTypeAnnotation} vor, der den Datentyp für Zahlen als Argument erhält. Auf Seite von TypeScript steht dagegen der Knoten des Vereinigungstyps (\code{TSUnionType}). Diesem ist eine Menge von Typen zugeordnet, die den äquivalenten Ausdruck herstellen, indem der Zahlentyp mit den Typen für \code{null} und \code{undefined} vereint wird.
 
+\bigbreak
 \begin{figure}[htb]
   \footnotesize
   \ttfamily
@@ -262,7 +264,7 @@ Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verg
   \label{ast:example-complex}
 \end{figure}
 
-Quelltext~\ref{code:convert-nullable-type} zeigt die entsprechende Implementierung. Zuerst wird in Zeile zwei das Argument des \code{NullableTypeAnnotation}-Typs durch Aufruf der zentralen Umwandlungsfunktion von Flow in den korrekten TypeScript-Typ übersetzt. Im vorliegenden Fall wird Flows \code{NumberTypeAnnotation} in das Gegenstück \code{TSNumberKeyword} überführt. Anschließend wird eine Liste aufgebaut, die aus diesem Datentyp und der Typen für \code{null} und \code{undefined} besteht. Zu Beachten ist hierbei einerseits, dass der Nullwert nicht doppelt in die Liste aufgenommen werden darf, andererseits dass Funktionstypen in dieser Situationen geklammert werden müssen. Eine Doppelung träte dann auf, wenn in Flow die wenig sinnvolle Typannotation \code{?null} verwendet wird. Zuletzt kann der Vereinigungstyp in TypeScript durch Aufruf der entsprechenden Hilfsfunktion, welche die Typliste als Argument erhält, hergestellt und zurück geliefert werden.
+Quelltext~\ref{code:convert-nullable-type} zeigt die entsprechende Implementierung. Zuerst wird in Zeile zwei das Argument des Typs \code{NullableTypeAnnotation} durch Aufruf der zentralen Umwandlungsfunktion von Flow in den korrekten TypeScript-Typ übersetzt. Im vorliegenden Fall wird Flows \code{NumberTypeAnnotation} in das Gegenstück \code{TSNumberKeyword} überführt. Anschließend wird eine Liste aufgebaut, die aus diesem Datentyp und der Typen für \code{null} und \code{undefined} besteht. Zu Beachten ist hierbei einerseits, dass der Nullwert nicht doppelt in die Liste aufgenommen werden darf, andererseits dass Funktionstypen in dieser Situationen geklammert werden müssen. Eine Doppelung träte dann auf, wenn in Flow die wenig sinnvolle Typannotation \code{?null} verwendet wird. Zuletzt kann der Vereinigungstyp in TypeScript durch Aufruf der entsprechenden Hilfsfunktion, welche die Typliste als Argument erhält, hergestellt und zurück geliefert werden.
 
 \bigbreak
 \begin{listing}[htb]
@@ -297,7 +299,9 @@ Zu beachten gilt darüber hinaus, dass der kursiv hervorgehobene Typ \textit{Exi
 
 \subsubsection{Transpilierung der Typdeklarationen}
 
-TODO
+
+
+% Da \emph{sämtliche} Flow-Konstrukte übersetzt werden können ist auch die
 
 \bigbreak
 \input{src/4_Umsetzung/tables/types-declaration}

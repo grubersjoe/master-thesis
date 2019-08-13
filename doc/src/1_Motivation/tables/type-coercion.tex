@@ -1,0 +1,21 @@
+\begin{table}[htb]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}p{5.5cm}XX@{}}
+    \midrule
+    \libertineSB{JavaScript} & \libertineSB{Python} & \libertineSB{Ruby} \\
+    \midrule
+    \texttt{\{\} + []}~~$\Rightarrow$~~\texttt{0} & \texttt{\{\} + []}~~$\Rightarrow$~~\texttt{TypeError} & \texttt{\{\} + []}~~$\Rightarrow$~~\texttt{TypeError} \\
+    \texttt{[] + \{\}}~~$\Rightarrow$~~\texttt{'[object Object]'} & \texttt{[] + \{\}}~~$\Rightarrow$~~\texttt{TypeError} & \texttt{[] + \{\}}~~$\Rightarrow$~~\texttt{TypeError} \\
+    \texttt{\{\} + \{\}}~~$\Rightarrow$\newline\-\hspace{0.5cm}\texttt{'[object Object][object Object]'} & \texttt{\{\} + []}~~$\Rightarrow$~~\texttt{TypeError} & \texttt{\{\} + []}~~$\Rightarrow$~~\texttt{TypeError} \\
+    \texttt{[] + []}~~$\Rightarrow$~~\texttt{''} & \texttt{[] + []}~~$\Rightarrow$~~\texttt{[]} & \texttt{[] + []}~~$\Rightarrow$~~\texttt{[]} \\
+    \texttt{[1, 3] + [5]}~~$\Rightarrow$~~\texttt{'1,35'} & \texttt{[1, 3] + [5]}~~$\Rightarrow$~~\texttt{[1, 3, 5]} & \texttt{[1, 3] + [5]}~~$\Rightarrow$~~\texttt{[1, 3, 5]} \\
+    \texttt{[] == 0}~~$\Rightarrow$~~\texttt{true} & \texttt{[] == 0}~~$\Rightarrow$~~\texttt{false} & \texttt{[] == 0}~~$\Rightarrow$~~\texttt{false} \\
+    \texttt{0 == '0'}~~$\Rightarrow$~~\texttt{true} & \texttt{0 == '0'}~~$\Rightarrow$~~\texttt{false} & \texttt{0 == '0'}~~$\Rightarrow$~~\texttt{false} \\
+    \texttt{false == 'false'}~~$\Rightarrow$~~\texttt{false} & \texttt{false == 'false'}~~$\Rightarrow$~~\texttt{false} & \texttt{false == 'false'}~~$\Rightarrow$~~\texttt{false} \\
+    \texttt{0 === '0'}~~$\Rightarrow$~~\texttt{false} & \texttt{0 == '0'}~~$\Rightarrow$~~\texttt{false} & \texttt{0 == '0'}~~$\Rightarrow$~~\texttt{false} \\
+    \texttt{typeof null}~~$\Rightarrow$~~\texttt{'object'} & \texttt{type(None)}~~$\Rightarrow$~~\texttt{NoneType} & \texttt{nil.class}~~$\Rightarrow$~~\texttt{NilClass} \\
+    \midrule
+  \end{tabu}
+  \caption[Dynamische Typumwandlung verschiedener JavaScript-Ausdrücke im Vergleich zu Python und Ruby]{Demonstration der dynamischen Typumwandlung verschiedener Ausdrücke in JavaScript im Vergleich zu Python und Ruby (Node 12.6, Python 3.7, Ruby 2.6.).}
+  \label{tab:js-type-coercion}
+\end{table}
