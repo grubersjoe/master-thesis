@@ -2,3 +2,5 @@ build/*
 
 .kile/
 *.kilepr
+
+.~lock*
