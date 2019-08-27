@@ -9,10 +9,10 @@ TODO
 
 \subsection{Vorteile statischer Typsysteme}
 
-Eine explizite, statische Typisierung wie sie beispielsweise in C++ oder Java vorliegt, bietet viele Vorteile für den Software-Entwicklungsprozess: Im Gegensatz zu einer dynamischen Typsystem wird der Typ einer Variable in statischen Systemen \emph{explizit} deklariert oder kann selbstständig inferiert (abgeleitet) werden. Damit wird die Wertebereich einer Variable durch ihren Typ bestimmt und dynamische Typumwandlungen eingeschränkt.
+Eine explizite, statische Typisierung wie sie beispielsweise in C++ oder Java vorliegt, bietet viele Vorteile für den Software-Entwicklungsprozess: Im Gegensatz zu einer dynamischen Typsystem wird der Typ einer Variable in statischen Systemen \emph{explizit} deklariert oder kann selbstständig inferiert (abgeleitet) werden. Der Wertebereich einer Variable wird damit durch ihren Typ bestimmt und dynamische Typumwandlungen eingeschränkt.
 % TODO: CITATION NEEDED (like a lot)
 % TODO: Überarbeiten
-Ein gewichtiges Argument für den Einsatz statischer Typsysteme ist die erhöhte Sicherheit während des Programmierens~\autocite{CORNELL:STRONG_TYPING}. Da der Compiler mittels statischer Analyse überprüfen kann, ob bei Zuweisungen, Funktionsaufrufen und Rückgabewerten Typverletzungen auftreten, können Logik- und Flüchtigkeitsfehler reduziert werden. Wenn alle Datenstrukturen typisiert sind können darüber hinaus irrtümliche Annahmen über diese bereits vor der Ausführung des Programms erkannt und zugehörige Fehler behoben werden. Auf diese Weise können Laufzeitfehler verringert und die Qualität der Software gesteigert werden. Weiterhin ist es möglich die Einschränkungen und Regeln der gegebenen Anwendungsdomäne mittels eines Typsystems präzise zu modellieren und deren Einhaltung zu erzwingen. Durch eine statische Typisierung gewinnen Software"=Entwickler die Sicherheit und Zuversicht, dass Änderungen in umfangreichen Projekten keine unerwünschte Nebenwirkung verursachen (\textit{Refactoring}).
+Ein gewichtiges Argument für den Einsatz statischer Typsysteme ist die erhöhte Sicherheit während des Programmierens~\autocite{CORNELL:STRONG_TYPING}. Da der Compiler mittels statischer Analyse überprüfen kann, ob bei Zuweisungen, Funktionsaufrufen und Rückgabewerten Typverletzungen auftreten, können Logik- und Flüchtigkeitsfehler reduziert werden. Wenn alle Datenstrukturen typisiert sind, können irrtümliche Annahmen über diese bereits vor der Ausführung des Programms erkannt und zugehörige Fehler behoben werden. Auf diese Weise können Laufzeitfehler verringert und die Qualität der Software gesteigert werden. Weiterhin ist es möglich die Einschränkungen und Regeln der gegebenen Anwendungsdomäne mittels eines Typsystems präzise zu modellieren und deren Einhaltung zu erzwingen. Durch eine statische Typisierung gewinnen Software"=Entwickler die Sicherheit und Zuversicht, dass umfangreiche Änderungen (\textit{Refactoring}) in Projekten keine unerwünschte Nebenwirkung verursachen.
 % TODO: steile Thesen!
 % Mittels statischer Analyse werden Typfehler und damit auch gegebenenfalls semantische Probleme unmittelbar erkannt. Infolgedessen steigert sich die Wartbarkeit der Anwendung.
 % TODO: einfacherer Einstieg für Anfänger
@@ -27,6 +27,9 @@ Die Idee JavaScript um ein statisches Typsystem zu erweitern ist nicht neu. Zahl
 % Dart, Closure
 
 % Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
+
+
+Im Folgenden sollen die zwei in dieser Arbeit behandelten Systeme \textit{Flow}~\autocite{FLOW:PAPER} und \textit{TypeScript}~\autocite{TYPESCRIPT_SPEC} näher betrachtet werden.
 
 \subsection{Flow}
 \label{subsection:flow}

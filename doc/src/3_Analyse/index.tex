@@ -8,36 +8,34 @@
 
 \subsection{Kurzvorstellung der Projekte von TeamShirts}
 
-Das Leipziger Unternehmen sprd.net AG (\textit{Spreadshirt}) ist ein seit 2002 bestehender Anbieter verschiedener eCommerce-Plattformen, welche die individuelle On-Demand-Bedruckung von Kleidung und Accessoires ermöglichen~\autocite{SPREADSHIRT:ABOUT}. Die Produkte können von den Kunden online durch vorgegebene oder eigene Motive gestaltet und anschließend bestellt werden. Um weitere Zielgruppen wie Sportmannschaften, Vereine, Belegschaften et cetera besser anzusprechen, wurde 2014 der Geschäftsbereich \textit{TeamShirts} geschaffen.
-TeamShirts betreibt verschiedene Webanwendung deren Frontend mit JavaScript und Flow umgesetzt wurde. Innerhalb des Unternehmens gibt es strategische Überlegungen, die bestehenden Projekte nach TypeScript zu migrieren, um die derzeitige Typisierung durch Flow mit TypeScript zu ersetzen. Die Gründe hierfür werden in Abschnitt~\ref{analysis:goals} ausführlich dargelegt. Der Wechsel zu TypeScript wurde durch den in dieser Arbeit entworfenen und realisierten Transpiler für zwei dieser Projekte umgesetzt. Um die Nachvollziehbarkeit der weiteren Ausführungen zu erleichtern, sollen diese kurz vorgestellt werden.
+Das Leipziger Unternehmen \textit{sprd.net AG} (\textit{Spreadshirt}) ist ein seit 2002 bestehender Anbieter verschiedener eCommerce-Plattformen, welche die individuelle On-Demand-Bedruckung von Kleidung und Accessoires ermöglichen~\autocite{SPREADSHIRT:ABOUT}. Die Produkte können von den Kunden online durch vorgegebene oder eigene Motive gestaltet und anschließend bestellt werden. Um weitere Zielgruppen wie Sportmannschaften, Vereine, Belegschaften usw. besser anzusprechen, wurde 2014 der Geschäftsbereich \textit{TeamShirts} geschaffen.
+TeamShirts betreibt verschiedene Webanwendung deren Frontend mit JavaScript umgesetzt wurde. Innerhalb des Unternehmens gibt es strategische Überlegungen, die bestehenden Projekte nach TypeScript zu migrieren, um die derzeitige Typisierung durch Flow mit TypeScript zu ersetzen. Die Gründe hierfür werden in Abschnitt~\ref{analysis:goals} ausführlich dargelegt. Der Wechsel zu TypeScript wurde durch den in dieser Arbeit entworfenen und realisierten Transpiler für zwei dieser Projekte umgesetzt. Um die Nachvollziehbarkeit der weiteren Ausführungen zu erleichtern, sollen diese kurz vorgestellt werden.
 
 \subsubsection{Components}
 
-Alle Frontend-Projekte von TeamShirts basieren auf der Bibliothek \textit{React}~\autocite{SOFTWARE:REACT}, welche die Programmierung von Benutzeroberflächen auf Basis von sogenannten \emph{Komponenten}\footnote{React-Komponenten sind nicht mit \textit{Webkomponenten}~\autocite{MDN:WEBCOMPONENTS} zu verwechseln. Diese verfolgen ein ähnliches aber nicht identisches Konzept. React interagiert im Gegensatz zu Webkomponenten direkt mit dem \textit{Document Object Model} (DOM) des HTML-Dokuments~\autocite{REACT:WEBCOMPONENTS}.} ermöglicht~\autocite{ACM:REACT}. Diese stellen wiederverwendbare Elemente dar, die aus HTML, CSS und JavaScript aufgebaut sind sind. Da Komponenten voneinander unabhängig sind können sie leicht zu komplexere Strukturen zusammen gesetzt werden. Das erste Projekt von TeamShirts \enquote{Components} stellt eine Bibliothek von derartigen React-Komponenten dar, die in verschiedenen anderen Projekten eingesetzt wird.
+Alle Frontend-Projekte von TeamShirts basieren auf der Software-Bibliothek \textit{React}~\autocite{SOFTWARE:REACT}, welche die Programmierung von Benutzeroberflächen auf Basis von sogenannten \emph{Komponenten}\footnote{React-Komponenten sind nicht mit \textit{Webkomponenten}~\autocite{MDN:WEBCOMPONENTS} zu verwechseln. Diese verfolgen ein ähnliches aber nicht identisches Konzept. React interagiert im Gegensatz zu Webkomponenten direkt mit dem \textit{Document Object Model} (DOM) des HTML-Dokuments~\autocite{REACT:WEBCOMPONENTS}.} ermöglicht~\autocite{ACM:REACT}. Diese stellen wiederverwendbare Elemente dar, die aus HTML, CSS und JavaScript aufgebaut sind sind. Da Komponenten voneinander unabhängig sind können sie leicht zu komplexere Strukturen zusammen gesetzt werden. Das erste Projekt von TeamShirts \enquote{Components} stellt eine Bibliothek von derartigen React-Komponenten dar, die in verschiedenen anderen Software-Modulen eingesetzt wird.
 
 \subsubsection{Helios}
 
-
+\enquote{Helios} stellt einen Service für \emph{Server-Side Rendering} (SSR) dar. Unter \emph{Server-Side Rendering} versteht man die Generierung des gesamten HTML-Quelltexts einer Webseite auf dem Server. Hierdurch ergeben sich verschiedene Performance-Vorteile wie z.~B. eine schnelle Interaktivität\footnote{engl. \emph{Time to Interactive} (TTI).} der Seite~\autocite{GOOGLE:RENDERING_ON_THE_WEB}. TeamShirts verwendet Helios, um dynamische Webseiten wie beispielsweise Produktübersichten serverseitig zu erstellen und auszuliefern. Die Seiten sind dabei durch verschiedene React-Komponenten aufgebaut.
 
 
 \subsection{Bestehende Ansätze zur Transpilierung von Flow nach TypeScript}
 
+Vor Beginn der Arbeit wurde evaluiert, ob bereits Software existiert, welche die gegebene Problemstellung, die Transpilierung von Flow nach TypeScript, umsetzt. Tatsächlich existierten zum damaligen Zeitpunkt im Februar 2019 zwei Projekte auf GitHub, welche das gleiche Ziel wie diese Arbeit verfolgen: Bereits im November 2017 wurde von Boris Cherny mit der Entwicklung eines Babel-Plugins zur Transpilierung von Flow begonnen~\autocite{CHERNY:FLOW_TO_TS}. Weiterhin ist im April 2018 ein vergleichbares Projekt durch Yuichiro Kikura entstanden~\autocite{KIKURA:FLOW_TO_TS}. Nach näherer Betrachtung und Erprobung der zwei Plugins wurde schnell festgestellt, dass sich beide Projekte noch ein einem frühen Entwicklungsstadium befinden und unvollständig sind. Da die Software darüber hinaus nur sporadisch weiterentwickelt wurde, wurde angenommen, dass die Projekte inaktiv sind. Eine korrekte, ganzheitliche Transpilierung der vorliegenden JavaScript-Codebasis von TeamShirts war damit nicht möglich. Infolgedessen wurde beschlossen einen Flow-Transpiler, welcher allen nachfolgend ausgeführten Anforderungen gerecht wird, selbst zu entwickeln.
 
-
-
-% Was geht so bei TeamShirts? Wie verwenden wir Flow? Wie ist die Typisierung bisher (eher implizit, explizit etc)?
-
-% Erläutern, dass es da schon eine Handvoll Ansätze auf GitHub gab, aber die alle nicht einsatzbereit waren.
+Inzwischen wurde die Entwicklung des Plugins von Yuichiro Kikura wieder aufgenommen und es ist ein drittes Projekt auf GitHub hinzu gekommen~\autocite{KHAN:FLOW_TO_TS}. In Abschnitt~\ref{evaluation:other-tools} wird der in dieser Arbeit umgesetzte Transpiler mit den zwei konkurrierenden Ansätzen hinsichtlich verschiedener Kriterien verglichen.
 
 \section{Ziele der angestrebten Migration zu TypeScript}
 \label{analysis:goals}
 
-Hypothesen, Wünsche, Hoffnungen
+\subsection{Erkennung weiterer Typ- und Programmfehler}
 
-  \subsection{Erkennung neuer Typ- und Programmfehler}
-  \subsection{Unterstützung externer Bibliotheken und Frameworks}
-  \subsection{Stabilität und Geschwindigkeit der Typüberprüfungen}
-  \subsection{Zukunftssicherheit und Transparenz der Technologie}
+
+
+\subsection{Unterstützung externer Bibliotheken und Frameworks}
+\subsection{Stabilität und Geschwindigkeit der Typüberprüfungen}
+\subsection{Zukunftssicherheit und Transparenz der Technologie}
 
 \section{Anforderungen an den Transpiler}
 
