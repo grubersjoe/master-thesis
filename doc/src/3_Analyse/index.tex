@@ -17,8 +17,7 @@ Alle Frontend-Projekte von TeamShirts basieren auf der Software-Bibliothek \text
 
 \subsubsection{Helios}
 
-\enquote{Helios} stellt einen Service für \emph{Server-Side Rendering} (SSR) dar. Unter \emph{Server-Side Rendering} versteht man die Generierung des gesamten HTML-Quelltexts einer Webseite auf dem Server. Hierdurch ergeben sich verschiedene Performance-Vorteile wie z.~B. eine schnelle Interaktivität\footnote{engl. \emph{Time to Interactive} (TTI).} der Seite~\autocite{GOOGLE:RENDERING_ON_THE_WEB}. TeamShirts verwendet Helios, um dynamische Webseiten wie beispielsweise Produktübersichten serverseitig zu erstellen und auszuliefern. Die Seiten sind dabei durch verschiedene React-Komponenten aufgebaut.
-
+\enquote{Helios} ist ein Service für \emph{Server-Side Rendering} (SSR). Unter \emph{Server-Side Rendering} versteht man die Generierung des gesamten HTML-Quelltexts einer Webseite auf dem Server. Dies ist insbesondere für Anwendungen interessant, die JavaScript für den Seitenaufbau verwenden. Auf diese Weise ergeben sich verschiedene Performance-Vorteile wie z.~B. eine schnelle Interaktivität\footnote{engl. \emph{Time to Interactive} (TTI).} der Seite, weil weniger Berechnungen auf Seite des Clients nötig sind~\autocite{GOOGLE:RENDERING_ON_THE_WEB}. TeamShirts verwendet Helios, um Seiten, die durch verschiedene React-Komponenten aufgebaut sind, serverseitig zu erstellen und auszuliefern.
 
 \subsection{Bestehende Ansätze zur Transpilierung von Flow nach TypeScript}
 
@@ -29,29 +28,45 @@ Inzwischen wurde die Entwicklung des Plugins von Yuichiro Kikura wieder aufgenom
 \section{Ziele der angestrebten Migration zu TypeScript}
 \label{analysis:goals}
 
+In Zusammenarbeit mit den Software-Entwicklern bei TeamShirts wurden die folgenden Ziele der Migration von Flow nach TypeScript definiert. Diese und die im nachfolgenden Abschnitt dargelegten Anforderungen an den Transpiler bilden die Grundlage für die Bewertung der Ergebnisse in Kapitel~\ref{chap:evaluation}.
+
 \subsection{Erkennung weiterer Typ- und Programmfehler}
 
 
 
 \subsection{Unterstützung externer Bibliotheken und Frameworks}
+
+Da alle Projekte von TeamShirts auf eine Vielzahl externer Software-Bibliotheken wie \textit{React} et cetera angewiesen sind, ist die umfassende Unterstützung dieser durch das Typsystem eine wichtige Zielvorgabe. Sowohl Flow als auch TypeScript ermöglichen es Bibliotheken und Frameworks Dritter durch Typdeklarationen zu beschreiben. Somit ist es möglich auch untypisierte, externe JavaScript-Module nachträglich um eine Typisierung in Flow oder TypeScript zu erweitern. Hierdurch kann sicher gestellt werden, dass die Bibliothek korrekt verwendet wird, da fehlerhafte Aufrufe durch das Typsystem unmittelbar erkannt werden.
+
+Da es sehr aufwändig und fehleranfällig ist selbst Typdeklarationen für fremde Bibliotheken anzufertigen, ist es entscheidend, dass bereits qualitativ hochwertige Typisierungen extern vorliegen. Qualitativ hochwertig bedeutet, dass die Definitionen vollständig, korrekt und aktuell hinsichtlich der Software-Version sind. Einige Projekte stellen selbst Deklarationsdateien bereit, für andere existieren gemeinschaftlich gepflegte Typisierungen. Ausschlaggebend für den Erfolgt der Migration ist, dass nach dem Wechsel zu TypeScript Typdeklarationen in mindestens genau so großem Maße für die eingesetzten Bibliotheken vorliegen. Auch darf deren Qualität im Vergleich zu Flow nicht sinken.
+
 \subsection{Stabilität und Geschwindigkeit der Typüberprüfungen}
+
+Ein weiterer Aspekt ist einerseits die Geschwindigkeit der Typüberprüfungen, andererseits die Stabilität dieses Prozesses. Im Gespräch mit
+
 \subsection{Zukunftssicherheit und Transparenz der Technologie}
+
+Schließlich
 
 \section{Anforderungen an den Transpiler}
 
-  \subsection{Korrekte Übersetzung der Flow-Typen}
-  \label{subsection:requirement:correct-translation}
+\subsection{Korrekte Übersetzung der Flow-Typen}
+\label{subsection:requirement:correct-translation}
 
-  \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
-  \label{subsection:requirement:semantic-equivalence}
+\subsection{Semantisch äquivalente Transpilierung des Quelltexts}
+\label{subsection:requirement:semantic-equivalence}
 
-  \subsection{Vollständige Unterstützung moderner JavaScript- und JSX-Syntax}
-  \label{subsection:requirement:modern-js-support}
+\subsection{Vollständige Unterstützung moderner JavaScript- und JSX-Syntax}
+\label{subsection:requirement:modern-js-support}
 
-  JSX\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.}
+JSX\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.}
 
-  \subsection{Verarbeitung gesamter Projektverzeichnisse}
-  \label{subsection:requirement:batch-processing}
+\subsection{Verarbeitung gesamter Projektverzeichnisse}
+\label{subsection:requirement:batch-processing}
 
-  \subsection{Beibehaltung der Quelltext-Formatierung}
-  \label{subsection:requirement:format}
+
+
+\subsection{Beibehaltung der Quelltext-Formatierung}
+\label{subsection:requirement:format}
+
+Weiterhin muss gewährleistet werden, dass die Quelltext-Formatierung eines Projekte nach Ausführung des Transpilers so originalgetreu wie möglich beibehalten wird, da der Programmierstil wichtig für die Wartbarkeit und Verständlichkeit von Software ist~\autocite[146]{KERNIGHAN:1982}. Auch bestehen teaminterne Vorgaben bezüglich des Aufbaus und der Formatierung des Codes, welche durch die Migration nicht verworfen werden dürfen. Unter der Formatierung wird nachfolgend die Einrückung des Codes, Zeilenumbrüche und die Position der Leerzeichen und -zeilen verstanden. Auch Block- und Zeilenkommentare müssen korrekt in die Ausgabe übernommen werden.
