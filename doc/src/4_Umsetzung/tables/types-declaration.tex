@@ -1,18 +1,18 @@
-\begin{footnotesize}
-\begin{longtabu} to \textwidth {@{}lXX@{}}
-  \midrule
-  \libertineSB{Deklaration} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
-  \midrule
-  \endhead
-  Class       & \code{declare class C {}}                   & \code{declare class C {}}                 \\
-  Export      & \code{declare export default () => string}  & \code{const \_default: () => string;\newline export default \_default;}     \\
-  Function    & \code{declare function f(number): any}      & \code{declare function f(p: number): any} \\
-  Interface   & \code{declare interface I {}}               & \code{declare interface I {}}             \\
-  Module      & \code{declare module 'esmodule' {}}         & \code{declare module 'esmodule' {}}       \\
-  Type alias  & \code{declare type T = number}              & \code{declare type T = number}            \\
-  Variable    & \code{declare var v: any}                   & \code{declare var v: any}                 \\
-  \midrule
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}lXX@{}}
+    \midrule
+    \libertineSB{Deklaration} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
+    \midrule
+    Class       & \code{declare class C {}}                   & \code{declare class C {}}                 \\
+    Export      & \code{declare export default () => string}  & \code{const \_default: () => string;\newline export default \_default;}     \\
+    Function    & \code{declare function f(number): any}      & \code{declare function f(p: number): any} \\
+    Interface   & \code{declare interface I {}}               & \code{declare interface I {}}             \\
+    Module      & \code{declare module 'esmodule' {}}         & \code{declare module 'esmodule' {}}       \\
+    Type alias  & \code{declare type T = number}              & \code{declare type T = number}            \\
+    Variable    & \code{declare var v: ?string}                   & \code{declare var v: string | null | undefined}                 \\
+    \midrule
+  \end{tabu}
   \caption{Übersicht über Transformationen der Typdeklarationen von Flow.}
   \label{tab:transformation-declarations}
-\end{longtabu}
-\end{footnotesize}
+\end{table}
