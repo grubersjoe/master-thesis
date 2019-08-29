@@ -99,6 +99,9 @@
 \usepackage{longtable, tabu, booktabs}
 \renewcommand{\arraystretch}{1.2} % More space between table rows
 
+% Ragged text
+\usepackage{ragged2e}
+
 % Code listings (minted)
 \usepackage[outputdir=build]{minted}
 \usemintedstyle{vs}
@@ -138,18 +141,26 @@
 \hyphenation{Ruby}
 \hyphenation{TypeScript}
 \hyphenation{retainLines}
+\hyphenation{false}
+\hyphenation{true}
 \hyphenation{unknow}
 \babelhyphenation[ngerman]{Be-sucher-Ent-wurfs-musters}
 \babelhyphenation[ngerman]{Kom-man-do-zei-len-pro-gramm}
 
-% Orphans TODO
-% \usepackage[all]{nowidow}
+% Orphans
+\usepackage[all]{nowidow}
 
-% Commands
+% Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\dquote}[1]{\enquote{\textit{#1}}}
+\newcommand{\iquote}[1]{\enquote{\textit{#1}}}
 \newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
 \newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
+
+\newenvironment{longtabuwrap}{
+  \begin{footnotesize}\begin{singlespacing}
+}{
+  \end{singlespacing}\end{footnotesize}
+}
 
 \input{src/fixes}
 
@@ -186,12 +197,17 @@
   \pagenumbering{arabic}
 
   \input{src/1_Motivation/index}
+  % \chapter{Grundlagen}
+  % \chapter{Ziel- und Anforderungsanalyse}
   \input{src/2_Grundlagen/index}
   \input{src/3_Analyse/index}
   \input{src/4_Umsetzung/index}
   \input{src/5_Durchfuehrung/index}
   \input{src/6_Auswertung/index}
   \input{src/7_Fazit/index}
+  % \chapter{Durchführung}
+  % \chapter{Auswertung und Diskussion}
+  % \chapter{Schlussbetrachtungen}
 
   % ------------------------------
 
