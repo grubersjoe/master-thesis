@@ -1,6 +1,6 @@
 # Test devices                # Done
-- Spreadshirt (Notebook)
-- Spreadshirt (Lenovo)        OK
+- Spreadshirt (Notebook)      x
+- Spreadshirt (Lenovo)        x
 - MacBook Pro 2013
 - MacBook Pro 2018
 - Jupiter (Desktop)
