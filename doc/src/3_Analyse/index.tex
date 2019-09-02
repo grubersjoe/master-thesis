@@ -4,8 +4,6 @@
 \section{Ausgangslage}
 \label{sec:status-quo}
 
-% Bevor die Ziele der Migration nach TypeScript erläutert und die Anforderungen an den Transpiler spezifiziert werden, soll zunächst die Situation vor Beginn der Entwicklungsphase beschrieben werden.
-
 \subsection{Kurzvorstellung der Projekte von TeamShirts}
 
 Das Leipziger Unternehmen \textit{sprd.net AG} (\textit{Spreadshirt}) ist ein seit 2002 bestehender Anbieter verschiedener eCommerce-Plattformen, welche die individuelle On-Demand-Bedruckung von Kleidung und Accessoires ermöglichen~\autocite{SPREADSHIRT:ABOUT}. Die Produkte können von den Kunden online durch vorgegebene oder eigene Motive gestaltet und anschließend bestellt werden. Um weitere Zielgruppen wie Sportmannschaften, Vereine, Belegschaften usw. besser anzusprechen, wurde 2014 der Geschäftsbereich \textit{TeamShirts} geschaffen.
@@ -21,7 +19,7 @@ Alle Frontend-Projekte von TeamShirts basieren auf der Software-Bibliothek \text
 
 \subsection{Bestehende Ansätze zur Transpilierung von Flow nach TypeScript}
 
-Vor Beginn der Arbeit wurde evaluiert, ob bereits Software existiert, welche die gegebene Problemstellung, die Transpilierung von Flow nach TypeScript, umsetzt. Tatsächlich existierten zum damaligen Zeitpunkt im Februar 2019 zwei Projekte auf GitHub, welche das gleiche Ziel wie diese Arbeit verfolgen: Bereits im November 2017 wurde von Boris Cherny mit der Entwicklung eines Babel-Plugins zur Transpilierung von Flow begonnen~\autocite{CHERNY:FLOW_TO_TS}. Weiterhin ist im April 2018 ein vergleichbares Projekt durch Yuichiro Kikura entstanden~\autocite{KIKURA:FLOW_TO_TS}. Nach näherer Betrachtung und Erprobung der zwei Plugins wurde schnell festgestellt, dass sich beide Projekte noch ein einem frühen Entwicklungsstadium befinden und unvollständig sind. Da die Software darüber hinaus nur sporadisch weiterentwickelt wurde, wurde angenommen, dass die Projekte inaktiv sind. Eine korrekte, ganzheitliche Transpilierung der vorliegenden JavaScript-Codebasis von TeamShirts war damit nicht möglich. Infolgedessen wurde beschlossen einen Flow-Transpiler, welcher allen nachfolgend ausgeführten Anforderungen gerecht wird, selbst zu entwickeln.
+Vor Beginn der Arbeit wurde evaluiert, ob bereits Software existiert, welche die gegebene Problemstellung, die Transpilierung von Flow nach TypeScript, umsetzt. Tatsächlich existierten zum damaligen Zeitpunkt im Februar 2019 zwei Projekte auf GitHub, welche das gleiche Ziel wie diese Arbeit verfolgen: Bereits im November 2017 wurde von Boris Cherny mit der Entwicklung eines Babel-Plugins zur Transpilierung von Flow begonnen~\autocite{CHERNY:FLOW_TO_TS}. Weiterhin ist im April 2018 ein vergleichbares Projekt durch Yuichiro Kikura entstanden~\autocite{KIKURA:FLOW_TO_TS}. Nach näherer Betrachtung und Erprobung der zwei Plugins wurde frühzeitig festgestellt, dass sich beide Projekte noch ein einem frühen Entwicklungsstadium befinden und keinen vollständigen Funktionsumfang besitzen. Da die Software darüber hinaus nur sporadisch weiterentwickelt wurde, wurde angenommen, dass die Projekte inaktiv sind. Eine korrekte, ganzheitliche Transpilierung der vorliegenden JavaScript-Codebasis von TeamShirts war damit nicht möglich. Infolgedessen wurde beschlossen einen Transpiler für Flow, der allen nachfolgend ausgeführten Anforderungen gerecht wird, selbst zu entwickeln.
 
 Inzwischen wurde die Entwicklung des Plugins von Yuichiro Kikura wieder aufgenommen und es ist ein drittes Projekt auf GitHub hinzu gekommen~\autocite{KHAN:FLOW_TO_TS}. In Abschnitt~\ref{evaluation:other-tools} wird der in dieser Arbeit umgesetzte Transpiler mit den zwei konkurrierenden Ansätzen hinsichtlich verschiedener Kriterien verglichen.
 
@@ -32,29 +30,37 @@ In Zusammenarbeit mit den Software-Entwicklern bei TeamShirts wurden die folgend
 
 \subsection{Erkennung weiterer Typ- und Programmfehler}
 
-Die Hauptmotivation für den Wechsel des Typsystems bei TeamShirts ist die Erkennung weiterer Bugs im bestehenden und zukünftigen Code der Frontend-Projekte. Es wird angenommen dass TypeScript hier, insbesondere auch durch die im nächsten Abschnitt beschriebene Unterstützung externer Bibliotheken, Flow überlegen ist. Im Umfeld einer eCommerce"=Plattform sind JavaScript"=Laufzeitfehler in der Produktivumgebung fatal, da diese im vorliegenden Fall Bestellabschlüsse verhindern können und dies Umsatzeinbußen bedeutet. Folglich besteht ein starkes Interesse des Unternehmens die Qualität der betriebenen Software weiter zu steigern, indem Programmfehler behoben werden. Es gilt in der Auswertung in Kapitel~\ref{chap:evaluation} zu zeigen, dass TypeScript einerseits mindestens das gleiche Maß an Typsicherheit bietet, andererseits neue Bugs durch Typverletzungen offen legt.
+Die Hauptmotivation für den Wechsel des Typsystems bei TeamShirts ist die Erkennung weiterer Bugs im bestehenden und zukünftigen Code der Frontend-Projekte. Es wird angenommen dass TypeScript hier, insbesondere auch durch die im nächsten Abschnitt beschriebene Unterstützung externer Bibliotheken, Flow überlegen ist. Im Umfeld einer eCommerce"=Plattform sind JavaScript"=Laufzeitfehler in der Produktivumgebung fatal, da diese im vorliegenden Fall Bestellabschlüsse verhindern können und dies Umsatzeinbußen bedeutet. Folglich besteht ein starkes Interesse des Unternehmens die Qualität der betriebenen Software weiter zu steigern, indem Programmfehler behoben werden. Es gilt in der Auswertung zu zeigen, dass TypeScript einerseits mindestens das gleiche Maß an Typsicherheit bietet, andererseits neue Bugs durch Typverletzungen offen legt.
 
 \subsection{Unterstützung externer Bibliotheken und Frameworks}
 
-Da alle Projekte von TeamShirts auf eine Vielzahl externer Software-Bibliotheken wie \textit{React} et cetera angewiesen sind, ist die umfassende Unterstützung dieser durch das Typsystem eine wichtige Zielvorgabe. Sowohl Flow als auch TypeScript ermöglichen es Bibliotheken und Frameworks Dritter durch Typdeklarationen zu beschreiben (vgl. Abschnitt~\ref{subsubsec:type-declarations}). Somit ist es möglich auch untypisierte, externe JavaScript-Module nachträglich um eine Typisierung in Flow oder TypeScript zu erweitern. Somit können die Vorteile statischer Typisierung auch hier genutzt werden. Es kann so sicher gestellt werden, dass Bibliotheken korrekt verwendet werden, da beispielsweise fehlerhafte Funktionsaufrufe durch das Typsystem unmittelbar erkannt werden.
+Da alle Projekte von TeamShirts auf eine Vielzahl externer Software-Bibliotheken wie \textit{React} et cetera angewiesen sind, ist die umfassende Unterstützung dieser durch das Typsystem eine wichtige Zielvorgabe. Sowohl Flow als auch TypeScript ermöglichen es Bibliotheken und Frameworks Dritter durch Typdeklarationen zu beschreiben (vgl. Abschnitt~\ref{subsubsec:type-declarations}). Damit ist es möglich auch untypisierte JavaScript-Module nachträglich um eine Typisierung in Flow oder TypeScript zu erweitern, sodass die Vorteile statischer Typisierung auch hier genutzt werden können. Es kann auf diese Weise sicher gestellt werden, dass Bibliotheken korrekt verwendet werden, da beispielsweise fehlerhafte Funktionsaufrufe durch das Typsystem unmittelbar erkannt werden.
 
-Weil es sehr aufwändig und fehleranfällig ist selbst Typdeklarationen für fremde Bibliotheken anzufertigen, ist es entscheidend, dass bereits qualitativ hochwertige Typisierungen extern vorliegen. Qualitativ hochwertig bedeutet, dass die Definitionen vollständig, korrekt und aktuell hinsichtlich der Software-Version sind. Einige Projekte stellen selbst Deklarationsdateien bereit, für andere existieren gemeinschaftlich gepflegte Typisierungen. Ausschlaggebend für den Erfolgt der Migration ist, dass nach dem Wechsel zu TypeScript Typdeklarationen in mindestens vergleichbarer Qualität für einen Großteil der eingesetzten Bibliotheken vorliegen.
+Weil es sehr aufwändig und fehleranfällig ist selbst Typdeklarationen für fremde Bibliotheken anzufertigen, ist es für die Unterstützung dieser durch das Typsystem entscheidend, dass bereits qualitativ hochwertige Typisierungen bestehen. Qualitativ hochwertig bedeutet, dass die Definitionen vollständig, korrekt und aktuell hinsichtlich der Software-Version sind. Einige Projekte stellen selbst Deklarationsdateien bereit, für andere existieren gemeinschaftlich gepflegte Typisierungen. Ausschlaggebend für den Erfolgt der Migration ist, dass nach dem Wechsel zu TypeScript Typdeklarationen in mindestens vergleichbarer Qualität für einen Großteil der eingesetzten Bibliotheken vorliegen.
 
-\subsection{Stabilität und Geschwindigkeit der Typüberprüfungen}
+\subsection{Performance der Typüberprüfungen}
 
-Ein weiterer maßgeblicher Aspekt für die Akzeptanz von TypeScript innerhalb des Teams ist zum einen die Geschwindigkeit der Typüberprüfungen, zum anderen die Stabilität dieses Vorgangs. Es muss gewährleistet sein, dass mögliche Typverletzungen, die während der Arbeit des Programmierers auftreten, sehr schnell im Editor angezeigt werden, da dies andernfalls den Workflow erheblich verlangsamt und beeinträchtigt. Gleichzeitig müssen diese Ergebnisse zuverlässig sein. Im Gespräch mit den Software-Entwicklern bei TeamShirts war die Instabilität von Flow ein oft genannter Grund für bisherige Unzufriedenheit mit dem Typsystem. Laut der Erfahrungsberichte ist es zum Teil unklar, ob lediglich der Sprachserver von Flow, welcher im Hintergrund die Überprüfungen vollzieht, erneut abgestürzt ist oder ob tatsächlich keine Typverletzung vorliegt. Im Bugtracker~\autocite{FLOW:BUGTRACKER} von Flow auf GitHub existieren zahlreiche Fehlerberichte zu Abstürzen des Flow-Servers. Ein weiteres Erfolgskriterium der Migration zu Flow ist somit die Erzielung einer mindestens gleich schnellen Performance und die Sicherstellung stabiler Typüberprüfungen.
+Ein weiterer maßgeblicher Aspekt für die Akzeptanz von TypeScript innerhalb des Entwicklerteams ist die Performance der Typüberprüfungen, also die Rechenleistung des eingesetzten Systems. Üblicherweise startet der Editor oder die integrierte Entwicklungsumgebung einen Prozess für den Flow- bzw. TypeScript-Sprachserver, welcher das gesamte Projekt und insbesondere offene Dateien im Hintergrund kontinuierlich auf Typverletzungen überprüft. Es ist wichtig, dass die Ergebnisse dieser Berechnungen möglichst schnell vorliegen, damit etwaige Fehler unmittelbar im Editor angezeigt werden können. Falls diese stark verzögert, erst nach einigen Sekunden ausgegeben werden, so verlangsamt dies den Workflow des Programmierers und beeinträchtigt dessen Effizienz. Ein weiteres Erfolgskriterium der Migration zu TypeScript ist also die Erzielung einer mindestens gleichwertigen Performance.
 
 \subsection{Zukunftssicherheit und Transparenz der Technologie}
 
-Schließlich
+Zuletzt sind einerseits die Zukunftssicherheit, andererseits die Transparenz der eingesetzten Technologie von großer Bedeutung. Hierunter werden in dieser Arbeit verschiedene Fragestellungen verstanden: Existiert ein öffentlich einsehbarer Projektplan (\textit{Roadmap}) für die Fortentwicklung von Flow bzw. TypeScript? Wie gesichert ist die langfristige Unterstützung der Projekte durch die ursprünglichen Autoren\footnote{\textit{Facebook} (Flow)~\autocite{FLOW:PAPER} bzw. \emph{Microsoft} (TypeScript)~\autocite{TYPESCRIPT:SPEC}.} des Systems? Werden strategische Entscheidungen öffentlich kommuniziert? Wird die Software quelloffen oder proprietär entwickelt? Werden gemeldete Bugs innerhalb einer angemessenen Zeitspanne behoben? Wird die Gemeinschaft in Entscheidungsprozesse eingebunden?
+
+All diesen Fragen gemein ist das Bedürfnis der Benutzer nach Stabilität, Transparenz und Verlässlichkeit der eingesetzten Technologie. Da die Software-Projekte bei TeamShirts für gewöhnlich über viele Jahre hinweg erweitert und gewartet werden, ist die Beständigkeit und die kontinuierliche Weiterentwicklung des eingesetzten Typsystems von großer Bedeutung für das Unternehmen. Das letzte Ziel der Migration ist deshalb die Verbesserung all dieser Aspekte durch den Wechsel zu TypeScript.
 
 \section{Anforderungen an den Transpiler}
 
-\subsection{Korrekte Übersetzung der Flow-Typen}
+\subsection{Äquivalente und vollständige Übersetzung der Flow-Typen}
 \label{subsection:requirement:correct-translation}
+
+Die bedeutsamste Anforderung an den Transpiler ist die möglichst äquivalente Übersetzung \emph{sämtlicher} Flow-Sprachkonstrukte nach TypeScript. Durch die Vorgabe der Vollständigkeit wird die Transpilierung jedes beliebigen Flow-Eingabeprogramms ermöglicht. Da durch die Spezifikation des abstrakten Syntaxbaums von Babel~\autocite{BABEL:PARSER_SPEC} definiert ist, welche Knoten eines Programms Flow-Typen darstellen, ist der Umfang einer vollständigen Implementierung exakt eingegrenzt.
+
+Wie in Abschnitt~\ref{sec:static-typesystems-for-js} ausgeführt, werden einige der Funktionen des Typsystems von Flow in TypeScript nicht unterstützt, sodass eine absolut bedeutungsgleiche Übersetzung dieser Typen unmöglich ist. Ein Verlust von Typinformation wird deshalb an dieser Stelle akzeptiert. Bei Auftreten eines solchen Falls soll der Benutzer jedoch durch eine aussagekräftige Warnung benachrichtigt werden.
 
 \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
 \label{subsection:requirement:semantic-equivalence}
+
+Der Transpilierungsprozess darf die Semantik des Ausgabeprogramms nicht verändern. Es muss sicher gestellt werden, dass die Bedeutung des Quelltexts
 
 \subsection{Vollständige Unterstützung moderner JavaScript- und JSX-Syntax}
 \label{subsection:requirement:modern-js-support}
@@ -64,9 +70,25 @@ JSX\footnote{Siehe~\citetitle{SOFTWARE:JSX}~\autocite{SOFTWARE:JSX}.}
 \subsection{Verarbeitung gesamter Projektverzeichnisse}
 \label{subsection:requirement:batch-processing}
 
+Weil ein umfangreiches JavaScript-Projekt aus Hunderten von Einzeldateien besteht, ist eine Stapelverarbeitung nützlich, um die Transpilierung der gesamten Codebasis zu realisieren. Tabelle~\ref{tab:projects-loc} gibt einen Überblick über die Anzahl und Zusammensetzung von JavaScript-Dateien in den Projekte bei TeamShirts.
+
+\bigbreak
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}lrrrr@{}}
+    \midrule
+    \libertineSB{Projekt} & \libertineSB{Dateien} & \libertineSB{Leer} & \libertineSB{Kommentare} & \libertineSB{Code}  \\
+    \midrule
+    Components & 331 & 4341 & 963 & 24936 \\
+    Helios & 353 & 4814 & 495 & 40127 \\
+    \midrule
+  \end{tabu}
+  \caption{Anzahl von JavaScript-Dateien und Verteilung zugehöriger Leer-, Kommentar- und Codezeilen zweier Projekte bei TeamShirts.}
+  \label{tab:projects-loc}
+\end{table}
 
 
 \subsection{Beibehaltung der Quelltext-Formatierung}
 \label{subsection:requirement:format}
 
-Schließlich muss gewährleistet werden, dass die Quelltext-Formatierung eines Projekte nach Ausführung des Transpilers so originalgetreu wie möglich beibehalten wird, da der Programmierstil wichtig für die Wartbarkeit und Verständlichkeit von Software ist~\autocite[146]{KERNIGHAN:1982}. Auch bestehen teaminterne Vorgaben bezüglich des Aufbaus und der Formatierung des Codes, welche durch die Migration nicht verworfen werden dürfen. Unter der Formatierung wird nachfolgend die Einrückung des Codes, Zeilenumbrüche und die Position der Leerzeichen und -zeilen verstanden. Auch Block- und Zeilenkommentare müssen korrekt in die Ausgabe übernommen werden.
+Schließlich muss gewährleistet werden, dass die Quelltext-Formatierung eines Projekte nach Ausführung des Transpilers so originalgetreu wie möglich beibehalten wird, da der Programmierstil wichtig für die Wartbarkeit und Verständlichkeit von Software ist~\autocite[146]{KERNIGHAN:1982}. Auch bestehen teamintern Vorgaben bezüglich des Aufbaus und der Formatierung des Codes, welche durch die Migration nicht verworfen werden dürfen. Unter der Formatierung wird nachfolgend die Einrückung des Codes, Zeilenumbrüche und die Position der Leerzeichen und -zeilen verstanden. Auch Block- und Zeilenkommentare müssen korrekt in die Ausgabe übernommen werden.
