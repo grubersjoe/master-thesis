@@ -1,6 +1,11 @@
 \chapter{Auswertung und Diskussion}
 \label{chap:evaluation}
 
+\section{Durchführung der Migration}
+
+% Anwendung Transpiler
+% Fixen von manuellen Fehlern
+
 % Vorteile: Andere Projekte wie Helios, die die Components verwenden, kriegen deren Typisierung "frei Haus".
 
 \section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
@@ -9,7 +14,7 @@
 
 \subsubsection{Übersetzungen mit Verlust von Typeinformation}
 
-Für einige, wenige Typen existiert keine vollständig äquivalente Übersetzung, da TypeScript manche der Funktionen von Flow nicht unterstützt. Somit kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{subsection:requirement:correct-translation} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
+Für einige, wenige Typen existiert keine absolut äquivalente Übersetzung, da TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{subsection:requirement:correct-translation} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
 
 \subsection{Erkennung neuer Typ- und Programmfehler}
 
