@@ -18,7 +18,7 @@ Ein gewichtiges Argument für den Einsatz statischer Typsysteme ist die erhöhte
 % TODO: einfacherer Einstieg für Anfänger
 Des Weiteren zwingt die Deklaration expliziter Typen den Entwickler dazu die \emph{Absicht} seines Programms klar zu formulieren, wodurch sich die Ausdruckskraft und Lesbarkeit des Codes erhöht~\autocite[96]{WALDMANN:PPS}. Durch eine vernünftige Typisierung wird der Quelltext darüber hinaus bereits grundlegend an Ort und Stelle dokumentiert (\textit{inline documentation})~\autocite[Abschn. 6.1.1]{MITCHELL:CONCEPTS}.
 
-Schließlich hat die Verwendung statischer Typsysteme auch Vorteile für die Effizienz und Ausführungsgeschwindigkeit von Software. Da bereits im Vorfeld bekannt ist, welche Typen verschiedene Datenstrukturen besitzen, kann deren Speicherung und Zugriff auf Hardware-Ebene optimiert werden~\autocite[Abschn. 6.1.3]{MITCHELL:CONCEPTS}. Damit können aufwändige Überprüfungen des Laufzeitsystems, die notwendig sind um eine dynamische Typisierung umzusetzen, entfallen.
+Schließlich hat die Verwendung statischer Typsysteme auch Vorteile für die Effizienz und Ausführungsgeschwindigkeit von Software. Da bereits im Vorfeld bekannt ist, welchen Typ die Elemente einer Datenstruktur besitzen, kann deren Speicherung und Zugriff auf Hardware-Ebene optimiert werden~\autocite[Abschn. 6.1.3]{MITCHELL:CONCEPTS}. Damit entfallen aufwändige Überprüfungen des Laufzeitsystems, die notwendig sind um eine dynamische Typisierung zu ermöglichen.
 
 
 \section{Statische Typsysteme für JavaScript}
@@ -46,81 +46,7 @@ Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basi
 Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannotationen von Flow verstanden, welche keine Hilfstypen oder Typdeklarationen darstellen. Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen in allen Übersichtstabellen beibehalten und nicht ins Deutsche übersetzt.
 
 \bigbreak
-\begin{longtabuwrap}
-\begin{longtabu} to \textwidth {@{}ll>{\RaggedRight}X@{}}
-    \midrule
-    \libertineSB{Basistyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-    \midrule
-  \endhead
-    \midrule
-    \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
-  \endfoot
-    \midrule
-    \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel (Fortsetzung).}
-  \endlastfoot
-  \medskip
-  Any type                   & \code{any}                             & Typ für beliebige Werte. Jeder Typ ist Subtyp von \code{any}. \code{any} ist jedem Typ zuweisbar und jeder Typ ist \code{any} zuweisbar. \\
-  \medskip
-  Array type                 & \code{Array<{}number>{}}               & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. \\
-  \medskip
-  Array type (shorthand)     & \code{number[]}                        & Felder (Kurzschreibweise). \\
-  \medskip
-  Boolean literal type       & \code{true}                            & Boolesche Literale (entweder \code{true} oder \code{false}) \\
-  \medskip
-  Boolean type               & \code{boolean}                         & Boolesche Werte \\
-  \medskip
-  Empty type                 & \code{empty}                           & Der leere Typ (\textit{bottom type} $\bot$), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (z.~B. Endlosschleife oder Exception). \\
-  \medskip
-  Exact object type          & \code{\{| prop: any |\}}               & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute verursachen einen Typfehler.\\
-  \medskip
-  Function type              & \code{(string, \{\}) => number}        & Funktionen: also der Typ der Parameter und des Rückgabewerts. \\
-  \medskip
-  Generic type annotation    & \code{let v: <{}FlowType>{}}           & Allgemeine Typannotation für Variablen, Funktionsparameter, -rückgabewerte usw. \\
-  \medskip
-  Generics                   & \code{type Generic<{}T: Super> = T}    & Generische Typen (parametrische Polymorphie). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, welcher mögliche Werte für T einschränkt. \\
-  \medskip
-  Interface type             & \code{interface \{ +prop: number \}}   & Schnittstellen \\
-  \medskip
-  Intersection type          & \code{type Intersection = T1 \& T2}    & Schnitt zweier Typen. Der Typ \code{Intersection} enthält hier alle Eigenschaften von \code{T1} \emph{und} \code{T2}. \\
-  \medskip
-  Mixed type                 & \code{mixed}                           & Typ für unbekannte Werte, ähnlich zu \code{any}. Jeder Typ kann \code{mixed} zugewiesen werden, aber \code{mixed} kann anderen Typen erst nach Überprüfung der Kompatibilität zugewiesen werden. \\
-  \medskip
-  Null literal type          & \code{null}                            & Genau der Wert \code{null}. \\
-  \medskip
-  Nullable type (Maybe)      & \code{?number}                         & Typ für optionale, möglicherweise undefinierte Werte. Entspricht der Vereinigung aus dem angegeben Typ, \code{null} und \code{undefined}. \\
-  \medskip
-  Number literal type        & \code{42}                              & Genau dieser numerische Wert. \\
-  \medskip
-  Number type                & \code{number}                          & Gleitkommazahlen. \\
-  \medskip
-  Object type                & \code{\{ {[}string{]}: number \}}      & Objekte mit den angegebenen Attributen. Zusätzlich angegebene Attribute stellen \emph{keine} Typverletzung dar (vgl. \textit{Exact Objects}).  \\
-  \medskip
-  Opaque type                & \code{opaque type Opaque = number}     & Opake Datentypen sind Typaliase, die ihre zugrunde liegende Implementierung dem Benutzer nicht offen legen (\textit{information hiding}). \\
-  \medskip
-  String literal type        & \code{'literal'}                       & Genau diese Zeichenkette. \\
-  \medskip
-  String type                & \code{string}                          & Zeichenketten. \\
-  \medskip
-  This type                  & \code{this}                            & TODO \\
-  \medskip
-  Tuple type                 & \code{{[}Date, number{]}}              & Tupel, also Listen fester Länge mit vorgegebenen Datentyp für jedes Element. \\
-  \medskip
-  Type alias                 & \code{type Type = <{}FlowType>{}}      & Ermöglicht beliebig komplexe Typkonstrukte unter einem neuen Namen, dem Alias, zusammen zu fassen. \\
-  \medskip
-  Type cast expresssion      & \code{(variable: string)}              & Explizite Typumwandlung (statisch). \\
-  \medskip
-  Type export                & \code{export type T = number | null}   & Export von Typen aus Modulen. \\
-  \medskip
-  Type import                & \code{import type T from './types'}    & Import von Typen aus anderen Modulen. \\
-  \medskip
-  Typeof type                & \code{typeof undefined}                & Operator um Flow-Typ eines Werts zu erhalten. \\
-  \medskip
-  Union type                 & \code{number | null}                   & Vereinigungstyp. Hier: Entweder \code{number} \emph{oder} \code{null}. \\
-  \medskip
-  Void type                  & \code{void}                            & Typ für \code{undefined} in Flow-Typen. Verwendung beispielsweise in Funktionen ohne Rückgabewert.
-  \label{tab:flow-base-types}
-\end{longtabu}
-\end{longtabuwrap}
+\input{src/2_Grundlagen/tables/base-types.tex}
 
 \subsubsection{Hilfstypen}
 \label{subsection:flow:utility-types}
@@ -128,38 +54,7 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
 TODO
 
 \bigbreak
-\begin{longtabuwrap}
-\begin{longtabu} to \textwidth {@{}llX@{}}
-  \midrule
-  \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-  \midrule
-  \endhead
-  \midrule
-  \endfoot
-  \endlastfoot
-  Call                & \texttt{\$Call<F, T...>}        & TODO   \\
-  Class               & \texttt{Class<T>}               & TODO   \\
-  Difference          & \texttt{\$Diff<A, B>}           & TODO   \\
-  Element type        & \texttt{\$ElementType<T, K>}    & TODO   \\
-  Exact               & \texttt{\$Exact<T>}             & TODO   \\
-  Existential type    & \texttt{*}                      & TODO   \\
-  Keys                & \texttt{\$Keys<T>}              & TODO   \\
-  None maybe type     & \texttt{\$NonMaybeType<T>}      & TODO   \\
-  Object map          & \texttt{\$ObjMap<T, F>}         & TODO   \\
-  Object map with key & \texttt{\$ObjMapi<T, F>}        & TODO   \\
-  Property type       & \texttt{\$PropertyType<T, k>}   & TODO   \\
-  ReadOnly            & \texttt{\$ReadOnly<T>}          & TODO   \\
-  Rest                & \texttt{\$Rest<A, B>}           & TODO   \\
-  Shape               & \texttt{\$Shape<T>}             & TODO   \\
-  Tuple map           & \texttt{\$TupleMap<T, F>}       & TODO   \\
-  Values              & \texttt{\$Values<T>}            & TODO   \\
-  Subtype             & \texttt{\$Subtype<T>}           & TODO   \\
-  Supertype           & \texttt{\$Supertype<T>}         & TODO   \\
-  \midrule
-  \caption{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel.}
-  \label{tab:flow-utility-types}
-\end{longtabu}
-\end{longtabuwrap}
+\input{src/2_Grundlagen/tables/utility-types.tex}
 
 \subsubsection{Typdeklarationen}
 \label{subsubsec:type-declarations}
@@ -167,28 +62,7 @@ TODO
 TODO
 
 \bigbreak
-\begin{longtabuwrap}
-\begin{longtabu} to \textwidth {@{}lXX@{}}
-  \midrule
-  \libertineSB{Deklaration} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-  \midrule
-  \endhead
-  \midrule
-  \endfoot
-  \endlastfoot
-  Class       & \code{declare class C {}}               & TODO \\
-  Export      & \code{declare export default () => any} & TODO \\
-              &                                         & TODO \\
-  Function    & \code{declare function f(number): any}  & TODO \\
-  Interface   & \code{declare interface I {}}           & TODO \\
-  Module      & \code{declare module 'esmodule' {}}     & TODO \\
-  Type alias  & \code{declare type T = number}          & TODO \\
-  Variable    & \code{declare var v: string}            & TODO \\
-  \midrule
-  \caption{Typdeklarationen von Flow.}
-  \label{tab:flow-type-declarations}
-\end{longtabu}
-\end{longtabuwrap}
+\input{src/2_Grundlagen/tables/declaration.tex}
 
 \subsection{TypeScript}
 % TS beschreiben (und zwar mit entsprechender Fachsprache)
@@ -198,6 +72,8 @@ TODO
 % Was macht eigentlich so ein Compiler bzw. Transpiler? Hier Theorie (AST etc.)
 
 \subsection{Konzeptioneller Aufbau von Transpilern}
+
+  %  TODO: vllt eher allgemeine Konzepte von Transpilern..?
 
   % TODO Lexikalische und syntaktische Analyse
 
@@ -226,8 +102,6 @@ Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Tr
 
 % Am Ende: es wird Babel eingesetzt werden, um das Dingens zu bauen.
 
-Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.
-
 % CITATION NEEDED
 Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}.}.
 Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
@@ -242,24 +116,24 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 % TODO: Tokenizer, Lexer, Tokens und all den Quatsch in den Grundlagen erklären!
 \begin{enumerate}
   \item {\libertineSB Parsen des Eingabecodes}\\*
-    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert. Jeder Knoten des Baums erhält dabei einen eindeutigen Typ, der dessen syntaktische Bedeutung beschreibt.
+    Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum (AST) des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Tokenizers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen Syntaxbaum repräsentiert. Jeder Knoten des Baums erhält dabei einen eindeutigen Typ, der dessen syntaktische Bedeutung widerspiegelt.
     \\
 
   \item {\libertineSB Transformation des Programms}\\*
-    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \emph{Besucher}"=Entwurfsmuster\footnote{engl. \textit{Visitor-Pattern.}.} rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden können~\autocite[634\psq]{FREEMAN:2004}. Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die individuelle Adressierung einer Untermenge der Knoten des Syntaxbaums, um dort die gewünschte Transformation des Programms umzusetzen.
+    Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \emph{Besucher}"=Entwurfsmuster\footnote{engl. \textit{Visitor-Pattern.}.} rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Besucher-Entwurfsmuster beschreibt wie Operationen auf einer Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden können~\autocite[634\psq]{FREEMAN:2004}. Es gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{Gang of Four}\footnote{E. Gamma, R. Helm, R. Johnson und J. Vlissides.} beschrieben werden~\autocite[306\psqq]{GAMMA:1994}. Im vorliegenden Fall ermöglicht die Anwendung des Musters die individuelle Adressierung einer genau eingegrenzten Untermenge der Knoten des Syntaxbaums, um dort die gewünschte Transformation des Programms umzusetzen.
     \\
 
   \item {\libertineSB Generierung des Ausgabequelltexts}\\*
-    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, welche den modifizierten Quelltext darstellt.
+    Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche nach und nach durchlaufen und eine Zeichenkette aufgebaut, die den endgültigen, modifizierten Quelltext darstellt.
 \end{enumerate}
 
 \subsubsection{Babel-Plugins}
 \label{subsection:babel-plugins}
 
-Da die wichtigste Phase der Transpilierung, die Programmtransformation, durch Plugins realisiert wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Compilers besteht aus einer Vielzahl von Plugins, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifend verankerte Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten sehr flexibel durch Verwendung vieler, kleiner Bausteine zusammen gesetzt werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
+Da die entscheidende Phase der Transpilierung, die Programmtransformation, bei Babel durch Plugins erzielt wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Compilers ist aus einer Vielzahl von Standard-Plugins zusammen gesetzt, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten sehr flexibel durch Kombination vieler, kleiner Bausteine realisiert werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
 Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel verdeutlicht werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines sehr einfachen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
-Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben. Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}. Dieser wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
+Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben. Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}. Dieser wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.}~\autocite{BABEL:STATE_OF_BABEL}.
 
 \bigbreak
 \begin{listing}[htb]

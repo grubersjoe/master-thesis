@@ -1,0 +1,75 @@
+\begin{longtabuwrap}
+\begin{longtabu} to \textwidth {@{}ll>{\RaggedRight}X@{}}
+    \midrule
+    \libertineSB{Basistyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+    \midrule
+  \endhead
+    \midrule
+    \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
+  \endfoot
+    \midrule
+    \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel (Fortsetzung).}
+  \endlastfoot
+  \medskip
+  Any type                   & \code{any}                             & Typ für beliebige Werte. Jeder Typ ist Subtyp von \code{any}. \code{any} ist jedem Typ zuweisbar und jeder Typ ist \code{any} zuweisbar. \\
+  \medskip
+  Array type                 & \code{Array<{}number>{}}               & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. \\
+  \medskip
+  Array type (shorthand)     & \code{number[]}                        & Felder (Kurzschreibweise). \\
+  \medskip
+  Boolean literal type       & \code{true}                            & Boolesche Literale (entweder \code{true} oder \code{false}) \\
+  \medskip
+  Boolean type               & \code{boolean}                         & Boolesche Werte \\
+  \medskip
+  Empty type                 & \code{empty}                           & Der leere Typ (\textit{bottom type} $\bot$), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (z.~B. Endlosschleife oder Exception). \\
+  \medskip
+  Exact object type          & \code{\{| prop: any |\}}               & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute verursachen einen Typfehler.\\
+  \medskip
+  Function type              & \code{(string, \{\}) => number}        & Funktionen: also der Typ der Parameter und des Rückgabewerts. \\
+  \medskip
+  Generic type annotation    & \code{let v: <{}FlowType>{}}           & Allgemeine Typannotation für Variablen, Funktionsparameter, -rückgabewerte usw. \\
+  \medskip
+  Generics                   & \code{type Generic<{}T: Super> = T}    & Generische Typen (parametrische Polymorphie). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, welcher mögliche Werte für T einschränkt. \\
+  \medskip
+  Interface type             & \code{interface \{ +prop: number \}}   & Schnittstellen \\
+  \medskip
+  Intersection type          & \code{type Intersection = T1 \& T2}    & Schnitt zweier Typen. Der Typ \code{Intersection} enthält hier alle Eigenschaften von \code{T1} \emph{und} \code{T2}. \\
+  \medskip
+  Mixed type                 & \code{mixed}                           & Typ für unbekannte Werte, ähnlich zu \code{any}. Jeder Typ kann \code{mixed} zugewiesen werden, aber \code{mixed} kann anderen Typen erst nach Überprüfung der Kompatibilität zugewiesen werden. \\
+  \medskip
+  Null literal type          & \code{null}                            & Genau der Wert \code{null}. \\
+  \medskip
+  Nullable type (Maybe)      & \code{?number}                         & Typ für optionale, möglicherweise undefinierte Werte. Entspricht der Vereinigung aus dem angegeben Typ, \code{null} und \code{undefined}. \\
+  \medskip
+  Number literal type        & \code{42}                              & Genau dieser numerische Wert. \\
+  \medskip
+  Number type                & \code{number}                          & Gleitkommazahlen. \\
+  \medskip
+  Object type                & \code{\{ {[}string{]}: number \}}      & Objekte mit den angegebenen Attributen. Zusätzlich angegebene Attribute stellen \emph{keine} Typverletzung dar (vgl. \textit{Exact Objects}).  \\
+  \medskip
+  Opaque type                & \code{opaque type Opaque = number}     & Opake Datentypen sind Typaliase, die ihre zugrunde liegende Implementierung dem Benutzer nicht offen legen (\textit{information hiding}). \\
+  \medskip
+  String literal type        & \code{'literal'}                       & Genau diese Zeichenkette. \\
+  \medskip
+  String type                & \code{string}                          & Zeichenketten. \\
+  \medskip
+  This type                  & \code{this}                            & TODO \\
+  \medskip
+  Tuple type                 & \code{{[}Date, number{]}}              & Tupel, also Listen fester Länge mit vorgegebenen Datentyp für jedes Element. \\
+  \medskip
+  Type alias                 & \code{type Type = <{}FlowType>{}}      & Ermöglicht beliebig komplexe Typkonstrukte unter einem neuen Namen, dem Alias, zusammen zu fassen. \\
+  \medskip
+  Type cast expresssion      & \code{(variable: string)}              & Explizite Typumwandlung (statisch). \\
+  \medskip
+  Type export                & \code{export type T = number | null}   & Export von Typen aus Modulen. \\
+  \medskip
+  Type import                & \code{import type T from './types'}    & Import von Typen aus anderen Modulen. \\
+  \medskip
+  Typeof type                & \code{typeof undefined}                & Operator um Flow-Typ eines Werts zu erhalten. \\
+  \medskip
+  Union type                 & \code{number | null}                   & Vereinigungstyp. Hier: Entweder \code{number} \emph{oder} \code{null}. \\
+  \medskip
+  Void type                  & \code{void}                            & Typ für \code{undefined} in Flow-Typen. Verwendung beispielsweise in Funktionen ohne Rückgabewert.
+  \label{tab:flow-base-types}
+\end{longtabu}
+\end{longtabuwrap}
