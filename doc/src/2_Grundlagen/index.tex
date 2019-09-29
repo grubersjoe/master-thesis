@@ -33,7 +33,7 @@ Die Idee JavaScript um ein statisches Typsystem zu erweitern ist nicht neu~\auto
 Im Folgenden sollen die zwei in dieser Arbeit behandelten Systeme \textit{Flow}~\autocite{FLOW:PAPER} und \textit{TypeScript}~\autocite{TYPESCRIPT:SPEC} näher betrachtet werden.
 
 \subsection{Flow}
-\label{subsection:flow}
+\label{subsec:flow}
 % Flow beschreiben (und zwar mit entsprechender Fachsprache)
 
 Alle Typen werden in der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} erläutert.
@@ -41,7 +41,7 @@ Alle Typen werden in der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOT
 Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basistypen, Hilfstypen und Typdeklarationen. Diese werden im Folgenden vorgestellt und beschrieben.
 
 \subsubsection{Basistypen}
-\label{subsection:flow:base-types}
+\label{subsec:flow:base-types}
 
 Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannotationen von Flow verstanden, welche keine Hilfstypen oder Typdeklarationen darstellen. Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen in allen Übersichtstabellen beibehalten und nicht ins Deutsche übersetzt.
 
@@ -49,7 +49,7 @@ Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller Typannota
 \input{src/2_Grundlagen/tables/base-types.tex}
 
 \subsubsection{Hilfstypen}
-\label{subsection:flow:utility-types}
+\label{subsec:flow:utility-types}
 
 TODO
 
@@ -103,8 +103,8 @@ Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Tr
 % Am Ende: es wird Babel eingesetzt werden, um das Dingens zu bauen.
 
 % CITATION NEEDED
-Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsection:requirement:correct-translation}.}.
-Ein weiteres Argument für die Wahl von Babel ist einerseits die sehr gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
+Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsec:requirement:correct-translation}.}.
+Ein weiteres Argument für die Wahl von Babel ist einerseits die gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
 \subsection{Babel}
 \label{sec:babel}
@@ -128,11 +128,11 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 \end{enumerate}
 
 \subsubsection{Babel-Plugins}
-\label{subsection:babel-plugins}
+\label{subsec:babel-plugins}
 
-Da die entscheidende Phase der Transpilierung, die Programmtransformation, bei Babel durch Plugins erzielt wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Compilers ist aus einer Vielzahl von Standard-Plugins zusammen gesetzt, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten sehr flexibel durch Kombination vieler, kleiner Bausteine realisiert werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
+Da die entscheidende Phase der Transpilierung, die Programmtransformation, bei Babel durch Plugins erzielt wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Compilers ist aus einer Vielzahl von Standard-Plugins zusammen gesetzt, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten flexibel durch Kombination vieler, kleiner Bausteine realisiert werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel verdeutlicht werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines sehr einfachen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
+Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel verdeutlicht werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines simplen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
 Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben. Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}. Dieser wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.}~\autocite{BABEL:STATE_OF_BABEL}.
 
 \bigbreak
