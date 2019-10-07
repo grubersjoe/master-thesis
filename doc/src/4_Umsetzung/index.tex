@@ -137,11 +137,11 @@ Anhand eines Beispiels wird nachfolgend der Ablauf einer einfachen Übersetzunge
     \begin{forest}
       for tree = {l=1.6cm, s sep=0.5cm}
       [Program
-        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
-            [\textrm{Alias}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
+            [\enquote{Alias}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
           ]
-          [MixedTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{right}}]
+          [MixedTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{right}}]
         ]
       ]
     \end{forest}
@@ -151,11 +151,11 @@ Anhand eines Beispiels wird nachfolgend der Ablauf einer einfachen Übersetzunge
       \begin{forest}
         for tree = {l=1.6cm, s sep=1cm}
         [Program
-          [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
-            [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
-              [\textrm{Alias}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+          [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+            [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
+              [\enquote{Alias}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
             ]
-            [TSUnknownKeyword, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}]
+            [TSUnknownKeyword, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}]
           ]
         ]
       \end{forest}
@@ -235,12 +235,12 @@ Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verg
     \begin{forest}
       for tree = {l=1.6cm, s sep=0.5cm}
       [Program
-        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
-            [\textrm{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
+            [\enquote{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
           ]
-          [NullableTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{right}}
-            [NumberTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}]
+          [NullableTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{right}}
+            [NumberTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}]
           ]
         ]
       ]
@@ -251,12 +251,12 @@ Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verg
     \begin{forest}
       for tree = {l=1.6cm, s sep=1.25cm, align=center}
       [Program
-        [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{id}}
-            [\textrm{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{name}}]
+        [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
+            [\enquote{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
           ]
-          [TSUnionType, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{typeAnnotation}}
-            [{TSNumberKeyword,\\ TSNullKeyword,\\ TSUndefinedKeyword}, align=left, s sep=0.5cm, edge label={node[midway,fill=white,font=\scriptsize\ttfamily]{types}}]
+          [TSUnionType, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}
+            [{TSNumberKeyword,\\ TSNullKeyword,\\ TSUndefinedKeyword}, align=left, s sep=0.5cm, edge label={node[midway,fill=white,font=\scriptsize]{types}}]
           ]
         ]
       ]

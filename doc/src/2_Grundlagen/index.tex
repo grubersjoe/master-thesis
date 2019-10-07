@@ -92,6 +92,7 @@ Um die Problemstellung dieser Arbeit praktisch zu lösen soll ein \textit{Transp
 \subsection{Konzepte und Aufbau von Transpilern}
 
 Ein Transpiler (auch \textit{Transcompiler}) ist ein spezieller Compiler, der den Quelltext einer höheren Programmiersprache in eine andere höhere Programmiersprache übersetzt~\autocite[3]{AHO:COMPILERS}. Anders als bei konventionellen Compilern wird also kein unmittelbar ausführbarer Maschinencode erzeugt, sondern der ursprüngliche Quelltext in eine andere Sprache überführt. Auch möglich ist die gleiche Programmiersprache als Ziel der Transpilierung, wenn beispielsweise das Eingabeprogramm auf einen neueren oder älteren Sprachstandard angepasst werden soll~\autocite{EVGENIY:2016}.
+Abbildung~\ref{fig:transpiler-architecture} zeigt den typischen Aufbau eines Transcompilers. Die Architektur lässt sich analog zu Compilern in zwei Phasen mit mehreren Unterpunkten gliedern: Während die Eingabe im \emph{Frontend} syntaktisch und semantisch analysiert wird, wird das Programm im \emph{Backend} optimiert und der Ausgabequelltext generiert~\autocite[136]{APPEL:2003}.
 
 % \bigbreak
 \begin{figure}[htb]
@@ -100,18 +101,50 @@ Ein Transpiler (auch \textit{Transcompiler}) ist ein spezieller Compiler, der de
 	\label{fig:transpiler-architecture}
 \end{figure}
 
-Abbildung~\ref{fig:transpiler-architecture} zeigt den typischen Aufbau eines Transcompilers. Die Architektur lässt sich analog zu klassischen Compilern in zwei Phasen mit mehreren Unterpunkten gliedern: Während im sogenannten \emph{Frontend} die Eingabe syntaktisch und semantisch analysiert wird, wird das Programm im \emph{Backend} optimiert und der Ausgabequelltext generiert~\autocite[6]{TORCZON:2007}. Dabei durchläuft die Eingabe während der Analysephase mehrere Schritte: Zunächst wird der Quelltext durch den Lexer oder Tokenizer in der lexikalischen Analyse in \emph{Lexeme} und anschließend in \emph{Tokens} zerlegt. Daraufhin wird in der syntaktischen Analyse überprüft, ob diese der formalen Grammatik der Programmiersprache entsprechen.
+Zunächst wird der Quelltext innerhalb der Analysephase durch den Lexer oder Tokenizer Zeichen für Zeichen eingelesen, um diesen in lexikalisch bedeutungsvolle Zeichenketten, sogenannte \emph{Lexeme} zu zerlegen~\autocite[43]{AHO:COMPILERS}. Daraufhin werden \emph{Tokens} gebildet, indem jedes dieser Wörter einer syntaktischen Klasse zugeordnet wird, welche die Bedeutung des Tokens angeben (zum Beispiel \code{3}~$\mapsto$~\code{INT(3)} oder \code{!=}~$\mapsto$~\code{NEQ})~\autocite[26]{TORCZON:2007}. Die Tokens entsprechen dabei den Terminalsymbolen der formalen Grammatik der Programmiersprache~\autocite[43]{AHO:COMPILERS}.
+Im zweiten Schritt, der syntaktischen Analyse oder dem \emph{Parsen}, wird anschließend überprüft, ob die Tokenfolge eine Ableitung der kontextfreien Grammatik der Quellsprache darstellen, indem versucht wird einen entsprechenden Syntaxbaum aufzubauen~\autocite{SCHOEPP:COMPILER}. Ein Syntax- oder Ableitungsbaum ist ein Graph, der die hierarchische, syntaktische Struktur eines Programms gemäß dessen Grammatik repräsentiert (vgl. Abb.~\ref{fig:ast}).
+Falls dieser nicht erstellt werden kann, so liegt ein Syntaxfehler vor.
+Daraufhin wird die Fragestellung betrachtet, ob ein gültiges Programm der Eingabesprache vorliegt, indem die statische Semantik analysiert wird~\autocite[8]{AHO:COMPILERS}. Hierfür können beispielsweise Attributgrammatiken verwendet werden~\autocite[161]{TORCZON:2007}.
+Auch wird während dieser Phase die Typkorrektheit überprüft~\autocite{SCHOEPP:COMPILER}. Es gilt hervorzuheben, dass nicht alle Transpilern eine solche semantische Analyse durchführen.
+Zuletzt wird durch das Frontend ein \emph{Zwischencode} des Programms (engl. \textit{intermediate representation} (IR)) erzeugt, der an das Backend übergeben wird. Im Allgemeinen ist ein Zwischencode eine von der Quellsprache und Zielarchitektur unabhängige Datenstruktur innerhalb von Compilern~\autocite[6]{TORCZON:2007}.
 
-% TODO
-% Lexikalische Analyse:
-% Quelltext (string) => Tokens
-% Parser, Tokenizer = Lexer
+% \bigbreak
 
-% Syntaxanalyse:
-% Tokens => AST
-% Abstrakter und konkreter Syntaxbaum
+\begin{figure}[htb]
+  {
+    \ttfamily
+    \small
+    \code{const val = random() ? 'foo' : 'bar';}
+    \vspace{0.25cm}
+    \begin{center}
+      \begin{forest}
+        for tree = {l=1.25cm, s sep=1cm}
+        [VariableDeclarator
+          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
+            [\enquote{val}]
+          ]
+          [ConditionalExpression, edge label={node[midway,fill=white,font=\scriptsize]{init}}
+            [CallExpresssion, edge label={node[midway,fill=white,font=\scriptsize]{test}}
+              [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{callee}}
+                [\enquote{random}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+              ]
+            ]
+            [Literal, edge label={node[midway,yshift=-0.2mm,fill=white,font=\scriptsize]{consequent}}
+              [\enquote{foo}, edge label={node[midway,fill=white,font=\scriptsize]{value}}]
+            ]
+            [Literal, edge label={node[midway,xshift=0.4cm,fill=white,font=\scriptsize]{alternate}}
+              [\enquote{bar}, edge label={node[midway,fill=white,font=\scriptsize]{value}}]
+            ]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+  }
+  \caption{Abstrakter Syntaxbaum des JavaScript-Ausdrucks oben gemäß ESTree-Spezifikation~\autocite{ESTREE_SPEC}.}
+  \label{fig:ast}
+\end{figure}
 
-% Code Generierung
+% Der Syntaxbaum stellt dabei einen \emph{Zwischencode} des Programms (engl. \textit{intermediate representation} (IR)) innerhalb des Transcompilers dar. Ein Zwischencode ist im Allgemeinen eine von der Quellsprache und Zielarchitektur unabhängige Datenstruktur in Compilern, welche an nachfolgende Phasen weitergereicht wird~\autocite[6]{TORCZON:2007}.
 
 \subsection{Bestehende Transpiler für JavaScript}
 \label{subsec:js-transpilers}
