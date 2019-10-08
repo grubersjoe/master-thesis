@@ -112,35 +112,44 @@ Zuletzt wird durch das Frontend ein \emph{Zwischencode} des Programms (engl. \te
 
 \begin{figure}[htb]
   {
-    \ttfamily
-    \small
-    \code{const val = random() ? 'foo' : 'bar';}
-    \vspace{0.25cm}
+    \begin{minted}{text}
+function square(x) {
+  return x ** 2;
+}
+    \end{minted}
+    \vspace{-1.5cm}
     \begin{center}
+      \small
+      \ttfamily
       \begin{forest}
-        for tree = {l=1.25cm, s sep=1cm}
-        [VariableDeclarator
+        for tree = {l=1.3cm, s sep=1cm}
+        [FunctionDeclaration
           [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
-            [\enquote{val}]
+            [$square$, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
           ]
-          [ConditionalExpression, edge label={node[midway,fill=white,font=\scriptsize]{init}}
-            [CallExpresssion, edge label={node[midway,fill=white,font=\scriptsize]{test}}
-              [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{callee}}
-                [\enquote{random}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+          [Identifier{[]}, edge label={node[midway,fill=white,font=\scriptsize]{params}}
+            [$x$, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+          ]
+          [BlockStatement, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+            [ReturnStatement, edge label={node[midway,fill=white,font=\scriptsize]{body}}
+              [BinaryExpression, edge label={node[midway,fill=white,font=\scriptsize]{argument}}
+                [Identifier, edge label={node[midway,xshift=-2mm,fill=white,font=\scriptsize]{left}}
+                  [$x$, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+                ]
+                [., edge label={node[midway,fill=white,font=\scriptsize]{argument}}
+                  [$**$, edge label={node[midway,fill=white,font=\scriptsize]{operator}}]
+                ]
+                [Literal, edge label={node[midway,xshift=2mm,fill=white,font=\scriptsize]{right}}
+                  [$2$, edge label={node[midway,fill=white,font=\scriptsize]{value}}]
+                ]
               ]
-            ]
-            [Literal, edge label={node[midway,yshift=-0.2mm,fill=white,font=\scriptsize]{consequent}}
-              [\enquote{foo}, edge label={node[midway,fill=white,font=\scriptsize]{value}}]
-            ]
-            [Literal, edge label={node[midway,xshift=0.4cm,fill=white,font=\scriptsize]{alternate}}
-              [\enquote{bar}, edge label={node[midway,fill=white,font=\scriptsize]{value}}]
             ]
           ]
         ]
       \end{forest}
     \end{center}
   }
-  \caption{Abstrakter Syntaxbaum des JavaScript-Ausdrucks oben gemäß ESTree-Spezifikation~\autocite{ESTREE_SPEC}.}
+  \caption{Abstrakter Syntaxbaum (AST) der obigen JavaScript-Funktion gemäß der Spezifikation \textit{ESTree}~\autocite{ESTREE_SPEC}.}
   \label{fig:ast}
 \end{figure}
 
