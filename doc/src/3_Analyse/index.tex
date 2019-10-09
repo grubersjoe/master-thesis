@@ -3,10 +3,8 @@
 
 Nachdem die Grundlagen der Thematik erörtert wurden, werden nachfolgend die Ziele der Migration von Flow nach TypeScript innerhalb des Unternehmens \textit{TeamShirts} und die Anforderung an die Implementierung des Transpilers dargelegt. Zunächst soll jedoch die Ausgangslage zu Beginn dieser Arbeit beschrieben werden, um deren Rahmenbedingungen zu verdeutlichen.
 
-\section{Ausgangslage}
+\section{Ausgangslage und Rahmenbedingungen}
 \label{sec:status-quo}
-
-% Weiterhin wird der Status Quo zu Beginn der Arbeit hinsichtlich bereits bestehender Ansätze zur Lösung der Problemstellung beleuchtet.
 
 \subsection{Kurzvorstellung der Projekte von TeamShirts}
 \label{subsec:ts-projects}
@@ -54,6 +52,7 @@ Zuletzt sind einerseits die Zukunftssicherheit, andererseits die Transparenz der
 
 All diesen Fragen gemein ist das Bedürfnis der Benutzer nach Stabilität, Transparenz und Verlässlichkeit der eingesetzten Technologie. Da die Software-Projekte bei TeamShirts für gewöhnlich über viele Jahre hinweg erweitert und gewartet werden, ist die Beständigkeit und die kontinuierliche Weiterentwicklung des eingesetzten Typsystems von großer Bedeutung für das Unternehmen. Das letzte Ziel der Migration ist deshalb die Verbesserung dieser Aspekte durch den Wechsel zu TypeScript.
 
+\pagebreak
 \section{Technische Anforderungen an den Transpiler}
 \label{sec:requirements}
 
@@ -70,7 +69,7 @@ Wie in Abschnitt~\ref{sec:static-typesystems-for-js} ausgeführt, werden einige 
 
 Darüber hinaus muss gewährleistet werden, dass die Semantik des ursprünglichen Eingabe-Programms nicht durch den Transpilierungsprozess verändert wird, um sicher zu stellen dass keine subtilen, semantischen Fehler in den resultierenden TypeScript-Code eingeschleust werden. Das heißt die \emph{Wirkung} der Gesamtheit aller Unterprogramme muss vor und nach der Migration identisch sein.
 
-\subsection{Vollständige Unterstützung moderner JavaScrip- und JSX-Syntax}
+\subsection{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}
 \label{subsec:requirement:syntax}
 
 Durch die kontinuierlichen Weiterentwicklung JavaScripts ist die Syntax der Sprache in den letzten Jahren wiederholt um neue Elemente erweitert worden. Beispielsweise wurden mit der achten ECMAScript-Spezifikation 2017 die Schlüsselworte \code{async} und \code{await} eingeführt, welche die asynchrone Programmierung in JavaScript erleichtern~\autocite[430]{ECMASCRIPT:2017}. Damit eine universelle Übersetzung beliebiger Eingaben umsetzbar ist, ist es entscheidend, dass der Transpiler jegliche aktuelle JavaScript-Syntax korrekt verarbeiten kann. Auch die Unterstützung vorläufiger, noch nicht endgültig spezifizierter Spracherweiterungen stellt eine wesentliche Anforderung dar, weil diese im Umfeld einiger populärer Bibliotheken zum Teil bereits heute verwendet werden\footnote{Dies setzt die Benutzung eines Transpilers wie Babel voraus, der diese experimentelle Syntax durch entsprechende Plugins vor der Auslieferung in standardkonformes JavaScript transformiert.}. So wird zum Beispiel die Erweiterung \enquote{\textit{Class field declarations for JavaScript}}~\autocite{ES_PROPOSAL:CLASS_FIELDS} häufig von React-Programmierern benutzt, da deren Syntax die Verwendung mancher Funktionen der Bibliothek vereinfacht~\autocite{REACT:HANDLING_EVENTS}.

@@ -29,6 +29,8 @@
     "captionsetup",
     "keyof",
     "konkatenationsoperator",
+    "lightgray",
+    "mlightgray",
     "pdfauthor",
     "readonly",
     "singlelinecheck",
@@ -36,7 +38,8 @@
     "textcolor",
     "transpiliert",
     "unintuitiv",
-    "untypisierte"
+    "untypisierte",
+    "ysep"
   ],
   "cSpell.ignoreWords": [
     "backends",

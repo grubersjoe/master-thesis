@@ -21,11 +21,11 @@ Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster 
 
 \section{Entwicklungsprozess}
 
-% Bevor die konkrete Implementierung des Transpilers betrachtet wird, sollen zunächst zwei Aspekte des Entwicklungsprozesses, die diesen wesentlich unterstützt haben, näher betrachtet werden.
+Bevor die Umsetzung des Transpilers im Detail betrachtet wird, sollen zunächst zwei Aspekte des Entwicklungsprozesses, die diesen wesentlich unterstützt haben, ausgeführt werden.
 
 \subsection{Testgetriebene Entwicklung}
 
-Die korrekte Übersetzung der Flow-Typen nach TypeScript ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsec:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Software-Regressionen während der Entwicklungphase frühzeitig festzustellen. Unter Regressionen werden Bugs verstanden, die nach bestimmten Ereignissen wie der Implementierung weiterer Features oder Software-Upgrades unvorhergesehen in bereits getesteten Modulen auftreten~\autocite[218]{DOR:SOFTWARE_TEST}. Zur Erfüllung der Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung}\footnote{engl. \textit{Test-driven development (TDD).}} gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{\textit{Extreme Programming}}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Gewährleistung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig konstruiert werden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features betrachten, jedoch nicht den ursprünglichen, möglicherweise abweichenden Anforderungen gerecht werden.
+Die korrekte Übersetzung der Flow-Typen nach TypeScript ist die wichtigste Anforderung an den Transpiler\footnote{Vgl. Anforderung \ref{subsec:requirement:correct-translation}.}. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Software-Regressionen während der Entwicklungphase frühzeitig festzustellen. Unter Regressionen werden Bugs verstanden, die nach bestimmten Ereignissen wie der Implementierung weiterer Features oder Software-Upgrades unvorhergesehen in bereits getesteten Modulen auftreten~\autocite[218]{DOR:SOFTWARE_TEST}. Zur Erfüllung der Anforderung wurde der Ansatz der \emph{testgetriebenen Entwicklung} ({engl. \textit{Test-driven development (TDD).}) gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich zu überprüfen. Die testgetriebene Entwicklung hat ihren Ursprung im Vorgehensmodell \enquote{\textit{Extreme Programming}}~\autocite{JEFFRIES:EXTREME_PROGRAMMING} aus der Software-Entwicklung und sieht im Gegensatz zu klassischen, seriellen Vorgehensweisen wie dem Wasserfall-Modell vor, dass sämtliche Testfälle eines Features bereits \emph{vor} dessen Umsetzung geschrieben werden müssen~\autocite{BECK:EXTREME_PROGRAMMING}. Die Vorteile dieser Methodik ist die Gewährleistung einer hohen Testabdeckung~\autocite[90]{BECK:TDD} und die Erzielung einer Implementierung, welche die Anforderungen \emph{vollständig} erfüllt, sofern die Testfälle sorgfältig konstruiert werden~\autocite[214]{BECK:TDD}. Wenn die Testfälle erst nach der Programmierung der Software angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Features betrachten, jedoch nicht den ursprünglichen, möglicherweise abweichenden Anforderungen gerecht werden.
 
 Der Testaufbau wurde wie folgt konzipiert: Pro Modul wird ein Verzeichnis mit einer Ein\-gabe- und einer Ausgabe-Datei angelegt. Die Eingabe enthält dabei reguläres JavaScript, das mit Flow typisiert wurde, und die Ausgabe den äquivalenten, manuell übersetzten TypeScript-Code. In den Dateien können beliebig viele Testfälle einer Kategorie spezifiziert werden, um ein bestimmtes Feature des Transpilers zu erproben. Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als \enquote{Fixtures} bezeichnet~\autocite{OLAN:2003}. Durch die bewusste Aufteilung auf zwei unabhängige Dateien kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels Flow bzw. TypeScript auf Typfehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle fehlerhaft hinsichtlich der Syntax bzw. der Typisierung erstellt werden. Würden die Quelltexte als Zeichenketten innerhalb des Testprogramms angegeben werden, so wäre eine derartige Prüfung durch das statische Typsystem nicht möglich.
 
@@ -130,18 +130,18 @@ Anhand eines Beispiels wird nachfolgend der Ablauf einer einfachen Übersetzunge
 \bigbreak
 \begin{figure}[htb]
   \centering
-  \small
+  \footnotesize
   \ttfamily
   \begin{subfigure}{.5\textwidth}
     \centering
     \begin{forest}
       for tree = {l=1.6cm, s sep=0.5cm}
       [Program
-        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
-            [\enquote{Alias}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+        [TypeAlias, edge label={node[edge]{body}}
+          [Identifier, edge label={node[edge]{id}}
+            [\enquote{Alias}, edge label={node[edge]{name}}]
           ]
-          [MixedTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{right}}]
+          [MixedTypeAnnotation, edge label={node[edge]{right}}]
         ]
       ]
     \end{forest}
@@ -151,11 +151,11 @@ Anhand eines Beispiels wird nachfolgend der Ablauf einer einfachen Übersetzunge
       \begin{forest}
         for tree = {l=1.6cm, s sep=1cm}
         [Program
-          [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize]{body}}
-            [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
-              [\enquote{Alias}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+          [TSTypeAliasDeclaration, edge label={node[edge]{body}}
+            [Identifier, edge label={node[edge]{id}}
+              [\enquote{Alias}, edge label={node[edge]{name}}]
             ]
-            [TSUnknownKeyword, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}]
+            [TSUnknownKeyword, edge label={node[edge]{typeAnnotation}}]
           ]
         ]
       \end{forest}
@@ -195,7 +195,7 @@ function convertFlowType(node: FlowType): TSType {
 \label{code:convert-flow-type}
 \end{listing}
 
-Der zweite Schritt der AST-Transformation für das Beispiel, die Übersetzung des \code{mixed}-Schlüsselworts nach \code{unknown}, wird in Zeile 10 umgesetzt. Durch Aufruf der durch Babel gegebenen Bibliotheksfunktion \code{tsUnknownKeyword()} kann ein neuer AST-Knoten erzeugt werden, der das entsprechende Schlüsselwort in TypeScript darstellt. Babel stellt für sämtliche Knotentypen Methoden mit diversen Parametern bereit, mittels derer alle Elemente des Syntaxbaums erstellt werden können\footnote{Siehe~\autocite{BABEL:TYPES}.}.
+Der zweite Schritt der AST-Transformation, die Übersetzung des \code{mixed}"=Schlüsselworts nach \code{unknown}, wird in Zeile 10 umgesetzt. Durch Aufruf der durch Babel gegebenen Bibliotheksfunktion \code{tsUnknownKeyword()} kann ein neuer AST-Knoten erzeugt werden, der das entsprechende Schlüsselwort in TypeScript darstellt. Babel stellt für sämtliche Knotentypen Methoden mit diversen Parametern bereit, mittels derer alle Elemente des Syntaxbaums erstellt werden können\footnote{Siehe~\autocite{BABEL:TYPES}.}.
 
 In Zeile 4 wird ein weiteres, wichtiges Konzept innerhalb des Transpilers exemplarisch aufgezeigt: Für Knoten des Typs \code{ArrayTypeAnnotation} wird die Umwandlungsfunktion \emph{rekursiv} aufgerufen, da auch hier beliebige Flow-Typen Argument des Feldtyps sind. Wie die weiteren Ausführungen zeigen werden, spielt die obige Umwandlungsmethode eine zentrale Rolle innerhalb des Transpilers, da sie in nahezu allen Konvertern aufgerufen wird. Zeile sieben verdeutlicht schließlich, dass nicht alle Knoten so einfach wie das Typalias aus dem Beispiel umgewandelt werden können, da der Aufbau vieler Typen komplexer ist. Die Transformation dieser Knoten wird durch jeweilige Konverterfunktionen separat durchgeführt.
 
@@ -229,34 +229,38 @@ Wie zuvor sollen zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe verg
 \begin{figure}[htb]
   \footnotesize
   \ttfamily
-  \begin{minipage}{.47\textwidth}
+  \begin{minipage}{.5\textwidth}
     \centering
-    \vspace{-0.87cm}
+    \vspace{-1.72cm} % vertically align left tree with right one
     \begin{forest}
       for tree = {l=1.6cm, s sep=0.5cm}
       [Program
-        [TypeAlias, edge label={node[midway,fill=white,font=\scriptsize]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
-            [\enquote{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+        [TypeAlias, edge label={node[edge]{body}}
+          [Identifier, edge label={node[edge]{id}}
+            [\enquote{MaybeNumber}, edge label={node[edge]{name}}]
           ]
-          [NullableTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{right}}
-            [NumberTypeAnnotation, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}]
+          [NullableTypeAnnotation, edge label={node[edge]{right}}
+            [NumberTypeAnnotation, edge label={node[edge]{typeAnnotation}}]
           ]
         ]
       ]
     \end{forest}
   \end{minipage}%
-  \begin{minipage}{.53\textwidth}
+  \begin{minipage}{.5\textwidth}
     \centering
     \begin{forest}
-      for tree = {l=1.6cm, s sep=1.25cm, align=center}
+      for tree = {l=1.6cm, s sep=1.25cm}
       [Program
-        [TSTypeAliasDeclaration, edge label={node[midway,fill=white,font=\scriptsize]{body}}
-          [Identifier, edge label={node[midway,fill=white,font=\scriptsize]{id}}
-            [\enquote{MaybeNumber}, edge label={node[midway,fill=white,font=\scriptsize]{name}}]
+        [TSTypeAliasDeclaration, edge label={node[edge]{body}}
+          [Identifier, edge label={node[edge]{id}}
+            [\enquote{MaybeNumber}, tier=last, edge label={node[edge]{name}}]
           ]
-          [TSUnionType, edge label={node[midway,fill=white,font=\scriptsize]{typeAnnotation}}
-            [{TSNumberKeyword,\\ TSNullKeyword,\\ TSUndefinedKeyword}, align=left, s sep=0.5cm, edge label={node[midway,fill=white,font=\scriptsize]{types}}]
+          [TSUnionType, edge label={node[edge]{typeAnnotation}}
+            [TSNumberKeyword, tier=last, edge label={node[edge]{types[]}}, align=center, minimum width=2.9cm, minimum height=4.5mm, inner ysep=0
+              [TSNullKeyword, no edge,for tree = {l=0.2cm, s sep=0}, align=center, minimum width=2.9cm, minimum height=4.5mm, inner ysep=0
+                [TSUndefinedKeyword, no edge, align=center, minimum width=2.9cm, minimum height=4.5mm, inner ysep=0]
+              ]
+            ]
           ]
         ]
       ]
@@ -351,7 +355,7 @@ export default C;                               export default d1(arg)(d2(C));
 \label{code:class-decorators}
 \end{listing}
 
-In den Projekten von TeamShirts werden Klassendekoratoren verwendet, um React"=Komponenten um verschiedene Funktionen zu erweitern. Es wurde bei Tests festgestellt, dass die Verwendung von Dekoratoren in TypeScript problematisch ist, da dies zu zahlreichen Typ"=fehlern führt und eine korrekte Typisierung aufwändig ist. Deshalb wurde ein \emph{optionales} Feature in das Babel-Plugin integriert, das die Klassendekoratoren durch äquivalente, verschachtelte Funktionsaufrufe ersetzt. Es hat sich gezeigt, dass diese hinsichtlich der Typisierung weitaus weniger Schwierigkeiten verursachen. In Quelltext~\ref{code:class-decorators} wird eine derartige Transpilierung demonstriert. Die Transformation der Klassendekoratoren kann durch Setzen der Option \code{-{}-replace-decorators} des Kommandozeilenprogramms aktiviert werden (vgl. Tabelle~\ref{tab:cli-options}).
+In den Projekten von TeamShirts werden Klassendekoratoren verwendet, um React"=Komponenten um verschiedene Funktionen zu erweitern. Es wurde bei Tests festgestellt, dass die Verwendung von Dekoratoren in TypeScript problematisch ist, da dies zu zahlreichen Typfehlern führt und eine korrekte Typisierung aufwändig ist. Deshalb wurde ein \emph{optionales} Feature in das Babel-Plugin integriert, das die Klassendekoratoren durch äquivalente, verschachtelte Funktionsaufrufe ersetzt. Es hat sich gezeigt, dass diese hinsichtlich der Typisierung weitaus weniger Schwierigkeiten verursachen. In Quelltext~\ref{code:class-decorators} wird eine derartige Transpilierung demonstriert. Die Transformation der Klassendekoratoren kann durch Setzen der Option \code{-{}-replace-decorators} des Kommandozeilenprogramms aktiviert werden (vgl. Tabelle~\ref{tab:cli-options}).
 
 \section{Erweiterung als Kommandozeilenprogramm}
 \label{sec:cli-program}
@@ -407,7 +411,7 @@ Da die Verwendung von JSX-Syntax in TypeScript die Dateierweiterung \code{.tsx} 
 \section{Formatierung des Ausgabequelltexts}
 \label{sec:formatting}
 
-Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor. Im Gegensatz zu einem \emph{konkreten} Syntaxbaum, welcher der Ableitungsbaum einer formalen Grammatik ist~\autocite[45]{AHO:COMPILERS}, enthält der abstrakte Syntaxbaum lediglich \enquote{wesentliche Teile}~\autocite[21]{WALDMANN:PPS} davon. Infolgedessen geht die Einrückung und die Position der Leerzeichen und -zeilen in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Übersetzung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Babel-Codegenerators, welche eine Beibehaltung der Zeilen in der Ausgabe bewirken soll, erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format des generierten Quelltexts erheblich von der Eingabe. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist\footnote{Vgl. Abschnitt~\ref{subsec:requirement:format}.}, wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Diese wird nach der Transpilierung aller Eingabedateien durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}) und im Folgenden erläutert. Um die Kommentare korrekt zu positionieren werden diese während der Transpilierung entfernt und nicht ausgegeben. Erst im Nachgang werden diese im Zuge der Formatierung in die Ausgabe eingefügt.
+Eine weitere Problematik, die sich während der Entwicklung des Transpilers gezeigt hat, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf Grundlage eines \emph{abstrakten} Syntaxbaums arbeitet, liegt nach der Transformation des Programms keinerlei Information mehr über die ursprüngliche Formatierung des Codes vor. Infolgedessen geht die Einrückung und die Position der Leerzeichen und -zeilen in der TypeScript-Ausgabe verloren. Es hat sich weiterhin herausgestellt, dass auch die Position der Kommentare nach der Übersetzung nicht präzise beibehalten wird. Versuche mit der Option \enquote{\texttt{retainLines}}~\autocite{BABEL:GENERATOR} des Babel-Codegenerators, welche eine Beibehaltung der Zeilen in der Ausgabe bewirken soll, erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen dieser Eigenschaft unterscheidet sich das Format des generierten Quelltexts erheblich von der Eingabe. Da die möglichst originalgetreue Formatierung der Ausgabe eine der Anforderungen an den Transpiler ist\footnote{Vgl. Abschnitt~\ref{subsec:requirement:format}.}, wurde eine Formatierungsroutine implementiert, um diese Vorgabe unabhängig von Babel zu erfüllen. Diese wird nach der Transpilierung aller Eingabedateien durch das Kommandozeilenprogramm angestoßen (vgl. Abb.~\ref{fig:architecture-overview}) und im Folgenden erläutert. Um die Kommentare korrekt zu positionieren werden diese während der Transpilierung entfernt und nicht ausgegeben. Erst im Nachgang werden diese im Zuge der Formatierung in die Ausgabe eingefügt.
 
 \begin{figure}[htb]
   \centering

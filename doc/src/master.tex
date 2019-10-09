@@ -17,6 +17,9 @@
 \date{\today}
 \author{Jonathan Gruber}
 
+% PDF Version 1.7
+\pdfminorversion=7
+
 % "Fix" for KOMA script warning about floats
 \usepackage{scrhack}
 
@@ -31,11 +34,14 @@
 \usepackage[tt=false]{libertine}
 \usepackage[scale=0.8,nomap,lining]{FiraMono}
 
+% Math
+\usepackage[libertine]{newtxmath}
+
 % Set headings in serif as well
 \addtokomafont{disposition}{\rmfamily}
 
-% Math
-\usepackage[libertine]{newtxmath}
+% Even better typography
+\usepackage{microtype}
 
 % Orphans
 \usepackage[all]{nowidow}
@@ -89,12 +95,38 @@
 % \renewcommand\labelitemi{--}
 \setlist{nosep}
 
+% Colors
+\usepackage{xcolor}
+\definecolor{mlightgray}{HTML}{DCDCDC}
+
 % Figures
 \usepackage{graphicx}
 \usepackage{tikz}
 
 % Trees
 \usepackage{forest}
+
+% Style for edge labels
+\tikzset{edge/.style = {
+  midway,fill=white,font=\scriptsize
+}}
+
+\forestset{
+  font=\footnotesize,
+  default preamble={
+    for tree = {
+      l=1.5cm,
+      s sep=.75cm,
+      inner xsep=2mm,
+      inner ysep=1mm,
+      minimum height=4.75mm,
+      rectangle,
+      rounded corners = 2,
+      fill=mlightgray,
+      font=\footnotesize,
+    }
+  }
+}
 
 % Tables
 \usepackage{longtable, tabu, booktabs}
@@ -155,7 +187,6 @@
 
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\iquote}[1]{\enquote{\textit{#1}}}
 \newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
 \newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
 
@@ -165,11 +196,12 @@
   \end{singlespacing}\end{footnotesize}
 }
 
+% Ugly fixes
 \input{src/fixes}
 
 % Document links
 % Should be loaded last!
-\usepackage[pdfencoding=auto]{hyperref}
+\usepackage[pdfencoding=auto, bookmarksdepth=3]{hyperref}
 \hypersetup{
   hidelinks,
   pdftitle={Statische Typsysteme für JavaScript -- Entwicklung eines Babel-Plugins zur Transpilierung von Flow nach TypeScript},
@@ -178,20 +210,15 @@
 
 % ----------
 
+
 \begin{document}
 	% Numbering is invisible, but required for hyperref package
   \pagestyle{empty}
   \pagenumbering{Roman}
 
-  \input{src/Title/index}
-  \input{src/Abstract/index}
-
-  {
-    % Apply empty page style to multiple pages
-    \renewcommand{\thispagestyle}[1]{}
-    \setcounter{tocdepth}{2}
-    \tableofcontents
-  }
+  \input{src/0_Frontmatter/title}
+  \input{src/0_Frontmatter/abstract}
+  \input{src/0_Frontmatter/toc}
 
   % ------------------------------
 
@@ -232,8 +259,6 @@
   \listoflistings
   \printendnotes
 
-  \input{src/Appendix/declaration.tex}
-
-  \appendix
-  \input{src/Appendix/index.tex}
+  \input{src/7_Backmatter/declaration.tex}
+  \input{src/7_Backmatter/appendix.tex}
 \end{document}
