@@ -19,19 +19,19 @@
   \medskip
   Boolean literal type       & \code{true}                            & Boolesche Literale (entweder \code{true} oder \code{false}) \\
   \medskip
-  Boolean type               & \code{boolean}                         & Boolesche Werte \\
+  Boolean type               & \code{boolean}                         & Boolesche Werte. \\
   \medskip
   Empty type                 & \code{empty}                           & Der leere Typ (\textit{bottom type} $\bot$), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (zum Beispiel Endlosschleife oder Exception). \\
   \medskip
-  Exact object type          & \code{\{| prop: any |\}}               & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute verursachen einen Typfehler.\\
+  Exact object type          & \code{\{| prop: any |\}}               & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar.\\
   \medskip
-  Function type              & \code{(string, \{\}) => number}        & Funktionen: also der Typ der Parameter und des Rückgabewerts. \\
+  Function type              & \code{(string, \{\}) => number}        & Funktionen: das heißt der Typ der Parameter und des Rückgabewerts. \\
   \medskip
-  Generic type annotation    & \code{let v: <{}FlowType>{}}           & Allgemeine Typannotation für Variablen, Funktionsparameter, -rückgabewerte usw. \\
+  Generic type annotation    & \code{let v: <{}FlowType>{}}           & Allgemeine Typannotation für Ausdrücke wie die Deklaration von Variablen, Funktionsparameter, -rückgabewerte usw. \\
   \medskip
-  Generics                   & \code{type Generic<{}T: Super> = T}    & Generische Typen (parametrische Polymorphie). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, welcher mögliche Werte für T einschränkt. \\
+  Generics                   & \code{type Generic<{}T: Super> = T}    & Generische Typen (\textit{parametrische Polymorphie}). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, der mögliche Werte für T einschränkt. \\
   \medskip
-  Interface type             & \code{interface \{ +prop: number \}}   & Schnittstellen \\
+  Interface type             & \code{interface \{ +prop: number \}}   & Schnittstellen. \\
   \medskip
   Intersection type          & \code{type Intersection = T1 \& T2}    & Schnitt zweier Typen. Der Typ \code{Intersection} enthält hier alle Eigenschaften von \code{T1} \emph{und} \code{T2}. \\
   \medskip
@@ -47,13 +47,13 @@
   \medskip
   Object type                & \code{\{ {[}string{]}: number \}}      & Objekte mit den angegebenen Attributen. Zusätzlich angegebene Attribute stellen \emph{keine} Typverletzung dar (vgl. \textit{Exact Objects}).  \\
   \medskip
-  Opaque type                & \code{opaque type Opaque = number}     & Opake Datentypen sind Typaliase, die ihre zugrunde liegende Implementierung dem Benutzer nicht offen legen (\textit{information hiding}). \\
+  Opaque type                & \code{opaque type Opaque = number}     & Opake Datentypen sind Typaliase, die ihre zugrunde liegende Implementierung vor dem Benutzer verbergen (\textit{information hiding}). \\
   \medskip
   String literal type        & \code{'literal'}                       & Genau diese Zeichenkette. \\
   \medskip
   String type                & \code{string}                          & Zeichenketten. \\
   \medskip
-  This type                  & \code{this}                            & TODO \\
+  This type                  & \code{this}                            & Typ für Wert des Schlüsselworts \code{this} (Selbstreferenz) in Funktionen oder globalem Kontext. \\
   \medskip
   Tuple type                 & \code{{[}Date, number{]}}              & Tupel, also Listen fester Länge mit vorgegebenen Datentyp für jedes Element. \\
   \medskip
@@ -69,7 +69,7 @@
   \medskip
   Union type                 & \code{number | null}                   & Vereinigungstyp. Hier: Entweder \code{number} \emph{oder} \code{null}. \\
   \medskip
-  Void type                  & \code{void}                            & Typ für \code{undefined} in Flow-Typen. Verwendung beispielsweise in Funktionen ohne Rückgabewert.
+  Void type                  & \code{void}                            & Typ für \code{undefined} in Flow. Verwendung zum Beispiel in Funktionen ohne Rückgabewert.
   \label{tab:flow-base-types}
 \end{longtabu}
 \end{longtabuwrap}

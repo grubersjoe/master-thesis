@@ -103,6 +103,15 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 
+\definecolor{piecolor}{HTML}{333333}
+
+\newcommand{\pie}[1]{%
+	\begin{tikzpicture}%
+    \draw[piecolor] (0,0) circle (0.7ex);%
+    \fill[rotate=-90,fill=piecolor] (0.7ex,0) arc (0:-#1*180:0.7ex) -- (0,0) -- cycle;%
+	\end{tikzpicture}%
+}
+
 % Trees
 \usepackage{forest}
 

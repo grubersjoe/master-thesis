@@ -1,27 +1,27 @@
 \chapter{Grundlagen}
 \label{chap:basics}
 
-Bevor die Ziele der Migration von Flow zu TypeScript im nächsten Kapitel dargelegt werden, sollen zunächst die nötigen theoretischen Grundlagen betrachtet werden, um die Nachvollziehbarkeit der weiteren Ausführungen zu erleichtern.
+Bevor die Ziele der Migration von Flow zu TypeScript im nächsten Kapitel dargelegt werden, sollen zunächst die nötigen theoretischen Grundlagen erörtert werden, um die Nachvollziehbarkeit der weiteren Ausführungen zu erleichtern.
 
 \section{Konzepte und Begriffe der Typentheorie}
 
 \subsection{Korrektheit von Typsystemen}
-Ein wichtiges theoretisches Konzept ist die logische \emph{Korrektheit} (engl. \emph{Soundness}) von Typsystemen. Dieses Kriterium beschreibt, ob das System garantieren kann, dass ein Programm während dessen Ausführung tatsächlich keine Typfehler verursacht, sofern keine statischen Typverletzungen bestehen~\autocite{WRIGHT:1994}. Durch mathematische Formalisierung des Typsystems kann diese Eigenschaft bewiesen werden~\autocite[7]{CARDELLI:TYPE_SYSTEMS}.
+Ein wichtiges Konzept aus der Theorie der Typensysteme ist deren logische \emph{Korrektheit} (engl. \emph{Soundness}). Dieses Kriterium beschreibt, ob das System garantieren kann, dass ein Programm während dessen Ausführung tatsächlich keine Typfehler verursacht, sofern keine statischen Typverletzungen bestehen~\autocite{WRIGHT:1994}. Durch mathematische Formalisierung des Typsystems kann diese Eigenschaft bewiesen werden~\autocite[7]{CARDELLI:TYPE_SYSTEMS}.
 Das Typsystem mancher Programmiersprachen erfüllt diese Definition von Korrektheit nicht. Im Fall von C ist die Semantik bestimmter Operationen wie beispielsweise die Dereferenzierung des Nullzeigers in der Sprachspezikation undefiniert~\autocite[79]{ISO:C99}. Obwohl ein solches Programm durch den Compiler akzeptiert wird, also keine Typverletzungen aufweist, können hier Laufzeitfehler auftreten.
 
 \subsection{Nominale und strukturelle Typen}
-Eine Möglichkeit Typsysteme zu klassifizieren ist deren Verwendung von nominalen bzw. strukturellen Typen. Relevant ist dabei die Fragestellung, ob unabhängige Ausdrücke mit dem gleichen Typ durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels (Quelltext~\ref{code:type-equivalence}) wird diese Differenzierung deutlich. In den ersten beiden Zeilen werden zunächst zwei Klassen \code{A} und \code{B} definiert. Weiterhin wird eine Funktion \code{f} angegeben, die einen Parameter mit dem Typ \code{A} erwartet. Bei Aufruf dieser Funktion mit einer Instanz der Klasse \code{B} sind nun zwei Fälle möglich: Entweder spezifiziert das Typsystem, dass Typen mit unterschiedlichen \emph{Namen} stets inkompatibel sind oder die Typen \code{A} und \code{B} werden als äquivalent betrachtet, da ihre \emph{Struktur} übereinstimmt. Nur im ersten Fall würde in Zeile 4 eine Typverletzung auftreten, da der Typ des Ausdrucks \code{new B()} nicht \code{A}, sondern \code{B} ist.
+Eine Möglichkeit Typsysteme zu klassifizieren ist die Verwendung von \emph{nominalen} bzw. \emph{strukturellen} Typen. Relevant ist dabei die Fragestellung, ob unabhängige Ausdrücke mit dem gleichen Typ durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels in Pseudocode (Quelltext~\ref{code:type-equivalence}) wird diese Differenzierung deutlich: In den ersten beiden Zeilen werden zunächst zwei Klassen \code{A} und \code{B} definiert. Weiterhin wird eine Funktion \code{f} angegeben, die einen Parameter vom Typ \code{A} erwartet. Bei Aufruf dieser Funktion mit einer Instanz der Klasse \code{B} sind nun zwei Fälle möglich: Entweder spezifiziert das System, dass Typen mit unterschiedlichen \emph{Namen} stets inkompatibel sind oder die Typen \code{A} und \code{B} werden als äquivalent betrachtet, da ihre \emph{Struktur} übereinstimmt. Im ersten Fall würde in Zeile 4 eine Typverletzung auftreten, da der Typ des Ausdrucks \code{new B()} nicht \code{A}, sondern \code{B} ist. Läge hingegen eine strukturelle Typisierung vor, so würde das Programm akzeptiert werden, da der Aufbau der Klassen \code{A} und \code{B} identisch ist. Beide enthalten genau ein Attribut \code{prop} mit demselben Typ \code{string}. Die Typsysteme der meisten realen Programmiersprachen verwenden sowohl nominale, als auch strukturelle Typen~\autocite[9]{CARDELLI:TYPE_SYSTEMS}.
 
 \bigbreak
 \begin{listing}[htb]
 \begin{textcode}
-class A {}
-class B {}
+class A { prop: string; }
+class B { prop: string; }
 function f(arg: A) {}
 f(new B()); // << Typfehler?
 \end{textcode}
 \listingvspace
-\caption{Differenzierung von nominalen und strukturellen Typen.}
+\caption{Beispiel zur Differenzierung von nominalen und strukturellen Typen.}
 \label{code:type-equivalence}
 \end{listing}
 
@@ -99,10 +99,11 @@ Abbildung~\ref{fig:transpiler-architecture} zeigt den typischen Aufbau eines Tra
 \end{figure}
 
 Zunächst wird der Quelltext innerhalb der Analysephase durch den Lexer oder Tokenizer Zeichen für Zeichen eingelesen, um diesen in lexikalisch bedeutungsvolle Zeichenketten, sogenannte \emph{Lexeme} zu zerlegen~\autocite[43]{AHO:COMPILERS}. Daraufhin werden \emph{Tokens} gebildet, indem jedes dieser Wörter einer syntaktischen Klasse zugeordnet wird. Diese geben die Bedeutung eines Tokens an (zum Beispiel \code{3}~$\mapsto$~\code{INT(3)} oder \code{!=}~$\mapsto$~\code{NEQ})~\autocite[26]{TORCZON:2007}. Die Tokens entsprechen dabei den Terminalsymbolen der formalen Grammatik der Programmiersprache~\autocite[43]{AHO:COMPILERS}.
-Im zweiten Schritt, der syntaktischen Analyse oder dem \emph{Parsen}, wird anschließend überprüft, ob die Tokenfolge eine Ableitung der kontextfreien Grammatik der Quellsprache darstellen, indem versucht wird einen entsprechenden \emph{konkreten} Syntaxbaum aufzubauen~\autocite{SCHOEPP:COMPILER}. Ein Syntax- oder Ableitungsbaum ist ein Graph, der die syntaktische Struktur eines Programms gemäß dessen Grammatik hierarchisch modelliert. Abbildung~\ref{fig:ast} zeigt exemplarisch den \emph{abstrakten} Syntaxbaum (AST) einer simplen JavaScript-Funktion. Der abstrakte Syntaxbaum verdichtet den konkreten Baum und zeigt lediglich \enquote{wesentliche Teile}~\autocite[21]{WALDMANN:PPS} davon. Falls der Ableitungsbaum nicht erstellt werden kann, so liegt ein Syntaxfehler im Quelltext vor.
 
-Als nächstes wird die Fragestellung betrachtet, ob ein gültiges Programm der Eingabesprache vorliegt, indem die statische Semantik analysiert wird~\autocite[8]{AHO:COMPILERS}. Darunter fällt beispielsweise, dass in vielen Programmiersprachen Variablen vor deren Benutzung deklariert sein müssen. Um derartiges kontextuelles Programmverhalten zu untersuchen, können Attributgrammatiken verwendet werden~\autocite[161]{TORCZON:2007}. Während dieser Phase wird darüber hinaus die Typkorrektheit überprüft~\autocite{SCHOEPP:COMPILER}. Es gilt hervorzuheben, dass nicht alle Transpiler eine solche semantische Analyse durchführen, sondern manche unmittelbar zum nächsten Schritt übergehen.
-Zuletzt wird durch das Frontend ein \emph{Zwischencode} des Programms (engl. \textit{intermediate representation} (IR)) erzeugt, der an das Backend übergeben wird. Ein Zwischencode ist im Allgemeinen eine von der Quellsprache und Zielarchitektur unabhängige Datenstruktur innerhalb von Compilern~\autocite[6]{TORCZON:2007}. Wie der nachfolgende Abschnitt zeigen wird, behalten vielen Transpiler im JavaScript-Umfeld den abstrakten Syntaxbaum als Zwischencode bei.
+Im zweiten Schritt, der syntaktischen Analyse oder dem \emph{Parsen}, wird anschließend überprüft, ob die Tokenfolge eine Ableitung der kontextfreien Grammatik der Quellsprache darstellen, indem versucht wird einen entsprechenden \emph{konkreten} Syntaxbaum aufzubauen~\autocite{SCHOEPP:COMPILER}. Ein Syntax- oder Ableitungsbaum ist ein Graph, der die syntaktische Struktur eines Programms gemäß der zugehörigen Grammatik hierarchisch modelliert. Abbildung~\ref{fig:ast} zeigt exemplarisch den \emph{abstrakten} Syntaxbaum (AST) einer simplen JavaScript-Funktion. Ein abstrakter Syntaxbaum ist eine kompaktere Form des konkreten Baums und zeigt lediglich \enquote{wesentliche Teile}~\autocite[21]{WALDMANN:PPS} davon. Falls der Ableitungsbaum nicht erstellt werden kann, so liegt ein Syntaxfehler im Quelltext vor.
+
+Danach prüft der Transpiler, ob ein gültiges Programm der Eingabesprache vorliegt, indem die statische Semantik analysiert wird~\autocite[8]{AHO:COMPILERS}. Hierunter fällt beispielsweise, dass Variablen in vielen Programmiersprachen vor deren Benutzung zunächst deklariert werden müssen. Um ein solches kontextuelles Programmverhalten zu untersuchen, können Attributgrammatiken verwendet werden~\autocite[161]{TORCZON:2007}. Während dieser Phase wird darüber hinaus die statische Typkorrektheit überprüft~\autocite{SCHOEPP:COMPILER}. Es ist hervorzuheben, dass nicht alle Transcompiler eine semantische Analyse durchführen.
+Zuletzt wird durch das Frontend ein \emph{Zwischencode}\footnote{engl. \textit{intermediate representation} (IR).} des Programms erzeugt, der an das Backend übergeben wird. Ein Zwischencode ist im Allgemeinen eine von der Quellsprache und Zielarchitektur unabhängige Datenstruktur innerhalb von Compilern~\autocite[6]{TORCZON:2007}. Wie der nachfolgende Abschnitt zeigen wird, verwenden viele Transpiler im JavaScript-Umfeld den abstrakten Syntaxbaum als Zwischencode.
 
 \begin{figure}[tb]
   {
@@ -143,33 +144,34 @@ function square(x) {
   \label{fig:ast}
 \end{figure}
 
-Der erste Schritt der Synthesephase besteht darin, das Programm sprachunabhängig zu optimieren, das heißt die Laufzeit oder den Speicherplatzbedarf auf Grundlage von Programmanalyse zu reduzieren~\autocite[405]{TORCZON:2007}. Hierbei können eine Vielzahl unterschiedlicher Transformationen angewandt werden. Möglich ist zum Beispiel die Entfernung nicht erreichbarer Programmstücke (\textit{dead code elimination}) oder die Inline-Ersetzung von Konstanten und Schleifen~\autocites{TORCZON:2007}{SCHOEPP:COMPILER}. Auch hier gilt: nicht alle Transcompiler besitzen eine derartige Optimierungsphase. Schließlich kann im letzten Schritt des Backends der endgültige Quelltext in der Zielsprache auf Basis des gegebenenfalls modifizierten Zwischencodes erzeugt werden~\autocite[505]{AHO:COMPILERS}.
+Der erste Schritt der Synthesephase besteht darin, das Programm sprachunabhängig zu optimieren, das heißt die Laufzeit oder den Speicherplatzbedarf auf Grundlage von Programmanalyse zu reduzieren~\autocite[405]{TORCZON:2007}. Hierbei können eine Vielzahl unterschiedlicher Transformationen angewandt werden. Möglich ist zum Beispiel die Entfernung nicht erreichbarer Programmstücke (\textit{dead code elimination}) oder die Inline-Ersetzung von Konstanten und Schleifen~\autocites{TORCZON:2007}{SCHOEPP:COMPILER}. Auch hier gilt es zu betonen, dass nicht alle Transcompiler eine derartige Optimierungsphase besitzen. Schließlich kann im letzten Schritt der endgültige Quelltext in der Zielsprache auf Basis des gegebenenfalls optimierten Zwischencodes erzeugt werden~\autocite[505]{AHO:COMPILERS}.
 
-\subsection{Bestehende Transpiler für JavaScript}
+\subsection{Evaluation bestehender Transpiler für JavaScript}
 \label{subsec:js-transpilers}
 
-Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern und Transpilern entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Transpilers von Flow nach TypeScript stark vereinfachen können. Im Folgenden sollen die relevantesten, aktuellen Ansätze gegenüber gestellt werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage für die Umsetzung heran gezogen wird. Entscheidend bei dieser Auswahl sind zwei technische Anforderungen:
+\subsubsection{Anforderungen}
 
-\begin{enumerate}
-  \item {\libertineSB{Unterstützung der gesamten Syntax von Flow und TypeScript}}\\*
-    Das heißt es existiert einerseits ein Parser für JavaScript mit Flow-Typisierung, andererseits ein zugehöriger Code-Generator für TypeScript.
-  \item {\libertineSB{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}}\\*
-    Weiterhin die vorliegenden Projekte
-\end{enumerate}
+Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern, Codegeneratoren und Transcompiler entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Flow-Transpilers stark vereinfachen können. Im Folgenden sollen die relevantesten, aktuellen Ansätze bezüglich verschiedener Aspekte gegenüber gestellt werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage für die Umsetzung heran gezogen wird. Hierbei wird lediglich frei verfügbare, quelloffene Software betrachtet.
 
-% Esprima, Acorn, Babel
-% Babel basiert auf acorn.
+Die Auswahl hängt entscheidend von der Erfüllung mehrerer technischer Anforderungen ab:
+Der Parser muss aktuelle JavaScript-Syntax gemäß der ECMAScript-Spezifikation 2019~\autocite{ECMASCRIPT:2019} (ES2019) vollständig unterstützen.
+Weiterhin muss die Verarbeitung von \emph{vorläufiger} Syntax möglich sein. Unter vorläufiger Syntax werden in dieser Arbeit vorgeschlagene Erweiterungen von JavaScript verstanden, die noch nicht endgültiger Bestandteil der Spezifikation sind, sondern sich noch im Standardisierungsprozess befinden\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Spracherweiterungen (\textit{ECMAScript proposals}) durchlaufen hierbei einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.}. Die Anforderung derartige Syntax einlesen zu können ist ebenfalls eine Vorgabe, weil diese zum Teil bereits heute in der Praxis verwendet wird\footnote{Dies setzt die Benutzung eines Transpilers wie Babel voraus, der diese experimentelle Syntax vor der Auslieferung durch entsprechende Plugins in standardkonformes JavaScript transformiert.}.
+Damit die Transpilierung von Flow nach TypeScript möglich ist, müssen einerseits jegliche Sprachkonstrukte von Flow verarbeitet werden können, andererseits muss das Format des abstrakten Syntaxbaums des Transpilers TypeScript vollständig unterstützen, sodass korrekter Ausgabequelltext erzeugt werden kann.
+Aufgrund der gegebenen Rahmenbedingungen innerhalb des Unternehmens muss darüber hinaus sogenannte JSX-Syntax~\autocite{SOFTWARE:JSX} (\textit{JavaScript XML}) unterstützt werden, da die zu migrierenden Projekte diese Notation benutzen. Die Gründe für die Unterstützung von experimentellen Spracherweiterungen und von JSX werden in Abschnitt~\ref{subsec:requirement:syntax} ausführlich dargelegt.
 
-% http://marijnhaverbeke.nl/blog/acorn.html
-% https://github.com/estree/estree
-% https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API
+\subsubsection{Vergleich}
+
+% TODO: Auswertung Tabelle
+
+% \bigbreak
+\input{src/2_Grundlagen/tables/transpilers.tex}
+
 % https://babeljs.io/blog/2016/12/07/the-state-of-babel#the-future-parser-unity
 % https://medium.com/@sebmck/2015-in-review-51ac7035e272#.jdoo279bl
 
-% Am Ende: es wird Babel eingesetzt werden, um das Dingens zu bauen.
+\subsubsection{Fazit}
 
-Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so eine universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann\footnote{vgl. Anforderung~\ref{subsec:requirement:syntax}.}.
-Ein weiteres Argument für die Wahl von Babel ist einerseits die gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
+Im Gegensatz zu den betrachteten Alternativen unterstützt lediglich Babel die Syntax von Flow, TypeScript und aktueller bzw. vorgeschlagener JavaScript-Sprachkonstrukte vollständig. Dieser Aspekt ist entscheidend, da nur so die geforderte universelle Übersetzung \emph{jeglicher} Flow-Syntax in äquivalentes TypeScript umgesetzt werden kann. Ein weiteres Argument für die Wahl von Babel ist einerseits die gute Erweiterbarkeit durch ein Plugin-System, andererseits die Ausgereiftheit und große Verbreitung des Projekts. Keine der anderen Optionen konnte die Anforderungen des Transpilers in vergleichbarem Maße erfüllen.
 
 \subsection{Babel}
 \label{sec:babel}
@@ -181,12 +183,10 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 \begin{enumerate}
   \item {\libertineSB{Parsen des Eingabecodes}}\\*
     Zunächst wird der ursprüngliche Quelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum des Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Lexers in Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den zugehörigen abstrakten Syntaxbaum repräsentiert. Jedem Knoten des Baums wird dabei einen eindeutiger Tokentyp zugewiesen, der die syntaktische Bedeutung widerspiegelt.
-    \\
-
+    \bigbreak
   \item {\libertineSB{Transformation des Programms}}\\*
     Während der zweiten Phase wird daraufhin die eigentliche Programmtransformation durchgeführt: Dabei wird der abstrakte Syntaxbaum durch das \emph{Besucher}"=Entwurfsmuster\footnote{Das Besucher-Entwurfsmustern (engl. \textit{visitor pattern}) gehört zu den 23 Entwurfsmustern, die im Standardwerk \citetitle{GAMMA:1994} der \enquote{\textit{Gang of Four}} (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben werden~\autocite[306\psqq]{GAMMA:1994}.} rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente eingefügt. Das Entwurfsmuster beschreibt, wie ein Algorithmus auf einer komplexen Objektdatenstruktur, unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden kann~\autocite[634\psq]{FREEMAN:2004}. Im vorliegenden Fall ermöglicht die Anwendung die individuelle Adressierung einer bestimmten Untermenge der Knoten des Syntaxbaums, sodass dort die gewünschte Transformation des Programms durchgeführt werden kann.
-    \\
-
+    \bigbreak
   \item {\libertineSB{Generierung des Ausgabequelltexts}}\\*
     Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums durch Anwendung einer Tiefensuche durchlaufen und eine Zeichenkette aufgebaut, die den endgültigen, modifizierten Quelltext darstellt.
 \end{enumerate}
@@ -197,7 +197,7 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 Da die entscheidende Phase der Transpilierung, die Programmtransformation, bei Babel durch Plugins erzielt wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Transcompilers ist aus einer Vielzahl von Standard-Plugins zusammen gesetzt, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten flexibel durch Kombination vieler, kleiner Bausteine realisiert werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
 Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel gezeigt werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines simplen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
-Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben. Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}. Dieser wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen, welche noch nicht endgültiger Bestandteil von ECMAScript sind, unterstützen möchte\footnote{Die ECMAScript-Spezifikation wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Erweiterungen der Sprache durchlaufen einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}.}~\autocite{BABEL:STATE_OF_BABEL}.
+Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben. Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree Spec}~\autocite{ESTREE_SPEC}. Dieser wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt~\autocite{BABEL:PARSER,ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
 
 \bigbreak
 \begin{listing}[htb]

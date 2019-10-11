@@ -1,0 +1,27 @@
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}lllllllllrrX@{}}
+    \midrule
+    \libertineSB{Werkzeug} & \libertineSB{Typ} & \libertineSB{seit} & \libertineSB{erw.} & \libertineSB{Format} & \libertineSB{ES2019} & \libertineSB{Flow} & \libertineSB{TS} & \libertineSB{JSX} & \libertineSB{Aktivität} & \libertineSB{Sterne} \\
+    \midrule
+    Acorn~\autocite{ACORN}         & P    & 2012 & \pie{2} & ESTree  & \pie{2} & \pie{0} & \pie{0} & \pie{2} &   5 &  5.250 & {} \\
+    Astring~\autocite{ASTRING}     & G    & 2015 & \pie{2} & ESTree  & \pie{2} & \pie{0} & \pie{0} & \pie{0} &  61 &    500 & {} \\
+    Babel~\autocite{BABEL}         & PG   & 2014 & \pie{2} & Babel   & \pie{2} & \pie{2} & \pie{2} & \pie{2} & 225 & 34.650 & {} \\
+    Escodegen~\autocite{ESCODEGEN} & G    & 2012 & \pie{0} & ESTree  & \pie{0} & \pie{0} & \pie{0} & \pie{0} &   2 &  1.900 & {} \\
+    Esprima~\autocite{ESPRIMA}     & P    & 2011 & \pie{0} & ESTree  & \pie{1} & \pie{0} & \pie{0} & \pie{1} &  12 &  5.450 & {} \\
+    Recast~\autocite{RECAST}       & PG   & 2012 & \pie{2} & diverse & \pie{2} & \pie{2} & \pie{2} & \pie{2} &  43 &  2.700 & {} \\
+    \midrule
+  \end{tabu}
+  \caption*{
+    \footnotesize
+    Stand: Oktober 2019
+    \medbreak
+    Abkürzungen: P = Parser, G = Codegenerator, erw. = erweiterbar, TS = TypeScript
+    \medbreak
+    Aktivität: Entspricht der Summe der Zahl aktiver \emph{Merge Requests}, aktiver Fehlerberichte, veröffentlichter Git-Commits und der Anzahl beteiligter Autoren innerhalb des zurückliegenden Monats auf GitHub.
+    \medbreak
+    Sterne: Anzahl Sterne auf GitHub
+  }
+  \caption{Vergleich verschiedener Werkzeuge zur Transpilierung von JavaScript-Quelltexten.}
+  \label{tab:transpilers}
+\end{table}
