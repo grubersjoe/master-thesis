@@ -20,9 +20,6 @@
 % PDF Version 1.7
 \pdfminorversion=7
 
-% "Fix" for KOMA script warning about floats
-\usepackage{scrhack}
-
 % Encoding
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -32,7 +29,7 @@
 
 % Fonts
 \usepackage[tt=false]{libertine}
-\usepackage[scale=0.8,nomap,lining]{FiraMono}
+\usepackage[scale=0.8,sb]{plex-mono}
 
 % Math
 \usepackage[libertine]{newtxmath}
@@ -55,19 +52,13 @@
 ]{biblatex}
 \addbibresource{src/references.bib}
 
-\DefineBibliographyStrings{german}{
+\DefineBibliographyStrings{ngerman}{
+  andothers = {et\addabbrvspace al\adddot},
   references = {Quellenverzeichnis}
 }
 
 % Use the main font for URLs
 \urlstyle{same}
-
-% Endnotes
-\usepackage[
-  backref=true,
-  counter-format=roman,
-  totoc=chapter,
-]{enotez}
 
 % Use a 1.5 line-height
 \usepackage[onehalfspacing]{setspace}
@@ -83,6 +74,12 @@
 
 % Remove chapter number
 \renewcommand\chaptermarkformat{}
+
+% Remove space before chapter headings
+\RedeclareSectionCommand[
+  beforeskip=0pt,
+  afterindent=false
+]{chapter}
 
 % Decrease space after subsubsections
 \RedeclareSectionCommand[
@@ -145,27 +142,59 @@
 % Ragged text
 \usepackage{ragged2e}
 
-% Code listings (minted)
-\usepackage[outputdir=build]{minted}
-\usemintedstyle{vs}
-\newminted{text}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
-\newminted{js}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
-\newminted{ts}{fontsize=\footnotesize,baselinestretch=1.05,tabsize=4,stripall,linenos}
-\renewcommand\listingscaption{\textsf Quelltext}
-\renewcommand\listoflistingscaption{Quelltextverzeichnis}
-\renewcommand{\theFancyVerbLine}{\scriptsize{\arabic{FancyVerbLine}}}
+% Code listings
+\usepackage{listings,float,pmboxdraw}
+
+\lstset{
+  abovecaptionskip=0.5\baselineskip,
+  aboveskip=\baselineskip,
+  basicstyle=\linespread{1.08}\small\ttfamily,
+  belowcaptionskip=0pt,
+  belowskip=0pt,
+  breakatwhitespace=true,
+  breaklines=true,
+  captionpos=b,
+  comment=[l]{//},
+  commentstyle=\color{darkgray},
+  emph={?, any, Array, boolean, empty, interface, mixed, never, number, opaque, string, this, type, unknown, void, T},
+  emphstyle=\itshape,
+  extendedchars=false,
+  keywords={abstract, arguments, await, boolean, break, byte, case, catch, char, class, const, continue, debugger, default, delete, do, double, else, enum, eval, export, extends, false, final, finally, float, for, function, goto, if, implements, import, in, instanceof, int, let, long, native, new, null, of, package, private, protected, public, return, short, static, super, switch, synchronized, this, throw, throws, transient, true, try, typeof, var, volatile, while, with, yield, type},
+  keywordstyle=\bfseries,
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  numbers=left,
+  numbersep=12pt,
+  numberstyle=\linespread{1.08}\scriptsize\ttfamily\color{darkgray},
+  showspaces=false,
+  showstringspaces=false,
+  stepnumber=1,
+  stringstyle=\color{black},
+  tabsize=2,
+  literate=
+    {│}{\textSFxi}1%
+    {┐}{\textSFiii}1%
+    {└}{\textSFii}1%
+    {┴}{\textSFvii}1%
+    {┬}{\textSFvi}1%
+    {├}{\textSFviii}{1}%
+    {─}{\textSFx}1%
+    {┼}{\textSFv}1,
+}
+
+\renewcommand{\lstlistlistingname}{Quelltextverzeichnis}
+\renewcommand{\lstlistingname}{Quelltext}
 
 % Captions (needs to come after minted)
-\usepackage[font=small]{caption}
+\usepackage{caption}
 \captionsetup{
+  font=small,
   format=hang,
   justification=raggedright,
   singlelinecheck=off
 }
 \usepackage{subcaption}
-
-% Box drawing characters
-\usepackage{pmboxdraw}
 
 % Quotes
 \usepackage{csquotes}
@@ -219,11 +248,12 @@
 
 % ----------
 
+% TODO make sure to consistently use
 
 \begin{document}
 	% Numbering is invisible, but required for hyperref package
   \pagestyle{empty}
-  \pagenumbering{alpha}
+  \pagenumbering{alph}
 
   \input{src/0_Frontmatter/title}
   \input{src/0_Frontmatter/abstract}
@@ -265,8 +295,7 @@
 
   \listoffigures
   \listoftables
-  \listoflistings
-  \printendnotes
+  \lstlistoflistings
 
   \input{src/7_Backmatter/declaration.tex}
   \input{src/7_Backmatter/appendix.tex}

@@ -246,11 +246,11 @@
 }
 
 @book{TERRY:2000,
-  title={Compilers and Compiler Generators - an introduction with C++},
-  author={Terry, P. D.},
-  year={2000},
-  publisher={International Thomson Computer Press},
-  organization={Rhodes University},
+  author       = {Terry, P. D.},
+  organization = {Rhodes University},
+  publisher    = {International Thomson Computer Press},
+  date         = {2000},
+  title        = {Compilers and Compiler Generators - an introduction with C++},
 }
 
 @book{TORCZON:2007,
@@ -285,6 +285,18 @@
   isbn      = {978-3-540-77966-7},
   pages     = {218--234},
   title     = {Locating Regression Bugs},
+}
+
+@inproceedings{MALAYERI:2008,
+  author    = {Malayeri, Donna and Aldrich, Jonathan},
+  editor    = {Vitek, Jan},
+  location  = {Berlin, Heidelberg},
+  publisher = {Springer Berlin Heidelberg},
+  booktitle = {ECOOP 2008 -- Object-Oriented Programming},
+  date      = {2008},
+  isbn      = {978-3-540-70592-5},
+  pages     = {260--284},
+  title     = {Integrating Nominal and Structural Subtyping},
 }
 
 @inproceedings{NIKHIL:2014,
@@ -343,6 +355,15 @@
   title     = {Towards a Type System for Analyzing JavaScript Programs},
 }
 
+@inproceedings{WINTER:2013,
+  author    = {Winter, Kirsten and Zhang, Chenyi and Hayes, Ian J and Keynes, Nathan and Cifuentes, Cristina and Li, Lian},
+  publisher = {Springer},
+  booktitle = {International Conference on Formal Engineering Methods},
+  date      = {2013},
+  pages     = {415--430},
+  title     = {Path-sensitive data flow analysis simplified},
+}
+
 @manual{BABEL:HANDBOOK,
   author       = {Kyle, Jamie and McKenzie, Sebastian and Zhu, Henry and others},
   organization = {Babel},
@@ -363,8 +384,17 @@
   urldate      = {2019-07-17},
 }
 
+@manual{DART:SPEC,
+  author  = {{Google LLC}},
+  url     = {https://dart.dev/guides/language/specifications/DartLangSpec-v2.2.pdf},
+  date    = {2019-07},
+  edition = {5th},
+  title   = {Dart Programming Language Specification},
+  urldate = {2019-10-16},
+  version = {2.2},
+}
+
 @manual{ECMASCRIPT:1997,
-  author       = {International, Ecma},
   location     = {Geneva},
   organization = {Ecma International},
   url          = {https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%201st%20edition,%20June%201997.pdf},
@@ -375,7 +405,6 @@
 }
 
 @manual{ECMASCRIPT:1999,
-  author       = {International, Ecma},
   location     = {Geneva},
   organization = {Ecma International},
   url          = {http://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf},
@@ -386,7 +415,6 @@
 }
 
 @manual{ECMASCRIPT:2017,
-  author       = {International, Ecma},
   location     = {Geneva},
   organization = {Ecma International},
   url          = {http://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf},
@@ -397,7 +425,6 @@
 }
 
 @manual{ECMASCRIPT:2019,
-  author       = {International, Ecma},
   location     = {Geneva},
   organization = {Ecma International},
   url          = {http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf},
@@ -458,8 +485,6 @@
   urldate      = {2019-06-25},
 }
 
-
-
 @misc{ACORN,
   author   = {Haverbeke, Marijn},
   url      = {http://marijnhaverbeke.nl/blog/acorn.html},
@@ -488,140 +513,6 @@
   title    = {Babel - The compiler for next generation JavaScript},
   urldate  = {2019-03-22},
   version  = {7.6},
-}
-
-@misc{ESCODEGEN,
-  author   = {Suzuki, Yusuke},
-  url      = {https://github.com/estools/escodegen},
-  date     = {2015},
-  keywords = {software},
-  title    = {Escodegen - ECMAScript code generator},
-  urldate  = {2019-10-11},
-  version  = {1.12},
-}
-
-@misc{ESPRIMA,
-  author   = {Hidayat, Ariya},
-  url      = {https://esprima.org},
-  date     = {2011},
-  keywords = {software},
-  title    = {ECMAScript parsing infrastructure for multipurpose analysis},
-  urldate  = {2019-10-11},
-  version  = {4.0},
-}
-
-@misc{RECAST,
-  author   = {Newman, Ben},
-  url      = {https://github.com/benjamn/recast},
-  date     = {2012},
-  keywords = {software},
-  title    = {recast - JavaScript syntax tree transformer, nondestructive pretty-printer, and automatic source map generator},
-  urldate  = {2019-10-11},
-  version  = {0.18},
-}
-
-@misc{ES_PROPOSAL:CLASS_FIELDS,
-  author       = {Ehrenberg, Daniel and Morrison, Jeff},
-  organization = {Ecma International, Technical Committee 39},
-  url          = {https://github.com/tc39/proposal-class-fields},
-  date         = {2019},
-  note         = {Stage 3},
-  title        = {Class field declarations for JavaScript},
-  urldate      = {2019-08-02},
-}
-
-@misc{ES_PROPOSAL:DECORATORS,
-  author       = {Ehrenberg, Daniel},
-  organization = {Ecma International, Technical Committee 39},
-  url          = {https://github.com/tc39/proposal-decorators},
-  date         = {2019},
-  note         = {Stage 2},
-  title        = {JavaScript Decorators},
-  urldate      = {2019-08-02},
-}
-
-@misc{ES_PROPOSAL:DYNAMIC_IMPORTS,
-  author       = {Denicola, Domenic},
-  organization = {Ecma International, Technical Committee 39},
-  url          = {https://github.com/tc39/proposal-dynamic-import},
-  date         = {2019},
-  note         = {Stage 4},
-  title        = {import()},
-  urldate      = {2019-08-02},
-}
-
-@misc{LICENSE:MIT,
-  organization = {Massachusetts Institute of Technology},
-  url          = {https://opensource.org/licenses/MIT},
-  date         = {2019},
-  title        = {MIT License},
-  urldate      = {2019-07-01},
-}
-
-@misc{SCHOEPP:COMPILER,
-  author       = {Schöpp, Ulrich},
-  organization = {Ludwig-Maximilians-Universität München, Institut für Informatik},
-  url          = {https://www.tcs.ifi.lmu.de/lehre/ws-2014-15/compilerbau/material/folien},
-  date         = {2019-01},
-  title        = {Praktikum Compilerbau -- Wintersemester 2014/15},
-  urldate      = {2019-10-07},
-}
-
-@misc{SOFTWARE:JEST,
-  author   = {Inc., Facebook},
-  url      = {https://jestjs.io/},
-  date     = {2019},
-  keywords = {software},
-  title    = {Jest - Delightful JavaScript Testing},
-  urldate  = {2019-07-30},
-  version  = {24.8},
-}
-
-@misc{SOFTWARE:JSX,
-  author  = {Inc., Facebook},
-  url     = {https://reactjs.org/docs/introducing-jsx.html},
-  date    = {2019},
-  title   = {Introducing JSX},
-  urldate = {2019-08-02},
-}
-
-@misc{SOFTWARE:NODEJS,
-  author   = {Foundation, Node.js},
-  url      = {https://nodejs.org},
-  date     = {2019},
-  keywords = {software},
-  title    = {Node.js},
-  urldate  = {2019-06-04},
-  version  = {12.6},
-}
-
-@misc{SOFTWARE:PRETTIER,
-  author   = {Duailibe, Lucas},
-  url      = {https://prettier.io/},
-  date     = {2019},
-  keywords = {software},
-  title    = {Prettier · Opinionated Code Formatter},
-  urldate  = {2019-08-02},
-  version  = {1.18},
-}
-
-@misc{SOFTWARE:REACT,
-  author   = {Inc., Facebook},
-  url      = {https://reactjs.org},
-  date     = {2019},
-  keywords = {software},
-  title    = {React - A JavaScript library for building user interfaces},
-  urldate  = {2019-03-22},
-  version  = {16.8},
-}
-
-@misc{WALDMANN:PPS,
-  author       = {Waldmann, Johannes},
-  organization = {Hochschule für Technik, Wirtschaft und Kultur Leipzig},
-  url          = {https://www.imn.htwk-leipzig.de/~waldmann/edu/ws18/pps/folien/skript.pdf},
-  date         = {2019-01},
-  title        = {Prinzipien von Programmiersprachen -- Vorlesung Wintersemester 2007 – 2018},
-  urldate      = {2019-07-31},
 }
 
 @misc{BABEL:GENERATOR,
@@ -672,6 +563,46 @@
   urldate  = {2019-08-06},
 }
 
+@misc{ES_PROPOSAL:CLASS_FIELDS,
+  author       = {Ehrenberg, Daniel and Morrison, Jeff},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-class-fields},
+  date         = {2019},
+  note         = {Stage 3},
+  title        = {Class field declarations for JavaScript},
+  urldate      = {2019-08-02},
+}
+
+@misc{ES_PROPOSAL:DECORATORS,
+  author       = {Ehrenberg, Daniel},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-decorators},
+  date         = {2019},
+  note         = {Stage 2},
+  title        = {JavaScript Decorators},
+  urldate      = {2019-08-02},
+}
+
+@misc{ES_PROPOSAL:DYNAMIC_IMPORTS,
+  author       = {Denicola, Domenic},
+  organization = {Ecma International, Technical Committee 39},
+  url          = {https://github.com/tc39/proposal-dynamic-import},
+  date         = {2019},
+  note         = {Stage 4},
+  title        = {import()},
+  urldate      = {2019-08-02},
+}
+
+@misc{ESCODEGEN,
+  author   = {Suzuki, Yusuke},
+  url      = {https://github.com/estools/escodegen},
+  date     = {2015},
+  keywords = {software},
+  title    = {Escodegen - ECMAScript code generator},
+  urldate  = {2019-10-11},
+  version  = {1.12},
+}
+
 @misc{ESLINT,
   author   = {Zakas, Nicholas C.},
   url      = {https://eslint.org},
@@ -680,6 +611,16 @@
   title    = {ESLint - Pluggable JavaScript linter},
   urldate  = {2019-10-06},
   version  = {6.5},
+}
+
+@misc{ESPRIMA,
+  author   = {Hidayat, Ariya},
+  url      = {https://esprima.org},
+  date     = {2011},
+  keywords = {software},
+  title    = {ECMAScript parsing infrastructure for multipurpose analysis},
+  urldate  = {2019-10-11},
+  version  = {4.0},
 }
 
 @misc{KHAN:FLOW_TO_TS,
@@ -702,6 +643,24 @@
   version  = {0.3},
 }
 
+@misc{LICENSE:MIT,
+  organization = {Massachusetts Institute of Technology},
+  url          = {https://opensource.org/licenses/MIT},
+  date         = {2019},
+  title        = {MIT License},
+  urldate      = {2019-07-01},
+}
+
+@misc{RECAST,
+  author   = {Newman, Ben},
+  url      = {https://github.com/benjamn/recast},
+  date     = {2012},
+  keywords = {software},
+  title    = {recast - JavaScript syntax tree transformer, nondestructive pretty-printer, and automatic source map generator},
+  urldate  = {2019-10-11},
+  version  = {0.18},
+}
+
 @misc{REFLOW_GITHUB,
   author   = {Gruber, Jonathan},
   url      = {https://github.com/grubersjoe/reflow},
@@ -721,19 +680,78 @@
   version  = {1.18},
 }
 
+@misc{SCHOEPP:COMPILER,
+  author       = {Schöpp, Ulrich},
+  organization = {Ludwig-Maximilians-Universität München, Institut für Informatik},
+  url          = {https://www.tcs.ifi.lmu.de/lehre/ws-2014-15/compilerbau/material/folien},
+  date         = {2019-01},
+  title        = {Praktikum Compilerbau -- Wintersemester 2014/15},
+  urldate      = {2019-10-07},
+}
+
+@misc{SOFTWARE:JEST,
+  author   = {{Facebook Inc.}},
+  url      = {https://jestjs.io/},
+  date     = {2019},
+  keywords = {software},
+  title    = {Jest - Delightful JavaScript Testing},
+  urldate  = {2019-07-30},
+  version  = {24.8},
+}
+
+@misc{SOFTWARE:JSX,
+  author  = {{Facebook Inc.}},
+  url     = {https://reactjs.org/docs/introducing-jsx.html},
+  date    = {2019},
+  title   = {Introducing JSX},
+  urldate = {2019-08-02},
+}
+
+@misc{SOFTWARE:NODEJS,
+  author   = {{Node.js Foundation}},
+  url      = {https://nodejs.org},
+  date     = {2019},
+  keywords = {software},
+  title    = {Node.js},
+  urldate  = {2019-06-04},
+  version  = {12.6},
+}
+
+@misc{SOFTWARE:PRETTIER,
+  author   = {Duailibe, Lucas},
+  url      = {https://prettier.io/},
+  date     = {2019},
+  keywords = {software},
+  title    = {Prettier · Opinionated Code Formatter},
+  urldate  = {2019-08-02},
+  version  = {1.18},
+}
+
+@misc{SOFTWARE:REACT,
+  author   = {{Facebook Inc.}},
+  url      = {https://reactjs.org},
+  date     = {2019},
+  keywords = {software},
+  title    = {React - A JavaScript library for building user interfaces},
+  urldate  = {2019-03-22},
+  version  = {16.8},
+}
+
+@misc{WALDMANN:PPS,
+  author       = {Waldmann, Johannes},
+  organization = {Hochschule für Technik, Wirtschaft und Kultur Leipzig},
+  url          = {https://www.imn.htwk-leipzig.de/~waldmann/edu/ws18/pps/folien/skript.pdf},
+  date         = {2019-01},
+  title        = {Prinzipien von Programmiersprachen -- Vorlesung Wintersemester 2007 – 2018},
+  urldate      = {2019-07-31},
+}
+
 @online{BABEL:STATE_OF_BABEL,
   author  = {Zhu, Henry},
   url     = {https://babeljs.io/blog/2016/12/07/the-state-of-babel},
   date    = {2016-12},
   title   = {The State of Babel},
   urldate = {2019-07-22},
-}
-
-@online{GITHUB,
-  url     = {https://github.com/},
-  date    = {2019},
-  title   = {The world's leading software development platform · GitHub},
-  urldate = {2019-10-14},
 }
 
 @online{BROWN:PROGRAMMING_LANGUAGES,
@@ -743,6 +761,22 @@
   date         = {2019},
   title        = {Programming and Programming Languages},
   urldate      = {2019-10-02},
+}
+
+@online{CLOSURE:COMPILER,
+  author  = {LLC, Google},
+  url     = {https://developers.google.com/closure/compiler},
+  date    = {2009},
+  title   = {Closure Compiler | Google Developers},
+  urldate = {2019-10-16},
+}
+
+@online{CLOSURE:TYPES,
+  author  = {LLC, Google},
+  url     = {https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler},
+  date    = {2019},
+  title   = {Annotating JavaScript for the Closure Compiler},
+  urldate = {2019-10-16},
 }
 
 @online{CORNELL:STRONG_TYPING,
@@ -769,6 +803,23 @@
   urldate = {2019-07-22},
 }
 
+@online{DART:DART2JS,
+  author   = {Thomsen, Michael},
+  url      = {https://dart.dev/tools/dart2js},
+  date     = {2019-07},
+  keywords = {software},
+  title    = {dart2js: Dart-to-JavaScript compiler},
+  urldate  = {2019-10-16},
+}
+
+@online{DART:TYPE_SYSTEM,
+  author  = {Zakhou, Shams},
+  url     = {https://dart.dev/guides/language/sound-dart},
+  date    = {2019-09},
+  title   = {The Dart type system},
+  urldate = {2019-10-16},
+}
+
 @online{EICH:POPULARITY,
   author  = {Eich, Brendan},
   url     = {https://brendaneich.com/2008/04/popularity/},
@@ -784,24 +835,32 @@
   urldate = {2019-08-30},
 }
 
+@online{FLOW:INSTALLATION,
+  author  = {{Facebook Inc.}},
+  url     = {https://flow.org/en/docs/install/},
+  date    = {2019},
+  title   = {Installation},
+  urldate = {2019-10-16},
+}
+
 @online{FLOW:LINT_RULE_REFERENCE,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://flow.org/en/docs/linting/rule-reference/#toc-deprecated-type},
   date    = {2018},
-  title   = {Lint Rule Reference | Flow},
+  title   = {Lint Rule Reference},
   urldate = {2019-08-11},
 }
 
 @online{FLOW:ONLINE,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://flow.org},
-  date    = {2018},
+  date    = {2019},
   title   = {Flow: A Static Type Checker For JavaScript},
   urldate = {2019-03-22},
 }
 
 @online{FLOW:TYPE_ANNOTATIONS,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://flow.org/en/docs/types/},
   date    = {2019},
   note    = {Flow},
@@ -809,8 +868,35 @@
   urldate = {2019-07-15},
 }
 
+@online{FLOW:NOMINAL_TYPES,
+  author  = {{Facebook Inc.}},
+  url     = {https://flow.org/en/docs/lang/nominal-structural/},
+  date    = {2019},
+  note    = {Flow},
+  title   = {Nominal \& Structural Typing},
+  urldate = {2019-10-17},
+}
+
+@online{FLOW:TYPE_SYSTEM,
+  author  = {{Facebook Inc.}},
+  url     = {https://flow.org/en/docs/lang/},
+  date    = {2019},
+  note    = {Flow},
+  title   = {Type System},
+  urldate = {2019-10-16},
+}
+
+@online{FLOW:TYPES_AND_EXPRESSIONS,
+  author  = {{Facebook Inc.}},
+  url     = {https://flow.org/en/docs/lang/types-and-expressions/},
+  date    = {2019},
+  note    = {Flow},
+  title   = {Types \& Expressions},
+  urldate = {2019-10-16},
+}
+
 @online{FLOW:UTILITY_TYPES,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://flow.org/en/docs/types/utilities/},
   date    = {2019},
   note    = {Flow},
@@ -824,6 +910,13 @@
   date    = {2005-02},
   title   = {Ajax: A New Approach to Web Applications},
   urldate = {2019-03-21},
+}
+
+@online{GITHUB,
+  url     = {https://github.com/},
+  date    = {2019},
+  title   = {The world's leading software development platform · GitHub},
+  urldate = {2019-10-14},
 }
 
 @online{GOOGLE:RENDERING_ON_THE_WEB,
@@ -883,7 +976,7 @@
 }
 
 @online{REACT:HANDLING_EVENTS,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://reactjs.org/docs/handling-events.html},
   date    = {2019},
   title   = {Handling Events},
@@ -891,7 +984,7 @@
 }
 
 @online{REACT:WEBCOMPONENTS,
-  author  = {Inc., Facebook},
+  author  = {{Facebook Inc.}},
   url     = {https://reactjs.org/docs/web-components.html},
   date    = {2019},
   title   = {Web Components},
@@ -931,7 +1024,7 @@
 }
 
 @online{TC39_COMMITTEE,
-  author  = {International, Ecma},
+  author  = {{Ecma International}},
   url     = {https://www.ecma-international.org/memento/tc39.htm},
   date    = {2019},
   title   = {TC39 - ECMAScript},
@@ -939,7 +1032,7 @@
 }
 
 @online{TC39_PROCESS,
-  author  = {International, Ecma},
+  author  = {{Ecma International}},
   url     = {https://tc39.es/process-document/},
   date    = {2019},
   title   = {The TC39 Process},

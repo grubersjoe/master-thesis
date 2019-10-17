@@ -6,58 +6,84 @@ Bevor die Ziele der Migration von Flow zu TypeScript im nächsten Kapitel dargel
 \section{Konzepte und Begriffe der Typentheorie}
 
 \subsection{Korrektheit von Typsystemen}
-Ein wichtiges Konzept aus der Theorie der Typensysteme ist deren logische \emph{Korrektheit} (engl. \emph{Soundness}). Dieses Kriterium beschreibt, ob das System garantieren kann, dass ein Programm während dessen Ausführung tatsächlich keine Typfehler verursacht, sofern keine statischen Typverletzungen bestehen~\autocite{WRIGHT:1994}. Durch mathematische Formalisierung des Typsystems kann diese Eigenschaft bewiesen werden~\autocite[7]{CARDELLI:TYPE_SYSTEMS}.
-Das Typsystem mancher Programmiersprachen erfüllt diese Definition von Korrektheit nicht. Im Fall von C ist die Semantik bestimmter Operationen wie beispielsweise die Dereferenzierung des Nullzeigers in der Sprachspezikation undefiniert~\autocite[79]{ISO:C99}. Obwohl ein solches Programm durch den Compiler akzeptiert wird, also keine Typverletzungen aufweist, können hier Laufzeitfehler auftreten.
+Ein wichtiges Konzept aus der Theorie der Typensysteme ist deren logische \textit{Korrektheit} (engl. \textit{soundness}). Dieses Kriterium beschreibt, ob das System garantieren kann, dass ein Programm während dessen Ausführung tatsächlich keine Typfehler verursacht, sofern keine statischen Typverletzungen bestehen~\autocite{WRIGHT:1994}. In einem solchen Typsystem stimmt also der Typ eines zur Laufzeit ausgewerteten Ausdrucks immer mit dem statischen Typ überein~\autocite{DART:TYPE_SYSTEM}. Durch mathematische Formalisierung des Systems kann diese Eigenschaft bewiesen werden~\autocite[7]{CARDELLI:TYPE_SYSTEMS}. Das Gegenstück von Korrektheit ist \textit{Vollständigkeit}. Während ein korrektes System alle Fehler identifiziert, die zur Laufzeit auftreten können, findet ein vollständiges System nur diejenigen Fehler, die tatsächlich eintreten würden~\autocite{FLOW:TYPES_AND_EXPRESSIONS}. Im ersten Fall werden unter Umständen Fehler entdeckt, die zur Laufzeit praktisch nicht vorkommen (falsch positiver Fehler), im zweiten Fall treten dagegen eventuell Laufzeitfehler auf, obwohl keine Typverletzung festgestellt wurde (falsch negativer Fehler). Im Idealfall ist ein Typsystem sowohl korrekt, als auch vollständig.
+
+Das Typsystem mancher Programmiersprachen erfüllt diese Definition von Korrektheit nicht. Im Fall von C ist die Semantik bestimmter Operationen wie beispielsweise die Dereferenzierung des Nullzeigers in der Sprachspezikation undefiniert~\autocite[79]{ISO:C99}. Obwohl ein solches Programm durch den Compiler akzeptiert wird, also keine Typverletzungen aufweist, können so Laufzeitfehler auftreten.
 
 \subsection{Nominale und strukturelle Typen}
-Eine Möglichkeit Typsysteme zu klassifizieren ist die Verwendung von \emph{nominalen} bzw. \emph{strukturellen} Typen. Relevant ist dabei die Fragestellung, ob unabhängige Ausdrücke mit dem gleichen Typ durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels in Pseudocode (Quelltext~\ref{code:type-equivalence}) wird diese Differenzierung deutlich: In den ersten beiden Zeilen werden zunächst zwei Klassen \code{A} und \code{B} definiert. Weiterhin wird eine Funktion \code{f} angegeben, die einen Parameter vom Typ \code{A} erwartet. Bei Aufruf dieser Funktion mit einer Instanz der Klasse \code{B} sind nun zwei Fälle möglich: Entweder spezifiziert das System, dass Typen mit unterschiedlichen \emph{Namen} stets inkompatibel sind oder die Typen \code{A} und \code{B} werden als äquivalent betrachtet, da ihre \emph{Struktur} übereinstimmt. Im ersten Fall würde in Zeile 4 eine Typverletzung auftreten, da der Typ des Ausdrucks \code{new B()} nicht \code{A}, sondern \code{B} ist. Läge hingegen eine strukturelle Typisierung vor, so würde das Programm akzeptiert werden, da der Aufbau der Klassen \code{A} und \code{B} identisch ist. Beide enthalten genau ein Attribut \code{prop} mit demselben Typ \code{string}. Die Typsysteme der meisten realen Programmiersprachen verwenden sowohl nominale, als auch strukturelle Typen~\autocite[9]{CARDELLI:TYPE_SYSTEMS}.
+Eine Möglichkeit Typsysteme zu klassifizieren ist die Verwendung von \textit{nominalen} bzw. \textit{strukturellen} Typen. Relevant ist dabei die Fragestellung, ob unabhängige Typen durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Bedeutsam ist auch, wann ein Typ als Untertyp eines anderen Typen betrachtet wird. Bei strukturellen Typen liegt ein Untertyp vor, wenn dessen Attribute eine Obermenge des Supertyps sind~\autocite{MALAYERI:2008}. Liegt hingegen ein nominaler Typ vor, so besteht eine solche Beziehung nur genau dann , wenn sie explizit deklariert wird (zum Beispiel durch das Schlüsselwort \code{extends}). Die Typsysteme der meisten realen Programmiersprachen setzen sowohl nominale, als auch strukturelle Typen ein~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels in Pseudocode (Quelltext~\ref{code:type-equivalence}) soll diese Differenzierung verdeutlicht werden.
 
-\bigbreak
-\begin{listing}[htb]
-\begin{textcode}
+\begin{lstlisting}[
+  label={code:type-equivalence},
+  caption={Beispiel zur Differenzierung von nominalen und strukturellen Typen.}
+]
 class A { prop: string; }
 class B { prop: string; }
 function f(arg: A) {}
 f(new B()); // << Typfehler?
-\end{textcode}
-\listingvspace
-\caption{Beispiel zur Differenzierung von nominalen und strukturellen Typen.}
-\label{code:type-equivalence}
-\end{listing}
+\end{lstlisting}
 
-
-
+In den ersten beiden Zeilen werden zunächst zwei Klassen \code{A} und \code{B} definiert. Weiterhin wird eine Funktion \code{f} angegeben, die einen Parameter vom Typ \code{A} erwartet. Bei Aufruf dieser Funktion mit einer Instanz der Klasse \code{B} sind nun zwei Fälle möglich: Entweder spezifiziert das System, dass Typen mit unterschiedlichen Namen stets inkompatibel sind oder die Typen \code{A} und \code{B} werden als äquivalent betrachtet, da ihre Struktur übereinstimmt. Im ersten Fall würde in Zeile 4 eine Typverletzung auftreten, da der Typ des Ausdrucks \code{new B()} nicht \code{A}, sondern \code{B} ist. Läge hingegen eine strukturelle Typisierung vor, so würde das Programm akzeptiert werden, da der Aufbau der Klassen \code{A} und \code{B} identisch ist. Beide enthalten genau ein Attribut \code{prop} mit demselben Typ \code{string}.
 
 \section{Statische Typsysteme für JavaScript}
 \label{sec:static-typesystems-for-js}
 
-Im Folgenden sollen nun bestehende statische Typsysteme für JavaScript beleuchtet werden. Die Idee die ausgeführten Schwachstellen der dynamischen Typisierung der Sprache durch ein solches System auszugleichen ist nicht neu~\autocite[2]{FLOW:PAPER}. Innerhalb der letzten Jahre sind verschiedene Ansätze entstanden, die sich dieser Problemstellung widmen.
+Im Folgenden sollen bestehende statische Typsysteme für JavaScript betrachtet werden. Die Idee die ausgeführten Schwachstellen der dynamischen Typisierung der Sprache durch statische Systeme auszugleichen ist nicht neu~\autocite[2]{FLOW:PAPER}. Innerhalb der letzten Jahre sind verschiedene Ansätze entstanden, die sich dieser Problematik widmen.
 
-% Dart, Closure
+Ein Beispiel ist das 2009 erschienene Werkzeug \textit{Closure Compiler}~\autocite{CLOSURE:COMPILER}. Ziel dieses Transpilers ist es einerseits gängige Programmierfehler in JavaScript-Quelltexten mittels statischer Analyse aufzudecken, andererseits effizienteren Ausgabecode durch Anwendung verschiedener Optimierungen zu erzeugen~\autocite{CLOSURE:COMPILER}. Dabei ist es auch möglich Ausdrücke innerhalb des Quelltexts durch spezielle Annotationen in Kommentarblöcken zu typisieren, sodass der Compiler daraufhin die Typkorrektheit statisch überprüfen kann~\autocite{CLOSURE:TYPES}.
 
-% Es gibt noch viele weitere: https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS
-
-
-In den nachfolgenden Abschnitten werden die zwei in dieser Arbeit behandelten Systeme \textit{Flow}~\autocite{FLOW:PAPER} und \textit{TypeScript}~\autocite{TYPESCRIPT:SPEC} näher betrachtet.
+Einen anderen Ansatz verfolgt die Programmiersprache \textit{Dart}~\autocite{DART:SPEC}. Dart bietet ein gemäß obiger Definition korrektes, statisches Typsystem, welches neben konventionellen Typdeklarationen auch Typinferenz unterstützt~\autocite{DART:TYPE_SYSTEM}. Anstatt JavaScript-Code durch Typannotationen in Kommentaren zu erweitern, wird hier also auf eine andere Programmiersprache zurückgegriffen, um statische Typüberprüfungen zu erzielen. Um ein Dart-Programm in standardkonformes JavaScript zu übersetzen, kann der Transcompiler \textit{dart2js}~\autocite{DART:DART2JS} verwendet werden. In den nachfolgenden Abschnitten sollen nun die zwei in dieser Arbeit behandelten Systeme \textit{Flow}~\autocite{FLOW:PAPER} und \textit{TypeScript}~\autocite{TYPESCRIPT:SPEC} näher beleuchtet werden.
 
 \subsection{Flow}
 \label{subsec:flow}
-% Flow beschreiben (und zwar mit entsprechender Fachsprache)
 
 \subsubsection{Charakterisierung}
 
-Alle Typen werden in der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} erläutert.
+Flow~\autocite{FLOW:PAPER} ist ein durch das US-amerikanische Unternehmen \textit{Facebook Inc.} entwickeltes Software"=System, das statische Typüberprüfungen in JavaScript durch das Einfügen von Typannotationen ermöglicht (siehe Quelltext~\ref{code:example-flow}). Die Annotationen sind syntaktische Spracherweiterungen und müssen vor Auslieferung des Codes mittels eines geeigneten Werkzeugs wie beispielsweise Babel~\autocite{BABEL} entfernt werden, damit wieder regulärer JavaScript-Quelltext entsteht~\autocite{FLOW:INSTALLATION}.
+Der Entwurf und die Implementierung von Flow wird in der akademischen Arbeit \enquote{\textit{Fast and Precise Type Checking for JavaScript}} von \citeauthor{FLOW:PAPER} ausführlich beschrieben. Die nachfolgenden Erläuterungen beziehen sich vorrangig auf den Inhalt dieser Veröffentlichung.
 
-Die Typannotationen von Flow können in drei Kategorien eingeordnet werden: Basistypen, Hilfstypen und Typdeklarationen. Diese werden im Folgenden vorgestellt und beschrieben.
+% TODO: Sind die Belege hier überall nötig..?
+Flow verfolgt zwei primäre Ziele~\autocite{FLOW:TYPE_SYSTEM}: Erstens soll eine möglichst hohe Präzision durch die Typüberprüfungen erreicht werden, um möglichst zuverlässige Ergebnisse, das heißt eine geringe Quote falsch positiver und falsch negativer Fehler, zu erzielen. Zweitens müssen diese Ergebnisse selbst bei einer sehr umfangreichen Codebasis schnell berechnet werden können, damit der Workflow des Programmierers nicht verlangsamt wird.
+Die erste Zielvorgabe wird zum einen anhand einer pfadsensitive Datenflussanalyse, zum anderen durch die Korrektheit des Typsystems realisiert~\autocite{FLOW:TYPE_SYSTEM}. Mittels pfadsensitiver Datenflussanalyse kann das Laufzeitverhalten von Software modelliert und so der Typ von Ausdrücken durch Einbeziehung der Programmverzweigungen auf einen spezielleren Untertyp abgebildet werden (\textit{type refinement})~\cites{WINTER:2013}[2]{FLOW:PAPER}. Um die Korrektheit des Typsystems zu gewährleisten, überprüft Flow \emph{alle} möglichen Werte innerhalb eines Ausdrucks~\autocite{FLOW:TYPES_AND_EXPRESSIONS}. Wie ausgeführt birgt dies die Gefahr Typfehler zu erkennen, die zur Laufzeit gar nicht auftreten.
+Um das zweite Ziel, die Geschwindigkeit der Typüberprüfungen, zu steigern, wird das Verfahren modularisiert, sodass die Berechnungen stark parallelisiert werden können~\autocite[4]{FLOW:PAPER}. Flow nutzt hierbei aus, dass in modernen JavaScript-Projekten üblicherweise genau eine Datei pro Modul vorliegt. Unabhängige Module können somit durch mehrere unabhängige Prozesse auf verschiedenen Rechenkernen gleichzeitig überprüft werden. Die Ergebnisse dieser Berechnungen werden daraufhin durch einen MapReduce-Algorithmus, der auf einer geteilten Heap-Datenstruktur arbeitet, rekombiniert~\autocite[22\psq]{FLOW:PAPER}.
+
+Die Architektur von Flow gliedert sich in einen Server, einen Client und einen Dateisystemüberwacher~\autocite[22]{FLOW:PAPER}. Der Server liest zunächst den Quelltext des gesamten Projekts ein und überprüft diesen hinsichtlich Typverletzungen. Daraufhin läuft der Prozess im Hintergrund weiter und ist bereit Anfragen des Clients entgegen zu nehmen. Der Client -- zum Beispiel die integrierte Entwicklungsumgebung -- kann nun durch Kommandos einerseits den generellen Status der Typüberprüfung abrufen, andererseits spezifischere Informationen wie beispielsweise den Typ eines bestimmten Ausdrucks abfragen. Sobald eine Datei editiert, neu erstellt oder gelöscht wird, wird dies dem Server durch den Dateisystemüberwacher mitgeteilt. Daraufhin überprüft der Server die Typkorrektheit inkrementell erneut auf Grundlage des modifizierten Quelltexts. Dabei werden nur geänderte Module und deren Abhängigkeiten betrachtet, sodass der Berechnungs- und damit Zeitaufwand stark reduziert werden kann. Weil die aktuellen Ergebnisse stets im Arbeitsspeicher vorgehalten werden, können nachfolgende Anfragen des Clients schnell beantwortet werden.
+
+Flow ist in der Lage Typen global zu inferieren~\autocite[25]{FLOW:PAPER}. Das heißt der Typ vieler Ausdrücke muss nicht explizit angegeben werden, sondern kann durch das Typsystem selbstständig abgeleitet werden. Somit kann bereits mit wenig Aufwand eine hohe Abdeckung der Codebasis durch das Typsystem erreicht werden. Eine weitere Eigenschaft des Typsystems ist die Verwendung von nominellen Typen für Klassen und exportierte opake Typen (siehe Tabelle~\ref{tab:flow-base-types})~\autocite{FLOW:NOMINAL_TYPES}. Alle anderen Typen werden strukturell behandelt.
+
+\subsubsection{Beispiel}
+
+Zur Veranschaulichung wie die Typannotationen von Flow benutzt werden, soll in Quelltext~\ref{code:example-flow} die Typisierung eines einfachen JavaScript-Programms anhand des Algorithmus der linearen Suche demonstriert werden. In diesem und allen nachfolgenden Quelltexten werden die Schlüsselworte von JavaScript bzw. TypeScript \code{\textbf{fett}} und Typannotationen \code{\textit{kursiv}} abgedruckt.
+% TODO: hier weiter
+
+\begin{lstlisting}[
+  label={code:example-flow},
+  caption={Benutzung von Flow anhand des Algorithmus der linearen Suche.},
+  mathescape=true,
+]
+// @flow
+function linearSearch<T>(list: Array<T>, searchValue: T): number | empty {
+  for (const [index, value] of list.entries()) {
+    if (value === searchValue) {
+      return index;
+    }
+  }
+  throw new Error('Not found');
+}
+
+linearSearch<number>([3, 1, 10, 56], 10);        // $\rightarrow$ 2
+linearSearch<number>([3, 1, 10, 56], 12);        // $\rightarrow$ Exception (Not Found)
+linearSearch<string>(['foo', 'bar', 'baz'], 3);  // $\rightarrow$ Typfehler (3 ist kein String)
+\end{lstlisting}
+
+Nachfolgend sollen nun die verschiedenen Sprachkonstrukte von Flow, die eine statische Typisierung von JavaScript ermöglichen, kurz beschrieben werden. In der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} werden diese ausführlich erläutert. Die Typen können in drei Kategorien eingeordnet werden: Basistypen, Hilfstypen und Typdeklarationen.
+
+% TODO: explain categories
 
 \subsubsection{Basistypen}
 \label{subsec:flow:base-types}
 
-Unter Basistypen werden im weiteren Verlauf der Arbeit die Menge aller grundlegenden Typannotationen von Flow verstanden.
-
-% welche keine Hilfstypen oder Typdeklarationen darstellen.
-
-Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über diese. Um die Nachvollziehbarkeit zur Flow"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen beibehalten und nicht ins Deutsche übersetzt.
+Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über die Basistypen von Flow. Um die Nachvollziehbarkeit zur Online"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen beibehalten und nicht ins Deutsche übersetzt.
 
 \bigbreak
 \input{src/2_Grundlagen/tables/base-types.tex}
@@ -81,17 +107,40 @@ TODO
 \subsection{TypeScript}
 % TS beschreiben (und zwar mit entsprechender Fachsprache)
 
+\subsubsection{Charakterisierung}
+
+\subsubsection{Beispiel}
+
+\begin{lstlisting}[
+  label={code:examples-ts},
+  caption={Benutzung von TypeScript anhand des Algorithmus der linearen Suche.},
+  mathescape=true
+]
+function linearSearch<T>(list: Array<T>, searchValue: T): number | never {
+  for (const [index, value] of list.entries()) {
+    if (value === searchValue) {
+      return index;
+    }
+  }
+  throw new Error('Not found');
+}
+
+linearSearch([3, 1, 10, 56], 10);        // $\rightarrow$ 2
+linearSearch([3, 1, 10, 56], 12);        // $\rightarrow$ Exception (Not found)
+linearSearch(['foo', 'bar', 'baz'], 3);  // $\rightarrow$ Typfehler (3 ist kein String)
+\end{lstlisting}
+
 \section{Transpilierung von Quelltexten}
 \label{sec:transpilers}
 
-Um die Problemstellung dieser Arbeit praktisch zu lösen soll ein \textit{Transpiler} umgesetzt werden, welcher die Flow-Typisierung der Eingabe in entsprechenden TypeScript-Code transformiert. Bevor dessen Implementierung in Kapitel~\ref{chap:implementation} ausführlich dargelegt wird, soll zunächst der grundlegende Aufbau von Transpilern betrachtet werden.
+Um die Problemstellung dieser Arbeit praktisch zu lösen, soll ein Transpiler umgesetzt werden, welcher die Flow-Typisierung eines Eingabe-Quelltexts in entsprechenden TypeScript-Code transformiert. Bevor dessen Implementierung in Kapitel~\ref{chap:implementation} ausführlich dargelegt wird, wird zunächst der grundlegende konzeptionelle Aufbau von Transpilern betrachtet.
 
 \subsection{Konzepte und Aufbau von Transpilern}
 
-Ein Transpiler (auch \textit{Transcompiler}) ist ein spezieller Compiler, der den Quelltext einer höheren Programmiersprache in eine andere höhere Programmiersprache übersetzt~\autocite[3]{AHO:COMPILERS}. Anders als bei konventionellen Compilern wird also kein unmittelbar ausführbarer Maschinencode erzeugt, sondern der ursprüngliche Quelltext in eine andere Sprache überführt. Auch möglich ist die gleiche Programmiersprache als Ziel der Transpilierung, wenn beispielsweise das Eingabeprogramm entsprechend eines neueren oder älteren Sprachstandards angepasst werden soll~\autocite{EVGENIY:2016}.
+Ein Transpiler oder Transcompiler ist ein spezieller Compiler, der den Quelltext einer höheren Programmiersprache in eine andere höhere Programmiersprache übersetzt~\autocite[3]{AHO:COMPILERS}. Anders als bei konventionellen Compilern wird also kein unmittelbar ausführbarer Maschinencode erzeugt, sondern der ursprüngliche Quelltext in eine andere Sprache überführt. Auch möglich als Ziel der Transpilierung ist die gleiche Programmiersprache, wenn beispielsweise das Eingabeprogramm entsprechend eines neueren oder älteren Sprachstandards umgeformt werden soll~\autocite{EVGENIY:2016}.
 Abbildung~\ref{fig:transpiler-architecture} zeigt den typischen Aufbau eines Transcompilers. Die Architektur lässt sich analog zu Compilern in zwei Phasen mit mehreren Unterpunkten gliedern: Während die Eingabe im \emph{Frontend} syntaktisch und semantisch analysiert wird, wird das Programm im \emph{Backend} optimiert und der Ausgabequelltext generiert~\autocite[136]{APPEL:2003}.
 
-% \bigbreak
+\bigbreak
 \begin{figure}[htb]
   \includegraphics[width=\textwidth]{src/2_Grundlagen/fig/transpiler-architecture.pdf}
   \caption{Architektur eines typischen Transpilers nach~\autocite{EVGENIY:2016} und~\autocite[8]{TORCZON:2007}.}
@@ -107,12 +156,12 @@ Zuletzt wird durch das Frontend ein \emph{Zwischencode}\footnote{engl. \textit{i
 
 \begin{figure}[tb]
   {
-    \begin{minted}{text}
-function square(x) {
-  return x ** 2;
-}
-    \end{minted}
-    \vspace{-1.5cm}
+    \begin{lstlisting}[numbers=none,aboveskip=0pt,belowskip=0pt]
+    function square(x) {
+      return x ** 2;
+    }
+    \end{lstlisting}
+    \vspace{-0.5cm}
     \begin{center}
       \ttfamily
       \begin{forest}
@@ -153,12 +202,12 @@ Der erste Schritt der Synthesephase besteht darin, das Programm sprachunabhängi
 
 Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern, Codegeneratoren und vollständigen Transcompiler entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Flow-Transpilers stark vereinfachen können. Im Folgenden sollen die relevantesten, aktuellen Ansätze bezüglich verschiedener Aspekte gegenüber gestellt werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage für die Umsetzung heran gezogen wird. Hierbei wird lediglich frei verfügbare, quelloffene Software betrachtet.
 
-Die Auswahl hängt entscheidend von der Erfüllung mehrerer technischer Anforderungen ab, die auf Grundlage der gegebenen Rahmenbedingungen innerhalb des Unternehmens erarbeitet wurden. Diese werden in Kapitel~\ref{chap:analysis} ausführlich dargelegt. Die erste Vorgabe ist die vollumfängliche Unterstützung aktueller JavaScript-Syntax gemäß der ECMAScript-Spezifikation 2019~\autocite{ECMASCRIPT:2019} (ES10). Weiterhin muss die Verarbeitung von \emph{vorläufiger} Syntax möglich sein. Unter vorläufiger Syntax werden in dieser Arbeit Erweiterungen von JavaScript verstanden, die noch nicht endgültiger Bestandteil des Standards sind. Dieser wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Spracherweiterungen durchlaufen dabei einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}. Derartige Syntax einlesen zu können ist ebenfalls eine Anforderung, weil diese zum Teil bereits heute in den gegebenen Projekte von Spreadshirt eingesetzt werden\footnote{Dies setzt die Benutzung eines Transpilers wie Babel~\autocite{BABEL} voraus, der solche experimentelle Syntax vor der Auslieferung durch entsprechende Plugins in standardkonformes JavaScript transformiert.}. Damit die Übersetzung der Flow-Typen nach TypeScript möglich ist, muss ferner sowohl die Syntax von Flow, als auch von TypeScript vollständig unterstützt werden. Schließlich muss sogenannte JSX-Syntax~\autocite{SOFTWARE:JSX} (\textit{JavaScript XML}) eingelesen werden können, weil die zu migrierenden Projekte diese Notation verwenden.
+Die Auswahl hängt entscheidend von der Erfüllung mehrerer technischer Anforderungen ab, die auf Grundlage der gegebenen Rahmenbedingungen innerhalb des Unternehmens erarbeitet wurden. Diese werden in Kapitel~\ref{chap:analysis} ausführlich dargelegt. Die erste Vorgabe ist die vollumfängliche Unterstützung aktueller JavaScript-Syntax gemäß der ECMAScript-Spezifikation 2019~\autocite{ECMASCRIPT:2019} (ES10). Weiterhin muss die Verarbeitung von \emph{vorläufiger} Syntax möglich sein. Unter vorläufiger Syntax werden in dieser Arbeit Erweiterungen von JavaScript verstanden, die noch nicht endgültiger Bestandteil des Standards sind. Dieser wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Spracherweiterungen durchlaufen dabei einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}. Derartige Syntax einlesen zu können ist ebenfalls eine Anforderung, weil diese zum Teil bereits heute in den gegebenen Projekte von Spreadshirt eingesetzt werden\footnote{Dies setzt die Benutzung eines Transpilers wie Babel~\autocite{BABEL} voraus, der solche experimentelle Syntax vor der Auslieferung durch entsprechende Plugins in standardkonformes JavaScript transformiert.}. Damit die Übersetzung der Flow-Typen nach TypeScript möglich ist, muss ferner sowohl die Syntax von Flow, als auch von TypeScript vollständig unterstützt werden. Schließlich muss sogenannte JSX-Syntax~\autocite{SOFTWARE:JSX} (\textit{JavaScript XML}) eingelesen werden können, weil die zu migrierenden Projekte auch diese Notation verwenden.
 
 % \subsubsection{Vergleich}
 
-Tabelle~\ref{tab:transpilers} zeigt die Eigenschaften verschiedener Parser (\textit{Acorn}, \textit{Esprima}), Codegeneratoren (\textit{Astring}, \textit{Escodegen}) und Transpiler (\textit{Babel}, \textit{Recast}) für JavaScript. Jedes der Werkzeuge benutzt intern den abstrakten Syntaxbaum der Eingabe als Zwischencode. Weil abgesehen von Babel alle Alternativen die Spezifikation \textit{ESTree} als Format des abstrakten Syntaxbaums verwenden, können diese Parser und Codegeneratoren beliebig kombiniert werden, um einen Transcompiler zu realisieren. Der ESTree-Standard wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt und beschreibt den Aufbau abstrakter Syntaxbäume von ECMAScript-Programmen~\autocite{BABEL:PARSER,ESTREE_SPEC}.
-Im Gegensatz zu den anderen betrachteten Optionen ist lediglich Babel und Recast in der Lage aktuelle und vorläufige JavaScript-Syntax, sowie Flow, TypeScript und JSX vollständig zu verarbeiten. In Recast wird dies jedoch nur durch die interne Verwendung Babels erzielt~\autocite{RECAST}. Da Babel im Vergleich zu Recast deutlich verbreiteter ist und aktiver entwickelt wird, kann Babel als die ausgereiftere Software betrachtet werden. Darüber hinaus ist es möglich, Babel durch ein umfangreich dokumentiertes Plugin-System flexibel zu erweitern~\autocite{BABEL:HANDBOOK}. Aufgrund dieser Vorteile gegenüber den anderen Werkzeugen wird Babel als Grundlage für die Implementierung gewählt.
+Tabelle~\ref{tab:transpilers} zeigt die Eigenschaften verschiedener Parser (\textit{Acorn}, \textit{Esprima}), Codegeneratoren (\textit{Astring}, \textit{Escodegen}) und Transpiler (\textit{Babel}, \textit{Recast}) für JavaScript. Jedes der Werkzeuge benutzt intern den abstrakten Syntaxbaum der Eingabe als Zwischencode. Weil abgesehen von Babel alle Alternativen die Spezifikation \textit{ESTree} als Format des abstrakten Syntaxbaums verwenden, können diese Parser und Codegeneratoren beliebig kombiniert werden, um einen Transcompiler zusammen zu setzen. Der ESTree-Standard wird von Mitgliedern verschiedener Projekte im Umfeld der statischen Analyse von JavaScript kontinuierlich weiterentwickelt und beschreibt den Aufbau abstrakter Syntaxbäume von ECMAScript-Programmen~\autocite{BABEL:PARSER,ESTREE_SPEC}.
+Im Gegensatz zu den anderen betrachteten Optionen ist lediglich Babel und Recast in der Lage aktuelle und vorläufige JavaScript-Syntax, sowie Flow, TypeScript und JSX vollständig zu verarbeiten. In Recast wird dies jedoch nur durch die interne Verwendung Babels erzielt~\autocite{RECAST}. Recast ermöglicht die Verwendung einer Vielzahl unterschiedlicher Parser, um Quelltext-Transformationen umzusetzen. Da Babel im Vergleich zu Recast deutlich verbreiteter ist und aktiver entwickelt wird, kann Babel als die ausgereiftere Software betrachtet werden. Weiterhin kann Babel durch ein umfangreich dokumentiertes Plugin-Systems flexibel erweitert werden~\autocite{BABEL:HANDBOOK}. Aufgrund dieser Vorteile und Alleinstellungsmerkmale gegenüber den anderen Werkzeugen wird Babel als Grundlage für die Implementierung gewählt.
 
 \input{src/2_Grundlagen/tables/transpilers.tex}
 
@@ -170,7 +219,7 @@ Im Gegensatz zu den anderen betrachteten Optionen ist lediglich Babel und Recast
 \subsection{Babel}
 \label{sec:babel}
 
-\subsubsection{Funktionsweise von Babel}
+\subsubsection{Funktionsweise}
 
 Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Transpilers in Kapitel \ref{chap:implementation} soll zunächst die grundsätzliche Funktionsweise von Babel umrissen werden. Die Ausführung von Babel gliedert sich in folgende drei Phasen~\autocite{BABEL:HANDBOOK}. Diese sind in weiten Teilen analog zu dem beschriebenen Aufbau eines typischen Transcompilers.
 
@@ -190,14 +239,12 @@ Zur Erleichterung des Verständnisses der Ausführung der Umsetzung des Flow-Tra
 
 Da die entscheidende Phase der Transpilierung, die Programmtransformation, bei Babel durch Plugins erzielt wird, sollen diese genauer betrachtet werden. Plugins sind die elementaren Bausteine, die eine flexible Erweiterung von Babel ermöglichen. Selbst der Kern des Transcompilers ist aus einer Vielzahl von Standard-Plugins zusammen gesetzt, die in ihrer Gesamtheit die Funktionalität des Systems abbilden~\autocite{BABEL}. Dies verdeutlicht die tiefgreifende Modularität der Architektur von Babel. Jedes Plugin ist eine JavaScript"=Funktion, welche gemäß der vorgegebenen Schnittstelle ein Objekt mit verschiedenen Attributen zurückliefern muss. Mindestens anzugeben ist dabei lediglich die Abbildung der gewünschten Knotentypen des abstrakten Syntaxbaums auf Besucherfunktionen~\autocite{BABEL:HANDBOOK}. Deren Implementierung setzt die angestrebte Quelltext"=Transformation um. Es ist in der Praxis gängig mehrere Plugins einzusetzen, sodass ein Knoten während der Verarbeitung durch Babel mehrere, unabhängige Transformationen durchlaufen kann. Hierdurch kann die erwünschte Transpilierung von JavaScript-Quelltexten flexibel durch Kombination vieler, kleiner Bausteine realisiert werden. Auch möglich ist die Angabe einer hierarchischen Abhängigkeitsstruktur, sodass dass die Verwendung eines Plugins zur impliziten Aktivierung weiterer Plugins führt.
 
-Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel gezeigt werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines simplen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert. Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
-Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben.
-% TODO: anpassen
-Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums basiert auf dem Standard \textit{ESTree}~\autocite{ESTREE_SPEC}. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit Version 6 ist, dass das Projekt auch \emph{vorläufige} JavaScript-Erweiterungen unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
-
-\bigbreak
-\begin{listing}[htb]
-\begin{textcode}
+\begin{lstlisting}[
+  float,
+  floatplacement=H,
+  label={code:babel-plugin-definition},
+  caption={[Minimalbeispiel eines Babel-Plugins]Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\code{Identifier}) werden in Großbuchstaben umgewandelt.}
+]
 // var foo => var FOO
 module.exports = function() {
   return {
@@ -208,10 +255,10 @@ module.exports = function() {
     }
   };
 };
-\end{textcode}
-\listingvspace
-\caption[Minimalbeispiel eines Babel-Plugins]{Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\code{Identifier}) werden in Großbuchstaben umgewandelt.}
-  \label{code:babel-plugin-definition}
-\end{listing}
+\end{lstlisting}
 
-Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase der Transpilierung gelegt, da hier die vorliegende Problemstellung, die Transformation der Flow-Typannotationen nach TypeScript, umgesetzt wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheksfunktionen von Babel simpel realisiert werden und bedarf keiner tiefgründigen Betrachtung.
+Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel gezeigt werden. Quelltext~\ref{code:babel-plugin-definition} zeigt den Code eines simplen aber vollständigen Plugins, welches lediglich den Namen aller Bezeichner (\code{Identifier}) eines JavaScript-Programms in Großbuchstaben setzt. Hierfür wird eine gleichnamige Besucherfunktion für den Knotentyp \code{Identifier} definiert (Zeile 5). Diese erhält den \emph{Pfad} der so adressierten Identifier-Knoten als Argument und kann diesen wie gewünscht transformieren. Der Pfad eines AST-Knotens ist ein Objekt, das die Beziehung des Knotens zu seinen Elternelementen modelliert und diesen um Metainformationen anreichert~\autocite{BABEL:HANDBOOK}. Es enthält eine Vielzahl von Methoden mittels derer der Pfad und der Syntaxbaum manipuliert werden kann.
+Alle Knotentypen des abstrakten Syntaxbaums werden einerseits in der Spezifikation des Parsers von Babel~\autocite{BABEL:PARSER_SPEC,BABEL:PARSER}, andererseits in der Dokumentation der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} beschrieben.
+Der Aufbau des von Babel eingesetzten abstrakten Syntaxbaums liegt in einem eigenen Format vor, das ursprünglich auf dem ESTree-Standard~\autocite{ESTREE_SPEC} basiert. Grund für die Abspaltung Babels von der ESTree-Spezifikation seit der sechsten Version ist, dass das Projekt auch vorläufige JavaScript-Erweiterungen unterstützen möchte~\autocite{BABEL:STATE_OF_BABEL}.
+
+Im weitere Verlauf wird das Hauptaugenmerk der Untersuchung auf die zweite Phase der Transpilierung durch Babel gelegt, da hier die vorliegende Problemstellung, die Transformation der Flow-Typannotationen nach TypeScript, umgesetzt wird. Das Parsen des Eingabquelltexts und das Generieren der Ausgabe kann durch Verwendung der gegebenen Bibliotheksfunktionen von Babel simpel realisiert werden und bedarf keiner tiefgründigen Betrachtung.
