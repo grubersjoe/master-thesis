@@ -11,7 +11,7 @@ Ein wichtiges Konzept aus der Theorie der Typensysteme ist deren logische \texti
 Das Typsystem mancher Programmiersprachen erfüllt diese Definition von Korrektheit nicht. Im Fall von C ist die Semantik bestimmter Operationen wie beispielsweise die Dereferenzierung des Nullzeigers in der Sprachspezikation undefiniert~\autocite[79]{ISO:C99}. Obwohl ein solches Programm durch den Compiler akzeptiert wird, also keine Typverletzungen aufweist, können so Laufzeitfehler auftreten.
 
 \subsection{Nominale und strukturelle Typen}
-Eine Möglichkeit Typsysteme zu klassifizieren ist die Verwendung von \textit{nominalen} bzw. \textit{strukturellen} Typen. Relevant ist dabei die Fragestellung, ob unabhängige Typen durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Bedeutsam ist auch, wann ein Typ als Untertyp eines anderen Typen betrachtet wird. Bei strukturellen Typen liegt ein Untertyp vor, wenn dessen Attribute eine Obermenge des Supertyps sind~\autocite{MALAYERI:2008}. Liegt hingegen ein nominaler Typ vor, so besteht eine solche Beziehung nur genau dann , wenn sie explizit deklariert wird (zum Beispiel durch das Schlüsselwort \code{extends}). Die Typsysteme der meisten realen Programmiersprachen setzen sowohl nominale, als auch strukturelle Typen ein~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels in Pseudocode (Quelltext~\ref{code:type-equivalence}) soll diese Differenzierung verdeutlicht werden.
+Eine Möglichkeit Typsysteme zu klassifizieren ist die Verwendung von \textit{nominalen} bzw. \textit{strukturellen} Typen. Relevant ist dabei die Fragestellung, ob unabhängige Typen durch das Typsystem als äquivalent angesehen werden oder nicht~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Bedeutsam ist auch, wann ein Typ als Untertyp eines anderen Typen betrachtet wird. Bei strukturellen Typen liegt ein Subtyp vor, wenn dessen Attribute eine Obermenge des Supertyps sind~\autocite{MALAYERI:2008}. Liegt hingegen ein nominaler Typ vor, so besteht eine solche Beziehung nur genau dann , wenn sie explizit deklariert wird (zum Beispiel durch das Schlüsselwort \code{extends}). Die Typsysteme der meisten realen Programmiersprachen setzen sowohl nominale, als auch strukturelle Typen ein~\autocite[9]{CARDELLI:TYPE_SYSTEMS}. Anhand eines Beispiels in Pseudocode (Quelltext~\ref{code:type-equivalence}) soll diese Differenzierung verdeutlicht werden.
 
 \begin{lstlisting}[
   label={code:type-equivalence},
@@ -39,22 +39,21 @@ Einen anderen Ansatz verfolgt die Programmiersprache \textit{Dart}~\autocite{DAR
 
 \subsubsection{Charakterisierung}
 
-Flow~\autocite{FLOW:PAPER} ist ein durch das US-amerikanische Unternehmen \textit{Facebook Inc.} entwickeltes Software"=System, das statische Typüberprüfungen in JavaScript durch das Einfügen von Typannotationen ermöglicht (siehe Quelltext~\ref{code:example-flow}). Die Annotationen sind syntaktische Spracherweiterungen und müssen vor Auslieferung des Codes mittels eines geeigneten Werkzeugs wie beispielsweise Babel~\autocite{BABEL} entfernt werden, damit wieder regulärer JavaScript-Quelltext entsteht~\autocite{FLOW:INSTALLATION}.
+Flow~\autocite{FLOW:PAPER} ist ein durch das US-amerikanische Unternehmen \textit{Facebook Inc.} entwickeltes Software"=System, das statische Typüberprüfungen in JavaScript durch das Einfügen von Typannotationen ermöglicht (s. Quelltext~\ref{code:example-flow}). Die Annotationen sind syntaktische Spracherweiterungen und müssen vor Auslieferung des Codes mittels eines geeigneten Werkzeugs wie beispielsweise Babel~\autocite{BABEL} entfernt werden, damit wieder regulärer JavaScript-Quelltext entsteht~\autocite{FLOW:INSTALLATION}.
 Der Entwurf und die Implementierung von Flow wird in der akademischen Arbeit \enquote{\textit{Fast and Precise Type Checking for JavaScript}} von \citeauthor{FLOW:PAPER} ausführlich beschrieben. Die nachfolgenden Erläuterungen beziehen sich vorrangig auf den Inhalt dieser Veröffentlichung.
 
 % TODO: Sind die Belege hier überall nötig..?
 Flow verfolgt zwei primäre Ziele~\autocite{FLOW:TYPE_SYSTEM}: Erstens soll eine möglichst hohe Präzision durch die Typüberprüfungen erreicht werden, um möglichst zuverlässige Ergebnisse, das heißt eine geringe Quote falsch positiver und falsch negativer Fehler, zu erzielen. Zweitens müssen diese Ergebnisse selbst bei einer sehr umfangreichen Codebasis schnell berechnet werden können, damit der Workflow des Programmierers nicht verlangsamt wird.
-Die erste Zielvorgabe wird zum einen anhand einer pfadsensitive Datenflussanalyse, zum anderen durch die Korrektheit des Typsystems realisiert~\autocite{FLOW:TYPE_SYSTEM}. Mittels pfadsensitiver Datenflussanalyse kann das Laufzeitverhalten von Software modelliert und so der Typ von Ausdrücken durch Einbeziehung der Programmverzweigungen auf einen spezielleren Untertyp abgebildet werden (\textit{type refinement})~\cites{WINTER:2013}[2]{FLOW:PAPER}. Um die Korrektheit des Typsystems zu gewährleisten, überprüft Flow \emph{alle} möglichen Werte innerhalb eines Ausdrucks~\autocite{FLOW:TYPES_AND_EXPRESSIONS}. Wie ausgeführt birgt dies die Gefahr Typfehler zu erkennen, die zur Laufzeit gar nicht auftreten.
+Die erste Zielvorgabe wird zum einen anhand einer pfadsensitive Datenflussanalyse, zum anderen durch die Korrektheit des Typsystems realisiert~\autocite{FLOW:TYPE_SYSTEM}. Mittels pfadsensitiver Datenflussanalyse kann das Laufzeitverhalten von Software modelliert und so der Typ von Ausdrücken durch Einbeziehung der Programmverzweigungen auf einen spezielleren Untertyp abgebildet werden (\textit{type refinement})~\cites{WINTER:2013}[2]{FLOW:PAPER}. Um die Korrektheit des Typsystems zu gewährleisten, überprüft Flow \emph{alle} möglichen Werte innerhalb eines Ausdrucks~\autocite{FLOW:TYPES_AND_EXPRESSIONS}. Wie ausgeführt birgt dies die Gefahr Typfehler zu erkennen, die zur Laufzeit gar nicht auftreten würden.
 Um das zweite Ziel, die Geschwindigkeit der Typüberprüfungen, zu steigern, wird das Verfahren modularisiert, sodass die Berechnungen stark parallelisiert werden können~\autocite[4]{FLOW:PAPER}. Flow nutzt hierbei aus, dass in modernen JavaScript-Projekten üblicherweise genau eine Datei pro Modul vorliegt. Unabhängige Module können somit durch mehrere unabhängige Prozesse auf verschiedenen Rechenkernen gleichzeitig überprüft werden. Die Ergebnisse dieser Berechnungen werden daraufhin durch einen MapReduce-Algorithmus, der auf einer geteilten Heap-Datenstruktur arbeitet, rekombiniert~\autocite[22\psq]{FLOW:PAPER}.
 
 Die Architektur von Flow gliedert sich in einen Server, einen Client und einen Dateisystemüberwacher~\autocite[22]{FLOW:PAPER}. Der Server liest zunächst den Quelltext des gesamten Projekts ein und überprüft diesen hinsichtlich Typverletzungen. Daraufhin läuft der Prozess im Hintergrund weiter und ist bereit Anfragen des Clients entgegen zu nehmen. Der Client -- zum Beispiel die integrierte Entwicklungsumgebung -- kann nun durch Kommandos einerseits den generellen Status der Typüberprüfung abrufen, andererseits spezifischere Informationen wie beispielsweise den Typ eines bestimmten Ausdrucks abfragen. Sobald eine Datei editiert, neu erstellt oder gelöscht wird, wird dies dem Server durch den Dateisystemüberwacher mitgeteilt. Daraufhin überprüft der Server die Typkorrektheit inkrementell erneut auf Grundlage des modifizierten Quelltexts. Dabei werden nur geänderte Module und deren Abhängigkeiten betrachtet, sodass der Berechnungs- und damit Zeitaufwand stark reduziert werden kann. Weil die aktuellen Ergebnisse stets im Arbeitsspeicher vorgehalten werden, können nachfolgende Anfragen des Clients schnell beantwortet werden.
 
-Flow ist in der Lage Typen global zu inferieren~\autocite[25]{FLOW:PAPER}. Das heißt der Typ vieler Ausdrücke muss nicht explizit angegeben werden, sondern kann durch das Typsystem selbstständig abgeleitet werden. Somit kann bereits mit wenig Aufwand eine hohe Abdeckung der Codebasis durch das Typsystem erreicht werden. Eine weitere Eigenschaft des Typsystems ist die Verwendung von nominellen Typen für Klassen und exportierte opake Typen (siehe Tabelle~\ref{tab:flow-base-types})~\autocite{FLOW:NOMINAL_TYPES}. Alle anderen Typen werden strukturell behandelt.
+Flow ist in der Lage Typen global zu inferieren~\autocite[25]{FLOW:PAPER}. Das heißt der Typ vieler Ausdrücke muss nicht explizit angegeben werden, sondern kann durch das Typsystem selbstständig abgeleitet werden. Deshalb kann bereits mit wenigen expliziten Annotationen eine hohe Abdeckung der Codebasis durch das Typsystem erzielt werden~\autocite[24]{FLOW:PAPER}. Eine weitere Eigenschaft des Typsystems ist die Verwendung von nominalen und strukturellen Typen. Flow behandelt Klassen und opake Typen (s. Tabelle~\ref{tab:flow-base-types}) nominal, alle anderen Typen hingegen strukturell~\autocite{FLOW:NOMINAL_TYPES}.
 
 \subsubsection{Beispiel}
 
-Zur Veranschaulichung wie die Typannotationen von Flow benutzt werden, soll in Quelltext~\ref{code:example-flow} die Typisierung eines einfachen JavaScript-Programms anhand des Algorithmus der linearen Suche demonstriert werden. In diesem und allen nachfolgenden Quelltexten werden die Schlüsselworte von JavaScript bzw. TypeScript \code{\textbf{fett}} und Typannotationen \code{\textit{kursiv}} abgedruckt.
-% TODO: hier weiter
+Zur Veranschaulichung wie Flow benutzt wird, soll in Quelltext~\ref{code:example-flow} die Typisierung eines einfachen JavaScript-Programms anhand des Algorithmus der linearen Suche demonstriert werden. In diesem und allen weiteren Quelltexten werden dabei die Schlüsselworte von JavaScript bzw. TypeScript \code{\textbf{fett}} und Typannotationen \code{\textit{kursiv}} abgedruckt.
 
 \begin{lstlisting}[
   label={code:example-flow},
@@ -76,14 +75,17 @@ linearSearch<number>([3, 1, 10, 56], 12);        // $\rightarrow$ Exception (Not
 linearSearch<string>(['foo', 'bar', 'baz'], 3);  // $\rightarrow$ Typfehler (3 ist kein String)
 \end{lstlisting}
 
-Nachfolgend sollen nun die verschiedenen Sprachkonstrukte von Flow, die eine statische Typisierung von JavaScript ermöglichen, kurz beschrieben werden. In der Online-Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} werden diese ausführlich erläutert. Die Typen können in drei Kategorien eingeordnet werden: Basistypen, Hilfstypen und Typdeklarationen.
+Im Beispiel werden verschiedene Sprachkonstrukte von Flow eingesetzt: Zunächst wird in Zeile 4 die Funktion \code{linearSearch} definiert, die den Suchalgorithmus implementiert. Deren formale Parameter werden dabei durch einen generischen Typparameter \code{T} typisiert. Hierdurch wird festgelegt, dass das erste Argument ein homogenes Feld mit Werten dieses Typs \code{T} und der zweite Parameter \code{searchValue} ein Wert desselben Typs sein muss. Mittels dieser Einschränkung werden unsinnige Funktionsaufrufe mit Suchwerten, die aufgrund der Typisierung gar nicht Bestandteil des Felds sein \emph{können}, statisch erkannt (vgl. Zeile 13). Der Algorithmus liefert entweder den Feldindex des Suchwerts zurück, sofern dieser in der Liste vorkommt, oder löst eine \textit{Exception} aus\footnote{Das Auslösen einer Exception an dieser Stelle ist aus softwaretechnischer Perspektive fragwürdig, verbessert aber die Ausdruckskraft des Beispiels.}. Flow bietet für den zweiten Fall den adäquaten Typ \code{empty}, welcher dem leeren Typ (\textit{bottom type} $\bot$) entspricht. Der korrekte Rückgabetyp der Funktion ist somit die Vereinigung aus \code{number} und \code{empty} (\textit{Union type}). Der Typ aller Ausdrücke im Funktionskörper kann durch Flow inferiert werden.
 
-% TODO: explain categories
+Nachfolgend sollen nun die verschiedenen Typen von Flow kurz beschrieben werden. Diese lassen sich in drei Kategorien einordnen: Basistypen, Hilfstypen und Typdeklarationen.
+Unter Basistypen werden in dieser Arbeit die regulären Typannotationen von Flow verstanden. Diese machen den größten Teil der Online-Dokumentation~\autocite{FLOW:TYPE_ANNOTATIONS} aus.
+Hilfstypen (\textit{Utility types}) sind spezielle Typen, die einen oder mehrere andere Typen als Argument erhalten und so einen neuen Typ mit zusätzlichen, nützlichen Eigenschaften herstellen.
+Typdeklarationen ermöglicht es schließlich die Schnittstellen externer Bibliotheken und Frameworks durch spezielle Deklarationsdateien zu typisieren. Auf diese Weise kann auch die Benutzung dieser Abhängigkeiten statisch überprüft werden.
 
 \subsubsection{Basistypen}
 \label{subsec:flow:base-types}
 
-Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über die Basistypen von Flow. Um die Nachvollziehbarkeit zur Online"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen beibehalten und nicht ins Deutsche übersetzt.
+Tabelle~\ref{tab:flow-base-types} listet die Basistypen von Flow auf, beschreibt deren Zweck und zeigt ein Beispiel. Um die Nachvollziehbarkeit zur Online"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen beibehalten und nicht ins Deutsche übersetzt.
 
 \bigbreak
 \input{src/2_Grundlagen/tables/base-types.tex}
@@ -91,25 +93,22 @@ Tabelle~\ref{tab:flow-base-types} gibt einen Überblick über die Basistypen von
 \subsubsection{Hilfstypen}
 \label{subsec:flow:utility-types}
 
-TODO
-
-\bigbreak
 \input{src/2_Grundlagen/tables/utility-types.tex}
 
 \subsubsection{Typdeklarationen}
 \label{subsubsec:type-declarations}
 
-TODO
-
-\bigbreak
 \input{src/2_Grundlagen/tables/declaration.tex}
 
 \subsection{TypeScript}
-% TS beschreiben (und zwar mit entsprechender Fachsprache)
 
 \subsubsection{Charakterisierung}
 
+TODO
+
 \subsubsection{Beispiel}
+
+Analog zur Veranschaulichung der Benutzung von Flow, soll der gleiche Quelltext
 
 \begin{lstlisting}[
   label={code:examples-ts},
@@ -200,7 +199,7 @@ Der erste Schritt der Synthesephase besteht darin, das Programm sprachunabhängi
 
 % \subsubsection{Anforderungen}
 
-Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern, Codegeneratoren und vollständigen Transcompiler entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Flow-Transpilers stark vereinfachen können. Im Folgenden sollen die relevantesten, aktuellen Ansätze bezüglich verschiedener Aspekte gegenüber gestellt werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage für die Umsetzung heran gezogen wird. Hierbei wird lediglich frei verfügbare, quelloffene Software betrachtet.
+Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern, Codegeneratoren und vollständigen Transcompiler entstanden, welche die Entwicklung weiterer Werkzeuge wie die des angestrebten Flow-Transpilers stark vereinfachen können. Im Folgenden sollen die relevantesten, aktuellen Ansätze bezüglich verschiedener Aspekte gegenüber gestellt werden, sodass daraufhin die Entscheidung getroffen werden kann, welches der Werkzeuge als Grundlage für die Umsetzung heran gezogen wird. Hierbei wird nur frei verfügbare, quelloffene Software betrachtet.
 
 Die Auswahl hängt entscheidend von der Erfüllung mehrerer technischer Anforderungen ab, die auf Grundlage der gegebenen Rahmenbedingungen innerhalb des Unternehmens erarbeitet wurden. Diese werden in Kapitel~\ref{chap:analysis} ausführlich dargelegt. Die erste Vorgabe ist die vollumfängliche Unterstützung aktueller JavaScript-Syntax gemäß der ECMAScript-Spezifikation 2019~\autocite{ECMASCRIPT:2019} (ES10). Weiterhin muss die Verarbeitung von \emph{vorläufiger} Syntax möglich sein. Unter vorläufiger Syntax werden in dieser Arbeit Erweiterungen von JavaScript verstanden, die noch nicht endgültiger Bestandteil des Standards sind. Dieser wird stetig durch das \textit{Technical Committee 39} (TC39)~\autocite{TC39_COMMITTEE} weiterentwickelt. Vorgeschlagene Spracherweiterungen durchlaufen dabei einen mehrstufigen Standardisierungsprozess, der schließlich in die Aufnahme in die Spezifikation münden kann~\autocite{TC39_PROCESS}. Derartige Syntax einlesen zu können ist ebenfalls eine Anforderung, weil diese zum Teil bereits heute in den gegebenen Projekte von Spreadshirt eingesetzt werden\footnote{Dies setzt die Benutzung eines Transpilers wie Babel~\autocite{BABEL} voraus, der solche experimentelle Syntax vor der Auslieferung durch entsprechende Plugins in standardkonformes JavaScript transformiert.}. Damit die Übersetzung der Flow-Typen nach TypeScript möglich ist, muss ferner sowohl die Syntax von Flow, als auch von TypeScript vollständig unterstützt werden. Schließlich muss sogenannte JSX-Syntax~\autocite{SOFTWARE:JSX} (\textit{JavaScript XML}) eingelesen werden können, weil die zu migrierenden Projekte auch diese Notation verwenden.
 

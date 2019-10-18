@@ -1,5 +1,5 @@
 \begin{longtabuenv}
-\begin{longtabu} to \textwidth {@{}>{\raggedright}p{2.75cm}CX[l]@{}}
+\begin{longtabu} to \textwidth {@{}>{\raggedright}p{2.75cm}P{4.5cm}X[l]@{}}
     \midrule
     \libertineSB{Basistyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
     \midrule
@@ -8,23 +8,22 @@
     \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
   \endfoot
   Any type                 & any                             & Typ für beliebige Werte. Jeder Typ ist Subtyp von \code{any}. \code{any} ist jedem Typ zuweisbar und jeder Typ ist \code{any} zuweisbar. \medskip\\
-  Array type               & Array<number>                   & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. \medskip\\
-  Array type (shorthand)   & number[]                        & Felder (Kurzschreibweise). \medskip\\
+  Array type               & Array<number>\newline number[]  & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. Der zweite Ausdruck ist eine äquivalente Kurzschreibweise.\medskip\\
   Boolean literal type     & true                            & Boolesche Literale (entweder \code{true} oder \code{false}). \medskip\\
   Boolean type             & boolean                         & Boolesche Werte. \medskip\\
   Empty type               & empty                           & Der leere Typ (\textit{bottom type} $\bot$), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (zum Beispiel Endlosschleife oder Exception). \medskip\\
-  Exact object type        & \{| prop: any |\}               & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar.\medskip\\
-  Function type            & (string, \{\}) => number        & Funktionen: das heißt der Typ der Parameter und des Rückgabewerts. \medskip\\
-  Generic type annotation  & let v: <{}FlowType>{}           & Allgemeine Typannotation für Ausdrücke wie die Deklaration von Variablen, Funktionsparameter, -rückgabewerte usw. \medskip\\
+  Exact object type        & \{| prop: boolean; |\}          & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar.\medskip\\
+  Function type            & (string, arg?: \{\}) => number  & Funktionen: das heißt der Typ der Parameter und des Rückgabewerts. Die Parameternamen sind dabei optional. \medskip\\
+  Generic type annotation  & let v: <{}FlowType>{}           & Allgemeine Typannotation für Ausdrücke wie die Deklaration von Variablen, Funktionsparameter, -rückgabewerte et cetera. \medskip\\
   Generics                 & type Generic<{}T: Super> = T    & Generische Typen (\textit{parametrische Polymorphie}). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, der mögliche Werte für T einschränkt. \medskip\\
-  Interface type           & interface \{ +prop: number \}   & Schnittstellen. \medskip\\
+  Interface type           & interface I \{\newline\hspace*{1.25em}prop: mixed;\newline\hspace*{1.25em}+covariant: Array<number>;\newline\}\medskip & Schnittstellen. Analog zu Objekttypen kann ein Attribute als kovariant (\code{+} nur lesbar) oder kontravariant (\code{-} nur schreibar) markiert werden. \medskip\\
   Intersection type        & type Intersection = T1 \& T2    & Schnitt zweier Typen. Der Typ \code{Intersection} enthält hier alle Eigenschaften von \code{T1} \emph{und} \code{T2}. \medskip\\
   Mixed type               & mixed                           & Typ für unbekannte Werte, ähnlich zu \code{any}. Jeder Typ kann \code{mixed} zugewiesen werden, aber \code{mixed} kann anderen Typen erst nach Überprüfung der Kompatibilität zugewiesen werden. \medskip\\
   Null literal type        & null                            & Genau der Wert \code{null}. \medskip\\
   Nullable type (Maybe)    & ?number                         & Typ für optionale, möglicherweise undefinierte Werte. Entspricht der Vereinigung aus dem angegeben Typ, \code{null} und \code{undefined}. \medskip\\
   Number literal type      & 42                              & Genau dieser numerische Wert. \medskip\\
   Number type              & number                          & Gleitkommazahlen. \medskip\\
-  Object type              & \{ {[}string{]}: number \}      & Objekte mit den angegebenen Attributen. Zusätzlich angegebene Attribute stellen \emph{keine} Typverletzung dar (vgl. \textit{Exact Objects}).  \medskip\\
+  Object type              & \{ {\newline\hspace*{1.25em}[}string{]}: number;\newline\hspace*{1.25em}prop: number;\newline\} & Objekte mit den angegebenen Attributen. Zusätzlich vorhandene Attribute zur Laufzeit stellen \emph{keine} Typverletzung dar, weil Flow standardmäßig \textit{Width Subtyping} unterstützt~\autocite{FLOW:WIDTH_SUBTYPING}. Typen in eckigen Klammern, die als Attributname eingesetzt werden, definieren einen Index. Der Zugriff auf Werte durch Namen dieses Typs ist damit erlaubt.\medskip\\
   Opaque type              & opaque type Opaque = number     & Opake Datentypen sind Typaliase, die ihre zugrunde liegende Implementierung vor dem Benutzer verbergen (\textit{information hiding}). \medskip\\
   String literal type      & \str{literal}                   & Genau diese Zeichenkette. \medskip\\
   String type              & string                          & Zeichenketten. \medskip\\

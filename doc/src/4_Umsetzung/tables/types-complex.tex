@@ -1,3 +1,4 @@
+% TODO sync with chapter 2
 \begin{table}[tbh]
   \footnotesize
   \begin{tabu} to \textwidth {@{}lCCX@{}}
@@ -8,7 +9,7 @@
     Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     & {} \\
     Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  & {} \\
     Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  & {} \\
-    Interface type             & interface \{ +prop: number \}    &   interface \{ readonly: number \}     & {} \\
+    Interface type             & interface I \{ +prop: number \}  &   interface I \{ readonly: number \}     & {} \\
     Nullable type (Maybe type) & ?number                          &   number | null | undefined            & {} \\
     Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      & {} \\
     Opaque type                & opaque type Opaque = number      &   type Opaque = number                 & {} \\
