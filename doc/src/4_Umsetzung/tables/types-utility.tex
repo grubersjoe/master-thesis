@@ -1,27 +1,27 @@
 \begin{table}[tbh]
   \footnotesize
-  \begin{tabu} to \textwidth {@{}XXX@{}}
+  \begin{tabu} to \textwidth {@{}lCCX[l]@{}}
     \midrule
-    \libertineSB{Hilfstyp} & \libertineSB{Flow} & \libertineSB{TypeScript}  \\
+    \libertineSB{Hilfstyp}    & \libertineSB{Flow}     & \libertineSB{TypeScript} & \libertineSB{Anmerkung} \\
     \midrule
-    Call                        & \texttt{\$Call<F, T...>}        & \texttt{ReturnType<F>}        \\
-    Class                       & \texttt{Class<T>}               & \texttt{typeof T}             \\
-    Difference                  & \texttt{\$Diff<A, B>}           & \texttt{Omit<A, keyof B>}     \\
-    Element type                & \texttt{\$ElementType<T, K>}    & \texttt{T[k]}                 \\
-    Exact                       & \texttt{\$Exact<T>}             & \texttt{T}                    \\
-    \textit{Existential type}   & \texttt{*}                      & \texttt{any}                  \\
-    Keys                        & \texttt{\$Keys<T>}              & \texttt{keyof T}              \\
-    None maybe type             & \texttt{\$NonMaybeType<T>}      & \texttt{NonNullable<T>}       \\
-    \sout{Object map}           & \texttt{\$ObjMap<T, F>}         & \textit{nicht implementiert}  \\
-    \sout{Object map with key}  & \texttt{\$ObjMapi<T, F>}        & \textit{nicht implementiert}  \\
-    Property type               & \texttt{\$PropertyType<T, k>}   & \texttt{T[k]}                 \\
-    ReadOnly                    & \texttt{\$ReadOnly<T>}          & \texttt{ReadOnly<T>}          \\
-    \sout{Rest}                 & \texttt{\$Rest<A, B>}           & \textit{nicht implementiert}  \\
-    Shape                       & \texttt{\$Shape<T>}             & \texttt{Partial<T>}           \\
-    \sout{Tuple map}            & \texttt{\$TupleMap<T, F>}       & \textit{nicht implementiert}  \\
-    Values                      & \texttt{\$Values<T>}            & \texttt{T[keyof T]}           \\
-    \sout{Subtype}              & \texttt{\$Subtype<T>}           & \textit{nicht implementiert (obsolet)} \\
-    \sout{Supertype}            & \texttt{\$Supertype<T>}         & \textit{nicht implementiert (obsolet)} \\
+    Call                      & \$Call<F, T...>        & ReturnType<F>            & {} \\
+    Class                     & Class<T>               & typeof T                 & {} \\
+    Difference                & \$Diff<A, B>           & Omit<A, keyof B>         & {} \\
+    Element type              & \$ElementType<T, K>    & T[k]                     & {} \\
+    Exact                     & \$Exact<T>             & T                        & {} \\
+    Existential type          & *                      & any                      & Verlust von Typinformation! \\
+    Keys                      & \$Keys<T>              & keyof T                  & {} \\
+    None maybe type           & \$NonMaybeType<T>      & NonNullable<T>           & {} \\
+    Object map*               & \$ObjMap<T, F>         & --                       & nicht implementiert \\
+    Object map with key*      & \$ObjMapi<T, F>        & --                       & nicht implementiert \\
+    Property type             & \$PropertyType<T, k>   & T[k]                     & {} \\
+    ReadOnly                  & \$ReadOnly<T>          & ReadOnly<T>              & {} \\
+    Rest*                     & \$Rest<A, B>           & --                       & nicht implementiert \\
+    Shape                     & \$Shape<T>             & Partial<T>               & {} \\
+    Tuple map*                & \$TupleMap<T, F>       & --                       & nicht implementiert \\
+    Values                    & \$Values<T>            & T[keyof T]               & {} \\
+    Subtype*                  & \$Subtype<T>           & --                       & nicht implementiert (obsolet) \\
+    Supertype*                & \$Supertype<T>         & --                       & nicht implementiert (obsolet) \\
     \midrule
   \end{tabu}
   \caption{Übersicht über Transformationen der Hilfstypen von Flow.}

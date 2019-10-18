@@ -1,21 +1,21 @@
 \begin{table}[tbh]
   \footnotesize
-  \begin{tabu} to \textwidth {@{}lCC@{}}
+  \begin{tabu} to \textwidth {@{}lCCX@{}}
     \midrule
-    \libertineSB{Basistyp}     & \libertineSB{Flow}                       &   \libertineSB{TypeScript}                      \\
+    \libertineSB{Basistyp}     & \libertineSB{Flow}               &   \libertineSB{TypeScript}             & {} \\
     \midrule
-    Exact object type          & \{| prop: any |\}               &   \{ prop: any \}                      \\
-    Function type              & (string, \{\}) => number        &   (p1: string, p2: \{\}) => number     \\
-    Generic type annotation    & let v: <{}FlowType>{}           &   let v: <{}TSType>{}                  \\
-    Generics                   & type Generic<{}T: Super> = T    &   type Generic<{}T extends Super> = T  \\
-    Interface type             & interface \{ +prop: number \}   &   interface \{ readonly: number \}     \\
-    Nullable type (Maybe type) & ?number                         &   number | null | undefined            \\
-    Object type                & \{ {[}string{]}: number \}      &   \{ {[}key: string{]}: number \}      \\
-    Opaque type                & opaque type Opaque = number     &   type Opaque = number                 \\
-    Type cast expresssion      & (variable: string)              &   (variable as string)                 \\
-    Type export                & export type T = number | null   &   export T = number | null             \\
-    Type import                & import type T from './types'    &   import T from './types'              \\
-    Typeof type                & typeof undefined                &   undefined                            \\
+    Exact object type          & \{| prop: any |\}                &   \{ prop: any \}                      & {} \\
+    Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     & {} \\
+    Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  & {} \\
+    Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  & {} \\
+    Interface type             & interface \{ +prop: number \}    &   interface \{ readonly: number \}     & {} \\
+    Nullable type (Maybe type) & ?number                          &   number | null | undefined            & {} \\
+    Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      & {} \\
+    Opaque type                & opaque type Opaque = number      &   type Opaque = number                 & {} \\
+    Type cast expresssion      & (variable: string)               &   (variable as string)                 & {} \\
+    Type export                & export type T = number | null    &   export T = number | null             & {} \\
+    Type import                & import type T from \str{./types} &   import T from \str{./types}          & {} \\
+    Typeof type                & typeof undefined                 &   undefined                            & {} \\
     \midrule
   \end{tabu}
   \caption{Übersicht über komplexe Transformationen der Basistypen von Flow.}

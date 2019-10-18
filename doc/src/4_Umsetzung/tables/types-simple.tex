@@ -1,29 +1,30 @@
 \begin{table}[tbh]
   \footnotesize
-  \begin{tabu} to \textwidth {@{}lXX@{}}
+  \begin{tabu} to \textwidth {@{}lCCX@{}}
     \midrule
-    \libertineSB{Basistyp}  & \libertineSB{Flow}                     & \libertineSB{TypeScript}                  \\
+    \libertineSB{Basistyp}  & \libertineSB{Flow}            & \libertineSB{TypeScript}         & {} \\
     \midrule
-    Any type                & \texttt{any}                           & \texttt{any}                              \\
-    Array type              & \texttt{Array<{}number>{}}             & \texttt{Array<{}number>{}}                \\
-    Array type (shorthand)  & \texttt{number[]}                      & \texttt{number[]}                         \\
-    Boolean literal type    & \texttt{true}                          & \texttt{true}                             \\
-    Boolean type            & \texttt{boolean}                       & \texttt{boolean}                          \\
-    \textit{Empty type}     & \texttt{empty}                         & \texttt{never}                            \\
-    Intersection type       & \texttt{type Intersection = T1 \& T2}  & \texttt{type Intersection = T1 \& T2}     \\
-    \textit{Mixed type}     & \texttt{mixed}                         & \texttt{unknown}                          \\
-    Null literal type       & \texttt{null}                          & \texttt{null}                             \\
-    Number literal type     & \texttt{42}                            & \texttt{42}                               \\
-    Number type             & \texttt{number}                        & \texttt{number}                           \\
-    String literal type     & \texttt{'literal'}                     & \texttt{'literal'}                        \\
-    String type             & \texttt{string}                        & \texttt{string}                           \\
-    This type               & \texttt{this}                          & \texttt{this}                             \\
-    Tuple type              & \texttt{{[}Date, number{]}}            & \texttt{{[}Date, number{]}}               \\
-    Type alias              & \texttt{type Type = <{}FlowType>{}}    & \texttt{type Type = <{}TypeScriptType>{}} \\
-    Union type              & \texttt{number | null}                 & \texttt{number | null}                    \\
-    Void type               & \texttt{void}                          & \texttt{void}                             \\
+    Any type                & any                           & any                              & {} \\
+    Array type              & Array<number>                 & Array<number>                    & {} \\
+    Array type (shorthand)  & number[]                      & number[]                         & {} \\
+    Boolean literal type    & true                          & true                             & {} \\
+    Boolean type            & boolean                       & boolean                          & {} \\
+    \textit{Empty type}     & empty                         & never                            & {} \\
+    Intersection type       & type Intersection = T1 \& T2  & type Intersection = T1 \& T2     & {} \\
+    \textit{Mixed type}     & mixed                         & unknown                          & {} \\
+    Null literal type       & null                          & null                             & {} \\
+    Number literal type     & 42                            & 42                               & {} \\
+    Number type             & number                        & number                           & {} \\
+    String literal type     & \str{literal}                 & \str{literal}                    &  {} \\
+    String type             & string                        & string                           & {} \\
+    This type               & this                          & this                             & {} \\
+    Tuple type              & {[}Date, number{]}            & {[}Date, number{]}               & {} \\
+    Type alias              & type Type = <FlowType>        & type Type = <TypeScriptType>     & {} \\
+    Union type              & number | null                 & number | null                    & {} \\
+    Void type               & void                          & void                             & {} \\
     \midrule
   \end{tabu}
   \caption{Übersicht über simple Transformationen der Basistypen von Flow.}
   \label{tab:transformation-base-types-simple}
 \end{table}
+

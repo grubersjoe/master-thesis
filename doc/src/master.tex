@@ -136,8 +136,10 @@
 
 % Tables
 \usepackage{longtable, tabu, booktabs}
-\renewcommand{\arraystretch}{1.3} % More space between table rows
-\newcolumntype{C}{>{\ttfamily}X} % New column type for code
+\renewcommand{\arraystretch}{1.3}    % More space between table rows
+\newcolumntype{C}{>{\ttfamily}l}     % New column type for code (based on l type)
+\newcolumntype{K}{>{\ttfamily}X[l]}  % New column type for code (based on X type)
+\newcommand{\cellheading}[1]{{{\libertineSB{#1}}\vspace{.25\baselineskip}\newline}}
 
 % Ragged text
 \usepackage{ragged2e}
@@ -199,9 +201,6 @@
 % Quotes
 \usepackage{csquotes}
 
-% Strike through
-\usepackage[normalem]{ulem}
-
 % Hyphenation rules
 \hyphenation{ECMAScript}
 \hyphenation{JavaScript}
@@ -225,10 +224,12 @@
 
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\danger}[1]{{\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}}
 \newcommand{\listingvspace}{\vspace{-.5\baselineskip}}
+\newcommand{\str}[1]{\textquotesingle#1\textquotesingle}
 \newcommand{\type}[1]{\textsc{\MakeLowercase{\normalsize#1}}}
 
-\newenvironment{longtabuwrap}{
+\newenvironment{longtabuenv}{
   \begin{footnotesize}\begin{singlespacing}
 }{
   \end{singlespacing}\end{footnotesize}

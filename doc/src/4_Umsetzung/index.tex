@@ -15,7 +15,7 @@ Mit der Entscheidung den Übersetzer als Babel-Plugin zu implementieren, ist des
   \label{fig:architecture-overview}
 \end{figure}
 
-Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen (siehe Tabelle~\ref{tab:cli-options}). Die zweite Komponente ist das Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Übersetzung des Quelltexts durch Babel. Hierfür wird das vorliegende Plugin geladen und dieses auf die Eingabe angewendet. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
+Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar, welche die Eingabe-Verzeichnisse bzw. -Dateien als Argument entgegen nimmt und verschiedene Optionen bereit stellt, um das Verhalten der Übersetzung zu beeinflussen (s. Tabelle~\ref{tab:cli-options}). Die zweite Komponente ist das Babel-Plugin, das die Transpilierung des Flow-Codes nach TypeScript realisiert. Das Kommandozeilenprogramm liest sukzessive alle Eingabeverzeichnisse bzw. -dateien ein und startet intern die Übersetzung des Quelltexts durch Babel. Hierfür wird das vorliegende Plugin geladen und dieses auf die Eingabe angewendet. Danach kann der generierte TypeScript-Code formatiert und in Dateien oder auf die Standardausgabe geschrieben werden.
 
 Das Plugin setzt sich aus verschiedenen Unterkomponenten zusammen: Auf oberster Ebene befinden sich die Besucherfunktionen\footnote{Vgl. Abschnitt~\ref{subsec:babel-plugins}.}. Diese adressieren alle Pfade des abstrakten Syntaxbaums des Eingabeprogramms, die Flow-Syntax darstellen. Bei der Traversierung des Baums durch Babel werden alle zugehörigen Pfadknoten durch Ausführung verschiedener \emph{Konverter} in äquivalentes TypeScript übersetzt. Dabei kann es während der Verarbeitung zu rekursiven Aufrufen weiterer Besucher bzw. Konverter kommen. In einigen Fällen liegen weiterhin Methoden zur Optimierung des Transformationsresultats vor, die nach der Konvertierung gegebenenfalls angewandt werden. Darüber hinaus beinhaltet das Plugin Hilfsfunktionen, um verschiedene Aufgaben, wie beispielsweise die Ausgabe von Fehlern und Warnungen zu ermöglichen. Zuletzt enthält das Plugin eine Vielzahl von Modultests (\textit{Unit tests}), welche die korrekte Funktionalität aller Komponenten überprüfen.
 
@@ -361,32 +361,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
   Beispiel: \texttt{ reflow -{}-dry-run -{}-include-pattern "{}*/.js"{} src/}
 }
 
-% \bigbreak
-\begin{table}[tbh]
-  \small
-  \begin{tabu} to \textwidth {@{}l>{\raggedright}X@{}} % disable hyphenation in column
-    \midrule
-    \libertineSB{Option} & \libertineSB{Beschreibung} \\
-    \midrule
-    \medskip
-    \texttt{-V -{}-version} & Versionsnummer anzeigen. \\
-    \medskip
-    \texttt{-d -{}-dry-run} & Generierten TypeScript-Code auf Standardausgabe statt in Dateien schreiben (Testlauf).\\
-    \medskip
-    \texttt{-e -{}-exclude-dirs <pattern ...>} & Kommaseparierte Liste von Verzeichnissen, die von der Transpilierung rekursiv ausgeschlossen werden sollen. \\
-    \medskip
-    \texttt{-i -{}-include-pattern <pattern>} & Wildcard-Muster für Eingabedateien bei Angabe von Verzeichnissen (Standardwert: \texttt{"**/*.{js,jsx}"}). \\
-    \medskip
-    \texttt{-r -{}-replace} & Originaldateien (Flow) mit generierten TypeScript-Dateien ersetzen, statt diese beizubehalten. \\
-    \medskip
-    \texttt{-D -{}-replace-decorators} & Klassendekoratoren durch verschachtelte Funktionsaufrufe ersetzen (vgl. Abschnitt~\ref{subsec:class-decorators}). \\
-    \medskip
-    \texttt{-h -{}-help} & Hilfe anzeigen. \\
-    \midrule
-  \end{tabu}
-  \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow}).}
-  \label{tab:cli-options}
-\end{table}
+\input{src/4_Umsetzung/tables/cli}
 
 \begin{figure}[tbp]
   \centering

@@ -1,0 +1,25 @@
+\begin{table}[tbh]
+  \small
+  \begin{tabu} to \textwidth {@{}lX[l]@{}}
+    \midrule
+    \libertineSB{Option} & \libertineSB{Beschreibung} \\
+    \midrule
+    \medskip
+    \texttt{-V -{}-version} & Versionsnummer anzeigen. \\
+    \medskip
+    \texttt{-d -{}-dry-run} & Generierten TypeScript-Code auf Standardausgabe statt in Dateien schreiben (Testlauf).\\
+    \medskip
+    \texttt{-e -{}-exclude-dirs <pattern ...>} & Kommaseparierte Liste von Verzeichnissen, die von der Transpilierung rekursiv ausgeschlossen werden sollen. \\
+    \medskip
+    \texttt{-i -{}-include-pattern <pattern>} & Wildcard-Muster für Eingabedateien bei Angabe von Verzeichnissen (Standardwert: \texttt{"**/*.{js,jsx}"}). \\
+    \medskip
+    \texttt{-r -{}-replace} & Originaldateien (Flow) mit generierten TypeScript-Dateien ersetzen, statt diese beizubehalten. \\
+    \medskip
+    \texttt{-D -{}-replace-decorators} & Klassendekoratoren durch verschachtelte Funktionsaufrufe ersetzen (vgl. Abschnitt~\ref{subsec:class-decorators}). \\
+    \medskip
+    \texttt{-h -{}-help} & Hilfe anzeigen. \\
+    \midrule
+  \end{tabu}
+  \caption{Optionen des Kommandozeilenprogramms (\textit{Reflow}).}
+  \label{tab:cli-options}
+\end{table}
