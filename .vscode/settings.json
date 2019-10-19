@@ -29,6 +29,8 @@
     "captionsetup",
     "keyof",
     "konkatenationsoperator",
+    "kontravariant",
+    "kovariant",
     "lightgray",
     "mlightgray",
     "pdfauthor",
@@ -39,6 +41,7 @@
     "transpiliert",
     "unintuitiv",
     "untypisierte",
+    "untypisierter",
     "ysep"
   ],
   "cSpell.ignoreWords": [
