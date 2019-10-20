@@ -4,11 +4,11 @@
     \midrule
     \libertineSB{Deklaration} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
     \midrule
-    Class       & declare class C {}                   & declare class C {}                       \\
+    Class       & declare class C \{\}                 & declare class C \{\}                     \\
     Export      & declare export default () => string  & const \_default: () => string;\newline export default \_default; \\
     Function    & declare function f(number): any      & declare function f(p: number): any       \\
-    Interface   & declare interface I {}               & declare interface I {}                   \\
-    Module      & declare module \str{esmodule} {}     & declare module \str{esmodule} {}         \\
+    Interface   & declare interface I \{\}             & declare interface I \{\}                 \\
+    Module      & declare module \str{esmodule} \{\}   & declare module \str{esmodule} \{\}       \\
     Type alias  & declare type T = number              & declare type T = number                  \\
     Variable    & declare var v: ?string               & declare var v: string | null | undefined \\
     \midrule

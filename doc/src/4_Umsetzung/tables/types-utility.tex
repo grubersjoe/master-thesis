@@ -10,7 +10,7 @@
     Element type                 &  \$ElementType<T, K>    & T[k]                     & {} \\
     Exact                        &  \$Exact<O>             & O                        & {} \\
     Existential type             &  *                      & any                      & Verlust von Typinformation! \\
-    Keys                         &  \$Keys<T>              & keyof T                  & {} \\
+    Keys                         &  \$Keys<O>              & keyof O                  & {} \\
     None maybe type              &  \$NonMaybeType<T>      & NonNullable<T>           & {} \\
     \textit{Object map}          &  \$ObjMap<O, F>         & --                       & nicht implementiert \\
     \textit{Object map with key} &  \$ObjMapi<O, F>        & --                       & nicht implementiert \\
@@ -20,7 +20,7 @@
     Rest                         &  \$Rest<A, B>           & Omit<A, Union<keyof B>>  & {} \\
     Shape                        &  \$Shape<O>             & Partial<O>               & {} \\
     \textit{Tuple map}           &  \$TupleMap<T, F>       & --                       & nicht implementiert \\
-    Values                       &  \$Values<T>            & T[keyof T]               & {} \\
+    Values                       &  \$Values<O>            & O[keyof O]               & {} \\
     \textit{Subtype}             &  \$Subtype<T>           & --                       & nicht implementiert (obsolet) \\
     \textit{Supertype}           &  \$Supertype<T>         & --                       & nicht implementiert (obsolet) \\
     \midrule
