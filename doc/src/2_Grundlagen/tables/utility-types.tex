@@ -11,12 +11,13 @@
   Class                     & Class<C>               & Berechnet den Typ (die Klasse) einer Klasseninstanz \code{C}. \medskip\\
   Difference                & \$Diff<A, B>           & Berechnet die Schnittmenge zweier Objekttypen \code{A} und \code{B}. \medskip\\
   Element type              & \$ElementType<T, K>    & Berechnet den Typ aller Elemente eines Felds, Tupels oder Objekts deren Name dem Typ \code{K} entspricht. \medskip\\
-  Exact                     & \$Exact<O>             & Berechnet die \textit{exakte} Version des Objekttyps \code{O} (vgl. \type{Exact object type}). \medskip\\
-  \textit{Existential type} & *                      & Spezielle Notation, die Flow anweist den Typ dieses Ausdrucks (falls möglich) automatisch zu inferieren\footnote{Dies ist vergleichbar mit dem Schlüsselwort \code{auto} in C++~\autocite[151]{CPP11_SPEC} oder \code{var} in C\#~\autocite{CSHARP:VAR}.}~\autocite{FLOW:EXISTENTIAL_TYPES}. \medskip\\
+  Exact                     & \$Exact<O>             & Berechnet die \textit{exakte} Version des Objekttyps \code{O}\newline(vgl. \type{Exact object type}). \medskip\\
+  \textit{Existential type} & *                      & Spezielle Notation, die Flow anweist den Typ dieses Ausdrucks (falls möglich) zu inferieren\footnote{Dies ist vergleichbar mit dem Schlüsselwort \code{auto} in C++~\autocite[151]{CPP11_SPEC} oder \code{var} in C\#~\autocite{CSHARP:VAR}.}~\autocite{FLOW:EXISTENTIAL_TYPES}. \medskip\\
   Keys                      & \$Keys<O>              & Berechnet den Vereinigungstyp der Attributnamen des Objekttyps \code{O}. \medskip\\
   None maybe type           & \$NonMaybeType<T>      & Entfernt die Eigenschaften des \type{Maybe types}, das heißt es wird ein Typ erzeugt, der alle Werte von \code{T} außer \code{null} und \code{undefined} umfasst. \medskip\\
+  \pagebreak
   Object map                & \$ObjMap<O, F>         & Berechnet statisch den Typ, der entsteht, wenn der Funktionstyp \code{F} auf alle Typen der Wert des Objekttyps \code{O} angewandt wird. \medskip\\
-  Object map with key       & \$ObjMapi<O, F>        & Analog zu \code{Object map}, jedoch wird in der Abbildung durch \code{F} neben den Typen der Werte auch die Typen der Namen miteinbezogen. \medskip\\
+  Object map with key       & \$ObjMapi<O, F>        & Analog zu \type{Object map}, jedoch wird in der Abbildung durch \code{F} neben den Typen der Werte auch die Typen der Namen miteinbezogen. \medskip\\
   Property type             & \$PropertyType<O, k>   & Berechnet den Typ des Attributnamens \code{k} eines Objekttyps \code{O}. \code{k} muss dabei ein Stringliteral sein. \medskip\\
   Read only                 & \$ReadOnly<O>          & Berechnet den schreibgeschützten Typ des Objekttyps \code{O}. \medskip\\
   Read only array           & \$ReadOnlyArray<A>     & Berechnet den schreibgeschützten Typ des Felds \code{A}.   \medskip\\

@@ -13,7 +13,7 @@
   Boolean type             & boolean                         & Boolesche Werte. \medskip\\
   Empty type               & empty                           & Der leere Typ $\bot$ (\textit{bottom type}), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (zum Beispiel Endlosschleife oder Exception). \medskip\\
   Exact object type        & \{| prop: boolean; |\}          & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar (vgl. \type{Object type}).\medskip\\
-  Function type            & (string, arg?: \{\}) => number  & Funktionen: das heißt der Typ der Parameter und des Rückgabewerts. Die Parameternamen sind dabei optional. \medskip\\
+  Function type            & (string, arg?: \{\}) => number  & Funktionen: das heißt der Typ der formalen Parameter und des Rückgabewerts. Die Parameternamen sind dabei optional. \medskip\\
   Generic type annotation  & let v: <{}FlowType>{}           & Allgemeine Typannotation für Ausdrücke wie die Deklaration von Variablen, Funktionsparameter, -rückgabewerte et cetera. \medskip\\
   Generics                 & type Generic<{}T: Super> = T    & Generische Typen (\textit{parametrische Polymorphie}). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, der mögliche Werte für T einschränkt. \medskip\\
   Interface type           & interface I \{\newline\hspace*{1.25em}prop: mixed;\newline\hspace*{1.25em}+covariant: Array<number>;\newline\}\medskip & Schnittstellen. Wie bei Objekttypen kann ein Attribute durch \code{+} als kovariant (nur lesbar) oder durch \code{-} als kontravariant (nur schreibar) markiert werden. \medskip\\
