@@ -1,30 +1,30 @@
 \chapter{Auswertung und Diskussion}
 \label{chap:evaluation}
 
+Nachfolgende sollen nun die Ergebnisse der Migration der zwei Projekte von TeamShirts, die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird einerseits die Erfüllung der Zielvorgaben aus Abschnitt~\ref{sec:goals}, andererseits die Einhaltung der technischen Anforderungen an den Transpiler aus Abschnitt~\ref{sec:requirements} beurteilt und kritisch diskutiert. Zunächst wird jedoch die Durchführung der Migration an sich beschrieben.
+
 \section{Durchführung der Migration}
+
+Bereits während der Entwicklungsphase des Flow-Transpilers wurde dieser immer wieder mit dem Quelltext der vorliegenden Projekte von TeamShirts erprobt, um dessen Praxistauglichkeit anhand einer realen Codebasis zu überprüfen. Nachdem der vollständige Funktionsumfang des Babel-Plugins hergestellt war, wurde zunächst das Projekt \textit{Components}, danach \textit{Helios} mit Hilfe des Flow-Übersetzers in TypeScript umgewandelt. Diese Reihenfolge wurde bewusst gewählt, weil Components einerseits keine Abhängigkeit zu anderen Projekten von TeamShirts besitzt, andererseits weniger Zeilen\footnote{Vgl. Abschnitt~\ref{sec:teamshirts-projects}} Code umfasst als Helios.
+
+% components: 360 modules not found
+Unmittelbar nach Ausführung des Transpilers wurden bei Components 195 neue Typfehler durch den TypeScript-Compiler festgestellt, die daraufhin manuell korrigiert werden mussten. Aufgrund der prinzipiellen Unterschiede der Typsysteme von Flow und Typescript, die im Grundlagenteil bereits ausgeführt wurden, war das Auftreten neuer Fehler zu erwarten. Wie beschrieben ist beispielsweise die Typinferenz und die Berechnung der Typkompatibilität (nominal versus strukturell) in TypeScript anders umgesetzt als bei Flow. In Abschnitt~\ref{goal:new-type-errors} wird dieser Aspekt näher beleuchtet und genauer beschrieben, welche Arten von Typfehlern neu aufgetreten sind. Gleichzeitig wird untersucht, ob die neu erkannten Typfehler tatsächlich bislang unentdeckte Programmfehler repräsentieren.
 
 % Anwendung Transpiler
 % Fixen von manuellen Fehlern
+% optimierungen und decorator weil kacke
 
 % Vorteile: Andere Projekte wie Helios, die Components verwenden, kriegen deren Typisierung "frei Haus".
 
+
 \section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
+\input{src/5_Auswertung/sections/goals}
 
-\subsection{Korrekte Übersetzung der Flow-Typen}
+\section{Erfüllung der technischen Anforderungen}
+\input{src/5_Auswertung/sections/requirements}
 
-\subsubsection{Übersetzungen mit Verlust von Typeinformation}
+% ---
 
-Für einige, wenige Typen existiert keine absolut äquivalente Übersetzung, da TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{subsec:requirement:completeness} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
-
-\subsection{Erkennung neuer Typ- und Programmfehler}
-
-\subsection{Semantische Äquivalenz des Ausgabeprogramms}
-
-\subsection{Verfügbarkeit und Qualität externer Typdeklarationen}
-
-\subsection{Performance der Typüberprüfungen durch TypeScript}
-
-\subsection{Formatierung des Ausgabequelltexts}
-
-\section{Vergleich des Transpilers mit konkurrierenden Ansätzen}
-\label{evaluation:other-tools}
+% \section{Vergleich des Transpilers mit konkurrierenden Ansätzen}
+% \label{evaluation:other-tools}
+% TODO: Falls noch Zeit ist

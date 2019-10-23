@@ -1,0 +1,37 @@
+\subsection{Äquivalente und vollständige Übersetzung der Flow-Typen}
+
+% TODO: fixture tests belegen das ja quasi. einschränkung: vollständigkeit der tests
+
+\subsubsection{Übersetzungen mit Verlust von Typeinformation}
+\label{sec:lossy-translations}
+
+Für einige, wenige Typen existiert keine absolut äquivalente Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{sec:requirement:completeness} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
+
+\subsection{Semantisch äquivalente Transpilierung des Quelltexts}
+
+% TODO: muss sowieso gehen, weil nur typen angepimmelt wurden
+% TODO: Unit Tests
+
+\subsection{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}
+
+% TODO: geht weil babel proposals, es2019 und jsx unterstützt
+
+\subsection{Verarbeitung gesamter Projektverzeichnisse}
+
+Wie in Abschnitt~\ref{sec:cli-program} bereits ausführlich dargelegt, wurde der Transpiler um ein Kommandozeilenprogramm (\textit{Reflow}) erweitert, um die Verarbeitung gesamter Verzeichnisse zu realisieren. Die Anwendung erwartet eine oder mehrere Dateien bzw. Verzeichnisse als Argument und führt daraufhin die Übersetzung dieser Eingaben durch.
+Durch die interne Verwendung der Bibliothek \textit{Glob}~\autocite{NPM:GLOB} können dabei auch beliebig komplexe Wildcard-Muster (\textit{glob patterns}) durch die Optionen \enquote{\code{include-pattern}} und \enquote{\code{exclude-pattern}} angegeben werden, um gewisse Datei- oder Verzeichnistypen ein- und auszuschließen. Die Glob-Notation ähnelt regulären Ausdrücken in einigen Aspekten, sodass auch kompliziertere Muster, wie beispielsweise die Negation von Ausdrücken oder die Spezifizierung von alternativen Werten, möglich sind~\autocite{MAN:GLOB}.
+
+Die in Abschnitt~\ref{sec:requirement:batch-processing} definierten Forderungen, dass einerseits Verzeichnisse rekursiv verarbeitet werden, andererseits die Menge der zu übersetzenden Dateien flexibel eingegrenzt werden können muss, wurden somit erfüllt.
+
+\subsection{Beibehaltung der Quelltext-Formatierung}
+
+Weil die originalgetreue Formatierung der Ausgabe (Anforderung~\ref{sec:requirement:format}), bei Verwendung des Babel-Codegenerators, aus den dargelegten Gründen nicht umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs \textit{Prettier}~\autocite{SOFTWARE:PRETTIER} implementiert. Mit Hilfe eines zeilenbasierten Vergleichs werden dabei Leerzeilen und Kommentare aus der Flow-Eingabe in die TypeScript-Ausgabe übertragen, um eine möglichst große Ähnlichkeit zur ursprünglichen Formatierung herzustellen.
+
+Durch händische Überprüfung des generierten TypeScript-Codes der zwei vorliegenden Projekte von TeamShirts wurden inkorrekt formatierte Dateien ermittelt. Eine inkorrekte Formatierung bedeutet, dass Zeilen anders als im ursprünglichen Quelltext umgebrochen werden, Leerzeilen an falscher Position auftreten oder Kommentare falsch platziert werden. Sobald eine dieser Vorgaben verletzt wird, wird eine Datei als fehlerhaft betrachtet. Wie Tabelle~\ref{tab:results-formatting} zeigt, gelingt die Formatierung der Ausgabe leider nicht in allen Fällen. Während diese im Projekt \textit{Components} bei 11 der 311 verarbeiteten JavaScript-Dateien (3,32\%) fehlgeschlagen ist, konnten bei Helios 21 der 353 Dateien nicht korrekt formatiert werden (5,95\%). Insgesamt ergibt sich so eine Fehlerrate von 4,68\%.
+
+\bigbreak
+\input{src/5_Auswertung/tables/results-formatting}
+
+Nach Untersuchung der Ursachen für die inkorrekten Formatierung konnten folgende Ursachen identifiziert werden: TODO.
+
+Zwar konnte die Anforderung nicht vollständig erfüllt werden, weil nicht alle Ausgabedateien korrekt formatiert wurden, dennoch wurde der Programmierstil in 95,32\% der Fälle akkurat beibehalten. Da die manuelle Korrektur der insgesamt 32 fehlerhaften Dateien mit geringem Zeitaufwand durchführbar ist, kann das Gesamtergebnis als zufriedenstellend betrachtet werden.
