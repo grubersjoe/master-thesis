@@ -15,12 +15,12 @@
   \textit{Existential type} & *                      & Spezielle Notation, die Flow anweist den Typ dieses Ausdrucks (falls möglich) zu inferieren\footnote{Dies ist vergleichbar mit dem Schlüsselwort \code{auto} in C++~\autocite[151]{CPP11_SPEC} oder \code{var} in C\#~\autocite{CSHARP:VAR}.}~\autocite{FLOW:EXISTENTIAL_TYPES}. \medskip\\
   Keys                      & \$Keys<O>              & Berechnet den Vereinigungstyp der Attributnamen des Objekttyps \code{O}. \medskip\\
   None maybe type           & \$NonMaybeType<T>      & Entfernt die Eigenschaften des \type{Maybe types}, das heißt es wird ein Typ erzeugt, der alle Werte von \code{T} außer \code{null} und \code{undefined} umfasst. \medskip\\
-  \pagebreak
   Object map                & \$ObjMap<O, F>         & Berechnet statisch den Typ, der entsteht, wenn der Funktionstyp \code{F} auf alle Typen der Wert des Objekttyps \code{O} angewandt wird. \medskip\\
   Object map with key       & \$ObjMapi<O, F>        & Analog zu \type{Object map}, jedoch wird in der Abbildung durch \code{F} neben den Typen der Werte auch die Typen der Namen miteinbezogen. \medskip\\
   Property type             & \$PropertyType<O, k>   & Berechnet den Typ des Attributnamens \code{k} eines Objekttyps \code{O}. \code{k} muss dabei ein Stringliteral sein. \medskip\\
   Read only                 & \$ReadOnly<O>          & Berechnet den schreibgeschützten Typ des Objekttyps \code{O}. \medskip\\
   Read only array           & \$ReadOnlyArray<A>     & Berechnet den schreibgeschützten Typ des Felds \code{A}.   \medskip\\
+  \pagebreak
   Rest                      & \$Rest<A, B>           & Berechnet einen Typ, der dem Ergebnis der Benutzung von JavaScripts Rest-Syntax~\autocite[190]{ECMASCRIPT:2019} zur Laufzeit entspricht. \medskip\\
   Shape                     & \$Shape<O>             & Berechnet einen Typ, der erlaubt, dass nur eine Untermenge der Attribute des Objekttyps \code{O} angegeben wird. Deren Typ muss jedoch mit den ursprünglichen Typen der Attribute kompatibel sein. \medskip\\
   Tuple map                 & \$TupleMap<T, F>       & Analog zu \type{Object map}, jedoch wird der Funktionstyp \code{F} auf alle Typen der Werte eines Tupels oder Felds angewandt. \medskip\\
