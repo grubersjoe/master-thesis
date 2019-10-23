@@ -29,4 +29,4 @@ configures
 render-app
 
 
-21 malformed output files => 21/334 = 6,29%
+21 malformed output files => 21/353 = 5.95%

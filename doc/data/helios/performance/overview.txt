@@ -2,7 +2,6 @@
 - Spreadshirt (Notebook)      x
 - Spreadshirt (Desktop)       x
 - MacBook Pro 2013
-- MacBook Pro 2018
 - Jupiter (Desktop)
 
 TS (3.5):     5c54489a  (all 'non-strict' errors have been fixed, Components are still Flow!)

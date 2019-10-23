@@ -18,4 +18,4 @@ utils/form-validation/index
 style/media/index-test
 style/media/responsive-config/index
 
-11 malformed output files => 11/255 = 4,31%
+11 malformed output files => 11/331 = 3.54%
