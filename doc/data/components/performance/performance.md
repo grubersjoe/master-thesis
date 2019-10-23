@@ -1,4 +1,4 @@
-# Test devices                # Done
+# Test devices                Done
 - Spreadshirt (Notebook)      x
 - Spreadshirt (Lenovo)        x
 - MacBook Pro 2013

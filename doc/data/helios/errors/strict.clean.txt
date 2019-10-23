@@ -1,0 +1,697 @@
+src/__api_tests__/graphql-api.ts(8,25): error TS2307: Cannot find module '../containers/SeoMetaData/graphql/query.gql'.
+src/__api_tests__/graphql-api.ts(10,26): error TS2307: Cannot find module '../containers/SeoText/graphql/query.gql'.
+src/__api_tests__/graphql-api.ts(12,31): error TS2307: Cannot find module '../graphql/config-values/query.gql'.
+src/__api_tests__/graphql-api.ts(14,40): error TS2307: Cannot find module '../graphql/config-values-localized/query.gql'.
+src/__api_tests__/graphql-api.ts(16,28): error TS2307: Cannot find module '../graphql/discounts/query.gql'.
+src/__api_tests__/graphql-api.ts(18,28): error TS2307: Cannot find module '../graphql/image-urls/query.gql'.
+src/__api_tests__/graphql-api.ts(20,40): error TS2307: Cannot find module '../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/__api_tests__/graphql-api.ts(21,36): error TS2307: Cannot find module '../graphql/product-type-detail/product-type/query.gql'.
+src/__api_tests__/graphql-api.ts(23,44): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Carousel/graphql/product-type/query.gql'.
+src/__api_tests__/graphql-api.ts(25,44): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Overview/graphql/product-type/shipping-days.gql'.
+src/__api_tests__/graphql-api.ts(27,54): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Shipping/graphql/productType/query.gql'.
+src/__api_tests__/graphql-api.ts(29,43): error TS2307: Cannot find module '../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/__api_tests__/graphql-api.ts(30,39): error TS2307: Cannot find module '../graphql/product-type-detail/product-type-set/query.gql'.
+src/__api_tests__/graphql-api.ts(32,47): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Carousel/graphql/product-type-set/query.gql'.
+src/__api_tests__/graphql-api.ts(34,47): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Overview/graphql/product-type-set/shipping-days.gql'.
+src/__api_tests__/graphql-api.ts(36,57): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/Shipping/graphql/productTypeSet/query.gql'.
+src/__api_tests__/graphql-api.ts(38,47): error TS2307: Cannot find module '../graphql/product-type-list/product-type-search/query.gql'.
+src/__api_tests__/graphql-api.ts(39,45): error TS2307: Cannot find module '../graphql/product-type-list/sort-options/query.gql'.
+src/__api_tests__/graphql-api.ts(41,50): error TS2307: Cannot find module '../graphql/product-type-list/departments/query.gql'.
+src/__api_tests__/graphql-api.ts(43,25): error TS2307: Cannot find module '../graphql/routes/query.gql'.
+src/__api_tests__/graphql-api.ts(45,36): error TS2307: Cannot find module '../graphql/shipping-countries/query.gql'.
+src/__api_tests__/graphql-api.ts(47,31): error TS2307: Cannot find module '../graphql/translations/query.gql'.
+src/__api_tests__/graphql-api.ts(49,45): error TS2307: Cannot find module '../containers/ShippingCalculator/graphql/productTypeSet/shipping-dates.gql'.
+src/__api_tests__/graphql-api.ts(50,42): error TS2307: Cannot find module '../containers/ShippingCalculator/graphql/productType/shipping-dates.gql'.
+src/__api_tests__/graphql-api.ts(51,42): error TS2307: Cannot find module '../containers/ShippingCalculator/graphql/costs.gql'.
+src/__api_tests__/graphql-api.ts(52,47): error TS2307: Cannot find module '../containers/ShippingCalculatorOverlay/graphql/query.gql'.
+src/__api_tests__/graphql-api.ts(54,42): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/RelatedProductTypes/graphql/productTypeSet/query.gql'.
+src/__api_tests__/graphql-api.ts(55,39): error TS2307: Cannot find module '../containers/ProductTypeDetailPage/RelatedProductTypes/graphql/productType/query.gql'.
+src/__api_tests__/graphql-api.ts(57,25): error TS2307: Cannot find module './graphql/schema.gql'.
+src/__api_tests__/graphql-api.ts(332,34): error TS2345: Argument of type '{ query: any; variables?: undefined; } | { query: any; variables: { limit: number; offset: number; orderBy: { sortOptionValue: number; }[]; filter: { departmentSlug: string; categorySlug: string; sizeIds: number[]; baseColorIds: number[]; brandIds: number[]; }[]; ... 16 more ...; path?: undefined; }; } | ... 18 more...' is not assignable to parameter of type 'QueryOptions<{ limit: number; offset: number; orderBy: { sortOptionValue: number; }[]; filter: { departmentSlug: string; categorySlug: string; sizeIds: number[]; baseColorIds: number[]; brandIds: number[]; }[]; imageOptions: { ...; }[]; ... 15 more ...; path?: undefined; } | undefined>'.
+src/__api_tests__/graphql-api.ts(338,68): error TS2345: Argument of type '{ query: any; variables?: undefined; } | { query: any; variables: { limit: number; offset: number; orderBy: { sortOptionValue: number; }[]; filter: { departmentSlug: string; categorySlug: string; sizeIds: number[]; baseColorIds: number[]; brandIds: number[]; }[]; ... 16 more ...; path?: undefined; }; } | ... 18 more...' is not assignable to parameter of type 'QueryOptions<{ limit: number; offset: number; orderBy: { sortOptionValue: number; }[]; filter: { departmentSlug: string; categorySlug: string; sizeIds: number[]; baseColorIds: number[]; brandIds: number[]; }[]; imageOptions: { ...; }[]; ... 15 more ...; path?: undefined; } | undefined>'.
+src/components/ErrorMessage/index.tsx(6,19): error TS2307: Cannot find module '../../assets/images/error.svg'.
+src/components/Inquiry/index.tsx(132,26): error TS2339: Property 'active' does not exist on type 'Pick<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "value" | "children" | "form" | "style" | "title" | "color" | "hidden" | "disabled" | ... 256 more ... | "formTarget"> & { ...; } & ThemeProps<...>'.
+src/components/Inquiry/index.tsx(145,8): error TS2339: Property 'active' does not exist on type 'Pick<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "value" | "children" | "form" | "style" | "title" | "color" | "hidden" | "disabled" | ... 256 more ... | "formTarget"> & { ...; } & ThemeProps<...>'.
+src/components/Inquiry/index.tsx(175,10): error TS2740: Type '{ backgroundImage: string; }' is missing the following properties from type 'Pick<Pick<Pick<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "children" | "style" | "title" | "color" | "hidden" | "key" | "defaultChecked" | "defaultValue" | ... 245 more ... | "onTransitionEndCapture"> & { ...; } & Props, "children" | ... 264 more ... | "horizontalSpacing"> & Partial<...>, "ch...': children, title, type, phoneNumber, and 7 more.
+src/components/Inquiry/index.tsx(207,12): error TS2322: Type '{ children: string; theme: string; fullWidth: true; center: true; active: boolean; onClick: () => void; }' is not assignable to type 'IntrinsicAttributes & Pick<Pick<Pick<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "value" | "children" | "form" | "style" | "title" | ... 259 more ... | "formTarget"> & { ...; }, "value" | ... 264 more ... | "formTarget"> & Partial<...>, "value" | ... 264 more ... | "formTarget"> & ...'.
+src/components/Inquiry/index.tsx(216,12): error TS2322: Type '{ children: string; theme: string; fullWidth: true; center: true; active: boolean; onClick: () => void; }' is not assignable to type 'IntrinsicAttributes & Pick<Pick<Pick<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "value" | "children" | "form" | "style" | "title" | ... 259 more ... | "formTarget"> & { ...; }, "value" | ... 264 more ... | "formTarget"> & Partial<...>, "value" | ... 264 more ... | "formTarget"> & ...'.
+src/components/LoadingMessage/index.tsx(6,21): error TS2307: Cannot find module '../../assets/images/loading.svg'.
+src/components/OptOutCookieLink/index.tsx(25,24): error TS2531: Object is possibly 'null'.
+src/components/PaymentMethodLogos/index.tsx(33,34): error TS2345: Argument of type '(logoUrl: string, index: number) => Element | null' is not assignable to parameter of type '(value: string | undefined, index: number, array: (string | undefined)[]) => Element | null'.
+src/components/ProductTypeDetail/Buttons/index.tsx(85,15): error TS2345: Argument of type 'HTMLElement | null' is not assignable to parameter of type 'Element'.
+src/components/ProductTypeDetail/Description/index.tsx(1,17): error TS2305: Module '"../../../../node_modules/@types/react"' has no exported member 'ChildrenArray'.
+src/components/ProductTypeDetail/Description/index.tsx(1,32): error TS2724: Module '"../../../../node_modules/@types/react"' has no exported member 'Element'. Did you mean 'CElement'?
+src/components/ProductTypeDetail/Description/index.tsx(34,3): error TS2739: Type 'Element[]' is missing the following properties from type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>': type, props, key
+src/components/ProductTypeDetail/Pricing/index.tsx(18,27): error TS2304: Cannot find name 'SyntheticInputEvent'.
+src/components/ProductTypeDetail/Pricing/index.tsx(47,52): error TS2322: Type 'FlattenSimpleInterpolation' is not assignable to type 'string'.
+src/components/ProductTypeDetail/Pricing/index.tsx(54,3): error TS2322: Type '"" | FlattenSimpleInterpolation' is not assignable to type 'string'.
+src/components/ProductTypeFilterOverlay/index.tsx(96,6): error TS2304: Cannot find name 'SyntheticEvent'.
+src/components/ProductTypeFilterOverlay/index.tsx(100,19): error TS2345: Argument of type '{ [x: string]: any[]; }' is not assignable to parameter of type 'State | ((prevState: Readonly<State>, props: Readonly<Props>) => State | Pick<State, "sizeIds" | "baseColorIds" | "brandIds" | "isSizesAccordionExpanded" | "isBrandsAccordionExpanded"> | null) | Pick<...> | null'.
+src/components/SeoTextBlocks/index.tsx(39,15): error TS2322: Type '{ seoTextBlocks: SeoTextBlock[]; wide?: boolean | undefined; }' is not assignable to type 'Props'.
+src/components/SeoTextBlocks/index.tsx(43,15): error TS2322: Type '{ columnCount: number; seoTextBlocks: SeoTextBlock[]; wide?: boolean | undefined; }' is not assignable to type 'Props'.
+src/components/SeoTextBlocks/index.tsx(46,15): error TS2322: Type '{ columnCount: number; seoTextBlocks: SeoTextBlock[]; wide?: boolean | undefined; }' is not assignable to type 'Props'.
+src/components/SeoTextBlocks/index.tsx(49,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/components/ShippingCalculatorOverlay/index.tsx(71,3): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/components/ShippingCalculatorOverlay/index.tsx(79,5): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/components/ShippingCalculatorOverlay/index.tsx(144,21): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/components/Status/index.tsx(33,3): error TS2322: Type 'false | Element' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/config/index.ts(92,63): error TS2339: Property '__CONFIG__' does not exist on type 'Window'.
+src/configures.ts(72,35): error TS2339: Property '__APOLLO_STATE__' does not exist on type 'Window'.
+src/configures.ts(83,13): error TS2339: Property '__REDUX_DEVTOOLS_EXTENSION__' does not exist on type 'Window'.
+src/configures.ts(100,28): error TS2345: Argument of type 'AppState' is not assignable to parameter of type 'DeepPartial<{ locale: string; abTesting: ABTestingState; notifications: NotificationState; responsive: unknown; translation: Messages; tracking: TrackingState; form: FormStateMap; quickQuote: QuickQuoteState; productTypeSelector: ProductTypeSelectorState; }>'.
+src/containers/CustomizeSetBannerCard/index.tsx(11,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/CustomizeSetBannerCard/index.tsx(12,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/CustomizeSetBannerCard/index.tsx(77,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/CustomizeSetBannerCard/index.tsx(77,33): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/Error/index.tsx(8,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Error/index.tsx(9,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/Error/index.tsx(110,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/Error/index.tsx(110,33): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/Error/index.tsx(119,32): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+src/containers/ErrorBoundary/index.tsx(10,3): error TS2322: Type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ErrorBoundary/index.tsx(35,13): error TS2304: Cannot find name 'ReactElement'.
+src/containers/Form/GraphicServiceInquiry/index.tsx(21,22): error TS2307: Cannot find module './graphql/mutation.gql'.
+src/containers/Form/GraphicServiceInquiry/index.tsx(90,12): error TS2322: Type '{ onSubmit: (input: GraphicServiceInquiryFormValues) => void; loading: boolean; validateRequired: any; validateEmail: any; emailLabel: string; fileLabel: string; quantityLabel: string; messageLabel: string; sendButtonText: string; minimumProductQuantity: number; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<Partial<ConfigProps<{}, {}, string>>, "form" | "onChange" | "onSubmit" | "validate" | "asyncBlurFields" | "asyncChangeFields" | "asyncValidate" | ... 18 more ... | "warn">, any, any>> & Readonly<...> & Readonly<...>'.
+src/containers/Form/HelpInquiry/index.tsx(21,22): error TS2307: Cannot find module './graphql/mutation.gql'.
+src/containers/Form/HelpInquiry/index.tsx(94,12): error TS2322: Type '{ onSubmit: (input: HelpInquiryFormValues) => void; loading: boolean; validateRequired: any; validateEmail: any; subjects: string[]; subjectLabel: string; orderIdLabel: string; fileLabel: string; nameLabel: string; emailLabel: string; messageLabel: string; sendButtonText: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<Partial<ConfigProps<{}, {}, string>>, "form" | "onChange" | "onSubmit" | "validate" | "asyncBlurFields" | "asyncChangeFields" | "asyncValidate" | ... 19 more ... | "warn">, any, any>> & Readonly<...> & Readonly<...>'.
+src/containers/Form/NewsletterRegistration/index.tsx(21,22): error TS2307: Cannot find module './graphql/mutation.gql'.
+src/containers/Form/NewsletterRegistration/index.tsx(96,12): error TS2322: Type '{ onSubmit: (input: NewsletterRegistrationFormValues) => void; loading: boolean; validateRequired: any; validateEmail: any; imgSrc: string; title: string; mailLabel: string; sendButtonText: string; cancelButtonText: string; handleCancel: (() => void) | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<FormInstance<{}, Partial<ConfigProps<{}, {}, string>>, string>> & Readonly<Partial<ConfigProps<{}, {}, string>>> & Readonly<...>'.
+src/containers/Form/OfferInquiry/index.tsx(21,22): error TS2307: Cannot find module './graphql/mutation.gql'.
+src/containers/Form/OfferInquiry/index.tsx(105,12): error TS2322: Type '{ onSubmit: (input: OfferInquiryFormValues) => void; loading: boolean; validateRequired: any; validateEmail: any; productTypeCategories: string[]; productTypeCategoryLabel: string; quantityLabel: string; ... 9 more ...; sendButtonText: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<Partial<ConfigProps<{}, {}, string>>, "form" | "onChange" | "onSubmit" | "validate" | "asyncBlurFields" | "asyncChangeFields" | "asyncValidate" | ... 19 more ... | "warn">, any, any>> & Readonly<...> & Readonly<...>'.
+src/containers/GraphicService/Cards/index.tsx(15,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/GraphicService/Cards/index.tsx(16,28): error TS2307: Cannot find module '../../../graphql/image-urls/query.gql'.
+src/containers/GraphicService/Cards/index.tsx(137,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/GraphicService/Cards/index.tsx(137,33): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/GraphicService/Heading/index.tsx(8,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/GraphicService/Heading/index.tsx(43,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/GraphicService/Inquiry/index.tsx(9,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/GraphicService/Inquiry/index.tsx(10,31): error TS2307: Cannot find module '../../../graphql/config-values/query.gql'.
+src/containers/GraphicService/Inquiry/index.tsx(85,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/GraphicService/Inquiry/index.tsx(85,33): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/GraphicService/Inquiry/index.tsx(90,16): error TS2322: Type '{ emailLabel: string; fileLabel: string; quantityLabel: string; messageLabel: string; sendButtonText: string; successMessage: string; errorMessage: string; validateRequiredMessage: string; validateMailMessage: string; minimumProductQuantity: number; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/Header/index.tsx(5,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/Header/index.tsx(55,15): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/Header/index.tsx(62,11): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/containers/Hero/index.tsx(4,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/Hero/index.tsx(45,17): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/Imprint/index.tsx(12,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Imprint/index.tsx(15,40): error TS2307: Cannot find module '../../graphql/config-values-localized/query.gql'.
+src/containers/Imprint/index.tsx(99,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/Imprint/index.tsx(99,33): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/help.tsx(8,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Inquiry/help.tsx(9,31): error TS2307: Cannot find module '../../graphql/config-values/query.gql'.
+src/containers/Inquiry/help.tsx(95,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/help.tsx(95,33): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/help.tsx(101,14): error TS2322: Type '{ subjects: string[]; subjectLabel: string; orderIdLabel: string; fileLabel: string; nameLabel: string; emailLabel: string; messageLabel: string; sendButtonText: string; successMessage: string; errorMessage: string; validateRequiredMessage: string; validateMailMessage: string; recipientEmail: string | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/Inquiry/index.tsx(9,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Inquiry/index.tsx(10,40): error TS2307: Cannot find module '../../graphql/config-values-localized/query.gql'.
+src/containers/Inquiry/index.tsx(11,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/Inquiry/index.tsx(12,25): error TS2307: Cannot find module '../../graphql/routes/query.gql'.
+src/containers/Inquiry/index.tsx(155,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/index.tsx(156,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/index.tsx(157,13): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/index.tsx(158,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/index.tsx(170,15): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+src/containers/Inquiry/index.tsx(191,18): error TS2322: Type '{ recipientEmail: string | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/containers/Inquiry/index.tsx(194,18): error TS2322: Type '{ recipientEmail: string | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/containers/Inquiry/offer.tsx(8,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Inquiry/offer.tsx(9,31): error TS2307: Cannot find module '../../graphql/config-values/query.gql'.
+src/containers/Inquiry/offer.tsx(14,40): error TS2307: Cannot find module './graphql/query.gql'.
+src/containers/Inquiry/offer.tsx(113,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/offer.tsx(114,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/offer.tsx(115,13): error TS2339: Property 'productTypeCategories' does not exist on type 'QueryData | undefined'.
+src/containers/Inquiry/offer.tsx(121,14): error TS2322: Type '{ productTypeCategories: any; productTypeCategoryLabel: string; quantityLabel: string; quantityHint: string; fileLabel: string; messageLabel: string; messageHint: string; nameLabel: string; ... 9 more ...; recipientEmail: string | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/MultiQuery/index.tsx(96,13): error TS2322: Type 'TData | undefined' is not assignable to type 'TData'.
+src/containers/NewsletterBannerCard/index.tsx(14,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/NewsletterBannerCard/index.tsx(15,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/NewsletterBannerCard/index.tsx(73,14): error TS2322: Type '{ handleSuccess: () => void; handleCancel: () => void; }' is not assignable to type 'IntrinsicAttributes'.
+src/containers/NewsletterBannerCard/index.tsx(109,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/NewsletterBannerCard/index.tsx(109,33): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/NewsletterRegistration/index.tsx(9,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/NewsletterRegistration/index.tsx(10,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/NewsletterRegistration/index.tsx(90,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/NewsletterRegistration/index.tsx(90,33): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/NewsletterRegistration/index.tsx(95,14): error TS2322: Type '{ imgSrc: unknown; title: string; mailLabel: string; sendButtonText: string; cancelButtonText: string; successMessage: string; errorMessage: string; validateRequiredMessage: string; validateMailMessage: string; handleSuccess: (() => void) | undefined; handleCancel: (() => void) | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/Pagination/index.tsx(2,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/Pagination/index.tsx(44,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/Pagination/index.tsx(57,56): error TS2345: Argument of type 'typeof PaginationContainer' is not assignable to parameter of type 'ComponentType<{ history: any; }>'.
+src/containers/PaymentMethodLogos/index.tsx(7,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/containers/PaymentMethodLogos/index.tsx(50,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/PaymentMethodLogos/index.tsx(150,19): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/containers/PaymentMethodLogos/index.tsx(177,47): error TS2322: Type '{ paypalLogoUrl: unknown; americanExpressLogoUrl: unknown; visaLogoUrl: unknown; mastercardLogoUrl: unknown; iDealLogoUrl: unknown; sepaLogoUrl: unknown; prepaymentLogoUrl: unknown; invoiceLogoUrl: unknown; }' is not assignable to type '{ paypalLogoUrl?: string | undefined; americanExpressLogoUrl?: string | undefined; visaLogoUrl?: string | undefined; mastercardLogoUrl?: string | undefined; iDealLogoUrl?: string | undefined; sepaLogoUrl?: string | undefined; prepaymentLogoUrl?: string | undefined; invoiceLogoUrl?: string | undefined; }'.
+src/containers/PrivacyPolicy/index.tsx(11,40): error TS2307: Cannot find module '../../graphql/config-values-localized/query.gql'.
+src/containers/PrivacyPolicy/index.tsx(17,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(22,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(27,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(32,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(37,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(42,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(47,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(52,5): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/PrivacyPolicy/index.tsx(89,19): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/AppearancePicker/index.tsx(16,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/query.gql'.
+src/containers/ProductTypeDetail/AppearancePicker/index.tsx(17,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/AppearancePicker/index.tsx(60,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/AppearancePicker/index.tsx(102,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(19,30): error TS2307: Cannot find module './graphql/product-type/query.gql'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(20,33): error TS2307: Cannot find module './graphql/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(114,19): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(119,13): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(166,19): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Carousel/index.tsx(174,13): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Description/index.tsx(17,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/query.gql'.
+src/containers/ProductTypeDetail/Description/index.tsx(18,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/Description/index.tsx(53,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Description/index.tsx(65,55): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetail/Description/index.tsx(84,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Description/index.tsx(96,53): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetail/Footer/index.tsx(21,6): error TS2322: Type '{ children: (select: () => any) => Element; id: number; isSet: boolean; onSelect: (productTypes: MinimalProductType[]) => void; appearanceId: number | null | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/containers/ProductTypeDetail/FooterRenderer/index.tsx(11,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/FooterRenderer/index.tsx(58,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/FooterRenderer/index.tsx(71,55): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(14,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(23,27): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(58,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(64,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(70,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(76,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(120,9): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Navigation/index.tsx(152,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(14,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(15,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(16,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/query.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(17,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(18,31): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(50,45): error TS2307: Cannot find module './graphql/product-type-set/shipping-days.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(51,42): error TS2307: Cannot find module './graphql/product-type/shipping-days.gql'.
+src/containers/ProductTypeDetail/Overview/index.tsx(72,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Overview/index.tsx(275,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Overview/index.tsx(278,8): error TS2322: Type '{ id: number; defaultAppearanceId: number; isSet: boolean; appearanceId: number | null | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/Overview/index.tsx(366,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(368,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(369,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(370,13): error TS2339: Property 'shippingDates' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(371,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(438,13): error TS2345: Argument of type '{ name: any; shortDescription: any; sizeNames: any; appearanceName: string; defaultAppearanceId: any; priceVatIncluded: any; discountItems: any; priceOldVatIncluded: any; currencyIsoCode: any; ... 6 more ...; deliveryNotBeforeChristmasText: string; }' is not assignable to parameter of type '{ name: string; shortDescription: string; sizeNames: string[]; appearanceName: string; defaultAppearanceId: number; priceVatIncluded: number; discountItems: DiscountItem[]; oldPrice?: number | null | undefined; ... 7 more ...; deliveryNotBeforeChristmasText: string; }'.
+src/containers/ProductTypeDetail/Overview/index.tsx(492,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(494,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(495,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(496,13): error TS2339: Property 'shippingDates' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(497,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Overview/index.tsx(544,47): error TS2538: Type 'null' cannot be used as an index type.
+src/containers/ProductTypeDetail/Overview/index.tsx(544,47): error TS2538: Type 'undefined' cannot be used as an index type.
+src/containers/ProductTypeDetail/Pricing/Container.tsx(86,3): error TS2322: Type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetail/Pricing/Container.tsx(182,37): error TS2304: Cannot find name 'SyntheticInputEvent'.
+src/containers/ProductTypeDetail/Pricing/Container.tsx(218,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Pricing/Container.tsx(275,10): error TS2322: Type '{ children: (string | false | Element)[]; onBackdropClick: () => void; zIndex: number; }' is not assignable to type 'Readonly<Pick<Props, "children" | "zIndex" | "onBackdropClick">>'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(6,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(7,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(8,31): error TS2307: Cannot find module '../../../graphql/config-values/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(9,40): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(10,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(11,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(107,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(108,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(109,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(110,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(114,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(135,14): error TS2322: Type '{ amount: number; translator: Translator; priceVatIncluded: any; currencyIsoCode: any; discounts: any; freeGraphicServiceQuantity: any; returnRightDays: any; priceFirstPrintarea: any; priceAdditionalPrintarea: any; maxColorsOnSportsProduct: any; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(171,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(172,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(173,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(174,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(178,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Pricing/index.tsx(213,14): error TS2322: Type '{ amount: any; translator: Translator; priceVatIncluded: any; currencyIsoCode: any; discounts: any; freeGraphicServiceQuantity: any; returnRightDays: any; priceFirstPrintarea: any; priceAdditionalPrintarea: any; maxColorsOnSportsProduct: any; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(11,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(12,36): error TS2307: Cannot find module '../../../graphql/shipping-countries/query.gql'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(16,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(17,33): error TS2307: Cannot find module './graphql/productTypeSet/query.gql'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(65,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(66,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(67,13): error TS2339: Property 'shippingCountries' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(75,14): error TS2322: Type '{ expressDeliveryAvailable: any; shippingCountries: TransformedShippingCountries; translator: Translator; id: any; isSet: boolean; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(111,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(112,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(113,13): error TS2339: Property 'shippingCountries' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Shipping/index.tsx(142,14): error TS2322: Type '{ expressDeliveryAvailable: any; shippingCountries: TransformedShippingCountries; translator: Translator; id: number; isSet: boolean; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(6,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(7,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/query.gql'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(8,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/query.gql'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(90,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(128,53): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(129,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(156,55): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetail/Sizing/index.tsx(157,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetail/index.tsx(34,6): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeDetail/index.tsx(65,7): error TS2605: JSX element type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>[]' is not a constructor function for JSX elements.
+src/containers/ProductTypeDetail/index.tsx(66,10): error TS2322: Type '{ id: number; isSet: boolean; appearanceId: number | null | undefined; setSelectedAppearance: (appearanceId: number | null | undefined) => void; onInfoLinkClick: (index: number) => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetail/index.tsx(73,10): error TS2322: Type '{ id: number; isSet: boolean; handleTabClick: ({ currentTarget: { value }, }: any) => void; activeTabIndex: number; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(2,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(32,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(33,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(34,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(154,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(158,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(200,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(206,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/AppearancePicker/index.tsx(242,56): error TS2345: Argument of type 'typeof AppearancePicker' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; canonicalName: string; appearanceId: string; appearanceSetId: string; slug: string; history: any; }>'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(23,30): error TS2307: Cannot find module './graphql/product-type/query.gql'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(24,33): error TS2307: Cannot find module './graphql/product-type-set/query.gql'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(136,19): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(141,13): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(190,19): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(199,13): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetailPage/Carousel/index.tsx(248,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: {}) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; canonicalName: string; appearanceId: string; slug: string; appearanceSetId: string; }>'.
+src/containers/ProductTypeDetailPage/Description/index.tsx(21,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Description/index.tsx(22,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Description/index.tsx(74,55): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetailPage/Description/index.tsx(103,53): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetailPage/Description/index.tsx(128,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: {}) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; slug: string; canonicalName: string; }>'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(5,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(17,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(61,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(67,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(73,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(79,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(141,6): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(160,9): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(192,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Navigation/index.tsx(245,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: {}) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<RouteComponentProps<any, StaticContext, any>>'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(2,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(21,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(22,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(23,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(24,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(25,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(26,31): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(83,42): error TS2307: Cannot find module './graphql/product-type/shipping-days.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(84,45): error TS2307: Cannot find module './graphql/product-type-set/shipping-days.gql'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(114,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(120,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(306,9): error TS2345: Argument of type '([productTypeId, appearanceId]: [number, number]) => AddProductTypeAction' is not assignable to parameter of type '(value: [number | undefined, number | undefined], index: number, array: [number | undefined, number | undefined][]) => void'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(473,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(623,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(624,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(626,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(627,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(628,13): error TS2339: Property 'shippingDates' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(630,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(721,13): error TS2345: Argument of type '{ name: any; shortDescription: any; sizeNames: any; appearanceName: string; defaultAppearanceId: any; priceVatIncluded: any; discountItems: any; priceOldVatIncluded: any; currencyIsoCode: any; ... 18 more ...; appearanceIds: any[]; }' is not assignable to parameter of type '{ name: string; shortDescription: string; sizeNames: string[]; appearanceName: string; defaultAppearanceId: number; priceVatIncluded: number; discountItems: DiscountItem[]; oldPrice?: number | null | undefined; ... 21 more ...; adjustSetHref?: string | undefined; }'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(787,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(788,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(790,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(791,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(792,13): error TS2339: Property 'shippingDates' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(794,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(846,47): error TS2538: Type 'null' cannot be used as an index type.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(846,47): error TS2538: Type 'undefined' cannot be used as an index type.
+src/containers/ProductTypeDetailPage/Overview/index.tsx(1002,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: {}) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; canonicalName: string; slug: string; appearanceId: string; appearanceSetId: string; history: any; }>'.
+src/containers/ProductTypeDetailPage/Pricing/Container.tsx(86,3): error TS2322: Type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeDetailPage/Pricing/Container.tsx(182,37): error TS2304: Cannot find name 'SyntheticInputEvent'.
+src/containers/ProductTypeDetailPage/Pricing/Container.tsx(218,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeDetailPage/Pricing/Container.tsx(275,10): error TS2322: Type '{ children: (string | false | Element)[]; onBackdropClick: () => void; zIndex: number; }' is not assignable to type 'Readonly<Pick<Props, "children" | "zIndex" | "onBackdropClick">>'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(6,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(7,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(8,31): error TS2307: Cannot find module '../../../graphql/config-values/query.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(9,40): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(10,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(11,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(121,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(123,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(124,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(125,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(129,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(147,14): error TS2322: Type '{ amount: number; translator: Translator; priceVatIncluded: any; currencyIsoCode: any; discounts: any; freeGraphicServiceQuantity: any; returnRightDays: any; priceFirstPrintarea: any; priceAdditionalPrintarea: any; maxColorsOnSportsProduct: any; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(184,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(186,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(187,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(188,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(192,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Pricing/index.tsx(227,14): error TS2322: Type '{ amount: any; translator: Translator; priceVatIncluded: any; currencyIsoCode: any; discounts: any; freeGraphicServiceQuantity: any; returnRightDays: any; priceFirstPrintarea: any; priceAdditionalPrintarea: any; maxColorsOnSportsProduct: any; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(16,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(17,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(21,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(22,33): error TS2307: Cannot find module './graphql/productTypeSet/query.gql'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(91,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(93,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(96,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(138,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(140,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(143,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/RelatedProductTypes/index.tsx(172,43): error TS2345: Argument of type 'typeof RelatedProductTypes' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; canonicalName: string; slug: string; }>'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(11,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(12,36): error TS2307: Cannot find module '../../../graphql/shipping-countries/query.gql'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(20,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(21,33): error TS2307: Cannot find module './graphql/productTypeSet/query.gql'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(80,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(82,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(83,13): error TS2339: Property 'shippingCountries' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(90,14): error TS2322: Type '{ expressDeliveryAvailable: any; shippingCountries: TransformedShippingCountries; translator: Translator; id: any; isSet: boolean | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(124,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(126,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(127,13): error TS2339: Property 'shippingCountries' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(155,14): error TS2322: Type '{ expressDeliveryAvailable: any; shippingCountries: TransformedShippingCountries; translator: Translator; id: any; isSet: boolean | undefined; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeDetailPage/Shipping/index.tsx(177,43): error TS2345: Argument of type 'typeof ShippingCalculator' is not assignable to parameter of type 'ComponentType<{ isSet: boolean; slug: string; canonicalName: string; }>'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(6,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(7,30): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(8,33): error TS2307: Cannot find module '../../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(134,53): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(135,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(161,55): error TS2345: Argument of type 'QueryData | undefined' is not assignable to parameter of type 'QueryData'.
+src/containers/ProductTypeDetailPage/Sizing/index.tsx(162,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(3,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(12,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(13,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(14,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(111,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(120,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(161,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(162,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(164,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/ActiveFilters/index.tsx(197,15): error TS2345: Argument of type 'ConnectedComponentClass<typeof ActiveFilters, Pick<any, string | number | symbol>>' is not assignable to parameter of type 'ComponentType<RouteComponentProps<any, StaticContext, any>>'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(5,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(43,30): error TS2307: Cannot find module '../../../graphql/product-type-list/sort-options/query.gql'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(44,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(45,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(52,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(113,6): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(151,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(194,15): error TS2339: Property 'productTypeSearchSortOptions' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(195,15): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(197,15): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(233,11): error TS2322: Type 'false | Element' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)> | ... 7 more ... | undefined'.
+src/containers/ProductTypeList/AdvancedFilter/index.tsx(242,14): error TS2345: Argument of type 'ConnectedComponentClass<typeof AdvancedFilter, Pick<any, string | number | symbol>>' is not assignable to parameter of type 'ComponentType<RouteComponentProps<any, StaticContext, any>>'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(4,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(32,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(33,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(34,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(67,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(111,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(112,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(114,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(150,13): error TS2345: Argument of type '{ departmentSlug: string | null | undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(155,17): error TS2345: Argument of type '{ departmentSlug: string; categorySlug: string | null | undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/Breadcrumbs/index.tsx(160,17): error TS2345: Argument of type '{ categorySlug: string | null | undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategoryList/index.tsx(1,28): error TS2724: Module '"../../../../node_modules/@types/react"' has no exported member 'Element'. Did you mean 'CElement'?
+src/containers/ProductTypeList/CategoryList/index.tsx(3,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/CategoryList/index.tsx(35,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/CategoryList/index.tsx(36,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/CategoryList/index.tsx(37,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/CategoryList/index.tsx(92,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/CategoryList/index.tsx(128,15): error TS2339: Property 'translations' does not exist on type 'BaseQueryData | undefined'.
+src/containers/ProductTypeList/CategoryList/index.tsx(130,15): error TS2339: Property 'routes' does not exist on type 'BaseQueryData | undefined'.
+src/containers/ProductTypeList/CategoryList/index.tsx(139,15): error TS2345: Argument of type '{ page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; subcategorySlug?: string | undefined; departmentSlug: string | ... 1 more ... | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategoryList/index.tsx(179,15): error TS2345: Argument of type '{ categorySlug: string; subcategorySlug: undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; departmentSlug?: string | ... 1 more ... | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategoryList/index.tsx(214,15): error TS2345: Argument of type '{ categorySlug: string; subcategorySlug: string; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; departmentSlug?: string | ... 1 more ... | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategoryList/index.tsx(232,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/CategoryList/index.tsx(262,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/CategoryList/index.tsx(263,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(3,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(27,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(28,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(29,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(60,28): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(80,9): error TS2345: Argument of type '{ categorySlug: string; subcategorySlug: any; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; departmentSlug?: string | ... 1 more ... | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(92,7): error TS2345: Argument of type '{ categorySlug: any; subcategorySlug: undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; departmentSlug?: string | ... 1 more ... | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(103,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(139,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(141,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/CategorySelect/index.tsx(142,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(2,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(31,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(42,29): error TS2307: Cannot find module '../../../graphql/product-type-list/departments/query.gql'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(124,7): error TS2345: Argument of type '{ departmentSlug: string | undefined; page: number; sortBy: number; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; categorySlug?: string | null | undefined; subcategorySlug?: string | undefined; }' is not assignable to parameter of type 'ProductListParameters'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(187,13): error TS2339: Property 'productTypeDepartments' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(189,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/DepartmentFilter/index.tsx(214,3): error TS2345: Argument of type 'ConnectedComponentClass<typeof DepartmentFilter, Pick<Props, "history" | "departmentSlug" | "routeParameters">>' is not assignable to parameter of type 'ComponentType<{ history: any; routeParameters: ProductListParameters; departmentSlug: string | null | undefined; }>'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(3,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(34,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(35,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(36,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(89,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(123,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(126,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(127,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/FilterOverlay/index.tsx(156,3): error TS2345: Argument of type 'ComponentClass<Pick<any, string | number | symbol>, any>' is not assignable to parameter of type 'ComponentType<{ routeParameters: { page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; departmentSlug?: string | ... 1 more ... | undefined; categorySlug?: string | ... 1 more ... | undefined; subcategorySlug?: ...'.
+src/containers/ProductTypeList/List/index.tsx(4,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ProductTypeList/List/index.tsx(38,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/List/index.tsx(39,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/List/index.tsx(40,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/List/index.tsx(41,31): error TS2307: Cannot find module '../../../graphql/config-values/query.gql'.
+src/containers/ProductTypeList/List/index.tsx(42,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeList/List/index.tsx(164,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/List/index.tsx(222,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/List/index.tsx(226,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/List/index.tsx(227,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/List/index.tsx(228,13): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/List/index.tsx(229,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/List/index.tsx(327,3): error TS2345: Argument of type 'ConnectedComponentClass<typeof ProductList, Pick<Props, "history" | "routeName" | "routeParameters">>' is not assignable to parameter of type 'ComponentType<{ routeName: string | null | undefined; history: any; routeParameters: { departmentSlug?: string | null | undefined; categorySlug?: string | null | undefined; subcategorySlug?: string | undefined; ... 4 more ...; brandIds?: number[] | undefined; }; }>'.
+src/containers/ProductTypeList/Pagination/index.tsx(14,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/Pagination/index.tsx(15,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/ProductTypeList/Pagination/index.tsx(58,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/Pagination/index.tsx(66,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/Pagination/index.tsx(93,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/Pagination/index.tsx(94,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/SearchResultsCount/index.tsx(16,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeList/SearchResultsCount/index.tsx(17,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeList/SearchResultsCount/index.tsx(35,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeList/SearchResultsCount/index.tsx(65,19): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeList/SearchResultsCount/index.tsx(65,38): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/ActiveFilters/index.tsx(9,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/ActiveFilters/index.tsx(10,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/ActiveFilters/index.tsx(90,17): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/ActiveFilters/index.tsx(90,36): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(12,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(13,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(71,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(109,20): error TS2532: Object is possibly 'undefined'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(112,51): error TS2532: Object is possibly 'undefined'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(138,18): error TS2532: Object is possibly 'undefined'.
+src/containers/ProductTypeSelector/CategoryNav/index.tsx(142,36): error TS2532: Object is possibly 'undefined'.
+src/containers/ProductTypeSelector/CategorySelect/index.tsx(10,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/CategorySelect/index.tsx(11,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/CategorySelect/index.tsx(56,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/CategorySelect/index.tsx(88,19): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/CategorySelect/index.tsx(88,38): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/DepartmentFilter/index.tsx(9,29): error TS2307: Cannot find module '../../../graphql/product-type-list/departments/query.gql'.
+src/containers/ProductTypeSelector/DepartmentFilter/index.tsx(116,13): error TS2339: Property 'productTypeDepartments' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/DepartmentFilter/index.tsx(140,3): error TS2345: Argument of type 'typeof DepartmentFilter' is not assignable to parameter of type 'ComponentType<Matching<{ departmentId: number | null | undefined; } & { setDepartment: (departmentId: number | null | undefined) => SetDepartmentAction; }, Props>>'.
+src/containers/ProductTypeSelector/FilterButton/index.tsx(9,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/FilterButton/index.tsx(75,46): error TS2532: Object is possibly 'undefined'.
+src/containers/ProductTypeSelector/FilterOverlay/index.tsx(5,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/FilterOverlay/index.tsx(6,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/FilterOverlay/index.tsx(62,11): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/FilterOverlay/index.tsx(65,11): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/List/ItemCard.tsx(29,20): error TS2339: Property 'productTypeSet' does not exist on type 'ProductTypeSearchResult'.
+src/containers/ProductTypeSelector/List/ItemCard.tsx(34,18): error TS2339: Property 'productType' does not exist on type 'ProductTypeSearchResult'.
+src/containers/ProductTypeSelector/List/index.tsx(19,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/List/index.tsx(20,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/ProductTypeSelector/List/index.tsx(21,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/ProductTypeSelector/List/index.tsx(71,17): error TS2339: Property 'productType' does not exist on type 'ProductTypeSearchResult'.
+src/containers/ProductTypeSelector/List/index.tsx(73,22): error TS2339: Property 'productTypeSet' does not exist on type 'ProductTypeSearchResult'.
+src/containers/ProductTypeSelector/List/index.tsx(100,9): error TS2698: Spread types may only be created from object types.
+src/containers/ProductTypeSelector/List/index.tsx(114,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/List/index.tsx(155,13): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/List/index.tsx(156,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/List/index.tsx(158,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/List/index.tsx(166,19): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/List/index.tsx(167,22): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/List/index.tsx(169,17): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/List/index.tsx(206,27): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/List/index.tsx(207,30): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/List/index.tsx(213,25): error TS2531: Object is possibly 'null'.
+src/containers/ProductTypeSelector/Pagination/index.tsx(9,32): error TS2307: Cannot find module '../../../graphql/product-type-list/product-type-search/query.gql'.
+src/containers/ProductTypeSelector/Pagination/index.tsx(46,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/Pagination/index.tsx(58,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/Pagination/index.tsx(80,19): error TS2339: Property 'productTypeSearch' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/SortOptions/index.tsx(7,30): error TS2307: Cannot find module '../../../graphql/product-type-list/sort-options/query.gql'.
+src/containers/ProductTypeSelector/SortOptions/index.tsx(31,38): error TS2304: Cannot find name 'SyntheticEvent'.
+src/containers/ProductTypeSelector/SortOptions/index.tsx(46,13): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ProductTypeSelector/SortOptions/index.tsx(48,19): error TS2339: Property 'productTypeSearchSortOptions' does not exist on type 'QueryData | undefined'.
+src/containers/ProductTypeSelector/index.tsx(80,16): error TS2322: Type '{ onChange: () => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeSelector/index.tsx(91,18): error TS2322: Type '{ onChange: () => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/ProductTypeSelector/index.tsx(113,16): error TS2322: Type '{ onChange: () => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<Component<Pick<{}, never>, any, any>> & Readonly<Pick<{}, never>> & Readonly<{ children?: ReactNode; }>'.
+src/containers/QuickQuote/AmountSelector/index.tsx(39,37): error TS2304: Cannot find name 'SyntheticInputEvent'.
+src/containers/QuickQuote/AmountSelector/index.tsx(65,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/ConditionalCard/index.tsx(31,41): error TS2345: Argument of type '({ withCard, children, ...rest }: Props) => {} | null | undefined' is not assignable to parameter of type 'ComponentType<never>'.
+src/containers/QuickQuote/Footer/index.tsx(8,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/QuickQuote/Footer/index.tsx(63,11): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/Footer/index.tsx(104,3): error TS2345: Argument of type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to parameter of type 'ComponentType<Matching<{ productTypes: QuickQuoteProductType[]; } & { showShareOverlay: () => ShowShareOverlayAction; }, Props>>'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(1,42): error TS2305: Module '"../../../../node_modules/@types/react"' has no exported member 'ChildrenArray'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(1,57): error TS2724: Module '"../../../../node_modules/@types/react"' has no exported member 'Element'. Did you mean 'CElement'?
+src/containers/QuickQuote/PriceOverall/Blank.tsx(26,40): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(28,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(35,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(39,31): error TS2307: Cannot find module './graphql/productTypes/query.gql'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(115,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(179,13): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(180,13): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(181,13): error TS2339: Property 'productTypes' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PriceOverall/Blank.tsx(182,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PriceOverall/Route.ts(31,3): error TS2345: Argument of type 'ConnectedComponentClass<typeof PriceOverall, Pick<Props, "productTypeIds" | "amounts" | "selectedPrintAreas">>' is not assignable to parameter of type 'ComponentType<{ productTypeIds: number[]; amounts: { [id: number]: number; }; selectedPrintAreas: { [id: number]: number[]; }; }>'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(13,40): error TS2307: Cannot find module '../../../graphql/config-values-localized/query.gql'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(15,28): error TS2307: Cannot find module '../../../graphql/discounts/query.gql'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(21,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(25,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(75,5): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(137,11): error TS2339: Property 'configValuesLocalized' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(138,11): error TS2339: Property 'discounts' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(139,11): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PricePerItemInfo/Blank.tsx(143,11): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PricePerItemInfo/Route.ts(26,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<{ amounts: { [id: number]: number; }; }>'.
+src/containers/QuickQuote/PrintAreaSlider/index.tsx(26,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/QuickQuote/PrintAreaSlider/index.tsx(94,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/PrintAreaSlider/index.tsx(136,25): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/PrintAreaSlider/index.tsx(189,3): error TS2345: Argument of type 'typeof PrintAreaSlider' is not assignable to parameter of type 'ComponentType<Matching<{ slideItemsToShow: number; productTypeId: number | null | undefined; appearanceId: number | null | undefined; printAreaIds: any; } & { addPrintAreaForProductTypeId: (productTypeId: number, printArea: number) => AddPrintAreaForProductTypeIdAction; removePrintAreasForProductTypeId: (id: number,...'.
+src/containers/QuickQuote/ProductTypeCard/index.tsx(13,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/QuickQuote/ProductTypeCard/index.tsx(72,9): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/ProductTypeInfo/index.tsx(20,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/QuickQuote/ProductTypeInfo/index.tsx(24,30): error TS2307: Cannot find module './graphql/productTypes/query.gql'.
+src/containers/QuickQuote/ProductTypeInfo/index.tsx(190,21): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/ProductTypeInfo/index.tsx(190,34): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(33,30): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(128,7): error TS2345: Argument of type 'null' is not assignable to parameter of type 'number'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(154,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(196,29): error TS2345: Argument of type 'number' is not assignable to parameter of type 'null | undefined'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(206,18): error TS2322: Type '{ label: string; onClick: (productTypeIdToReplace?: null) => void; data-tracking: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+src/containers/QuickQuote/ProductTypeSlider/index.tsx(238,20): error TS2532: Object is possibly 'undefined'.
+src/containers/QuickQuote/RelatedProductTypes/index.tsx(70,27): error TS2345: Argument of type '(previousData: ClickedProductType | null) => { appearanceId: number | null | undefined; } | { appearanceId: number | null | undefined; productTypeId: number; isSet: boolean; }' is not assignable to parameter of type 'SetStateAction<ClickedProductType | null>'.
+src/containers/QuickQuote/RelatedProductTypes/index.tsx(77,5): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/RelatedProductTypes/index.tsx(135,3): error TS2345: Argument of type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to parameter of type 'ComponentType<Matching<{ selectedProductTypeId: number | null | undefined; } & { addProductTypeForQuickQuote: (productTypeId: number, appearanceId?: number | null | undefined) => AddProductTypeAction; }, Props>>'.
+src/containers/QuickQuote/Share/index.tsx(4,10): error TS2305: Module '"../../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/QuickQuote/Share/index.tsx(20,31): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/QuickQuote/Share/index.tsx(29,25): error TS2307: Cannot find module '../../../graphql/routes/query.gql'.
+src/containers/QuickQuote/Share/index.tsx(41,31): error TS2307: Cannot find module './graphql/productTypes/query.gql'.
+src/containers/QuickQuote/Share/index.tsx(155,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/Share/index.tsx(219,13): error TS2339: Property 'productTypes' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/Share/index.tsx(220,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/Share/index.tsx(221,13): error TS2339: Property 'routes' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/Share/index.tsx(281,52): error TS2345: Argument of type 'typeof ProductTypeSlider' is not assignable to parameter of type 'ComponentType<Matching<{ productTypeIds: number[]; amounts: AmountsPerProductTypeId; printAreas: SelectedPrintareasPerProductTypeId; slidesToShow: number; } & DispatchProp<AnyAction>, Props>>'.
+src/containers/QuickQuote/SharePage/index.tsx(12,30): error TS2307: Cannot find module '../../../graphql/translations/query.gql'.
+src/containers/QuickQuote/SharePage/index.tsx(151,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/index.tsx(14,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/QuickQuote/index.tsx(63,3): error TS2322: Type 'ConnectedComponentClass<typeof Status, Pick<Props, "error" | "pastDelay" | "timedOut">>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/QuickQuote/index.tsx(87,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/QuickQuote/index.tsx(106,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/QuickQuote/index.tsx(163,17): error TS2322: Type 'false | Element' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)> | ... 7 more ... | undefined'.
+src/containers/QuickQuote/index.tsx(182,3): error TS2345: Argument of type 'ConnectedComponentClass<(props: {}) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>, Pick<...>>' is not assignable to parameter of type 'ComponentType<RouteComponentProps<any, StaticContext, any>>'.
+src/containers/RelatedProductTypes/Container.tsx(113,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/RelatedProductTypes/index.tsx(8,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/RelatedProductTypes/index.tsx(12,37): error TS2307: Cannot find module './graphql/productType/query.gql'.
+src/containers/RelatedProductTypes/index.tsx(13,40): error TS2307: Cannot find module './graphql/productTypeSet/query.gql'.
+src/containers/RelatedProductTypes/index.tsx(84,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/RelatedProductTypes/index.tsx(85,13): error TS2339: Property 'productTypeSet' does not exist on type 'QueryData | undefined'.
+src/containers/RelatedProductTypes/index.tsx(145,13): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/RelatedProductTypes/index.tsx(146,13): error TS2339: Property 'productType' does not exist on type 'QueryData | undefined'.
+src/containers/RouterLink/index.tsx(3,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/Routes/index.tsx(2,17): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/Routes/index.tsx(12,25): error TS2307: Cannot find module '../../graphql/routes/query.gql'.
+src/containers/Routes/index.tsx(13,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/Routes/index.tsx(50,16): error TS2322: Type '{ children: Element[]; value: string; }' is not assignable to type '{ value: string | null | undefined; children?: ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<...>)> | undefined; }'.
+src/containers/Routes/index.tsx(85,19): error TS2322: Type '{ error: ApolloError | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/containers/Routes/index.tsx(89,11): error TS2339: Property 'routes' does not exist on type 'BaseQueryData | undefined'.
+src/containers/Routes/index.tsx(90,11): error TS2339: Property 'translations' does not exist on type 'BaseQueryData | undefined'.
+src/containers/Routes/index.tsx(107,20): error TS2322: Type '{ routeName: string; errorCode: ErrorCode; }' is not assignable to type 'IntrinsicAttributes & { children?: ReactNode; }'.
+src/containers/SeoMetaData/index.tsx(8,19): error TS2307: Cannot find module './graphql/query.gql'.
+src/containers/SeoMetaData/index.tsx(59,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/SeoMetaData/index.tsx(76,19): error TS2339: Property 'seoMetaData' does not exist on type 'QueryData | undefined'.
+src/containers/SeoMetaData/transformer.ts(4,3): error TS2411: Property 'content' of type 'string | undefined' is not assignable to string index type 'string'.
+src/containers/SeoMetaData/transformer.ts(42,7): error TS2322: Type '(MetaTagAttributes | { [x: string]: string | MetaContent; })[]' is not assignable to type 'MetaTagAttributes[]'.
+src/containers/SeoText/index.tsx(15,19): error TS2307: Cannot find module './graphql/query.gql'.
+src/containers/SeoText/index.tsx(56,9): error TS2322: Type '(queryInfo: QueryProps<Data, OperationVariables>) => Element | null' is not assignable to type '((result: QueryResult<any, OperationVariables>) => ReactNode) | (((result: QueryResult<any, OperationVariables>) => ReactNode) & string) | (((result: QueryResult<any, OperationVariables>) => ReactNode) & number) | ... 4 more ... | (((result: QueryResult<...>) => ReactNode) & ReactPortal)'.
+src/containers/SeoText/index.tsx(57,19): error TS2339: Property 'loading' does not exist on type 'QueryProps<Data, OperationVariables>'.
+src/containers/SeoText/index.tsx(57,28): error TS2339: Property 'error' does not exist on type 'QueryProps<Data, OperationVariables>'.
+src/containers/SeoText/index.tsx(57,35): error TS2339: Property 'data' does not exist on type 'QueryProps<Data, OperationVariables>'.
+src/containers/SeoText/transformer.ts(43,5): error TS2345: Argument of type '(item: SeoText) => number' is not assignable to parameter of type '(value: SeoText | null | undefined, index: number, array: (SeoText | null | undefined)[]) => number'.
+src/containers/SeoText/transformer.ts(56,5): error TS2345: Argument of type '({ headingTag, heading, text, position }: SeoText) => { headingLevel: string; heading: string | null | undefined; text: string | null | undefined; position: number; }' is not assignable to parameter of type '(value: SeoText | null | undefined, index: number, array: (SeoText | null | undefined)[]) => { headingLevel: string; heading: string | null | undefined; text: string | null | undefined; position: number; }'.
+src/containers/SharingList/index.tsx(11,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/SharingList/index.tsx(113,19): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ShippingCalculator/index.tsx(33,27): error TS2307: Cannot find module './graphql/costs.gql'.
+src/containers/ShippingCalculator/index.tsx(35,41): error TS2307: Cannot find module './graphql/productTypeSet/shipping-dates.gql'.
+src/containers/ShippingCalculator/index.tsx(39,38): error TS2307: Cannot find module './graphql/productType/shipping-dates.gql'.
+src/containers/ShippingCalculator/index.tsx(66,3): error TS2322: Type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/containers/ShippingCalculator/index.tsx(242,17): error TS2532: Object is possibly 'undefined'.
+src/containers/ShippingCalculator/index.tsx(269,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ShippingCalculator/index.tsx(392,27): error TS2339: Property 'shippingCosts' does not exist on type 'CostsData | undefined'.
+src/containers/ShippingCalculator/index.tsx(460,11): error TS2322: Type 'false | Element' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)> | ... 7 more ... | undefined'.
+src/containers/ShippingCalculatorOverlay/index.tsx(2,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/containers/ShippingCalculatorOverlay/index.tsx(11,31): error TS2307: Cannot find module '../../graphql/translations/query.gql'.
+src/containers/ShippingCalculatorOverlay/index.tsx(15,44): error TS2307: Cannot find module './graphql/query.gql'.
+src/containers/ShippingCalculatorOverlay/index.tsx(57,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/ShippingCalculatorOverlay/index.tsx(80,15): error TS2339: Property 'translations' does not exist on type 'QueryData | undefined'.
+src/containers/ShippingCalculatorOverlay/index.tsx(81,15): error TS2339: Property 'shippingRegions' does not exist on type 'QueryData | undefined'.
+src/containers/Status/index.tsx(35,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/containers/Status/index.tsx(48,9): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+src/containers/Status/index.tsx(49,9): error TS2322: Type 'boolean | undefined' is not assignable to type 'boolean'.
+src/decorators/injectErrorBoundary.tsx(9,3): error TS2322: Type '(props: Props) => ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>' is not assignable to type 'ComponentClass<LoadingComponentProps, any> | FunctionComponent<LoadingComponentProps> | (() => null)'.
+src/decorators/injectPageTracking.tsx(4,10): error TS2305: Module '"../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/decorators/injectPageTracking.tsx(88,16): error TS2322: Type 'string' is not assignable to type 'DocumentNode'.
+src/decorators/injectPageTracking.tsx(97,63): error TS2345: Argument of type 'object | undefined' is not assignable to parameter of type 'object'.
+src/decorators/injectPageTracking.tsx(119,5): error TS2322: Type 'ConnectedComponentClass<any, Pick<unknown, never>>' is not assignable to type 'ComponentType<WrappedProps>'.
+src/decorators/injectPageTracking.tsx(119,39): error TS2345: Argument of type 'ComponentType<{}>' is not assignable to parameter of type 'ComponentType<RouteComponentProps<any, StaticContext, any>>'.
+src/decorators/injectProductSearchQuerySkip.tsx(87,7): error TS2345: Argument of type 'typeof SkipProductSearchQueryWrapper' is not assignable to parameter of type 'ComponentType<{ routeParameters: { departmentSlug?: string | null | undefined; categorySlug?: string | null | undefined; subcategorySlug?: string | undefined; page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; ...'.
+src/decorators/injectProductSearchQuerySkipFromProp.tsx(25,11): error TS2322: Type 'typeof WithSkipProductSearchQuery' is not assignable to type 'ComponentType<InputProps>'.
+src/decorators/injectTransformRouter.tsx(3,10): error TS2305: Module '"../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/decorators/injectTransformRouter.tsx(22,14): error TS2322: Type 'ProviderExoticComponent<ProviderProps<null>>' is not assignable to type 'ComponentType<{ value: string | null | undefined; children?: ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<...>)> | undefined; }>'.
+src/graphql/product-type-list/product-type-search/preprocess.ts(144,3): error TS2739: Type 'Dictionary<any>' is missing the following properties from type 'ProductTypeSearchVariables': imageOptions, appearanceImageOption
+src/graphql/product-type-list/product-type-search/preprocess.ts(163,3): error TS2322: Type 'Dictionary<any>' is not assignable to type 'ProductTypeSearchVariables'.
+src/index.tsx(22,31): error TS2339: Property '__INITIAL_STATE__' does not exist on type 'Window'.
+src/layouts/Alternating/index.tsx(8,5): error TS2605: JSX element type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>[]' is not a constructor function for JSX elements.
+src/pages/Error/index.tsx(16,11): error TS2339: Property 'router' does not exist on type '{}'.
+src/pages/Error/index.tsx(36,10): error TS2322: Type '{ errorCode: ErrorCode; fallback: boolean; }' is not assignable to type 'IntrinsicAttributes'.
+src/pages/GraphicService/index.tsx(21,57): error TS2345: Argument of type 'typeof GraphicService' is not assignable to parameter of type 'ComponentType<unknown>'.
+src/pages/Inquiry/index.tsx(32,7): error TS2322: Type 'null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/pages/Inquiry/index.tsx(37,10): error TS2322: Type '{ initialType: InquiryType; }' is not assignable to type 'IntrinsicAttributes'.
+src/pages/Inquiry/index.tsx(43,64): error TS2345: Argument of type 'typeof InquireHelp' is not assignable to parameter of type 'ComponentType<{ type: string; }>'.
+src/pages/ProductTypeDetail/index.tsx(2,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/pages/ProductTypeDetail/index.tsx(12,19): error TS2307: Cannot find module '../../graphql/product-type-detail/product-type/pageQuery.gql'.
+src/pages/ProductTypeDetail/index.tsx(29,22): error TS2345: Argument of type '{ query: any; getVariables: (props: any) => ProductTypeDetailPageVariables; transformQueryData: (data: QueryData, props: any) => Data; }' is not assignable to parameter of type 'PageTrackingParams'.
+src/pages/ProductTypeList/index.tsx(2,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/pages/ProductTypeList/index.tsx(25,19): error TS2307: Cannot find module '../../graphql/product-type-list/product-type-search/query.gql'.
+src/pages/ProductTypeList/index.tsx(44,9): error TS2322: Type 'Element | null' is not assignable to type 'ReactElement<any, string | ((props: any) => ReactElement<any, string | ... | (new (props: any) => Component<any, any, any>)> | null) | (new (props: any) => Component<any, any, any>)>'.
+src/pages/ProductTypeList/index.tsx(82,22): error TS2345: Argument of type '{ query: any; getVariables: (props: any) => ProductTypeSearchVariables; transformQueryData: (data: QueryData, props: any) => TransformedData; }' is not assignable to parameter of type 'PageTrackingParams'.
+src/pages/ProductTypeSetDetail/index.tsx(11,19): error TS2307: Cannot find module '../../graphql/product-type-detail/product-type-set/pageQuery.gql'.
+src/pages/ProductTypeSetDetail/index.tsx(28,22): error TS2345: Argument of type '{ query: any; getVariables: (props: any) => ProductTypeSetDetailPageVariables; transformQueryData: (data: QueryData, props: any) => Data | null | undefined; }' is not assignable to parameter of type 'PageTrackingParams'.
+src/pages/QuickQuote/index.tsx(2,10): error TS2305: Module '"../../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/pages/QuickQuote/index.tsx(31,24): error TS2345: Argument of type 'ComponentType<{}>' is not assignable to parameter of type 'ComponentType<unknown>'.
+src/pages/UsaLandingPage/footer.tsx(20,31): error TS2307: Cannot find module '../../graphql/config-values/query.gql'.
+src/pages/UsaLandingPage/footer.tsx(44,21): error TS2322: Type '{ error: ApolloError | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/pages/UsaLandingPage/footer.tsx(46,19): error TS2339: Property 'configValues' does not exist on type 'QueryData | undefined'.
+src/pages/UsaLandingPage/index.tsx(13,28): error TS2307: Cannot find module '../../graphql/image-urls/query.gql'.
+src/pages/UsaLandingPage/index.tsx(117,3): error TS2345: Argument of type '(productType: ProductTypeForSlider) => { imagePublicId: string; productTypeId: number; name: string; }' is not assignable to parameter of type '(value: { productTypeId: number; name: string; }, index: number, array: { productTypeId: number; name: string; }[]) => { imagePublicId: string; productTypeId: number; name: string; }'.
+src/pages/UsaLandingPage/index.tsx(202,21): error TS2322: Type '{ error: ApolloError | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+src/pages/UsaLandingPage/index.tsx(204,19): error TS2339: Property 'imageUrls' does not exist on type 'QueryData | undefined'.
+src/pages/UsaLandingPage/index.tsx(324,20): error TS2322: Type '{ initialType: string; phoneNumber: string; phoneInfo: string; hideFaqLink: true; recipientEmail: string; }' is not assignable to type 'IntrinsicAttributes'.
+src/reducers/abTesting.ts(9,3): error TS2374: Duplicate string index signature.
+src/reducers/product-type-selector.ts(26,26): error TS2304: Cannot find name '$Keys'.
+src/reducers/quick-quote.ts(430,10): error TS2678: Type '"RESET_PRODUCT_TYPE_IDS"' is not comparable to type '"SELECT_PRODUCT_TYPE_ID" | "ADD_PRODUCT_TYPE_ID" | "ADD_PRODUCT_TYPE" | "REMOVE_PRODUCT_TYPE_ID" | "REPLACE_PRODUCT_TYPE_ID" | "REPLACE_PRODUCT_TYPE" | "ADD_PRINT_AREA_FOR_PRODUCT_TYPE_ID" | ... 4 more ... | "HIDE_SHARE_OVERLAY"'.
+src/render-app.tsx(45,62): error TS2345: Argument of type 'string' is not assignable to parameter of type 'never'.
+src/render-app.tsx(64,30): error TS2339: Property 'statusCode' does not exist on type 'object'.
+src/render-error.tsx(30,12): error TS2322: Type '{ errorCode: ErrorCode; }' is not assignable to type 'IntrinsicAttributes'.
+src/render-error.tsx(47,28): error TS2322: Type '{ errorCode: ErrorCode; fallback: true; }' is not assignable to type 'IntrinsicAttributes'.
+src/selectors/product-type-selector.ts(20,33): error TS2304: Cannot find name '$Exact'.
+src/selectors/product-type-selector.ts(29,13): error TS2304: Cannot find name '$Exact'.
+src/selectors/product-type-selector.ts(30,33): error TS2345: Argument of type '(items: unknown[]) => boolean' is not assignable to parameter of type '(value: unknown, index: number, array: unknown[]) => unknown'.
+src/selectors/quick-quote.ts(56,3): error TS2345: Argument of type 'OutputSelector<AppState, number | null | undefined, (res: QuickQuoteState) => number | null | undefined>' is not assignable to parameter of type 'ParametricSelector<AppState, unknown, number>'.
+src/selectors/quick-quote.ts(65,3): error TS2345: Argument of type 'OutputSelector<AppState, number | null | undefined, (res: QuickQuoteState) => number | null | undefined>' is not assignable to parameter of type 'ParametricSelector<AppState, unknown, number>'.
+src/selectors/routing.ts(2,10): error TS2305: Module '"../../node_modules/@types/react-router-dom"' has no exported member 'Props'.
+src/selectors/routing.ts(44,14): error TS2322: Type 'OutputSelector<any, QuickQuoteParameters | null | undefined, (res: any) => QuickQuoteParameters | null | undefined>' is not assignable to type 'RouterSelector<QuickQuoteParameters>'.
+src/selectors/routing.ts(79,3): error TS2345: Argument of type '(router: any) => string | null | undefined' is not assignable to parameter of type 'ParametricSelector<any, unknown, string>'.
+src/utils/discount.ts(11,3): error TS2322: Type 'DiscountItem | undefined' is not assignable to type 'DiscountItem'.
+src/utils/graphql/authorization.ts(23,22): error TS2339: Property 'cache' does not exist on type '(cacheKey: number) => Promise<Response>'.
+src/utils/graphql/authorization.ts(84,12): error TS2339: Property '__AUTHORIZATION__' does not exist on type 'Window'.
+src/utils/graphql/authorization.ts(87,14): error TS2339: Property '__AUTHORIZATION__' does not exist on type 'Window'.
+src/utils/graphql/authorization.ts(95,5): error TS2322: Type '{ refreshAt: number; } | { refreshAt: number; } | { refreshAt: number; token: string; }' is not assignable to type 'Authorization | null | undefined'.
+src/utils/graphql/authorization.ts(104,10): error TS2339: Property '__AUTHORIZATION__' does not exist on type 'Window'.
+src/utils/graphql/authorization.ts(106,15): error TS2339: Property '__AUTHORIZATION__' does not exist on type 'Window'.
+src/utils/graphql/caching.ts(74,28): error TS2345: Argument of type '{ fragmentMatcher: any; dataIdFromObject: (object: QueryResult) => string | null | undefined; cacheRedirects: { Query: { routes: (_: any, args: RoutesArgs, { getCacheKey }: Resolver<"name">) => CacheKey[]; }; }; }' is not assignable to parameter of type 'InMemoryCacheConfig'.
+src/utils/graphql/fetch.ts(23,18): error TS2339: Property 'headers' does not exist on type 'object'.
+src/utils/link-generators/product-list.ts(64,36): error TS2345: Argument of type '{ page?: number | undefined; sortBy?: number | undefined; sizeIds?: number[] | undefined; baseColorIds?: number[] | undefined; brandIds?: number[] | undefined; }' is not assignable to parameter of type 'GetParameters'.
+src/utils/logger.ts(25,35): error TS2339: Property 'body' does not exist on type 'object'.
+src/utils/logger.ts(29,39): error TS2339: Property 'body' does not exist on type 'object'.
+src/utils/routing/quick-quote.ts(32,18): error TS2531: Object is possibly 'null'.
+src/utils/routing/quick-quote.ts(41,18): error TS2531: Object is possibly 'null'.
+src/utils/tracking.ts(13,31): error TS2339: Property '__INITIAL_STATE__' does not exist on type 'Window'.
+src/utils/transformers/product-type-detail.ts(82,7): error TS2322: Type '{ sizes: any[]; unit: Unit; src: string | undefined; name: string; srcSet: string; sizeFitHint: string; } | null | undefined' is not assignable to type 'Content | null | undefined'.
+src/utils/transformers/product-type-detail.ts(94,3): error TS2322: Type '(Content | null | undefined)[]' is not assignable to type 'Content[]'.
+src/utils/transformers/product-type-list.ts(211,5): error TS2322: Type 'FilterItem[]' is not assignable to type 'ColorItem[]'.
