@@ -7,7 +7,7 @@
     \midrule
     \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
   \endfoot
-  Any type                 & any                             & Beliebige Werte. Jeder Typ ist Subtyp von \code{any}. \code{any} ist jedem Typ zuweisbar und jeder Typ ist \code{any} zuweisbar. \medskip\\
+  Any type                 & any                             & Beliebige Werte. Jeder Typ ist Subtyp von \type{any}. \type{any} ist jedem Typ zuweisbar und jeder Typ ist \type{any} zuweisbar. \medskip\\
   Array type               & Array<number>\newline number[]  & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. Die zweite Notation ist eine äquivalente Kurzschreibweise.\medskip\\
   Boolean literal type     & true                            & Boolesche Literale (entweder \code{true} oder \code{false}). \medskip\\
   Boolean type             & boolean                         & Boolesche Werte. \medskip\\
@@ -18,7 +18,7 @@
   Generics                 & type Generic<{}T: Super> = T    & Generische Typen (\textit{parametrische Polymorphie}). \code{T} ist hierbei Typparameter, \code{Super} ein zugehöriger Supertyp, der mögliche Werte für T einschränkt. \medskip\\
   Interface type           & interface I \{\newline\hspace*{1.25em}prop: mixed;\newline\hspace*{1.25em}+covariant: Array<number>;\newline\}\medskip & Schnittstellen. Wie bei Objekttypen kann ein Attribute durch \code{+} als kovariant (nur lesbar) oder durch \code{-} als kontravariant (nur schreibar) markiert werden. \medskip\\
   Intersection type        & type Intersection = T1 \& T2    & Schnittmenge zweier Typen. Der Typ \code{Intersection} enthält hier alle Eigenschaften von \code{T1} und \code{T2}. \medskip\\
-  Mixed type               & mixed                           & Typ für unbekannte Werte, ähnlich zu \code{any}. Jeder Typ kann \code{mixed} zugewiesen werden, aber \code{mixed} kann anderen Typen erst nach Überprüfung der Kompatibilität zugewiesen werden. \medskip\\
+  Mixed type               & mixed                           & Typ für unbekannte Werte, ähnlich zu \type{any}. Jeder Typ kann \code{mixed} zugewiesen werden, aber \code{mixed} kann anderen Typen erst nach Überprüfung der Kompatibilität zugewiesen werden. \medskip\\
   Null literal type        & null                            & Genau der Wert \code{null}. \medskip\\
   Nullable type (Maybe type) & ?number                       & Typ für optionale, möglicherweise undefinierte Werte. Entspricht der Vereinigung aus dem angegeben Typ, \code{null} und \code{undefined}. \medskip\\
   Number literal type      & 42                              & Genau dieser numerische Wert. \medskip\\

@@ -40,8 +40,8 @@
 % Even better typography
 \usepackage{microtype}
 
-% Orphans
-\usepackage[all]{nowidow}
+% Continuous footnote numbering
+\counterwithout{footnote}{chapter}
 
 % Biber (references)
 \usepackage[
@@ -224,9 +224,6 @@
 \babelhyphenation[ngerman]{Team-Shirts}
 \babelhyphenation[ngerman]{ko-var-ia-nt}
 \babelhyphenation[ngerman]{kon-tra-var-ia-nt}
-
-% Orphans
-\usepackage[all]{nowidow}
 
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
