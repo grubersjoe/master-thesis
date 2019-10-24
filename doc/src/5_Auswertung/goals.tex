@@ -15,7 +15,31 @@ Der TypeScript-Compiler besitzt wie in Abschnitt~\ref{sec:typescript} beschriebe
 \subsection{Performance der Typüberprüfungen}
 
 % TODO: messungen (complete) für 4 geräte (tabelle reicht wohl)
-% TODO: diagramm mit messung multicore, wenn ts multicore köönnte, dann ...
+% TODO: wenn ts multicore könnte, dann ...
+
+\begin{figure}[tbp]
+  \centering
+
+  \input{../data/plots/complete/components-plot}
+
+  \vspace{.5\baselineskip}
+
+  \input{../data/plots/complete/helios-plot}
+  \vspace{.5\baselineskip}
+  \caption[Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow und TypeScript]{
+    Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow und TypeScript der Projekte \textit{Components} und \textit{Helios}.
+  }
+
+  \vspace{\baselineskip}
+  \caption*{
+    \small
+    Jeweils 100 Messwerte, bestes und schlechtestes Dezil verworfen.\\
+    Die Graphen zeigen den Durchschnitt der verbleibenden 80 Werte.\\
+    Flow v0.96, TypeScript v3.5.\\
+    Intel Core i7-6700 CPU mit 3,4~GHz.
+  }
+\end{figure}
+
 
 \subsection{Zukunftssicherheit und Transparenz der Technologie}
 
