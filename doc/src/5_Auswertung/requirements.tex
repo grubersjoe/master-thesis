@@ -1,11 +1,53 @@
 \subsection{Äquivalente und vollständige Übersetzung der Flow-Typen}
+\label{sec:interpretation:equivalent-translation}
 
-% TODO: fixture tests belegen das ja quasi. einschränkung: vollständigkeit der tests
+\subsubsection{Äquivalenz der Übersetzungen}
 
-\subsubsection{Übersetzungen mit Verlust von Typeinformation}
-\label{sec:lossy-translations}
+Die erste und wichtigste technische Anforderung an den Transpiler ist die äquivalente und vollständige Übersetzung aller Flow-Typen nach TypeScript. Die äquivalenten TypeScript-Ausdrücke der verschiedenen Flow-Typen konnten mehrheitlich einfach gefunden werden, weil TypeScript einen sehr ähnlichen Funktionsumfang wie Flow besitzt und sich oftmals nur die Schlüsselwörter unterscheiden\footnote{Vgl. Übersetzungstabellen in Abschnitt~\ref{sec:flow-transpilation}.}. Kompliziertere Übersetzungen, die nicht offensichtlich sind, wurden experimentell ermittelt.
 
-Für einige, wenige Typen existiert keine absolut äquivalente Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier zu einem Verlust von Typinformation, was in Konflikt mit Anforderung~\ref{sec:requirement:completeness} steht. Im Folgenden wird ausgeführt wo dies auftritt und wie dies innerhalb des Transpilers gehandhabt wird.
+Für einige, wenige Typen existiert keine äquivalente Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier bei der Übersetzung zwingend zu einem Verlust von Typinformation. Dieser wird gemäß Anforderung~\ref{sec:requirement:completeness} für diese Fälle akzeptiert, jedoch muss der Benutzer durch eine Warnung darüber informiert werden. Um diese Vorgabe zu erfüllen, gibt der Transpiler während der Verarbeitung einer Codebasis bei Auftreten eines derartigen Typs eine Warnung wie die Folgende aus:
+
+\begin{lstlisting}[
+  label={code:transpiler-warnings},
+  caption={Ausgabe von Warnungen bei Autreten nicht äquivalent übersetzbarer Flow-Typen.},
+  emph={Warning},
+]
+Transpiling example.js...
+
+  1 | // @flow
+> 2 | const existentialType: * = String(2 * 3);
+    |                       ^
+  Warning: Flow's Existential Type (*) is not expressible in TypeScript.
+           It will be replaced with 'any'.
+           See https://github.com/Microsoft/TypeScript/issues/14466.
+\end{lstlisting}
+
+Nachfolgend wird ausgeführt, welche der Funktionen von Flow nicht absolut korrekt übersetzt werden können und wie dies jeweils innerhalb des Transpilers gehandhabt wird.
+
+\begin{itemize}
+  \item {\libertineSB{Existential type}}\\*
+    In TypeScript existiert kein Typ, der Flows \type{Existential type} entspricht~\autocite{TS:GITHUB:NO_EXISTENTIAL_TYPE}. Wie Quelltext~\ref{code:transpiler-warnings} bereits exemplarisch zeigt, wird das Auftreten dieses Typs deswegen durch den Transpiler mit \type{any} ersetzt. Weil \type{any} mit jedem Typ kompatibel ist, geht damit gegebenenfalls Typinformation verloren, falls Flow zuvor einen konkreteren Typ inferieren konnte.
+  \medbreak
+  \item {\libertineSB{Index-Signaturen in Objekttypen}}\\*
+    Durch eckige Klammern kann in Objekttypen ein Index, also die Abbildung eines Typs von Namen auf Werte eines anderen Typs, angegeben werden\footnote{Vgl. Tabelle~\ref{tab:flow-base-types}.}. Flow unterstützt hierbei jeden beliebigen Typ für die Attributnamen, TypeScript hingegen nur \code{string} und \code{number}~\autocite{TS:HANDBOOK:INTERFACES}. Deshalb entfernt der Transpiler Index-Signaturen, die von diesen erlaubten Typen abweichen, und fügt stattdessen jeweils eine Signatur für \code{string} und \code{number} ein, um die größtmögliche Menge von Schlüsseltypen zu erreichen.
+  \medbreak
+  \item {\libertineSB{Opaque type}}\\*
+    Auch opake Typen werden durch TypeScript nicht unterstützt~\autocite{TS:GITHUB:NO_OPAQUE_TYPE}. Infolgedessen wird dieser Typ bei der Übersetzung durch ein Typalias, das auf den gleichen Typ verweist, ersetzt.
+  \medbreak
+  \item {\libertineSB{Rückgabewert von Konstruktoren}}\\*
+    Flow ermöglicht es den Rückgabewert von Konstruktoren explizit anzugeben. Dies ist in TypeScript bewusst verboten, weil es im Allgemeinen als schlechter Programmierstil erachtet wird, wenn der Konstruktor etwas anderes als eine Klasseninstanz zurückliefert~\autocite{TS:GITHUB:CONSTRUCTOR_RETURN_TYPE}. Ein solcher Rückgabewert wird deswegen durch den Transpiler entfernt, damit keine fehlerhafte TypeScript-Syntax entsteht.
+  \medbreak
+  \item {\libertineSB{Varianz}}\\*
+    Ein letzter Aspekt von Flow, der in TypeScript in einigen Fällen nicht abbildbar ist, ist die Varianz von Typen. Weil TypeScript nur Kovarianz (Schlüsselwort \code{readonly}) unterstützt, werden die Varianz-Signaturen von Flow für alle anderen Fälle verworfen. Dies beinhaltet neben Objektattributen beispielsweise auch parametrische Polymorphie (Typparameter).
+\end{itemize}
+
+\subsubsection{Vollständigkeit der Transformationen}
+
+Wie bereits in Abschnitt~\ref{sec:requirement:completeness} ausgeführt ist der vollständige Funktionsumfang der Implementierung durch die Spezifikation des Parsers~\autocite{BABEL:PARSER_SPEC} von Babel präzise definiert, weil das Dokument festlegt, welche Knoten des abstrakten Syntaxbaums Flow-Syntax darstellen. Sofern sämtliche dieser Elemente korrekt in ihr TypeScript-Gegenstück transformiert werden, so ist die Vollständigkeit erreicht. Dies setzt vorraus, dass der abstrakte Syntaxbaum von Babel tatsächlich jegliche Flow-Syntax abbildet. Falls dies nicht der Fall wäre, träte aber ohnehin beim Einlesen der Eingabe ein Syntaxfehler auf, sodass eine Übersetzung unmöglich wäre. Ein weitere Aspekt, der zur Erzielung einer vollständigen Umsetzung beiträgt, ist die Typisierung von Babel, da diese beispielsweise einen Vereinigungstyp \code{Flow} bereitstellt, der alle Knotentypen von Flow umfasst~\autocite{BABEL:TYPES}. Auf diese Weise kann statisch überprüft werden, ob das Babel-Plugin alle Elemente dieser Vereinigungsmenge verarbeitet. Sollten nicht alle Fälle behandelt werden, so kann dies durch eine Typverletzung offen gelegt werden\footnote{Vgl. beispielsweise zentrale Flow-Umwandlungsfunktion in Quelltext~\ref{code:convert-flow-type}. Die \code{switch}-Anweisung verarbeitet ausnahmslos alle Elemente des Typs \type{FlowType}. Dies kann statisch garantiert werden.}.
+
+Die Korrektheit der Transformationen wird durch den in Abschnitt~\ref{sec:tdd} beschriebenen Ansatz der testgetriebenen Entwicklung gewährleistet. In der Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} wird die Syntax aller Sprachkonstrukte beschrieben, sodass die Menge der möglichen Typen bekannt ist. Durch Anlegen von Fixture-Dateien kann damit die korrekte Übersetzung aller Flow-Funktionen umfangreich getestet werden. Wie ausgeführt wurden insgesamt \numberOfTests Testfälle angelegt, die sämtliche Basis- und Hilfstypen sowie Typdeklarationen überprüfen. Durch eine hohe Testabdeckung von 93\% wurde darüber hinaus sicher gestellt, dass die einzelnen Bestandteile des Babel-Plugins in der Tat die angestrebte Funktionalität korrekt umsetzen.
+
+Insgesamt kann die Anforderung der äquivalenten und vollständigen Übersetzung aller Flow-Typen somit als erfüllt betrachtet werden.
 
 \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
 
@@ -14,24 +56,54 @@ Für einige, wenige Typen existiert keine absolut äquivalente Übersetzung, wei
 
 \subsection{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}
 
+
 % TODO: geht weil babel proposals, es2019 und jsx unterstützt
 
 \subsection{Verarbeitung gesamter Projektverzeichnisse}
 
-Wie in Abschnitt~\ref{sec:cli-program} bereits ausführlich dargelegt, wurde der Transpiler um ein Kommandozeilenprogramm (\textit{Reflow}) erweitert, um die Verarbeitung gesamter Verzeichnisse zu realisieren. Die Anwendung erwartet eine oder mehrere Dateien bzw. Verzeichnisse als Argument und führt daraufhin die Übersetzung dieser Eingaben durch.
-Durch die interne Verwendung der Bibliothek \textit{Glob}~\autocite{NPM:GLOB} können dabei auch beliebig komplexe Wildcard-Muster (\textit{glob patterns}) durch die Optionen \enquote{\code{include-pattern}} und \enquote{\code{exclude-pattern}} angegeben werden, um gewisse Datei- oder Verzeichnistypen ein- und auszuschließen. Die Glob-Notation ähnelt regulären Ausdrücken in einigen Aspekten, sodass auch kompliziertere Muster, wie beispielsweise die Negation von Ausdrücken oder die Spezifizierung von alternativen Werten, möglich sind~\autocite{MAN:GLOB}.
+Wie in Abschnitt~\ref{sec:cli-program} bereits ausführlich dargelegt, wurde der Transpiler um ein Kommandozeilenprogramm (\textit{Reflow}) erweitert, um die Verarbeitung gesamter Verzeichnisse zu realisieren. Die Anwendung erwartet eine oder mehrere Dateien bzw. Verzeichnisse als Argument und setzt daraufhin die Übersetzung dieser Eingaben mit Hilfe des Babel-Plugins um.
+Durch die interne Verwendung der Bibliothek \textit{Glob}~\autocite{NPM:GLOB} können dabei beliebig komplexe Wildcard-Muster (\textit{glob patterns}) durch die Optionen \enquote{\code{include-pattern}} und \enquote{\code{exclude-pattern}} angegeben werden, um gewisse Datei- oder Verzeichnistypen ein- und auszuschließen. Die Glob-Notation ähnelt regulären Ausdrücken in einigen Aspekten konzeptionell, sodass auch kompliziertere Muster, wie beispielsweise die Negation von Ausdrücken oder die Angabe einer Gruppe von alternativen Werten, möglich sind~\autocite{MAN:GLOB}.
 
 Die in Abschnitt~\ref{sec:requirement:batch-processing} definierten Forderungen, dass einerseits Verzeichnisse rekursiv verarbeitet werden, andererseits die Menge der zu übersetzenden Dateien flexibel eingegrenzt werden können muss, wurden somit erfüllt.
 
 \subsection{Beibehaltung der Quelltext-Formatierung}
 
-Weil die originalgetreue Formatierung der Ausgabe (Anforderung~\ref{sec:requirement:format}), bei Verwendung des Babel-Codegenerators, aus den dargelegten Gründen nicht umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs \textit{Prettier}~\autocite{SOFTWARE:PRETTIER} implementiert. Mit Hilfe eines zeilenbasierten Vergleichs werden dabei Leerzeilen und Kommentare aus der Flow-Eingabe in die TypeScript-Ausgabe übertragen, um eine möglichst große Ähnlichkeit zur ursprünglichen Formatierung herzustellen.
-
-Durch händische Überprüfung des generierten TypeScript-Codes der zwei vorliegenden Projekte von TeamShirts wurden inkorrekt formatierte Dateien ermittelt. Eine inkorrekte Formatierung bedeutet, dass Zeilen anders als im ursprünglichen Quelltext umgebrochen werden, Leerzeilen an falscher Position auftreten oder Kommentare falsch platziert werden. Sobald eine dieser Vorgaben verletzt wird, wird eine Datei als fehlerhaft betrachtet. Wie Tabelle~\ref{tab:results-formatting} zeigt, gelingt die Formatierung der Ausgabe leider nicht in allen Fällen. Während diese im Projekt \textit{Components} bei 11 der 311 verarbeiteten JavaScript-Dateien (3,32\%) fehlgeschlagen ist, konnten bei Helios 21 der 353 Dateien nicht korrekt formatiert werden (5,95\%). Insgesamt ergibt sich so eine Fehlerrate von 4,68\%.
+Weil die originalgetreue Formatierung der Ausgabe (Anforderung~\ref{sec:requirement:format}) bei Verwendung des Babel-Codegenerators, aus den dargelegten Gründen, nicht umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs Prettier~\autocite{SOFTWARE:PRETTIER} implementiert\footnote{Vgl. Abschnitt~\ref{sec:formatting}}.
+% Hierbei wird die Ein- und Ausgabe zunächst in einen konsistenten Ausgangszustand überführt, sodass daraufhin Leerzeilen und Kommentare mit Hilfe eines zeilenbasierten Vergleichs übertragen werden können. Auf diese Weise wird eine möglichst große Ähnlichkeit des generierten Quelltexts zur ursprünglichen Formatierung hergestellt.
+Mittels händischer Überprüfung des erzeugten TypeScript-Codes der zwei vorliegenden Projekte von TeamShirts, wurden inkorrekt formatierte Dateien ermittelt. Damit gemeint ist das Auftreten von Zeilen, die anders als im ursprünglichen Quelltext umgebrochen werden, Leerzeilen an falscher Position und inkorrekt platzierte Kommentare. Sobald eines dieser Kriterien vorliegt, wird die Formatierung einer Datei als fehlerhaft betrachtet. Wie Tabelle~\ref{tab:results-formatting} zeigt, gelingt die Formatierung der Ausgabe leider nicht in allen Fällen. Während diese im Projekt Components bei 11 der 311 verarbeiteten JavaScript-Dateien (3,54\%) fehlgeschlagen ist, konnten bei Helios 21 der 353 Dateien nicht korrekt formatiert werden (5,95\%). Insgesamt ergibt sich so eine Fehlerrate von 4,68\%.
 
 \bigbreak
 \input{src/5_Auswertung/tables/results-formatting}
 
-Nach Untersuchung der Ursachen für die inkorrekten Formatierung konnten folgende Ursachen identifiziert werden: TODO.
+\medbreak
+Zur Feststellung der Ursachen der fehlerhaften Formatierung wurden die Verarbeitung der inkorrekt ausgegebenen Dateien untersucht. Weil das Verfahren zeilenbasiert arbeitet, ist die Konsistenz der Umbrüche für das Gelingen der Formatierung entscheidend, da es andernfalls zu einem Versatz der betrachteten Eingabe- und Ausgabgezeilen kommt. Die Betrachtung der Originaldateien, welche fehlerhaft formatiert wurden, hat gezeigt, dass dies in Folge von bestimmten, eher selten vorkommenden Quelltext-Formatierung auftritt. Nachfolgend soll das Problem anhand eines Beispiel für einen solchen Fall veranschaulicht werden:
 
-Zwar konnte die Anforderung nicht vollständig erfüllt werden, weil nicht alle Ausgabedateien korrekt formatiert wurden, dennoch wurde der Programmierstil in 95,32\% der Fälle akkurat beibehalten. Da die manuelle Korrektur der insgesamt 32 fehlerhaften Dateien mit geringem Zeitaufwand durchführbar ist, kann das Gesamtergebnis als zufriedenstellend betrachtet werden.
+\begin{lstlisting}[
+  label={code:wrong-formatting:flow},
+  caption={Beispiel für Formatierung des Original-Quelltexts, die falsch in die Ausgabe übernommen wird.}
+]
+if (
+  a &&
+  b &&    // Kommentar, der Zweck von 'b' beschreibt
+  c === 0 // Kommentar, der Zweck von 'c' beschreibt
+) {
+  // ...
+}
+\end{lstlisting}
+
+Der boolesche Ausdruck, der als Bedingung der Verzweigung in Zeile~1 dient, wird mehrmals umgebrochen, sodass der Zweck der einzelnen Elemente durch einen Zeilenkommentar erläutert werden kann. Der umgesetzte Flow-Transpiler ignoriert Kommentare der Eingabe bei Generierung der TypeScript-Ausgabe, weil Babel diese, wie ausgeführt, ohnehin falsch platzieren würde. Erst durch die Formatierungsroutine werden die Kommentare im Nachgang wieder eingefügt. Diese schlägt für das Beispiel fehl, weil der boolesche Ausdruck in der erzeugten Ausgabe aufgrund der entfernten Kommentare nicht mehr umgebrochen wird (vgl. Quelltext~\ref{code:wrong-formatting:ts}). Da der Zeilenumbruch in der Ein- und Ausgabe in diesem Fall somit inkonsistent ist, schlägt auch die Übertragung der Formatierung in allen nachfolgenden Zeilen fehl.
+
+\begin{lstlisting}[
+  % float,
+  % floatplacement=H,
+  label={code:wrong-formatting:ts},
+  caption={Generierte TypeScript-Ausgabe der Eingabe in~\ref{code:wrong-formatting:flow} \emph{vor} Ausführung der Formatierungsroutine.}
+]
+if (foo && bar && baz === 0) {
+  // ...
+}
+\end{lstlisting}
+
+Wie die weitere Fehleranalyse gezeigt hat, ergibt sich bei der Auflistung der formalen Parameter von Funktionen die gleiche Problematik, wenn diese analog zum Beispiel umgebrochen werden. Zur Lösung dieser fehlerhaften Fälle, sollte die angepasste Version von Prettier so erweitert werden, dass auch die Bedingung von Verzweigungen und die Auflistung von Parametern stets umgebrochen werden.
+
+Zwar konnte die Anforderung nicht vollständig umgesetzt werden, weil nicht alle Ausgabedateien korrekt formatiert werden, dennoch wurde der Programmierstil in 95,32\% der Fälle akkurat beibehalten. Da die manuelle Korrektur der insgesamt 32 fehlerhaften Dateien mit geringem Zeitaufwand durchführbar ist, kann die geforderte Funktion als größtenteils erfüllt betrachtet werden.
