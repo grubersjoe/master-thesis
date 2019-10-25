@@ -36,12 +36,16 @@
 
 % Set headings in serif as well
 \addtokomafont{disposition}{\rmfamily}
+\setkomafont{paragraph}{\libertineSB}
 
 % Even better typography
 \usepackage{microtype}
 
+% Orphans (note: this is still required even with microtype)
+\usepackage[all]{nowidow}
+
 % Continuous footnote numbering
-\counterwithout{footnote}{chapter}
+% \counterwithout{footnote}{chapter}
 
 % Biber (references)
 \usepackage[
@@ -228,6 +232,7 @@
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
 \newcommand{\danger}[1]{{\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}}
+\newcommand{\numberOfTests}{1013 }
 \newcommand{\str}[1]{\textquotesingle#1\textquotesingle}
 \newcommand{\type}[1]{\textit{#1}}
 

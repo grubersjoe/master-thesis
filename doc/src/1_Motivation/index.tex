@@ -20,7 +20,7 @@ Eine dynamische Typisierung ist dadurch charakterisiert, dass jedem Wert der Pro
 Die ECMAScript-Spezifikation definiert die folgenden sieben Datentypen~\autocite[25]{ECMASCRIPT:2019}. Diese legen fest, wie Werte des Programms zur Laufzeit interpretiert werden, welchen Wertebereich sie umfassen und welche Operationen mit ihnen möglich sind. Alle Datentypen außer \texttt{Object} sind dabei primitiv, das heißt nicht weiter zerlegbar (atomar)~\autocite[8]{ECMASCRIPT:2019}.
 
 % \pagebreak
-\begin{enumerate}
+\begin{itemize}
   \item \code{Undefined}: Undefinierte Werte
   \item \code{Null}: Nullwert
   \item \code{Boolean}: Boolesche Werte
@@ -28,7 +28,7 @@ Die ECMAScript-Spezifikation definiert die folgenden sieben Datentypen~\autocite
   \item \code{Symbol}: Eindeutige Bezeichner
   \item \code{Number}: Gleitkommazahlen
   \item \code{Object}: Alles Weitere (Felder, Funktionen, Objekte, usw.)
-\end{enumerate}
+\end{itemize}
 
 % JavaScripts Typsystem wird manchmal auch als \enquote{\emph{schwach}} bezeichnet. Eine solche Kategorisierung in \enquote{schwache} und \enquote{starke} Typsysteme ist umstritten, da keine allgemein anerkannte Definition dieser unpräzisen Klassifizierung existiert~\autocite{CARDELLI:TYPE_SYSTEMS}. Im Allgemeinen wird von starker Typisierung gesprochen, wenn eine strikte Typisierung vorliegt, d.~h. wenn im Extremfall der Typ einer Variablen \emph{lediglich} durch explizite Sprachkonstrukte wie beispielsweise in Haskell umgewandelt werden kann~\autocite{HASKELL}. Werden Typen hingegen wie in JavaScript bei Bedarf implizit in andere Typen konvertiert, so wird dies als schwache Typisierung angesehen.
 
@@ -37,12 +37,12 @@ Die ECMAScript-Spezifikation definiert die folgenden sieben Datentypen~\autocite
 Nachfolgend sollen einige der kontroversen Effekte der impliziten Typumwandlung in Java"=Script anhand verschiedener Beispiele in Tabelle~\ref{tab:js-type-coercion} veranschaulicht werden, indem die Ausdrücke mit ihren jeweiligen Gegenstücken in Python~\autocite{PYTHON3} und Ruby~\autocite{RUBY} verglichen werden. Python und Ruby sind dynamisch typisierte Skriptsprachen, die beide wie JavaScript in den Neunzigerjahren entstanden sind (1991 bzw. 1995).
 
 In den ersten drei Zeilen der Tabelle werden Feld- und Objektliterale durch den Konkatenationsoperator \code{+} verknüpft. Dieser Operator kann in JavaScript sowohl für die Addition, als auch für die Verknüpfung \emph{beliebiger} anderer Typen verwendet werden. Das Ergebnis der Operation wird dabei durch Algorithmen innerhalb der Spezifikation~\autocite[220]{ECMASCRIPT:2019} festgelegt. Entsprechend dieser Regeln werden die Argumente des Operators je nach Ausgangsdatentyp und deren Reihenfolge zuerst implizit umgewandelt und daraufhin durch Addition oder String-Verkettung verknüpft. Während die Operation in JavaScript für die Konkatenation von Zeichenketten und die Addition von Zahlen zweckmäßig ist, führt sie bei anderen Argumenttypen zu unvorhergesehenen Ergebnissen. In Python und Ruby resultiert die analoge Verwendung des Operators in einen Typfehler, da derartige Ausdrücke in diesen Sprachen ungültig sind. Die Ablehnung solcher Programme durch das Laufzeitsystem ist nützlich, weil auf diese Weise Fehler unmittelbar erkannt werden können.
-In Zeile 4~f. werden jeweils zwei Feldliterale konkateniert. In diesem Fall reihen viele dynamische Programmiersprachen, wie auch Python und Ruby, die Werte des zweiten Felds an die des ersten an. JavaScript konvertiert die Felder hingegen zu ihrer Repräsentation als Zeichenkette und konkateniert dieses daraufhin, statt die Werte des Felds zu kombinieren.
+In Zeile~4~f. werden jeweils zwei Feldliterale konkateniert. In diesem Fall reihen viele dynamische Programmiersprachen, wie auch Python und Ruby, die Werte des zweiten Felds an die des ersten an. JavaScript konvertiert die Felder hingegen zu ihrer Repräsentation als Zeichenkette und konkateniert dieses daraufhin, statt die Werte des Felds zu kombinieren.
 
 % \bigbreak
 \input{src/1_Motivation/tables/type-coercion}
 
-Auch beim Vergleichsoperator \texttt{==}\footnote{Vgl. \textit{Abstract Equality Comparison}~\autocite[68]{ECMASCRIPT:2019}.} (Zeile 6 ff.) werden die Typen der Operatorargumente automatisch entsprechend des Algorithmus der Spezifikation umgewandelt, um die Gleichheit der zugehörigen Werte zu überprüfen. \citeauthor{PRADEL:2015} argumentieren, dass die Regeln der impliziten Typumwandlung in JavaScript von Programmierern oft als kompliziert und unintuitiv wahrgenommen werden, sodass der Vergleich von Werten zu teilweise nicht unmittelbar nachvollziehbaren Ergebnissen führt~\autocite{PRADEL:2015}.
+Auch beim Vergleichsoperator \texttt{==}\footnote{Vgl. \textit{Abstract Equality Comparison}~\autocite[68]{ECMASCRIPT:2019}.} (Zeile~6 ff.) werden die Typen der Operatorargumente automatisch entsprechend des Algorithmus der Spezifikation umgewandelt, um die Gleichheit der zugehörigen Werte zu überprüfen. \citeauthor{PRADEL:2015} argumentieren, dass die Regeln der impliziten Typumwandlung in JavaScript von Programmierern oft als kompliziert und unintuitiv wahrgenommen werden, sodass der Vergleich von Werten zu teilweise nicht unmittelbar nachvollziehbaren Ergebnissen führt~\autocite{PRADEL:2015}.
 Mit der dritten Version der ECMAScript-Spezifikation~\autocite{ECMASCRIPT:1999} wurde 1999 ein strikter Vergleichsoperator \code{===}\footnote{Vgl. \textit{Strict Equality Comparison}~\autocite[68]{ECMASCRIPT:2019}.} eingeführt, der die Überprüfung sowohl der Typ- als auch der Wertgleichheit ermöglicht und damit mehr Sicherheit bietet (vgl. Zeile 7 versus 9).
 Das letzte Beispiel für die Inkonsistenz der dynamischen Typumwandlungen in JavaScript ist schließlich der \code{typeof}-Operator, der den momentanen Typ eines Programmelements zurückliefert. Obwohl der Operator den korrekten Wert für alle anderen Fälle zurückliefert, wird für \code{null} der mehrdeutige Wert \code{object} ausgegeben. Das Resultat der entsprechenden Ausdrücke in Python und Ruby ist dagegen eindeutig.
 

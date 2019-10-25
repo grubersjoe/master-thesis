@@ -66,7 +66,7 @@ Neben den ausgeführten Zielvorgaben wurden weiterhin einige technische Anforder
 \label{sec:requirement:completeness}
 
 Die bedeutsamste Anforderung an den Transpiler ist die äquivalente Übersetzung \emph{sämtlicher} Flow-Sprachelemente nach TypeScript. Durch die Forderung der Vollständigkeit wird garantiert, dass jedes beliebige Flow-Eingabeprogramm transpiliert werden kann. Da durch die Spezifikation des abstrakten Syntaxbaums von Babel~\autocite{BABEL:PARSER_SPEC} klar definiert ist, welche der AST-Knoten Flow-Syntax darstellen, ist der Umfang einer vollständigen Implementierung exakt eingegrenzt.
-Einige der Funktionen des Typsystems von Flow werden in TypeScript nicht unterstützt, sodass eine absolut bedeutungsgleiche Übersetzung dieser Typen unmöglich ist (s. Abschnitt~\ref{sec:lossy-translations}). Ein geringer Verlust von Typinformation wird deshalb an dieser Stelle akzeptiert, jedoch soll der Benutzer bei Auftreten dieser Fälle durch eine aussagekräftige Warnung benachrichtigt werden.
+Einige der Funktionen des Typsystems von Flow werden in TypeScript nicht unterstützt, sodass eine absolut bedeutungsgleiche Übersetzung dieser Typen unmöglich ist (s. Abschnitt~\ref{sec:interpretation:equivalent-translation}). Ein geringer Verlust von Typinformation wird deshalb an dieser Stelle akzeptiert, jedoch soll der Benutzer bei Auftreten dieser Fälle durch eine aussagekräftige Warnung benachrichtigt werden.
 
 \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
 \label{sec:requirement:semantic-equivalence}
