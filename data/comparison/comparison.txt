@@ -1,0 +1,22 @@
+Kiikurage entfernt Kommentare..?
+
+Components Kiikurage: 331 file(s), 167 modified, 54 errors
+Bug: Property parameters expected type of array but got object
+Encountered an error while processing packages/utils/style/media/index.js:
+TypeError: /home/joe/components_TEST/packages/utils/style/media/index.js: Property parameters expected type of array but got object
+    at validate (/home/joe/components_TEST/node_modules/@babel/types/lib/definitions/utils.js:164:13)
+    at Object.validate (/home/joe/components_TEST/node_modules/@babel/types/lib/definitions/utils.js:201:7)
+    at validateField (/home/joe/components_TEST/node_modules/@babel/types/lib/validators/validate.js:22:9)
+    at validate (/home/joe/components_TEST/node_modules/@babel/types/lib/validators/validate.js:16:3)
+    at builder (/home/joe/components_TEST/node_modules/@babel/types/lib/builders/builder.js:38:27)
+    at Object.TSFunctionType (/home/joe/components_TEST/node_modules/@babel/types/lib/builders/generated/index.js:985:31)
+    at Object.convertFlowType (/home/joe/components_TEST/node_modules/babel-plugin-flow-to-typescript/src/converters/convert_flow_type.ts:366:22)
+    at Object.convertTypeAnnotation (/home/joe/components_TEST/node_modules/babel-plugin-flow-to-typescript/src/converters/convert_type_annotation.ts:14:29)
+    at PluginPass.TypeAnnotation (/home/joe/components_TEST/node_modules/babel-plugin-flow-to-typescript/src/visitors/type_annotation.ts:7:22)
+    at newFn (/home/joe/.config/yarn/global/node_modules/@babel/traverse/lib/visitors.js:179:21)
+
+
+
+Khan verkackt Kommentare
+aber hat Prettier drin
+keine Decorator, nicht als einzelnes Plugin benutzbar
