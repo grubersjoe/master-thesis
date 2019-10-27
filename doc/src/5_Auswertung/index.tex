@@ -1,15 +1,15 @@
 \chapter{Auswertung und Diskussion}
 \label{chap:evaluation}
 
-Nachfolgende sollen nun die Ergebnisse der Migration der zwei Projekte von TeamShirts, die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird einerseits die Erfüllung der Zielvorgaben aus Abschnitt~\ref{sec:goals}, andererseits die Einhaltung der technischen Anforderungen an den Transpiler aus Abschnitt~\ref{sec:requirements} beurteilt und kritisch diskutiert. Zunächst wird jedoch die Durchführung der Migration an sich beschrieben.
+Nachfolgende sollen nun die Ergebnisse der Migration der zwei Projekte von TeamShirts, die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird einerseits die Erfüllung der Zielvorgaben aus Abschnitt~\ref{sec:goals}, andererseits die Einhaltung der technischen Anforderungen an den Transpiler aus Abschnitt~\ref{sec:requirements} beurteilt und kritisch diskutiert. Damit die erzielten Ergebnisse besser eingeordnet werden können, werden diese hierbei auch mit den zwei konkurrierenden Ansätzen zur Transpilierung von Flow von \textit{Kikura}~\autocite{KIKURA:FLOW_TO_TS} und der \textit{Khan Academy}~\autocite{KHAN:FLOW_TO_TS} verglichen\footnote{Vgl. Abschnitt~\ref{sec:evaluation-other-transpilers}.}. Als erstes wird jedoch die Durchführung der Migration an sich beschrieben.
 
 \section{Durchführung der Migration}
 
-Bereits während der Entwicklungsphase des Flow-Transpilers wurde dieser immer wieder mit dem Quelltext der vorliegenden Projekte von TeamShirts erprobt, um dessen Praxistauglichkeit anhand einer realen Codebasis zu überprüfen. Nachdem der vollständige Funktionsumfang des Babel-Plugins hergestellt war, wurde zunächst das Projekt \textit{Components}, danach \textit{Helios} mit Hilfe des Flow-Übersetzers in TypeScript umgewandelt. Diese Reihenfolge wurde bewusst gewählt, weil Components einerseits keine Abhängigkeit zu anderen Projekten von TeamShirts besitzt, andererseits weniger Zeilen Code umfasst als Helios und damit greifbarer ist\footnote{Vgl. Abschnitt~\ref{sec:teamshirts-projects}}.
+Bereits während der Entwicklungsphase des Flow-Transpilers wurde dieser immer wieder mit dem Quelltext der vorliegenden Projekte von TeamShirts erprobt, um dessen Praxistauglichkeit anhand einer realen Codebasis zu überprüfen. Nachdem der vollständige Funktionsumfang des Babel-Plugins hergestellt war, wurde zunächst das Projekt \textit{Components}, danach \textit{Helios} mit Hilfe des Flow-Übersetzers in TypeScript umgewandelt. Diese Reihenfolge wurde bewusst gewählt, weil Components einerseits keine Abhängigkeit zu anderen Projekten von TeamShirts besitzt, andererseits weniger Zeilen Code umfasst als Helios und damit besser zu überblicken ist\footnote{Vgl. Abschnitt~\ref{sec:teamshirts-projects}.}.
 
 Unmittelbar nach Ausführung des Transpilers wurden bei Components 543 und bei Helios 404 neue nicht-strikte Typfehler durch den TypeScript-Compiler festgestellt. Diese mussten daraufhin manuell behoben werden. Die Korrektur der Fehler vereinnahmte bei Components sieben und bei Helios acht Personentage. Aufgrund der prinzipiellen Unterschiede der Typsysteme von Flow und Typescript, die im Grundlagenteil bereits dargelegt wurden, war das Auftreten neuer Fehler zu erwarten. Wie beschrieben ist beispielsweise die Typinferenz und die Berechnung der Typkompatibilität (nominal versus strukturell) in TypeScript anders umgesetzt als bei Flow. In Abschnitt~\ref{goal:new-type-errors} wird dieser Aspekt näher beleuchtet und genauer beschrieben, welche Arten von Typfehlern neu aufgetreten sind. Gleichzeitig wird untersucht, ob manche der neu erkannten Typfehler tatsächlich bislang unentdeckte Programmfehler repräsentieren.
 
-% Neben der Korrektur der Typfehler mussten die Projekte auch anderweitig angepasst werden, um die Migration nach TypeScript zu vollenden: Zum Beispiel mussten die Prozesse zur Auslieferung des Codes angepasst werden, da nun TypeScript-Code nach JavaScript übersetzt werden muss, anstatt wie bisher regulärer JavaScript-Quelltext mit Flow.
+% Neben der Korrektur der Typfehler mussten die Projekte auch anderweitig angepasst werden, um die Migration nach TypeScript zu vollenden: So mussten beispielsweise die Prozesse zur Auslieferung der Anwendungen . Inzwischen wurden beide Webanwendungen auf Grundlage des neuen TypeScript-Codes in der Produktivumgebung eingesetzt.
 
 % Vorteile: Andere Projekte wie Helios, die Components verwenden, kriegen deren Typisierung "frei Haus".
 
@@ -17,6 +17,7 @@ Unmittelbar nach Ausführung des Transpilers wurden bei Components 543 und bei H
 \section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
 \input{src/5_Auswertung/goals}
 
+\pagebreak % TODO: remove later
 \section{Erfüllung der technischen Anforderungen}
 \input{src/5_Auswertung/requirements}
 

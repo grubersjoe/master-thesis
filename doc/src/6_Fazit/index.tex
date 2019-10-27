@@ -3,7 +3,12 @@
 
 \section{Zusammenfassung}
 
+In der vorliegende Masterarbeit wurde die Fragestellung behandelt, wie statischen Typsysteme für JavaScript automatisch ineinander überführt werden können. Dabei wurde ein Transpiler entwickelt, der beliebige durch Flow typisierte JavaScript-Quelltexte in äquivalenten TypeScript-Code übersetzen kann.
+
 \section{Ausblick}
 
 % strikte ts checks
+
+Der Transpiler weißt noch verschiedene Schwächen auf. Insbesondere die originalgetreue Formatierung der Ausgabe ist verbesserungswürdig, weil hier wie gezeigt noch teilweise Fehler auftreten. Das implementierte Verfahren, um die Ausgabe durch zeilenweisen Vergleich mit der Eingabe zu formatieren funktioniert zwar in den allermeisten Fällen akkurat, ist aber nicht besonders robust. Sobald eine Abweichung beim Vergleich auftritt, ist eine korrekte Formatierung der verbleibenden Datei unmöglich. Ein aussichtsreicher Ansatz wäre, die gesamte Quelltext-Transformation durch einen konkreten statt abstrakten Syntaxbaum zu realisieren, sodass die Information über die genaue Formatierung des ursprünglichen Quelltexts nicht verloren geht.
+
 % Formatierung ist noch eher nicht soo geil
