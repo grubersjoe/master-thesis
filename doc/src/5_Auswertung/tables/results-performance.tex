@@ -1,0 +1,21 @@
+\begingroup
+\setlength{\tabcolsep}{7pt}
+\begin{table}[tbh]
+  \small
+  \begin{tabu} to \textwidth {@{}rrrrrr|rrrrrX@{}}
+    \midrule
+    {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {}\\
+    \rowfont[c]{} \libertineSB{S} & Laufzeit & s & Laufzeit & s & rel. $\Delta$ & Laufzeit & s & Laufzeit & s & rel. $\Delta$ & {}\\
+    \midrule
+    A & 7,87 & 0,09 & 15,50 & 0,08 & 97,0\% & 12,20 & 0,16 & 13,06 & 0,70 &   7,1\% & {} \\
+    B & 6,86 & 0,05 & 10,59 & 0,06 & 54,4\% & 10,90 & 0,33 &  8,49 & 0,16 & -22,1\% & {} \\
+    C & 6,50 & 0,02 &  9,56 & 0,05 & 47,1\% & 11,70 & 0,07 &  7,63 & 0,04 & -34,8\% & {} \\
+    D & 3,38 & 0,02 &  6,41 & 0,04 & 89,6\% &  5,15 & 0,02 &  4,94 & 0,03 &  -4,1\% & {} \\
+    \midrule
+    {} & \multicolumn{5}{c}{\large\textsc{components}} & \multicolumn{5}{c}{\large\textsc{helios}} & {}\\
+    \midrule
+  \end{tabu}
+  \caption{Durchschnittliche Laufzeit in Sekunden, Standardabweichung (s) und relative Veränderung der Zeitspanne (rel. $\Delta$) der vollständigen Typüberprüfung der Projekte Components und Helios durch Flow 0.96 und TypeScript 3.5 auf verschiedenen Hardware-Systemen (S).}
+  \label{tab:performance-complete}
+\end{table}
+\endgroup

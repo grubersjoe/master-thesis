@@ -44,9 +44,11 @@ Nachfolgend wird dargelegt, welche der Funktionen von Flow nicht absolut korrekt
     Ein letzter Aspekt von Flow, der in TypeScript in einigen Fällen nicht abbildbar ist, ist die Varianz von Typen. Weil die Syntax von TypeScript nur Kovarianz (Schlüsselwort \code{readonly}) unterstützt, werden die Varianz-Signaturen von Flow für alle anderen Fälle verworfen. Dies beinhaltet neben Objektattributen beispielsweise auch Typparameter, die in Flow entsprechend markiert werden können.
 \end{itemize}
 
+Neben diesen Flow-Funktionen, die prinzipiell nicht bedeutungsgleich übersetzt werden können, konnte darüber hinaus wie ausgeführt für die drei Hilfstypen \type{Object map}, \type{Object map with key} und \type{Tuple map} kein TypeScript-Ausdruck gefunden werden, der diesen entspricht. Deshalb ist die äquivalente Transformation der Typisierung auch in diesen drei Fällen nicht gegeben.
+
 \subsubsection{Vollständigkeit der Transformationen}
 
-Wie bereits in Abschnitt~\ref{sec:requirement:completeness} ausgeführt ist der vollständige Funktionsumfang der Implementierung durch die Spezifikation des Parsers~\autocite{BABEL:PARSER_SPEC} von Babel präzise definiert, weil das Dokument festlegt, welche Knoten des abstrakten Syntaxbaums Flow-Syntax darstellen. Sofern sämtliche dieser Elemente korrekt in ihr TypeScript-Gegenstück transformiert werden, so ist die Vollständigkeit erreicht. Dies setzt vorraus, dass der abstrakte Syntaxbaum von Babel tatsächlich jegliche Flow-Syntax abbildet. Es konnte kein Beleg gefunden werden, der diese Annahme widerlegt.
+Wie bereits in Abschnitt~\ref{sec:requirement:completeness} dargelegt ist der vollständige Funktionsumfang der Implementierung durch die Spezifikation des Parsers~\autocite{BABEL:PARSER_SPEC} von Babel präzise definiert, weil das Dokument festlegt, welche Knoten des abstrakten Syntaxbaums Flow-Syntax darstellen. Sofern sämtliche dieser Elemente korrekt in ihr TypeScript-Gegenstück transformiert werden, so ist die Vollständigkeit erreicht. Dies setzt vorraus, dass der abstrakte Syntaxbaum von Babel tatsächlich jegliche Flow-Syntax abbildet. Es konnte kein Beleg gefunden werden, der diese Annahme widerlegt.
 Ein weitere Aspekt, der zur Erzielung einer vollständigen Umsetzung beiträgt, ist die Typisierung von Babel, da diese beispielsweise einen Vereinigungstyp \code{Flow} bereitstellt, der alle Knotentypen von Flow umfasst~\autocite{BABEL:TYPES}. Auf diese Weise kann statisch überprüft werden, ob das Babel-Plugin alle Elemente dieser Vereinigungsmenge verarbeitet. Sollten nicht alle Fälle behandelt werden, so kann dies durch eine Typverletzung offen gelegt werden\footnote{Vgl. beispielsweise zentrale Flow-Umwandlungsfunktion in Quelltext~\ref{code:convert-flow-type}. Die \code{switch}-Anweisung verarbeitet ausnahmslos alle Elemente des Typs \type{FlowType}. Dies kann statisch garantiert werden.}.
 
 Die Korrektheit der Transformationen wird durch den in Abschnitt~\ref{sec:tdd} beschriebenen Ansatz der testgetriebenen Entwicklung gewährleistet. In der Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} wird die Syntax aller Sprachkonstrukte beschrieben, sodass bekannt ist, welche Typen prinzipiell möglich sind. Durch Anlegen von Fixture-Dateien kann damit die korrekte Übersetzung sämtlicher Flow-Funktionen umfangreich getestet werden. Wie ausgeführt wurden insgesamt \numberOfTests Testfälle angelegt, um alle Basis- und Hilfstypen sowie Typdeklarationen zu überprüfen. Durch eine hohe Testabdeckung von 93\% wird darüber hinaus sicher gestellt, dass die verschiedenen Programmverzweigungen des Transpilers tatsächlich die angestrebte Funktionalität umsetzen.
@@ -55,42 +57,45 @@ Die Korrektheit der Transformationen wird durch den in Abschnitt~\ref{sec:tdd} b
 
 \subsubsection{Vergleich mit konkurrierenden Transpilern}
 
-Die zwei betrachteten Aspekte der Äquivalenz und Vollständigkeit der Transformationen sollen auch für die zwei konkurrierenden Ansätze von \textit{Kikura}~\autocite{KIKURA:FLOW_TO_TS} und der \textit{Khan Academy}~\autocite{KHAN:FLOW_TO_TS} betrachtet werden, um das erzielte Ergebnis einzuordnen.
+Die zwei betrachteten Aspekte der Äquivalenz und Vollständigkeit der Transformationen sollen auch für die zwei konkurrierenden Ansätze von Kikura und der Khan Academy betrachtet werden, um das erzielte Ergebnis einzuordnen.
 
-TODO kiikurage hat bugs
+% TODO Kikura hat bugs
 
 
 \subsection{Semantisch äquivalente Transpilierung des Quelltexts}
 
-Der Transpiler darf die Semantik des ursprünglichen JavaScript-Programms durch die Übersetzung nicht verändern, damit keine neuen Programmfehler in den Quelltext eingeschleust werden. Die Überprüfung der semantisch korrekten Übersetzung der Flow-Typen wurde bereits im vorherigen Abschnitt behandelt. Weil die statische Typisierung vor der Auslieferung vollständig entfernt wird, hat diese aber ohnehin keinen Einfluss auf die Laufzeit-Semantik des Programms, sofern deren Transformation fehlerfrei, ohne Nebenwirkung umgesetzt wurde. Ein Aspekt des umgesetzten Transcompilers, der zu abweichender Semantik führen könnte sind die in Abschnitt~\ref{sec:optimizations} beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option \enquote{\code{replace-decorators}} werden beispielsweise Dekoratoren in bedeutungsgleiche verschachtelte Funktionsaufrufe umgewandelt.
+Eine weitere wichtige Anforderung ist, dass der Transpiler die Semantik des ursprünglichen JavaScript-Programms durch die Übersetzung nicht verändern darf, damit keine neuen Programmfehler in den Quelltext eingeschleust werden. Die korrekte Übersetzung der Semantik der Flow-Typen wurde bereits im vorherigen Abschnitt behandelt. Hierbei ist anzumerken, dass die statische Typisierung aber ohnehin keinen Einfluss auf die Laufzeit-Semantik des Programms hat, weil diese vor der Auslieferung vollständig entfernt wird. Dies setzt vorraus, dass die Programm-Transformation tatsächlich nur die Typisierung adressiert und keine unbeabsichtigte Nebenwirkung, wie zum Beispiel das Einfügen neuer Knoten in den abstrakten Syntaxbaum, verursacht. Dies wird wie ausgeführt durch die Fixture-Tests überprüft. Ein weiterer Aspekt des umgesetzten Transcompilers, der zu abweichender Semantik führen könnte sind die in Abschnitt~\ref{sec:optimizations} beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option \enquote{\code{replace-decorators}} werden beispielsweise Dekoratoren in bedeutungsgleiche verschachtelte Funktionsaufrufe umgewandelt.
 
 Ein formaler Beweis der semantischen Äquivalenz ist aufgrund des Umfangs der zwei migrierten Projekte nicht durchführbar. Jedoch kann durch Betrachtung der bestehenden Modultests die Beibehaltung der Programmwirkung nach der Übersetzung zumindest approximativ verifiziert werden. Kritisch anzumerken ist, dass dieser Ansatz nur bei einer entsprechend hohen Testabdeckung aussagekräftig ist. Während diese bei Components bei 90,5\% liegt, wird bei Helios nur ein Anteil von 18,0\% erreicht. Nachdem alle nicht-strikten Typfehler in beiden Projekten korrigiert waren, wurden daraufhin die Modultests beider Projekte ausgeführt. Keiner der 373 Tests von Components und 326 Tests von Helios schlug dabei fehl, sodass die semantisch korrekten Überführung des ursprünglichen Quelltexts nach TypeScript wahrscheinlich ist.
 Bei der praktischen Erprobung der zwei Projekte wurde allerdings in vier Fällen ein fehlerhaftes Verhalten der Webanwendung festgestellt. Jedoch konnte jedes dieser Probleme auf eine fehlerhafte händische Korrektur neuer Typfehler zurückgeführt werden.
 
 \subsection{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}
 
-Die Anforderung aktuelle und vorläufige JavaScript- sowie JSX-Syntax zu unterstützen war eines der grundlegenden Kriterien anhand derer in Abschnitt~\ref{sec:js-transpilers} verschiedene Parser, Codegeneratoren und Transpiler bezüglich ihrer Eignung als Basis für die Umsetzung des Flow-Transpilers verglichen wurden. Wie dort bereits ausgeführt, ist der Babel nach Kenntnisstand des Autors das einzige Werkzeug, dass sowohl jegliche aktuelle, als auch vorläufige JavaScript-Syntax einlesen und verarbeiten kann. Ermöglicht wird dies durch eine Vielzahl von Plugins, welche die Verarbeitung von Flow, JSX und der in
+Die Anforderung aktuelle und vorläufige JavaScript- sowie JSX-Syntax zu unterstützen war eines der grundlegenden Kriterien anhand derer in Abschnitt~\ref{sec:js-transpilers} verschiedene Parser, Codegeneratoren und Transpiler bezüglich ihrer Eignung als Basis für die Umsetzung des Flow-Transpilers verglichen wurden. Wie dort bereits ausgeführt ist Babel nach Kenntnisstand des Autors das einzige Werkzeug, dass sowohl jegliche aktuelle, als auch vorläufige JavaScript-Syntax einlesen und verarbeiten kann. Infolgedessen wurde der vorliegende Transpiler auf Basis von Babel umgesetzt, um diese Anforderung umzusetzen. Wie die erfolgreich durchgeführte Transpilierung der zwei Projekte von TeamShirts beweist, ist die Verarbeitung derartiger Syntax tatsächlich möglich.
 
-% TODO: geht weil babel proposals, es2019 und jsx unterstützt
+% TODO: Khan, Kikura
 
 \subsection{Verarbeitung gesamter Projektverzeichnisse}
 
 Wie in Abschnitt~\ref{sec:cli-program} bereits ausführlich dargelegt, wurde der Transpiler um ein Kommandozeilenprogramm (\textit{Reflow}) erweitert, um die Verarbeitung gesamter Verzeichnisse zu realisieren. Die Anwendung erwartet eine oder mehrere Dateien bzw. Verzeichnisse als Argument und setzt daraufhin die Übersetzung dieser Eingaben mit Hilfe des Babel-Plugins um.
 Durch die interne Verwendung der Bibliothek \textit{Glob}~\autocite{NPM:GLOB} können dabei beliebig komplexe Wildcard-Muster (\textit{glob patterns}) verarbeitet werden, um gewisse Datei- oder Verzeichnistypen ein- und auszuschließen. Die Glob-Notation ähnelt konzeptionell regulären Ausdrücken in einigen Aspekten, sodass auch kompliziertere Muster, wie beispielsweise die Negation von Ausdrücken oder die Angabe einer Gruppe von alternativen Werten, möglich sind~\autocite{MAN:GLOB}.
 
-% TODO: Vergleich zu Khan und Kikura
+Von den zwei zum Vergleich betrachteten Ansätzen, ermöglicht lediglich der Flow-Transpiler der Khan Academy die Übersetzung ganzer Projektverzeichnisse durch ein integriertes Kommandozeilenprogramm~\autocite{KHAN:FLOW_TO_TS}. Das Babel-Plugin von Kikura kann nur bei Verwendung weiterer Werkzeuge für diesen Anwendungsfall eingesetzt werden.
 
 Die in Abschnitt~\ref{sec:requirement:batch-processing} definierten Forderungen, dass einerseits Verzeichnisse rekursiv verarbeitet werden, andererseits die Menge der zu übersetzenden Dateien flexibel eingegrenzt werden können muss, wurden somit erfüllt.
 
 \subsection{Beibehaltung der Quelltext-Formatierung}
 
+\subsubsection{Ergebnisse}
+
 Weil die originalgetreue Formatierung der Ausgabe (Anforderung~\ref{sec:requirement:format}) bei Verwendung des Babel-Codegenerators, aus den dargelegten Gründen, nicht umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs Prettier~\autocite{SOFTWARE:PRETTIER} implementiert\footnote{Vgl. Abschnitt~\ref{sec:formatting}}.
 Mittels händischer Überprüfung des erzeugten TypeScript-Codes der zwei vorliegenden Projekte von TeamShirts, wurden inkorrekt formatierte Dateien ermittelt. Hierunter werden Dateien verstanden in denen Zeilen anders als im ursprünglichen Quelltext umgebrochen oder Leerzeilen und Kommentare falsch platziert werden. Sobald eine dieser Eigenschaften vorliegt, wird die Formatierung als fehlerhaft betrachtet. Wie Tabelle~\ref{tab:results-formatting} zeigt, gelingt diese leider nicht in allen Fällen. Während diese im Projekt Components bei 11 der 311 verarbeiteten JavaScript-Dateien (3,54\%) fehlgeschlagen ist, konnten bei Helios 21 der 353 Ausgabedateien nicht korrekt formatiert werden (5,95\%). Insgesamt ergibt sich somit eine Fehlerrate von 4,68\%.
 
-\bigbreak
+\medbreak
 \input{src/5_Auswertung/tables/results-formatting}
 
-\medbreak
+\subsubsection{Fehleranalyse}
+
 Zur Feststellung der Ursachen der fehlerhaften Formatierung wurden die Verarbeitung der inkorrekt ausgegebenen Dateien untersucht. Weil das Verfahren zeilenbasiert arbeitet, ist die Konsistenz der Umbrüche für das Gelingen der Formatierung entscheidend, da es andernfalls zu einem Versatz der betrachteten Eingabe- und Ausgabgezeilen kommt. Die Betrachtung der Originaldateien, welche fehlerhaft formatiert wurden, hat gezeigt, dass dies in Folge von bestimmten, eher selten vorkommenden Quelltext-Formatierung auftritt. Nachfolgend soll das Problem anhand eines Beispiel für einen solchen Fall veranschaulicht werden:
 
 \begin{lstlisting}[
@@ -120,5 +125,11 @@ if (foo && bar && baz === 0) {
 \end{lstlisting}
 
 Wie die weitere Fehleranalyse gezeigt hat, ergibt sich bei der Auflistung der formalen Parameter von Funktionen die gleiche Problematik, wenn diese analog zum Beispiel umgebrochen werden. Zur Lösung dieser fehlerhaften Fälle, sollte die angepasste Version von Prettier so erweitert werden, dass auch die Bedingung von Verzweigungen und die Auflistung von Parametern stets umgebrochen werden.
+
+\subsubsection{Vergleich}
+
+
+
+\subsubsection{Fazit}
 
 Zwar konnte die Anforderung nicht vollständig umgesetzt werden, weil nicht alle Ausgabedateien korrekt formatiert werden, dennoch wurde der Programmierstil in 95,32\% der Fälle akkurat beibehalten. Da die manuelle Korrektur der insgesamt 32 fehlerhaften Dateien mit geringem Zeitaufwand durchführbar ist, kann die geforderte Funktion als größtenteils erfüllt betrachtet werden.

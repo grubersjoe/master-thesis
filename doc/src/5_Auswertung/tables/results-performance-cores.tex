@@ -1,0 +1,25 @@
+\begingroup
+\setlength{\tabcolsep}{7pt}
+\begin{table}[tbh]
+  \small
+  \begin{tabu} to \textwidth {@{}rrrrrr|rrrrrX@{}}
+    \midrule
+    {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {}\\
+    \rowfont[c]{} \libertineSB{RK} & Laufzeit & s & Laufzeit & s & rel. $\Delta$ & Laufzeit & s & Laufzeit & s & rel. $\Delta$ & {}\\
+    \midrule
+    1 & 10,59 & 0,03 & 10,13 & 0,03 & -4,3\% & 17,26 & 0,05 & 8,81 & 0,01 & -49,0\% & {} \\
+    2 &  6,19 & 0,02 &  6,85 & 0,05 & 10,7\% &  9,61 & 0,04 & 5,44 & 0,04 & -43,4\% & {} \\
+    3 &  4,74 & 0,03 &  6,50 & 0,02 & 37,1\% &  7,23 & 0,03 & 5,03 & 0,02 & -30,4\% & {} \\
+    4 &  4,05 & 0,03 &  6,43 & 0,02 & 58,8\% &  6,16 & 0,04 & 4,95 & 0,01 & -19,6\% & {} \\
+    5 &  3,79 & 0,04 &  6,48 & 0,02 & 71,0\% &  5,82 & 0,03 & 5,04 & 0,15 & -13,4\% & {} \\
+    6 &  3,63 & 0,02 &  6,41 & 0,04 & 76,6\% &  5,51 & 0,03 & 4,94 & 0,03 & -10,3\% & {} \\
+    7 &  3,52 & 0,02 &  6,40 & 0,03 & 81,8\% &  5,31 & 0,03 & 4,93 & 0,03 &  -7,2\% & {} \\
+    8 &  3,42 & 0,02 &  6,40 & 0,03 & 87,1\% &  5,16 & 0,02 & 4,94 & 0,03 &  -4,3\% & {} \\
+    \midrule
+    {} & \multicolumn{5}{c}{\large\textsc{components}} & \multicolumn{5}{c}{\large\textsc{helios}} & {}\\
+    \midrule
+  \end{tabu}
+  \caption{Durchschnittliche Laufzeit in Sekunden, Standardabweichung (s) und relative Veränderung der Zeitspanne (rel. $\Delta$) der vollständigen Typüberprüfung der Projekte Components und Helios durch Flow 0.96 und TypeScript 3.5 bei Einschränkung der Zahl der Rechenkerne (RK).}
+  \label{tab:performance-cores}
+\end{table}
+\endgroup
