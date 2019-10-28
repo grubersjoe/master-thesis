@@ -1,7 +1,12 @@
+\section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
+
+Nachfolgend soll nun die Ergebnisse der Migration bezüglich der Erfüllung der in Kapitel~\ref{chap:analysis} definierten Ziele untersucht werden. Die erste Zielsetzung war hierbei die Erkennung weiterer Typ- und Programmfehler.
+
 \subsection{Erkennung weiterer Typ- und Programmfehler}
 \label{goal:new-type-errors}
 
-Der TypeScript-Compiler besitzt wie in Abschnitt~\ref{sec:typescript} beschrieben verschiedene Optionen, um die Striktheit der Typüberprüfungen zu erhöhen. Diese kann durch Setzen der Option \enquote{\code{strict}} angepasst werden, sodass daraufhin deutlich mehr Ausdrücke als Typfehler betrachtet werden.
+
+% Der TypeScript-Compiler besitzt wie in Abschnitt~\ref{sec:typescript} beschrieben verschiedene Optionen, um die Striktheit der Typüberprüfungen zu erhöhen. Diese kann durch Setzen der Option \enquote{\code{strict}} angepasst werden, sodass daraufhin deutlich mehr Ausdrücke als Typfehler betrachtet werden.
 
 % TODO: histogramme mit top 8 fehlern oder so strikt vs nicht-strikt
 % TODO: erklärung: wo kommen diese fehler her? welche davon sind tatsächlich problematisch? welche nur bs von ts?
@@ -14,17 +19,52 @@ Der TypeScript-Compiler besitzt wie in Abschnitt~\ref{sec:typescript} beschriebe
 
 \subsection{Performance der Typüberprüfungen}
 
+\subsubsection{Messung der Laufzeiten}
+
+Eine weitere Zielsetzung des Wechsels zu TypeScript war die Performance der Typüberprüfungen zu steigern bzw. diese zumindest nicht zu verschlechtern. Nachdem die Migration der Projekte abgeschlossen war, konnten die Laufzeiten einer vollständigen Typüberprüfung durch Flow und TypeScript ermittelt werden.
+Hierfür wurden jeweils für Flow und TypeScript 100 Proben (\textit{Samples}) mithilfe des GNU-Programms \textit{time}~\autocite{GNU_TIME} gemessen und die zehn kleinsten und größten Werte daraufhin verworfen, um den Einfluss von \enquote{Ausreißern} zu minimieren. Aus den verbleibenden 80 Werten wurde anschließend der Mittelwert gebildet und die Standardabweichung berechnet. Dabei wurde in allen Messungen die zum damaligen Zeitpunkt aktuelle Version~3.5 von TypeScript und die von TeamShirts eingesetzte Version~0.96 von Flow verwendet. Um auch den Einfluss von unterschiedlich rechenstarken Prozessoren miteinzubeziehen, wurden die Messreihen auf vier verschiedenen Computern durchgeführt:
+
+\begin{enumerate}[label=\Alph*)]
+  \item AMD Phenom II X6 1055T Prozessor mit 3,3~GHz und 6 Rechenkernen (2010)
+  \item Intel Core i5-4258U Prozessor mit 2,9~GHz und 4 Rechenkernen (2013)
+  \item Intel Core i5-4210M Prozessor mit 3,2~GHz und 4 Rechenkernen (2014)
+  \item Intel Core i7-6700 Prozessor mit 4,0~GHz und 8 Rechenkernen (2015)
+\end{enumerate}
+
+Die auf diese Weise ermittelten Messwerte und deren Standardabweichung werden in Tabelle~\ref{tab:performance-cores-components} für Components und in Tabelle~\ref{tab:performance-cores-helios} für Helios gezeigt.
+
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}rlrrrrlrrrrX@{}}
+    \midrule
+    {} & {} & \multicolumn{4}{l}{\large\textsc{components}} & {} & \multicolumn{4}{l}{\large\textsc{helios}} & {}\\
+    \midrule
+    {} & {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {} & \multicolumn{2}{l}{\libertineSB{Flow}} & \multicolumn{2}{l}{\libertineSB{TypeScript}} & {}\\
+    CPU & {} & Laufzeit & s & Laufzeit & s & {} & Laufzeit & s & Laufzeit & s & {}\\
+    \midrule
+    A) & {} & TODO & TODO & TODO & TODO & {} & TODO & TODO & TODO & TODO & {} \\
+    B) & {} & TODO & TODO & TODO & TODO & {} & TODO & TODO & TODO & TODO & {} \\
+    C) & {} & TODO & TODO & TODO & TODO & {} & TODO & TODO & TODO & TODO & {} \\
+    D) & {} & TODO & TODO & TODO & TODO & {} & TODO & TODO & TODO & TODO & {} \\
+    \midrule
+  \end{tabu}
+  \caption[Laufzeiten in Sekunden und Standardabweichung der vollständigen Typüberprüfung durch Flow und TypeScript im Projekt Components.]{Laufzeiten in Sekunden und Standardabweichung (s) der vollständigen Typüberprüfung durch Flow~0.96 und TypeScript~3.5 im Projekt Components.}
+  \label{tab:performance-cores-components}
+\end{table}
+
+\subsubsection{Einfluss von Paralellisierung}
+
 % TODO: messungen (complete) für 4 geräte (tabelle reicht wohl)
 % TODO: wenn ts multicore könnte, dann ...
 
 \begin{figure}[tbp]
   \centering
 
-  \input{../data/plots/complete/components-plot}
+  \input{../data/performance/plots/cores/components-plot}
 
   \vspace{.5\baselineskip}
 
-  \input{../data/plots/complete/helios-plot}
+  \input{../data/performance/plots/cores/helios-plot}
   \vspace{.5\baselineskip}
   \caption[Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow und TypeScript]{
     Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow und TypeScript der Projekte \textit{Components} und \textit{Helios}.
