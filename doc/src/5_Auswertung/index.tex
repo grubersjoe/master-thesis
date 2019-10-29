@@ -13,8 +13,223 @@ Unmittelbar nach Ausführung des Transpilers wurden bei Components 543 und bei H
 
 % Vorteile: Andere Projekte wie Helios, die Components verwenden, kriegen deren Typisierung "frei Haus".
 
-\input{src/5_Auswertung/goals}
-\input{src/5_Auswertung/requirements}
+\section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
+
+Nachfolgend soll nun die Ergebnisse der Migration bezüglich der Erfüllung der in Kapitel~\ref{chap:analysis} definierten Ziele untersucht werden. Die erste Zielsetzung war hierbei die Erkennung weiterer Typ- und Programmfehler.
+
+\subsection{Erkennung weiterer Typ- und Programmfehler}
+\label{goal:new-type-errors}
+
+
+% Der TypeScript-Compiler besitzt wie in Abschnitt~\ref{sec:typescript} beschrieben verschiedene Optionen, um die Striktheit der Typüberprüfungen zu erhöhen. Diese kann durch Setzen der Option \enquote{\code{strict}} angepasst werden, sodass daraufhin deutlich mehr Ausdrücke als Typfehler betrachtet werden.
+
+% TODO: histogramme mit top 8 fehlern oder so strikt vs nicht-strikt
+% TODO: erklärung: wo kommen diese fehler her? welche davon sind tatsächlich problematisch? welche nur bs von ts?
+% TODO: ein paar beispiele für echte probleme
+
+\subsection{Unterstützung externer Bibliotheken}
+
+% TODO: vergleich flow-typed definitely typed
+% TODO: 3 "schöne" bibs rauspicken (react, redux, lodash, datefns?) und libdefs vergleichen
+
+\subsection{Performance der Typüberprüfungen}
+
+\subsubsection{Laufzeitmessung vollständiger Typüberprüfungen}
+
+Eine weitere Zielsetzung des Wechsels zu TypeScript war die Performance der Typüberprüfungen zu steigern bzw. diese zumindest nicht zu verschlechtern. Nachdem die Migration der zwei Projekte abgeschlossen war, konnten die Laufzeiten der vollständigen Typüberprüfung durch Flow bzw. TypeScript ermittelt werden. Die Messung der Zeitdauer von inkrementellen Überprüfungen durch den Flow- bzw. TypeScript-Sprachserver konnte nicht unabhängig von der Ausführung eines Editors  durchgeführt werden, sodass dieser Aspekt nachfolgend nicht betrachtet werden kann, da die Gefahr besteht, dass der Editor die Ergebnisse verfälscht.
+
+Zur Bestimmung der Laufzeiten wurden für Flow und TypeScript jeweils 100 Proben (\textit{Samples}) mithilfe des GNU-Programms \textit{time}~\autocite{GNU_TIME} gemessen und die zehn kleinsten und größten Werte daraufhin verworfen, um den Einfluss von \enquote{Ausreißern} zu minimieren. Aus den verbleibenden 80 Werten wurde anschließend der Mittelwert gebildet und die Standardabweichung berechnet. Dabei wurde in allen Messungen die zum damaligen Zeitpunkt aktuelle Version~3.5 von TypeScript und die von TeamShirts eingesetzte Version~0.96 von Flow verwendet. Um auch den Einfluss von unterschiedlich leistungsfähiger Hardware miteinzubeziehen, wurden die Messreihen auf vier verschiedenen Systemen durchgeführt:
+
+\begin{enumerate}[label=\Alph*.]
+  \item AMD Phenom II X6 1055T Prozessor mit 2,9~GHz\footnote{Es wird jeweils der Grundtakt des Prozessors und nicht der maximal mögliche Wert durch dynamische Übertaktung angegeben.} und 6\footnote{} Rechenkernen (2010)\\16~GB Arbeitsspeicher, Solid State Drive, Arch Linux
+  \item Intel Core i5-4258U Prozessor mit 2,4~GHz und 4 Rechenkernen (2013)\\8~GB Arbeitsspeicher, Solid State Drive, Arch Linux
+  \item Intel Core i5-4210M Prozessor mit 2,6~GHz und 4 Rechenkernen (2014)\\16~GB Arbeitsspeicher, Solid State Drive, Arch Linux
+  \item Intel Core i7-6700 Prozessor mit 3,4~GHz und 8 Rechenkernen (2015)\\32~GB Arbeitsspeicher, Solid State Drive, Debian Linux
+\end{enumerate}
+
+Die durch diese Methodik ermittelten Messwerte, deren Standardabweichung und die relative Veränderung der Laufzeiten werden in Tabelle~\ref{tab:performance-complete} für beide Projekte aufgelistet: Offensichtlich beschleunigen modernere, performante Prozessoren mit höherer Taktfrequenz und größeren Caches generell die Typüberprüfung durch Flow bzw. TypeScript. Die These, dass TypeScript schneller als Flow sei, lässt sich aber nur anhand des Projekts Helios für die Systeme B, C und D belegen (vgl. negative Werte für relative Veränderung der Laufzeit). Bei Components ist TypeScript dagegen stets deutlich langsamer als Flow.
+
+\medbreak
+\input{src/5_Auswertung/tables/results-performance}
+
+Wie im Grundlagenteil bereits ausgeführt wird die Berechnung der Typkorrektheit durch Flow stark parallelisiert, um diese zu verschnellern. TypeScript bietet keine Unterstützung für eine nebenläufige Typüberprüfung durch mehrere Threads~\autocite{TS:NO_MULTICORE}, sodass die Performance hier vorrangig von der Leistungsfähigkeit der einzelnen Prozessorkerne abzuhängen scheint. Diese These wird durch die gemessenen Daten unterstützt, denn je performanter die Prozessoren sind, desto kleiner kleiner wird die Differenz zwischen den Laufzeiten von Flow und TypeScript bei Components bzw. desto größer wird diese bei Helios.
+Für System D scheint jedoch die Parallelisierung von Flow aufgrund der hohen Zahl von acht Rechenkernen den größeren Effekt zu haben, als die Leistungsfähigkeit der einzelnen Kerne. Weil die Systeme B und C jeweils nur über vier Prozessorkerne verfügen, ist der Einfluss der Nebenläufigkeit hier kleiner. Als einen möglichen Grund warum Components im Vergleich zu Helios durch Flow insgesamt schneller überprüft werden kann, kann angeführt werden, dass dieses Projekt aus einer Vielzahl unabhängiger Komponenten besteht deren Verarbeitung somit gut durch Flow parallelisiert werden kann. In Helios besteht eine größere Abhängigkeit der Module zueinander.
+
+\subsubsection{Einfluss von Parallelisierung auf die Laufzeiten}
+
+Der Einfluss der Parallelisierung auf die Laufzeit der Berechnungen soll im Folgenden näher untersucht werden. Hierfür wurde eine weitere Testreihe durchgeführt in welcher die Zahl der einsetzbaren Rechenkerne für die Berechnung durch das Linux-Programm \textit{taskset}~\autocite{TASKSET} eingeschränkt wird. Dabei wird dem Prozess durch den Scheduler des Betriebssystems zunächst lediglich ein Rechenkern, dann zwei usw. zugeordnet. Abbildung~\ref{fig:plot-cores} auf Seite~\pageref{fig:plot-cores} zeigt jeweils ein Diagramm für Components und Helios, welche die Beeinflussung des Laufzeitverhaltens durch diese Einschränkung grafisch darstellen. Die exakten Messwerte und deren Standardabweichung wird darüber hinaus in Tabelle~\ref{tab:performance-cores} aufgelistet.
+
+Sowohl bei Flow, als auch bei TypeScript ermöglicht bereits die Verwendung von zwei Rechenkernen eine starke Verbesserung der Laufzeiten im Vergleich zu einem einzigen Kern. Obwohl TypeScript eine Kompilierung durch mehrere Prozessorkerne grundsätzlich nicht unterstützt, wird auch dieser Prozess so beschleunigt, weil der TypeScript Compiler durch Node.js ausgeführt wird und diese Umgebung mehrere Threads startet, um beispielsweise teure Ein- und Ausgabeoperationen auf weitere Rechenkerne auszulagern~\autocite{NODE:THREADS}. Für mehr als drei Kerne bleibt die Laufzeit von TypeScript daraufhin in etwa konstant. Die Laufzeit von Flow verringert sich hingegen mit zunehmender Zahl zur Verfügung stehender Rechenkerne aufgrund der Multithreading-Unterstützung stetig. Ab etwa fünf Kernen sind die Zugewinne allerdings nur noch gering, was auf den zunehmend größeren Overhead durch die notwendige Synchronisierung der Threads zurückgeführt werden könnte.
+
+\begin{figure}[tbp]
+  \centering
+
+  \input{../data/performance/plots/cores/components-plot}
+
+  \vspace{.5\baselineskip}
+
+  \input{../data/performance/plots/cores/helios-plot}
+  \vspace{.5\baselineskip}
+  \caption[Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow und TypeScript]{
+    Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow 0.96 und TypeScript 3.5 der Projekte Components und Helios.
+  }
+
+  \vspace{\baselineskip}
+  \caption*{
+    \small
+    Gemessen mit Intel Core i7-6700 CPU mit 3,4~GHz (Prozessor D).
+  }
+
+  \label{fig:plot-cores}
+\end{figure}
+
+\medbreak
+\input{src/5_Auswertung/tables/results-performance-cores}
+
+\subsubsection{Fazit}
+
+Die angestrebte Verbesserung der Performance durch die Migration zu TypeScript kann im vorliegenden Fall nur als teilweise erreicht betrachtet werden, da nur in drei Fällen bei Helios tatsächlich geringere Laufzeiten für eine vollständige Typüberprüfung gemessen wurden. Die stark parallelisierte Architektur von Flow scheint der von TypeScript bezüglich der Geschwindigkeit in den meisten Fällen überlegen. Es wird aber vermutet, dass die Performance von TypeScript deutlich gesteigert werden könnte, wenn auch hier die Berechnung der Typkorrektheit durch mehrere Rechenkerne möglich wäre. Laut Aussage eines leitenden Entwicklers von TypeScript im März 2019 wird die Implementierung von Multithreading im TypeScript Compiler zukünftig in Betracht gezogen~\autocite{TS:MULTICORE}.
+
+\subsection{Zukunftssicherheit und Transparenz der Technologie}
+
+% TODO: artikel: what we've been up to
+% TODO: roadmap
+% TODO: evtl berechnen wie lang issues im schnitt offen bleiben?
+
+% ----------------------------------------------------------------------------------
+
+\pagebreak % TODO: remove later
+\section{Erfüllung der technischen Anforderungen}
+
+\subsection{Äquivalente und vollständige Übersetzung der Flow-Typen}
+\label{sec:interpretation:equivalent-translation}
+
+\subsubsection{Äquivalenz der Übersetzungen}
+
+Als erste und wichtigste technische Anforderung an den Transpiler wurde die äquivalente und vollständige Übersetzung der gesamten Flow-Syntax nach TypeScript definiert. Die äquivalenten TypeScript-Ausdrücke der verschiedenen Flow-Typen konnten dabei mehrheitlich einfach gefunden werden, weil TypeScript einen sehr ähnlichen Funktionsumfang wie Flow besitzt und sich oftmals nur die Schlüsselwörter unterscheiden\footnote{Vgl. Übersetzungstabellen in Abschnitt~\ref{sec:flow-transpilation}.}. Kompliziertere, nicht offensichtliche Transformationen wurden experimentell ermittelt.
+
+Für einige, wenige Typen existiert keine absolut bedeutungsgleiche Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier bei der Transpilierung zwingend zu einem Verlust von Typinformation, was in neuen Typfehlern resultieren kann. Die inkorrekte Transformation derartiger Typen wird gemäß Anforderung~\ref{sec:requirement:completeness} akzeptiert, jedoch muss der Benutzer bei Auftreten eines solchen Falls gewarnt werden. Quelltext~\ref{code:transpiler-warnings} zeigt wie eine solche Warnung aufgebaut ist. Dabei wird einerseits die genaue Position des verursachenden Flow-Typs im Quelltext angegeben, andererseits wird der Benutzer über die Hintergründe der Warnung durch einen Link informiert.
+
+\begin{lstlisting}[
+  label={code:transpiler-warnings},
+  caption={Ausgabe von Warnungen bei Autreten nicht äquivalent übersetzbarer Flow-Typen.},
+  emph={Warning},
+]
+Transpiling example.js...
+
+  1 | // @flow
+> 2 | const existentialType: * = String(2 * 3);
+    |                       ^
+  Warning: Flow's Existential Type (*) is not expressible in TypeScript.
+           It will be replaced with 'any'.
+           See https://github.com/Microsoft/TypeScript/issues/14466.
+\end{lstlisting}
+
+Nachfolgend wird dargelegt, welche der Funktionen von Flow nicht absolut korrekt übersetzt werden können und wie dies jeweils innerhalb des Transpilers gehandhabt wird.
+
+\begin{itemize}
+  \item {\libertineSB{Existential type}}\\*
+    In TypeScript existiert kein Typ, der Flows \type{Existential type} entspricht~\autocite{TS:GITHUB:NO_EXISTENTIAL_TYPE}. Wie Quelltext~\ref{code:transpiler-warnings} bereits exemplarisch andeutet, wird dieser Typs deswegen durch den Typ \type{any} ersetzt. Weil \type{any} Supertyp jeden Typs ist, geht damit Typinformation verloren, sofern Flow zuvor einen konkreteren Typ inferieren konnte. Jedoch gibt die Dokumentation von Flow an, dass der \type{Existential type} oftmals tatsächlich äquivalent zu \type{any} ist~\autocite{FLOW:LINT_RULE_REFERENCE}.
+  \medbreak
+  \item {\libertineSB{Index-Signaturen in Objekttypen}}\\*
+    Durch eckige Klammern kann in Objekttypen ein Index, also die Abbildung eines Typs von Namen auf Werte eines anderen Typs, angegeben werden\footnote{Vgl. Tabelle~\ref{tab:flow-base-types}.}. Flow unterstützt hierbei jeden beliebigen Typ für die Attributnamen, TypeScript hingegen nur \code{string} und \code{number}~\autocite{TS:HANDBOOK:INTERFACES}. Deshalb entfernt der Transpiler Index-Signaturen, die von diesen erlaubten Typen abweichen, und fügt stattdessen jeweils eine Signatur für \code{string} und \code{number} ein, um die größtmögliche Menge von Schlüsseltypen zu gewährleisten.
+  \medbreak
+  \item {\libertineSB{Opaque type}}\\*
+    Auch opake Typen werden durch TypeScript nicht unterstützt~\autocite{TS:GITHUB:NO_OPAQUE_TYPE}. Infolgedessen wird dieser Typ bei der Übersetzung durch ein Typalias, das auf den gleichen Typ verweist, ersetzt.
+  \medbreak
+  \item {\libertineSB{Rückgabewert von Konstruktoren}}\\*
+    Flow ermöglicht es den Rückgabewert von Konstruktorfunktionen explizit anzugeben. Dies ist in TypeScript bewusst verboten, weil es im Allgemeinen als schlechter Programmierstil erachtet wird, wenn ein Konstruktor etwas anderes als eine Klasseninstanz zurückliefert~\autocite{TS:GITHUB:CONSTRUCTOR_RETURN_TYPE}. Ein solcher Rückgabewert wird deswegen durch den Transpiler entfernt, damit keine fehlerhafte TypeScript-Syntax entsteht.
+  \medbreak
+  \item {\libertineSB{Varianz}}\\*
+    Ein letzter Aspekt von Flow, der in TypeScript in einigen Fällen nicht abbildbar ist, ist die Varianz von Typen. Weil die Syntax von TypeScript nur Kovarianz (Schlüsselwort \code{readonly}) unterstützt, werden die Varianz-Signaturen von Flow für alle anderen Fälle verworfen. Dies beinhaltet neben Objektattributen beispielsweise auch Typparameter, die in Flow entsprechend markiert werden können.
+\end{itemize}
+
+Neben diesen Flow-Funktionen, die prinzipiell nicht bedeutungsgleich übersetzt werden können, konnte darüber hinaus wie ausgeführt für die drei Hilfstypen \type{Object map}, \type{Object map with key} und \type{Tuple map} kein TypeScript-Ausdruck gefunden werden, der diesen entspricht. Deshalb ist die äquivalente Transformation der Typisierung auch in diesen drei Fällen nicht gegeben.
+
+\subsubsection{Vollständigkeit der Transformationen}
+
+Wie bereits in Abschnitt~\ref{sec:requirement:completeness} dargelegt ist der vollständige Funktionsumfang der Implementierung durch die Spezifikation des Parsers~\autocite{BABEL:PARSER_SPEC} von Babel präzise definiert, weil das Dokument festlegt, welche Knoten des abstrakten Syntaxbaums Flow-Syntax darstellen. Sofern sämtliche dieser Elemente korrekt in ihr TypeScript-Gegenstück transformiert werden, so ist die Vollständigkeit erreicht. Dies setzt vorraus, dass der abstrakte Syntaxbaum von Babel tatsächlich jegliche Flow-Syntax abbildet. Es konnte kein Beleg gefunden werden, der diese Annahme widerlegt.
+Ein weitere Aspekt, der zur Erzielung einer vollständigen Umsetzung beiträgt, ist die Typisierung von Babel, da diese beispielsweise einen Vereinigungstyp \code{Flow} bereitstellt, der alle Knotentypen von Flow umfasst~\autocite{BABEL:TYPES}. Auf diese Weise kann statisch überprüft werden, ob das Babel-Plugin alle Elemente dieser Vereinigungsmenge verarbeitet. Sollten nicht alle Fälle behandelt werden, so kann dies durch eine Typverletzung offen gelegt werden\footnote{Vgl. beispielsweise zentrale Flow-Umwandlungsfunktion in Quelltext~\ref{code:convert-flow-type}. Die \code{switch}-Anweisung verarbeitet ausnahmslos alle Elemente des Typs \type{FlowType}. Dies kann durch das Typsystem statisch garantiert werden.}.
+
+Die Korrektheit der Transformationen wird durch den in Abschnitt~\ref{sec:tdd} beschriebenen Ansatz der testgetriebenen Entwicklung gewährleistet. In der Dokumentation von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} wird die Syntax aller Sprachkonstrukte beschrieben, sodass bekannt ist, welche Typen prinzipiell möglich sind. Durch Anlegen von Fixture-Dateien kann damit die korrekte Übersetzung sämtlicher Flow-Funktionen umfangreich getestet werden. Wie ausgeführt wurden insgesamt \numberOfTests Testfälle angelegt, um alle Basis- und Hilfstypen sowie Typdeklarationen zu überprüfen. Durch eine hohe Testabdeckung von 93\% wird darüber hinaus sicher gestellt, dass die verschiedenen Programmverzweigungen des Transpilers tatsächlich die angestrebte Funktionalität umsetzen.
+
+% Insgesamt kann die Anforderung der äquivalenten und vollständigen Übersetzung aller Flow-Typen somit als erfüllt betrachtet werden.
+
+\subsubsection{Vergleich mit konkurrierenden Transpilern}
+
+Die zwei betrachteten Aspekte der Äquivalenz und Vollständigkeit der Transformationen sollen auch für die zwei konkurrierenden Ansätze von Kikura und der Khan Academy betrachtet werden, um das erzielte Ergebnis einzuordnen.
+
+% TODO Kikura hat bugs
+
+
+\subsection{Semantisch äquivalente Transpilierung des Quelltexts}
+
+Eine weitere wichtige Anforderung ist, dass der Transpiler die Semantik des ursprünglichen JavaScript-Programms durch die Übersetzung nicht verändern darf, damit keine neuen Programmfehler in den Quelltext eingeschleust werden. Die korrekte Übersetzung der Semantik der Flow-Typen wurde bereits im vorherigen Abschnitt behandelt. Hierbei ist anzumerken, dass die statische Typisierung aber ohnehin keinen Einfluss auf die Laufzeit-Semantik des Programms hat, weil diese vor der Auslieferung vollständig entfernt wird. Dies setzt vorraus, dass die Programm-Transformation tatsächlich nur die Typisierung adressiert und keine unbeabsichtigte Nebenwirkung, wie zum Beispiel das Einfügen neuer Knoten in den abstrakten Syntaxbaum, verursacht. Dies wird wie ausgeführt durch die Fixture-Tests überprüft. Ein weiterer Aspekt des umgesetzten Transcompilers, der zu abweichender Semantik führen könnte sind die in Abschnitt~\ref{sec:optimizations} beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option \enquote{\code{replace-decorators}} werden beispielsweise Dekoratoren in bedeutungsgleiche verschachtelte Funktionsaufrufe umgewandelt.
+
+Ein formaler Beweis der semantischen Äquivalenz ist aufgrund des Umfangs der zwei migrierten Projekte nicht durchführbar. Jedoch kann durch Betrachtung der bestehenden Modultests die Beibehaltung der Programmwirkung nach der Übersetzung zumindest approximativ verifiziert werden. Kritisch anzumerken ist, dass dieser Ansatz nur bei einer entsprechend hohen Testabdeckung aussagekräftig ist. Während diese bei Components bei 90,5\% liegt, wird bei Helios nur ein Anteil von 18,0\% erreicht. Nachdem alle nicht-strikten Typfehler in beiden Projekten korrigiert waren, wurden daraufhin die Modultests beider Projekte ausgeführt. Keiner der 373 Tests von Components und 326 Tests von Helios schlug dabei fehl, sodass die semantisch korrekten Überführung des ursprünglichen Quelltexts nach TypeScript wahrscheinlich ist.
+Bei der praktischen Erprobung der zwei Projekte wurde allerdings in vier Fällen ein fehlerhaftes Verhalten der Webanwendung festgestellt. Jedoch konnte jedes dieser Probleme auf eine fehlerhafte händische Korrektur neuer Typfehler zurückgeführt werden.
+
+\subsection{Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax}
+
+Die Anforderung aktuelle und vorläufige JavaScript- sowie JSX-Syntax zu unterstützen war eines der grundlegenden Kriterien anhand derer in Abschnitt~\ref{sec:js-transpilers} verschiedene Parser, Codegeneratoren und Transpiler bezüglich ihrer Eignung als Basis für die Umsetzung des Flow-Transpilers verglichen wurden. Wie dort bereits ausgeführt ist Babel nach Kenntnisstand des Autors das einzige Werkzeug, dass sowohl jegliche aktuelle, als auch vorläufige JavaScript-Syntax einlesen und verarbeiten kann. Infolgedessen wurde der vorliegende Transpiler auf Basis von Babel umgesetzt, um diese Anforderung umzusetzen. Wie die erfolgreich durchgeführte Transpilierung der zwei Projekte von TeamShirts beweist, ist die Verarbeitung derartiger Syntax tatsächlich möglich.
+
+% TODO: Khan, Kikura
+
+% KHAN: kann keine Decorator
+
+\subsection{Verarbeitung gesamter Projektverzeichnisse}
+
+Wie in Abschnitt~\ref{sec:cli-program} bereits ausführlich dargelegt, wurde der Transpiler um ein Kommandozeilenprogramm (\textit{Reflow}) erweitert, um die Verarbeitung gesamter Verzeichnisse zu realisieren. Die Anwendung erwartet eine oder mehrere Dateien bzw. Verzeichnisse als Argument und setzt daraufhin die Übersetzung dieser Eingaben mit Hilfe des Babel-Plugins um.
+Durch die interne Verwendung der Bibliothek \textit{Glob}~\autocite{NPM:GLOB} können dabei beliebig komplexe Wildcard-Muster (\textit{glob patterns}) verarbeitet werden, um gewisse Datei- oder Verzeichnistypen ein- und auszuschließen. Die Glob-Notation ähnelt konzeptionell regulären Ausdrücken in einigen Aspekten, sodass auch kompliziertere Muster, wie beispielsweise die Negation von Ausdrücken oder die Angabe einer Gruppe von alternativen Werten, möglich sind~\autocite{MAN:GLOB}.
+
+Von den zwei zum Vergleich betrachteten Ansätzen, ermöglicht lediglich der Flow-Transpiler der Khan Academy die Übersetzung ganzer Projektverzeichnisse durch ein integriertes Kommandozeilenprogramm~\autocite{KHAN:FLOW_TO_TS}. Das Babel-Plugin von Kikura kann nur bei Verwendung weiterer Werkzeuge für diesen Anwendungsfall eingesetzt werden.
+
+Die in Abschnitt~\ref{sec:requirement:batch-processing} definierten Forderungen, dass einerseits Verzeichnisse rekursiv verarbeitet werden, andererseits die Menge der zu übersetzenden Dateien flexibel eingegrenzt werden können muss, wurden somit erfüllt.
+
+\subsection{Beibehaltung der Quelltext-Formatierung}
+
+Weil die originalgetreue Formatierung der Ausgabe (Anforderung~\ref{sec:requirement:format}) bei Verwendung des Babel-Codegenerators, aus den dargelegten Gründen, nicht umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs Prettier~\autocite{SOFTWARE:PRETTIER} implementiert\footnote{Vgl. Abschnitt~\ref{sec:formatting}}.
+Mittels händischer Überprüfung des erzeugten TypeScript-Codes der zwei vorliegenden Projekte von TeamShirts, können inkorrekt formatierte Dateien ermittelt werden. Hierunter werden Dateien verstanden in denen Ausdrücke, mit Ausnahme von Objektliteralen, anders als im ursprünglichen Quelltext umgebrochen oder Leerzeilen und Kommentare falsch platziert werden. Sobald eine dieser Eigenschaften vorliegt, wird die Formatierung als fehlerhaft betrachtet.
+
+% TODO: KHAN ist kacke, lass es einfach beim autoren nennen Barabash
+
+Tabelle~\ref{tab:results-formatting} zeigt die Ergebnisse der manuellen Überprüfung. Dabei werden die erzielten Werte der vorliegende Implementierung (\textit{Reflow}) dem Ansatz der Khan Academy~\autocite{KHAN:FLOW_TO_TS} gegenüber gestellt, um die Ergebnisse besser einordnen zu können. Das Babel-Plugin von Kikura bietet keine Möglichkeit die Ausgabe zu formatieren und wird daher hier nicht in den Vergleich miteinbezogen.
+Wie die Tabelle zeigt schlägt das Verfahren sowohl bei Reflow, als auch bei der Umsetzung der Khan Academy in einigen Fällen fehl. Jedoch erzielt die in dieser Arbeit umgesetzte Formatierungsroutine insgesamt bessere Ergebnisse: Während hier in Summe 32 Dateien (4,68\%) fehlerhaft formatiert werden, liegt der Wert für den Ansatz der Khan Academy bei 48 Dateien (7,00\%).
+
+\medbreak
+\input{src/5_Auswertung/tables/results-formatting}
+
+Zur Feststellung der Ursachen der fehlerhaften Formatierung wurden die Verarbeitung der inkorrekt ausgegebenen Dateien untersucht. Weil das Verfahren zeilenbasiert arbeitet, ist die Konsistenz der Umbrüche für das Gelingen der Formatierung entscheidend, da es andernfalls zu einem Versatz der betrachteten Eingabe- und Ausgabgezeilen kommt. Die Betrachtung der Originaldateien, welche fehlerhaft formatiert wurden, hat gezeigt, dass dies in Folge von bestimmten, eher selten vorkommenden Quelltext-Formatierung auftritt. Nachfolgend soll das Problem anhand eines Beispiel für einen solchen Fall veranschaulicht werden:
+
+\begin{lstlisting}[
+  label={code:wrong-formatting:flow},
+  caption={Beispiel für Formatierung des Original-Quelltexts, die falsch in die Ausgabe übernommen wird.}
+]
+if (
+  a &&
+  b &&    // Kommentar, der Zweck von 'b' beschreibt
+  c === 0 // Kommentar, der Zweck von 'c' beschreibt
+) {
+  // ...
+}
+\end{lstlisting}
+
+Der boolesche Ausdruck, der als Bedingung der Verzweigung in Zeile~1 dient, wird mehrmals umgebrochen, sodass der Zweck der einzelnen Elemente durch einen Zeilenkommentar erläutert werden kann. Der umgesetzte Flow-Transpiler ignoriert Kommentare der Eingabe bei Generierung der TypeScript-Ausgabe, weil Babel diese wie ausgeführt ohnehin falsch platzieren würde. Erst durch die Formatierungsroutine werden die Kommentare im Nachgang wieder eingefügt. Diese schlägt für das Beispiel fehl, weil der boolesche Ausdruck in der erzeugten Ausgabe aufgrund der entfernten Kommentare nicht mehr umgebrochen wird (vgl. Quelltext~\ref{code:wrong-formatting:ts}). Da der Zeilenumbruch in der Ein- und Ausgabe in diesem Fall somit inkonsistent ist, schlägt auch die Übertragung der Formatierung in allen nachfolgenden Zeilen fehl.
+
+\begin{lstlisting}[
+  % float,
+  % floatplacement=H,
+  label={code:wrong-formatting:ts},
+  caption={Generierte TypeScript-Ausgabe der Eingabe in~\ref{code:wrong-formatting:flow} \emph{vor} Ausführung der Formatierungsroutine.}
+]
+if (foo && bar && baz === 0) {
+  // ...
+}
+\end{lstlisting}
+
+Wie die weitere Fehleranalyse gezeigt hat, ergibt sich bei der Auflistung der formalen Parameter von Funktionen die gleiche Problematik, wenn diese analog zum Beispiel umgebrochen werden. Zur Lösung dieser fehlerhaften Fälle, sollte die angepasste Version von Prettier so erweitert werden, dass auch die Bedingung von Verzweigungen und die Auflistung von Parametern stets umgebrochen werden.
+
+Zwar konnte die Anforderung nicht vollständig umgesetzt werden, weil nicht alle Ausgabedateien korrekt formatiert werden, dennoch wurde der Programmierstil in 95,32\% der Fälle akkurat beibehalten. Da die manuelle Korrektur der insgesamt 32 fehlerhaften Dateien mit geringem Zeitaufwand durchführbar ist, kann die geforderte Funktion als größtenteils erfüllt betrachtet werden.
 
 % ---
 

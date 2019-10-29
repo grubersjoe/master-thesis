@@ -1,14 +1,16 @@
 \begin{table}[tbh]
   \footnotesize
-  \begin{tabu} to \textwidth {@{}lrrrrrr@{}}
+  \begin{tabu} to \textwidth {@{}lr|rr|rr@{}}
     \midrule
-    \libertineSB{Projekt} & \libertineSB{Dateien} & \libertineSB{falsch formatiert} & \libertineSB{rel. Anteil}\\ % & \libertineSB{Zeilen~$+$} & \libertineSB{Zeilen~$-$} & \libertineSB{Zeilen insg.} \\
+    {} & {} & \multicolumn{2}{l|}{\libertineSB{Vorl. Implementierung}} & \multicolumn{2}{l}{\libertineSB{Khan Academy}} \\
+    \rowfont[l]{} \libertineSB{Projekt} & Dateien & falsch form & rel. Anteil & falsch form & rel. Anteil \\
     \midrule
-    Components & 331 & 11 & 3,54\% \\ % & 2.564 & 2.417 & 32.240 \\
-    Helios     & 353 & 21 & 5,95\% \\ % & 4.604 & 3.873 & 45.436 \\
-    insgesamt  & 684 & 32 & 4,68\% \\ % & 7.168 & 6.290 & 77.675 \\
+    Components & 331 & 11 & 3,54\% & 31 & 9,37\% \\
+    Helios     & 353 & 21 & 5,95\% & 17 & 4,80\% \\
+    \midrule
+    insgesamt  & 684 & 32 & 4,68\% & 48 & 7,00\% \\
     \midrule
   \end{tabu}
-  \caption{Ergebnisse der Formatierung der Ausgabequelltexte.}
+  \caption{Anteil falsch formatierter Ausgabedateien in den Projekten Components und Helios mit Vergleich zu Ansatz der Khan Academy~\autocite{KHAN:FLOW_TO_TS}.}
   \label{tab:results-formatting}
 \end{table}
