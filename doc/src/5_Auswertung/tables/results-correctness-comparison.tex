@@ -1,0 +1,62 @@
+\begin{longtabuenv}
+\begin{longtabu} to \textwidth {@{}lr|rr|rrX@{}}
+  \midrule
+  {} & {} & \multicolumn{2}{l|}{\large\textsc{kikura}} & \multicolumn{2}{l}{\large\textsc{barabash}} \\
+  \rowfont[l]{\libertineSB} Typ & Testfälle & Fehler & rel. Anteil & Fehler & rel. Anteil & {} \\
+  \midrule
+\endhead
+  \midrule
+  \caption[]{Fehlerhafte Übersetzung von Flow-Typen bei Kikura~\autocite{KIKURA:FLOW_TO_TS} und Barabash~\autocite{BARABASH:FLOW_TO_TS} (\Lightning~=~Programmabsturz).}
+\endfoot
+  \captionlistentry{Fehlerhafte Übersetzung von Flow-Typen bei Kikura~\autocite{KIKURA:FLOW_TO_TS} und Barabash~\autocite{BARABASH:FLOW_TO_TS} (\Lightning~=~Programmabsturz).}
+  Any type              &   8 & 0          & 0      &  0         & 0        & {} \\
+  Array type            &  13 & 0          & 0      &  2         & 15,5\%   & {} \\
+  Class type            &  43 & \Lightning & --     &  4         &  9,3\%   & {} \\
+  Empty type            &   7 & \Lightning & --     &  0         & 0        & {} \\
+  Function type         &  34 & \Lightning & --     &  4         & 11,8\%   & {} \\
+  Generics              &  17 & \Lightning & --     &  1         &  5,9\%   & {} \\
+  Interface type        &  61 & \Lightning & --     & \Lightning & --       & {} \\
+  Intersection type     &  29 & \Lightning & --     &  2         &  6,9\%   & {} \\
+  Maybe type            &  27 & \Lightning & --     & 23         & 85,2\%   & {} \\
+  Mixed type            &   6 & 0          & 0      &  0         & 0        & {} \\
+  Module type           &  32 & \Lightning & --     &  6         & 18,8\%   & {} \\
+  Object type           & 122 & \Lightning & --     & \Lightning & --       & {} \\
+  Opaque type           &  10 & 2          & 20,0\% &  6         & 60,0\%   & {} \\
+  Primitives            &   9 & 0          & 0      &  0         & 0        & {} \\
+  This type             &   8 & 0          & 0      & \Lightning & --       & {} \\
+  Tuple type            &   5 & 0          & 0      &  1         & 20,0\%   & {} \\
+  Type alias            &  22 & \Lightning & --     &  3         & 13,6\%   & {} \\
+  Type cast             &  16 & 0          & 0      &  0         & 0        & {} \\
+  Type declarations     &  44 & \Lightning & --     & 14         & 31,8\%   & {}  \\
+  Typeof type           &  20 & 3          & 15,0\% &  2         & 10,0\%   & {} \\
+  Union type            &  19 & \Lightning & --     &  1         &  5,3\%   & {} \\
+  Call                  &   6 & \Lightning & --     &  0         & 0        & {} \\
+  Difference            &  11 & 0          & 0      &  0         & 0        & {} \\
+  Element type          &  13 & 0          & 0      &  0         & 0        & {} \\
+  Exact                 &   7 & 0          & 0      &  1         & 14,3\%   & {} \\
+  Existential type      &   5 & 0          & 0      &  0         & 0        & {} \\
+  Keys                  &   5 & 0          & 0      &  0         & 0        & {} \\
+  None maybe type       &   6 & 4          & 66,7\% &  0         & 0        & {} \\
+  Property type         &   8 & 0          & 0      &  0         & 0        & {} \\
+  Rest                  &  13 & \Lightning & --     &  0         & 0        & {} \\
+  Shape                 &  11 & 3          & 22,3\% &  0         & 0        & {} \\
+  \midrule
+  \libertineSB{Insgesamt} & \libertineSB{637} & \libertineSB{12} & \libertineSB{1,9\%} & \libertineSB{70} & \libertineSB{11,0\%} & {}
+  \label{tab:correctness-comparison}
+\end{longtabu}
+\end{longtabuenv}
+
+  % barabash:
+  % TODO: output.ts vorher löschen!
+  % maybe types falsch (fehlt undefined),
+  %  konstruktur return types,
+  % optionale parameter mit initializer,
+  % typdeklarationen im allgemeinen ziemlich falsch,
+  % rest paramater bekommt keinen namen,
+  % keine klamemrung von funktionstypen, wo nötig
+  % typeof undefined
+  % utility types: nimmer aber externe bib
+
+  % kikura
+  % laufzeitfehler
+  % entfernt // @flow direktive nicht

@@ -1,16 +1,18 @@
 \begin{longtabuenv}
 \begin{longtabu} to \textwidth {@{}>{\raggedright}p{2.5cm}P{4.5cm}>{\RaggedRight}X@{}}
-    \midrule
-    \libertineSB{Basistyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-    \midrule
-  \endhead
-    \midrule
-    \caption{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
-  \endfoot
+  \midrule
+  \libertineSB{Basistyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+  \midrule
+\endhead
+  \midrule
+  \caption[]{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
+\endfoot
+  \captionlistentry{Basistypen von Flow~\autocite{FLOW:TYPE_ANNOTATIONS} mit Beispiel.}
   Any type                 & any                             & Beliebige Werte. Jeder Typ ist Subtyp von \type{any}. \type{any} ist jedem Typ zuweisbar und jeder Typ ist \type{any} zuweisbar. \medskip\\
   Array type               & Array<number>\newline number[]  & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. Die zweite Notation ist eine äquivalente Kurzschreibweise.\medskip\\
   Boolean literal type     & true                            & Boolesche Literale (entweder \code{true} oder \code{false}). \medskip\\
   Boolean type             & boolean                         & Boolesche Werte. \medskip\\
+  Class type               & class C {}\\newline type ClassAlias = C & Boolesche Werte. \medskip\\
   Empty type               & empty                           & Der leere Typ $\bot$ (\textit{bottom type}), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (zum Beispiel Endlosschleife oder Exception). \medskip\\
   Exact object type        & \{| prop: boolean; |\}          & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar (vgl. \type{Object type}).\medskip\\
   Function type            & (string, arg?: \{\}) => number  & Funktionen: das heißt der Typ der formalen Parameter und des Rückgabewerts. Die Parameternamen sind dabei optional. \medskip\\
@@ -30,7 +32,7 @@
   This type                & this                            & Typ für Wert des Schlüsselworts \code{this} (Selbstreferenz) in Funktionen oder globalem Kontext. \medskip\\
   Tuple type               & {[}Date, number{]}              & Tupel, also Listen fester Länge mit vorgegebenen Datentyp für jedes Element. \medskip\\
   Type alias               & type Type = <{}FlowType>{}      & Ermöglicht beliebig komplexe Typkonstrukte unter einem neuen Namen, dem Alias, zusammen zu fassen. \medskip\\
-  Type cast expression\medskip & (variable: string)          & Statische Assertion eines Typs. \medskip\\
+  Type cast\medskip & (variable: string)          & Statische Assertion eines Typs. \medskip\\
   Type export              & export type T = number | null   & Export von Typen aus Modulen. \medskip\\
   Type import              & import type T from './types'    & Import von Typen aus anderen Modulen. \medskip\\
   Typeof type              & typeof undefined                & Operator um Flow-Typ eines Werts zu erhalten. \medskip\\

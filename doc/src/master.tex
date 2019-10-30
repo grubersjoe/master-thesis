@@ -17,10 +17,6 @@
 \date{\today}
 \author{Jonathan Gruber}
 
-% TODO: remove before "release"
-\pdfcompresslevel=0
-\pdfobjcompresslevel=0
-
 % PDF Version 1.7
 \pdfminorversion=7
 
@@ -34,6 +30,9 @@
 % Fonts
 \usepackage[tt=false]{libertine}
 \usepackage[scale=0.8,sb]{plex-mono}
+
+% Some symbols
+\usepackage{marvosym}
 
 % Math
 \usepackage[libertine]{newtxmath}
@@ -236,7 +235,7 @@
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
 \newcommand{\danger}[1]{{\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}}
-\newcommand{\numberOfTests}{1013 }
+\newcommand{\numberOfTests}{1022 }
 \newcommand{\str}[1]{\textquotesingle#1\textquotesingle}
 \newcommand{\type}[1]{\textit{#1}}
 

@@ -279,7 +279,7 @@ Quelltext~\ref{code:convert-nullable-type} zeigt die entsprechende Implementieru
 
 \begin{lstlisting}[
   label={code:convert-nullable-type},
-  caption={Transpilierung eines \textit{Maybe types} in äquivalenten Vereinigungstyp in TypeScript.}
+  caption={Transpilierung des Typs \type{Maybe type} in äquivalenten Vereinigungstyp in TypeScript.}
 ]
 function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionType {
   const tsType = convertFlowType(node.typeAnnotation);
