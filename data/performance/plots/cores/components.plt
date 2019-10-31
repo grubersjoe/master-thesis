@@ -23,5 +23,5 @@ set boxwidth 0.8
 flow = '#9ecae1';
 ts = '#3182bd';
 
-plot 'complete.dat' using 2:xtic(1) title '\small Flow' linecolor rgb flow, \
+plot 'cores.dat' using 2:xtic(1) title '\small Flow' linecolor rgb flow, \
   '' using 3 title '\small TypeScript' linecolor rgb ts
