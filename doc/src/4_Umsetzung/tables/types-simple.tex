@@ -1,31 +1,32 @@
 % TODO sync with chapter 2
-\begin{table}[tbh]
-  \footnotesize
-  \begin{tabu} to \textwidth {@{}lCCX@{}}
-    \midrule
-    \libertineSB{Basistyp}  & \libertineSB{Flow}            & \libertineSB{TypeScript}         & {} \\
-    \midrule
-    Any type                & any                           & any                              & {} \\
-    Array type              & Array<number>                 & Array<number>                    & {} \\
-    Array type (shorthand)  & number[]                      & number[]                         & {} \\
-    Boolean literal type    & true                          & true                             & {} \\
-    Boolean type            & boolean                       & boolean                          & {} \\
-    \textit{Empty type}     & empty                         & never                            & {} \\
-    Intersection type       & type Intersection = T1 \& T2  & type Intersection = T1 \& T2     & {} \\
-    \textit{Mixed type}     & mixed                         & unknown                          & {} \\
-    Null literal type       & null                          & null                             & {} \\
-    Number literal type     & 42                            & 42                               & {} \\
-    Number type             & number                        & number                           & {} \\
-    String literal type     & \str{literal}                 & \str{literal}                    &  {} \\
-    String type             & string                        & string                           & {} \\
-    This type               & this                          & this                             & {} \\
-    Tuple type              & {[}Date, number{]}            & {[}Date, number{]}               & {} \\
-    Type alias              & type Type = <FlowType>        & type Type = <TypeScriptType>     & {} \\
-    Union type              & number | null                 & number | null                    & {} \\
-    Void type               & void                          & void                             & {} \\
-    \midrule
-  \end{tabu}
-  \caption{Übersicht über simple Transformationen der Basistypen von Flow.}
+\begin{longtabuenv}
+\begin{longtabu} to \textwidth {@{}lCCX@{}}
+  \midrule
+  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} & {} \\
+  \midrule
+\endhead
+  \midrule
+  \caption[]{Übersicht über simple Transformationen der Basistypen von Flow.}
+\endfoot
+  \captionlistentry{Übersicht über simple Transformationen der Basistypen von Flow.}
+  Any type                & any                           & any                              & {} \\
+  Array type              & Array<number>                 & Array<number>                    & {} \\
+  Array type (shorthand)  & number[]                      & number[]                         & {} \\
+  Boolean literal type    & true                          & true                             & {} \\
+  Boolean type            & boolean                       & boolean                          & {} \\
+  \textit{Empty type}     & empty                         & never                            & {} \\
+  Intersection type       & type Intersection = T1 \& T2  & type Intersection = T1 \& T2     & {} \\
+  \textit{Mixed type}     & mixed                         & unknown                          & {} \\
+  Null literal type       & null                          & null                             & {} \\
+  Number literal type     & 42                            & 42                               & {} \\
+  Number type             & number                        & number                           & {} \\
+  String literal type     & \str{literal}                 & \str{literal}                    & {} \\
+  String type             & string                        & string                           & {} \\
+  This type               & this                          & this                             & {} \\
+  Tuple type              & {[}Date, number{]}            & {[}Date, number{]}               & {} \\
+  Type alias              & type Type = <FlowType>        & type Type = <TypeScriptType>     & {} \\
+  Union type              & number | null                 & number | null                    & {} \\
+  Void type               & void                          & void                             & {}
   \label{tab:transformation-base-types-simple}
-\end{table}
-
+\end{longtabu}
+\end{longtabuenv}

@@ -12,7 +12,7 @@
   Array type               & Array<number>\newline number[]  & Felder. Der Typparameter (hier \code{number}) gibt den Typ der Feldelemente an. Die zweite Notation ist eine äquivalente Kurzschreibweise.\medskip\\
   Boolean literal type     & true                            & Boolesche Literale (entweder \code{true} oder \code{false}). \medskip\\
   Boolean type             & boolean                         & Boolesche Werte. \medskip\\
-  Class type               & class C {}\\newline type ClassAlias = C & Boolesche Werte. \medskip\\
+  Class type               & class C \{\}\newline type ClassAlias = C & Typ für Klassen (durch Klassennamen). \medskip\\
   Empty type               & empty                           & Der leere Typ $\bot$ (\textit{bottom type}), also der Typ mit genau 0 Elementen. Nützlich um niemals terminierende Unterprogramme zu typisieren (zum Beispiel Endlosschleife oder Exception). \medskip\\
   Exact object type        & \{| prop: boolean; |\}          & Objekte mit \emph{genau} der angegebenen Menge von Attributen. Weitere Attribute stellen eine Typverletzung dar (vgl. \type{Object type}).\medskip\\
   Function type            & (string, arg?: \{\}) => number  & Funktionen: das heißt der Typ der formalen Parameter und des Rückgabewerts. Die Parameternamen sind dabei optional. \medskip\\

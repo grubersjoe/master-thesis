@@ -172,7 +172,7 @@ Die Übersetzung der Flow-Typen durch Kikura ist in 98,1\% der Fälle korrekt. J
   \item Schließlich werden bei beiden Ansätzen einige der Hilfstypen überhaupt nicht transformiert und einfach in die Ausgabe übernommen. Weil diese Typen in TypeScript undefiniert sind, entsteht auch so ein Fehler.
 \end{itemize}
 
-Insgesamt treten bei Kikura zwar weniger Fehler als bei Barabash auf, aber das Plugin stürzt auch bei fast der Hälfte der Eingabedateien ab, was darauf hindeutet, dass noch viele Spezialfälle außer Acht gelassen wurden. Der Ansatz von Barabash ist hier bedeutend stabiler, jedoch werden in Summe mehr Fehler aufgedeckt. Da hier allerdings auch deutlich mehr Testfälle untersucht werden, ist dies zu erwarten (161 bei Kikura vsersus 466 bei Barabash). Zusammenfassend lässt sich sagen, dass beide Ansätze offenbar viele Grenzfälle der Übersetzung derzeit noch nicht korrekt behandeln, sodass verschiedene semantische und syntaktische Probleme in der Ausgabe entstehen.
+Insgesamt treten bei Kikura zwar weniger Fehler als bei Barabash auf, aber das Plugin stürzt auch bei fast der Hälfte der Eingabedateien ab, was darauf hindeutet, dass noch viele Spezialfälle außer Acht gelassen wurden. Der Ansatz von Barabash ist hier bedeutend stabiler, jedoch werden in Summe mehr Fehler aufgedeckt. Da hier allerdings auch deutlich mehr Testfälle untersucht werden, ist dies zu erwarten (161 bei Kikura versus 466 bei Barabash). Zusammenfassend lässt sich sagen, dass beide Ansätze offenbar viele Grenzfälle der Übersetzung derzeit noch nicht korrekt behandeln, sodass verschiedene semantische und syntaktische Probleme in der Ausgabe entstehen.
 
 \subsubsection{Fazit}
 
@@ -230,7 +230,7 @@ if (
 }
 \end{lstlisting}
 
-Der boolesche Ausdruck, der als Argument der bedingten Anweisung in Zeile~1 dient, wird mehrmals umgebrochen, damit der Zweck der einzelnen Elemente durch einen Zeilenkommentar erläutert werden kann. Der umgesetzte Flow-Transpiler ignoriert Kommentare der Eingabe bei Generierung der TypeScript-Ausgabe generell, weil Babel diese, wie ausgeführt, ohnehin zum Teil falsch platziert. Erst durch die Formatierungsroutine werden die Kommentare im Nachgang wieder eingefügt, um deren korrekte Positionierung zu erzielen. Diese schlägt für das Beispiel fehl, weil der boolesche Ausdruck in der erzeugten Ausgabe aufgrund der entfernten Kommentare nicht länger umgebrochen wird (vgl. Quelltext~\ref{code:wrong-formatting:ts}). Da der Zeilenumbruch in der Ein- und Ausgabe in diesem Fall somit inkonsistent ist, schlägt die Übertragung der Formatierung beim Vergleich dieser und aller nachfolgenden Zeilen fehl.
+Der boolesche Ausdruck, der als Argument der bedingten Anweisung in Zeile~1 dient, wird mehrmals umgebrochen, damit der Zweck der einzelnen Elemente durch einen Zeilenkommentar erläutert werden kann. Der umgesetzte Flow-Transpiler ignoriert Kommentare der Eingabe bei Generierung der TypeScript-Ausgabe generell, weil Babel diese, wie ausgeführt, ohnehin zum Teil falsch platziert. Erst durch die Formatierungsroutine werden die Kommentare im Nachgang wieder eingefügt, um deren korrekte Positionierung zu erzielen. Diese schlägt für das Beispiel fehl, weil der boolesche Ausdruck in der erzeugten Ausgabe aufgrund der entfernten Kommentare nicht länger umgebrochen wird\footnote{Vgl. Quelltext~\ref{code:wrong-formatting:ts}.}. Da der Zeilenumbruch in der Ein- und Ausgabe in diesem Fall somit inkonsistent ist, schlägt die Übertragung der Formatierung beim Vergleich dieser und aller nachfolgenden Zeilen fehl.
 
 \begin{lstlisting}[
   % float,
