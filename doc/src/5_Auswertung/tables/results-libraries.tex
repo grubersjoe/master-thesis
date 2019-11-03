@@ -1,0 +1,31 @@
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}CrrrrX@{}}
+    \midrule
+    \rowfont[l]{\libertineSB} Bibliothek & Version & Verwendung & Verfügb. Flow & Verfügb. TypeScript & {} \\
+    \midrule
+    react             & 16.11 &	388 & 16.11~~~~~~\code{I}  & 16.11~~~~~~\code{E} & {} \\
+    styled-components &   4.4 &	135 &   4.x~~~~~~\code{E}  &   4.1~~~~~~\code{E} & {} \\
+    @storybook/react  &   5.2 &  74 &   5.x~~~~~~\code{E}  &   4.0~~~~~~\code{E} & {} \\
+    chai              &   4.2 &  73 &   4.x~~~~~~\code{E}  &   4.2~~~~~~\code{E} & {} \\
+    react-redux       &   7.1 &	 72 &   7.x~~~~~~\code{E}  &   7.1~~~~~~\code{E} & {} \\
+    react-apollo      &   3.1 &  34 &    --~~~~~~\code{ }  &   3.1~~~~~~\code{I} & {} \\
+    react-router-dom  &   5.1 &  22 &   5.x~~~~~~\code{E}  &   5.1~~~~~~\code{E} & {} \\
+    react-loadable    &   5.5 &  17 &   5.x~~~~~~\code{E}  &   5.5~~~~~~\code{E} & {} \\
+    lodash            &  4.17 &  15 &   4.x~~~~~~\code{E}  &  4.14~~~~~~\code{E} & {} \\
+    react-router      &   5.1 &  13 &   5.x~~~~~~\code{E}  &   5.1~~~~~~\code{E} & {} \\
+    es6-error         &   4.1 &   9 &   4.x~~~~~~\code{E}  &   4.1~~~~~~\code{I} & {} \\
+    react-motion      &   0.5 &   5 &    --~~~~~~\code{ }  &  0.29~~~~~~\code{E} & {} \\
+    axios             &  0.19 &   3 &  0.19~~~~~~\code{E}  &  0.19~~~~~~\code{I} & {} \\
+    react-collapse    &   5.0 &   3 &    --~~~~~~\code{ }  &   4.0~~~~~~\code{E} & {} \\
+    css-math          &   0.4 &   2 &    --~~~~~~\code{ }  &    --~~~~~~\code{ } & {} \\
+    \midrule
+  \end{tabu}
+  \caption*{
+    \footnotesize
+    \code{E}: Separat gepflegte Typdefinition (flow-typed bzw. DefinitelyTyped)\\
+    \code{I}: In Bibliothek integrierte Typdefinition
+  }
+  \caption{Verfügbarkeit von Typdeklarationen für Flow bzw. TypeScript für die 15 am häufigsten verwendeten JavaScript"=Bibliotheken innerhalb der Projekte Components und Helios.}
+  \label{tab:used-libraries}
+\end{table}
