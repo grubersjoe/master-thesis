@@ -1,3 +1,6 @@
-# Masterarbeit: Statische Typsysteme für JavaScript
+# Statische Typsysteme für JavaScript (Masterarbeit)
 
-Entwicklung eines Transpilers von Flow nach TypeScript
+**Entwicklung eines Babel-Plugins zur Transpilierung von Flow nach TypeScript**
+
+Jonathan Gruber, 2019<br />
+HTWK Leipzig
