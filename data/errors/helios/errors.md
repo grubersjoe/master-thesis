@@ -1,7 +1,7 @@
 Measurement right after execution of Reflow
 (WITHOUT global.d.ts)
 
-# Strict (but no strictNullChecks)
+# Strict
 Errors: 697
 Histogram:
     205 TS2307

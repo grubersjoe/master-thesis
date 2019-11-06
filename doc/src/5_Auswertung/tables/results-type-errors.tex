@@ -1,0 +1,52 @@
+\begin{table}[p]
+  \small
+  \begin{tabu} to \textwidth {@{}rrrr|rrrrX@{}}
+    \midrule
+    \rowfont[r]{\libertineSB} S & Art & NS & Art & S & Art & NS & Art & {} \\
+    \midrule
+    249 & TS2322 & 184 & TS2322 & 205 & TS2307 & 205 & TS2307 & {} \\
+    104 & TS2345 &  91 & TS2345 & 202 & TS2339 &  88 & TS2322 & {} \\
+     70 & TS2339 &  70 & TS2339 & 147 & TS2322 &  37 & TS2345 & {} \\
+     47 & TS2605 &  48 & TS2605 &  72 & TS2345 &  24 & TS2339 & {} \\
+     39 & TS2304 &  39 & TS2304 &  24 & TS2305 &  24 & TS2305 & {} \\
+     22 & TS2741 &  25 & TS2538 &  15 & TS2304 &  15 & TS2304 & {} \\
+     22 & TS2554 &  23 & TS2741 &   9 & TS2531 &   3 & TS2739 & {} \\
+     12 & TS2739 &  22 & TS2554 &   7 & TS2532 &   3 & TS2724 & {} \\
+      9 & TS2307 &  12 & TS2739 &   4 & TS2538 &   2 & TS2605 & {} \\
+      8 & TS2740 &   9 & TS2307 &   3 & TS2724 &   1 & TS2740 & {} \\
+      5 & TS2557 &   5 & TS2557 &   2 & TS2739 &   1 & TS2678 & {} \\
+      5 & TS2305 &   5 & TS2305 &   2 & TS2605 &   1 & TS2374 & {} \\
+      4 & TS1099 &   4 & TS1099 &   1 & TS2740 &  -- & --     & {} \\
+    \midrule
+    \multicolumn{4}{c}{\large\textsc{components}} & \multicolumn{4}{c}{\large\textsc{helios}} & {} \\
+    \midrule
+  \end{tabu}
+  \vspace{\baselineskip}
+  \caption*{
+    \small
+    {\libertineSB{Arten von Typfehlern}~\autocite{TYPESCRIPT:GITHUB}}\\
+    \vspace{.5\baselineskip}
+    TS1099 -- Die Liste der Typargumente darf nicht leer sein.\\
+    TS2304 -- Name $x$ kann nicht gefunden werden.\\
+    TS2305 -- Modul $x$ exportiert kein Element $y$.\\
+    TS2307 -- Modul $x$ kann nicht gefunden werden.\\
+    TS2322 -- Typ $x$ ist Typ $y$ nicht zuweisbar.\\
+    TS2339 -- Attribut $x$ existiert nicht in Typ $y$.\\
+    TS2345 -- Argument mit Typ $x$ ist Parameter mit Typ $y$ nicht zuweisbar.\\
+    TS2374 -- Doppelte Index-Signatur für Zeichenketten.
+    TS2531 -- Objekt ist möglicherweise \code{null}.\\
+    TS2532 -- Objekt ist möglicherweise \code{undefined}.\\
+    TS2538 -- Typ $x$ darf nicht als Index-Typ verwendet werden.\\
+    TS2554 -- $x$ Argumente erwartet, aber $y$ gegeben (Anzahl).\\
+    TS2557 -- Mindestens $x$ Argumente erwartet, aber $y$ oder mehr gegeben (Anzahl).\\
+    TS2605 -- Der Typ des JSX-Elements $x$ ist keine Konstruktorfunktion eines JSX-Elements.\\
+    TS2678 -- Typ $x$ ist nicht vergleichbar mit Typ $y$.\\
+    TS2724 -- Modul $x$ exportiert kein Element $y$. Meinten Sie $z$?\\
+    TS2739 -- Typ $x$ fehlen die folgenden Attribute von Typ $y$: $z$.\\
+    TS2740 -- Typ $x$ fehlen die folgenden Attribute von Typ $y$: $z$ und weiterhin $p$.\\
+    TS2741 -- Attribut $x$ fehlt in Typ $y$, wird aber von Typ $z$ erwartet.\\
+  }
+  \vspace{\baselineskip}
+  \caption{Auflistung der zwölf häufigsten nach der Transpilierung neu aufgetretene strikten (S) und nicht-strikten (NS) TypeScript-Typfehler in den Projekten Components und Helios.}
+  \label{tab:type-errors}
+\end{table}
