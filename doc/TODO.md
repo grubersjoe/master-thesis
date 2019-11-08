@@ -7,3 +7,4 @@
 - Titelseite (Abgabedatum)
 - Floats überprüfen
 - Ergebnisse überprüfen und Bezugnahme darauf
+- Tabellen glatt ziehen
