@@ -7,9 +7,13 @@ Nachfolgend sollen nun die Ergebnisse der Migration der zwei Projekte von TeamSh
 
 Bereits während der Entwicklungsphase des Flow-Transpilers wurde dieser immer wieder mit dem Quelltext der vorliegenden Projekte von TeamShirts erprobt, um dessen Praxistauglichkeit anhand einer realen Codebasis zu überprüfen und gegebenenfalls zu korrigieren. Nachdem der vollständige Funktionsumfang des Transcompilers hergestellt war, wurde als erstes das Projekt Components, danach Helios mit Hilfe des Übersetzers in TypeScript umgewandelt. Diese Reihenfolge wurde bewusst gewählt, da Components keine Abhängigkeit zu anderen Projekten von TeamShirts besitzt, aber Helios wiederum Teile von Components einsetzt.
 
-Unmittelbar nach Ausführung des Transpilers wurden bei Components 543 und bei Helios 404 neue Typfehler durch den TypeScript-Compiler festgestellt. Diese mussten daraufhin manuell behoben werden, um die Typkorrektheit wiederherzustellen. Die Berichtigung der Typisierung vereinnahmte bei Components sieben und bei Helios acht Personentage. Aufgrund der prinzipiellen Unterschiede der Typsysteme von Flow und Typescript, die im Grundlagenteil bereits dargelegt wurden, war das Auftreten neuer Fehler zu erwarten. Wie beschrieben ist beispielsweise die Typinferenz und die Berechnung der Typkompatibilität (nominal versus strukturell) in TypeScript anders umgesetzt als bei Flow. Im nachfolgenden Abschnitt wird dieser Aspekt näher beleuchtet und genauer beschrieben, welche Arten von Typfehlern neu aufgetreten sind. Weiterhin wird untersucht, welche der neu erkannten Typfehler tatsächlich bislang unentdeckte Programmfehler repräsentieren.
+Unmittelbar nach Ausführung des Transpilers wurden bei Components 543 und bei Helios 404 neue Typfehler durch den TypeScript-Compiler festgestellt. Diese mussten daraufhin manuell behoben werden, um die Typkorrektheit wiederherzustellen. Die Berichtigung der Typisierung vereinnahmte bei Components sieben und bei Helios acht Personentage. Aufgrund der prinzipiellen Unterschiede der Typsysteme von Flow und Typescript, die im Grundlagenteil bereits dargelegt wurden, war das Auftreten neuer Fehler zu erwarten. Wie beschrieben ist beispielsweise die Typinferenz und die Berechnung der Typkompatibilität (nominal versus strukturell) in TypeScript anders umgesetzt als bei Flow.
+
+% Im nachfolgenden Abschnitt wird dieser Aspekt näher beleuchtet und genauer beschrieben, welche Arten von Typfehlern neu aufgetreten sind. Weiterhin wird untersucht, welche der neu erkannten Typfehler tatsächlich bislang unentdeckte Programmfehler repräsentieren.
 
 \section{Bewertung der Ergebnisse hinsichtlich der Zielvorgabe}
+
+Nachdem der Wechsel zu TypeScript vollzogen war konnten verschiedene Auswertungen durchgeführt werden, um die Ergebnisse bezüglich der Zielsetzung zu bewerten. Im Folgenden sollen die in Kapitel~\ref{chap:analysis} dargelegten Vorgaben hinsichtlich ihrer Erfüllung untersucht werden.
 
 \subsection{Erkennung weiterer Typ- und Programmfehler}
 \label{goal:new-type-errors}
@@ -36,7 +40,7 @@ declare module '*.svg' {
 
 \subsubsection{Neu erkannte Programmfehler}
 
-Das Ziel der Migration zu TypeScript war es, zuvor unerkanntes fehlerhaftes Programmverhalten aufzudecken. Während der manuellen Behebung der neu aufgetreten Typverletzungen wurde deshalb untersucht, ob manche der Typfehler tatsächlich semantische Probleme innerhalb des Quelltexts repräsentieren. In der Tat konnten einige Programmfehler durch TypeScript ermittelt werden. Anhand von drei Beispielen soll im Folgenden dargelegt werden, welche Art von Programmfehlern festgestellt wurden. Obwohl keiner der Fälle kritische Laufzeitfehler verursacht, ist es dennoch erstrebenswert diese zu korrigieren, um die Codequalität insgesamt zu steigern.
+Ein Aspekt der Zielsetzung war auch zuvor unerkanntes fehlerhaftes Programmverhalten aufzudecken. Während der manuellen Behebung der neu aufgetreten Typverletzungen wurde deshalb untersucht, ob manche der Typfehler tatsächlich semantische Probleme innerhalb des Quelltexts repräsentieren. In der Tat konnten einige Programmfehler durch TypeScript ermittelt werden. Anhand von drei Beispielen soll im Folgenden dargelegt werden, welche Art von Programmfehlern festgestellt wurden. Obwohl keiner der Fälle kritische Laufzeitfehler verursacht, ist es dennoch erstrebenswert diese zu korrigieren, um die Codequalität insgesamt zu steigern.
 
 \vspace{-0.5\baselineskip}
 \paragraph{Zusätzliche Objektattribute bei Funktionsargumenten}
@@ -152,8 +156,6 @@ Nachdem die Erfüllung der Zielvorgaben durch den Wechsel zu TypeScript diskutie
 
 Als erste und wichtigste technische Anforderung an den Transpiler wurde die äquivalente und vollständige Übersetzung der gesamten Flow-Syntax nach TypeScript definiert. Die äquivalenten TypeScript-Ausdrücke der verschiedenen Flow-Typen konnten dabei mehrheitlich einfach gefunden werden, weil TypeScript einen sehr ähnlichen Funktionsumfang wie Flow besitzt und sich oftmals nur die Schlüsselwörter unterscheiden\footnote{Vgl. Übersetzungstabellen in Abschnitt~\ref{sec:flow-transpilation}.}. Kompliziertere, nicht offensichtliche Transformationen wurden experimentell bestimmt.
 
-Für einige, wenige Typen existiert keine absolut bedeutungsgleiche Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier bei der Transpilierung zwingend zu einem Verlust von Typinformation, was in neuen Typfehlern resultieren kann. Die inkorrekte Transformation derartiger Typen wird gemäß Anforderung~\ref{sec:requirement:completeness} akzeptiert, jedoch muss der Benutzer bei Auftreten eines solchen Falls gewarnt werden. Quelltext~\ref{code:transpiler-warnings} zeigt wie eine solche Warnung aufgebaut ist. Dabei wird einerseits die genaue Position des verursachenden Flow-Typs im Quelltext angegeben, andererseits wird der Benutzer über die Hintergründe der Warnung durch einen Link informiert.
-
 \begin{lstlisting}[
   label={code:transpiler-warnings},
   caption={Ausgabe von Warnungen bei Autreten nicht äquivalent übersetzbarer Flow-Typen.},
@@ -169,7 +171,7 @@ Transpiling example.js...
            See https://github.com/Microsoft/TypeScript/issues/14466.
 \end{lstlisting}
 
-Nachfolgend wird dargelegt, welche der Funktionen von Flow nicht absolut korrekt übersetzt werden können und wie dies jeweils innerhalb des Transpilers gehandhabt wird.
+Für einige, wenige Typen existiert keine absolut bedeutungsgleiche Übersetzung, weil TypeScript manche der Funktionen von Flow nicht unterstützt. Infolgedessen kommt es hier bei der Transpilierung zwingend zu einem Verlust von Typinformation, was in neuen Typfehlern resultieren kann. Die inkorrekte Transformation derartiger Typen wird gemäß Anforderung~\ref{sec:requirement:completeness} akzeptiert, jedoch muss der Benutzer bei Auftreten eines solchen Falls gewarnt werden. Quelltext~\ref{code:transpiler-warnings} zeigt wie eine solche Warnung aufgebaut ist. Dabei wird einerseits die genaue Position des verursachenden Flow-Typs im Quelltext angegeben, andererseits wird der Benutzer über die Hintergründe der Warnung durch einen Link informiert. Nachfolgend wird dargelegt, welche der Funktionen von Flow nicht absolut korrekt übersetzt werden können und wie dies jeweils innerhalb des Transpilers gehandhabt wird.
 
 \begin{itemize}
   \item {\libertineSB{Existential type}}\\*
@@ -276,6 +278,8 @@ if (
 
 Der boolesche Ausdruck, der als Argument der bedingten Anweisung in Zeile~1 dient, wird mehrmals umgebrochen, damit der Zweck der einzelnen Elemente durch einen Zeilenkommentar erläutert werden kann. Der umgesetzte Flow-Transpiler ignoriert Kommentare der Eingabe bei Generierung der TypeScript-Ausgabe generell, weil Babel diese wie ausgeführt ohnehin zum Teil falsch platziert. Erst durch die Formatierungsroutine werden die Kommentare im Nachgang wieder eingefügt, um deren korrekte Positionierung zu erzielen. Diese schlägt für das Beispiel fehl, weil der boolesche Ausdruck in der erzeugten Ausgabe aufgrund der entfernten Kommentare nicht länger umgebrochen wird (vgl. Quelltext~\ref{code:wrong-formatting:ts}). Da der Zeilenumbruch in der Ein- und Ausgabe in diesem Fall somit inkonsistent ist, schlägt die Übertragung der Formatierung beim Vergleich dieser und aller nachfolgenden Zeilen fehl.
 
+Wie die weitere Fehleranalyse gezeigt hat, ergibt sich bei der Auflistung der formalen Parameter von Funktionen die gleiche Problematik, wenn diese analog zum Beispiel umgebrochen werden. Zur Lösung dieser fehlerhaften Fälle, sollte die angepasste Version von Prettier so erweitert werden, dass auch das Argument bedingter Anweisungen und die Auflistung  von Parametern stets umgebrochen werden.
+
 \begin{lstlisting}[
   % float,
   % floatplacement=H,
@@ -286,8 +290,6 @@ if (foo && bar && baz === 0) {
   // ...
 }
 \end{lstlisting}
-
-Wie die weitere Fehleranalyse gezeigt hat, ergibt sich bei der Auflistung der formalen Parameter von Funktionen die gleiche Problematik, wenn diese analog zum Beispiel umgebrochen werden. Zur Lösung dieser fehlerhaften Fälle, sollte die angepasste Version von Prettier so erweitert werden, dass auch das Argument bedingter Anweisungen und die Auflistung  von Parametern stets umgebrochen werden.
 
 \subsubsection{Fazit}
 

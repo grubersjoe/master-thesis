@@ -17,7 +17,6 @@
   Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     & {} \\
   Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  & {} \\
   Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  & {} \\
-  \pagebreak
   Interface type             & interface I \{ +prop: number \}  &   interface I \{ readonly: number \}   & {} \\
   Nullable type (Maybe type) & ?number                          &   number | null | undefined            & {} \\
   Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      & {} \\

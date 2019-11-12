@@ -159,8 +159,8 @@
 
 \lstset{
   abovecaptionskip=0.5\baselineskip,
-  aboveskip=\baselineskip,
-  basicstyle=\linespread{1.08}\small\ttfamily,
+  aboveskip={16pt plus 4pt minus 4pt},
+  basicstyle=\linespread{1.04}\small\ttfamily,
   belowcaptionskip=0pt,
   belowskip=0pt,
   breakatwhitespace=true,
@@ -240,7 +240,7 @@
 \newcommand{\type}[1]{\textit{#1}}
 
 \newenvironment{longtabuenv}{
-  \vspace*{-\baselineskip} % balance out required newline after \captionlistentry
+  \vspace{-\baselineskip} % balance out required newline after \captionlistentry
   \begin{footnotesize}\begin{singlespacing}
 }{
   \end{singlespacing}\end{footnotesize}
