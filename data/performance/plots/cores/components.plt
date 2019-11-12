@@ -20,8 +20,8 @@ set style histogram cluster gap 1.5
 set style fill solid
 set boxwidth 0.8
 
-flow = '#9ecae1';
-ts = '#3182bd';
+flow = '#888888';
+ts = '#333333';
 
 plot 'cores.dat' using 2:xtic(1) title '\small Flow' linecolor rgb flow, \
   '' using 3 title '\small TypeScript' linecolor rgb ts
