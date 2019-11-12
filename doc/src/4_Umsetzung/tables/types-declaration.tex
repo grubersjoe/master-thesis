@@ -1,6 +1,11 @@
 % TODO: Sync with chapter 2
 \begin{longtabuenv}
 \begin{longtabu} to \textwidth {@{}lCK@{}}
+  \captionlistentry{Übersicht über Transformationen der Typdeklarationen von Flow.} \\
+  \midrule
+  \libertineSB{Deklaration} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
+  \midrule
+\endfirsthead
   \midrule
   \libertineSB{Deklaration} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
   \midrule
@@ -8,7 +13,6 @@
   \midrule
   \caption[]{Übersicht über Transformationen der Typdeklarationen von Flow.}
 \endfoot
-  \captionlistentry{Übersicht über Transformationen der Typdeklarationen von Flow.}
   Class       & declare class C \{\}                 & declare class C \{\}                     \\
   Export      & declare export default () => string  & const \_default: () => string;\newline export default \_default; \\
   Function    & declare function f(number): any      & declare function f(p: number): any       \\

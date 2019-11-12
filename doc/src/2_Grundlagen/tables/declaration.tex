@@ -1,20 +1,18 @@
-\begin{longtabuenv}
-\begin{longtabu} to \textwidth {@{}lC>{\RaggedRight}X@{}}
-  \midrule
-  \libertineSB{Deklaration} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
-  \midrule
-\endhead
-  \midrule
-  \caption[]{Typdeklarationen von Flow~\autocite{FLOW:LIBRARY_DEFINITIONS} mit Beispiel.}
-\endfoot
-  \captionlistentry{Typdeklarationen von Flow~\autocite{FLOW:LIBRARY_DEFINITIONS} mit Beispiel.}
-  Class       & declare class C \{\}               & Deklaration einer Klasse. \medskip\\
-  Export      & declare export default () => any   & Deklaration eines Exports aus einem Modul. \medskip\\
-  Function    & declare function f(number): any    & Deklaration von Funktionen. \medskip\\
-  Interface   & declare interface I \{\}           & Deklaration von Schnittstellen. \medskip\\
-  Module      & declare module \str{esmodule} \{\} & Deklaration von Modulen. \medskip\\
-  Type alias  & declare type T = number            & Deklaration von Typaliassen. \medskip\\
-  Variable    & declare var v: string              & Deklaration des Typs von Variablen. \medskip
+\begin{table}[tbh]
+  \footnotesize
+  \begin{tabu} to \textwidth {@{}lC>{\RaggedRight}X@{}}
+    \midrule
+    \libertineSB{Deklaration} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+    \midrule
+    Class       & declare class C \{\}             & Deklaration einer Klasse. \\
+    Export      & declare export default () => any & Deklaration eines Exports aus einem Modul. \\
+    Function    & declare function f(number): any  & Deklaration von Funktionen. \\
+    Interface   & declare interface I \{\}         & Deklaration von Schnittstellen. \\
+    Module      & declare module \str{M} \{\}      & Deklaration von Modulen. \\
+    Type alias  & declare type T = number          & Deklaration von Typaliassen. \\
+    Variable    & declare var v: string            & Deklaration des Typs von Variablen. \\
+    \midrule
+  \end{tabu}
+  \caption{Typdeklarationen von Flow~\autocite{FLOW:LIBRARY_DEFINITIONS} mit Beispiel.}
   \label{tab:flow-type-declarations}
-\end{longtabu}
-\end{longtabuenv}
+\end{table}

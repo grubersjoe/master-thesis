@@ -7,3 +7,4 @@
 - Ergebnisse überprüfen und Bezugnahme darauf
 - Tabellen glatt ziehen
 - Übersetzungstabellen schöner
+- \code in \footnote?

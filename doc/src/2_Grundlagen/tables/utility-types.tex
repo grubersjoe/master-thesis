@@ -1,5 +1,10 @@
 \begin{longtabuenv}
 \begin{longtabu} to \textwidth {@{}lC>{\RaggedRight}X@{}}
+  \captionlistentry{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel.} \\
+  \midrule
+  \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
+  \midrule
+\endfirsthead
   \midrule
   \libertineSB{Hilfstyp} & \libertineSB{Beispiel} & \libertineSB{Kurzbeschreibung} \\
   \midrule
@@ -7,7 +12,6 @@
   \midrule
   \caption[]{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel.}
 \endfoot
-  \captionlistentry{Hilfstypen von Flow~\autocite{FLOW:UTILITY_TYPES} mit Beispiel.}
   Call                      & \$Call<F, T...>        & Berechnet statisch den Typ, der entsteht, wenn der Funktionstyp F mit dem Argument \code{T} aufgerufen wird. \code{T} steht dabei für null oder beliebig viele Argumente.  \medskip\\
   Class                     & Class<C>               & Berechnet den Typ (die Klasse) einer Klasseninstanz \code{C}. \medskip\\
   Difference                & \$Diff<A, B>           & Berechnet die Schnittmenge zweier Objekttypen \code{A} und \code{B}. \medskip\\
@@ -26,8 +30,8 @@
   Shape                     & \$Shape<O>             & Berechnet einen Typ, der erlaubt, dass nur eine Untermenge der Attribute des Objekttyps \code{O} angegeben wird. Deren Typ muss jedoch mit den ursprünglichen Typen der Attribute kompatibel sein. \medskip\\
   Tuple map                 & \$TupleMap<T, F>       & Analog zu \type{Object map}, jedoch wird der Funktionstyp \code{F} auf alle Typen der Werte eines Tupels oder Felds angewandt. \medskip\\
   Values                    & \$Values<O>            & Berechnet den Vereinigungstyp der Attributwerte eines Objekttyps \code{O}. \medskip\\
-  \textit{Subtype}          & \$Subtype<T>           & Berechnet den Subtyp von \code{T}. \medskip\\
-  \textit{Supertype}        & \$Supertype<T>         & Berechnet den Supertyp von \code{T}.  \medskip
+  \textit{Subtype}          & \$Subtype<T>           & Berechnet einen Typ, der nur Subtypen von \code{T} zulässt\newline(Kovarianz). \medskip\\
+  \textit{Supertype}        & \$Supertype<T>         & Berechnet einen Typ, der nur Supertypen von \code{T} zulässt (Kontravarianz).  \medskip
   \label{tab:flow-utility-types}
 \end{longtabu}
 \end{longtabuenv}

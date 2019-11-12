@@ -1,6 +1,11 @@
 % TODO sync with chapter 2, maybe line breaks
 \begin{longtabuenv}
 \begin{longtabu} to \textwidth {@{}lCCX@{}}
+  \captionlistentry{Übersicht über komplexe Transformationen der Basistypen von Flow.} \\
+  \midrule
+  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} & {} \\
+  \midrule
+\endfirsthead
   \midrule
   \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} & {} \\
   \midrule
@@ -8,7 +13,6 @@
   \midrule
   \caption[]{Übersicht über komplexe Transformationen der Basistypen von Flow.}
 \endfoot
-  \captionlistentry{Übersicht über komplexe Transformationen der Basistypen von Flow.}
   Exact object type          & \{| prop: any |\}                &   \{ prop: any \}                      & {} \\
   Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     & {} \\
   Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  & {} \\

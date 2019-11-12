@@ -24,7 +24,7 @@
         - klare kommunikation
         - bugs werden schneller angegangen
 - fünf techn. anforderungen
-    - äquivalenz / vollständigkeit der transpilierung ERREICHT MIT EINSCHRÄNKUNGEN
+    - äquivalenz / vollständigkeit der transpileirung ERREICHT MIT EINSCHRÄNKUNGEN
         - anhand fixture tests
         - volllständigkeit jawoll
         - äquivalenz jawoll mit beschriebenen einschränkungen
