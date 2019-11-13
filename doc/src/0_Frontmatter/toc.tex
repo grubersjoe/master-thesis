@@ -3,6 +3,12 @@
 
   % Apply empty page style to multiple pages
   \renewcommand{\thispagestyle}[1]{}
+
+  % Roman numerals need more space
+  \makeatletter
+  \renewcommand{\@pnumwidth}{2.25em}% 1.55em
+  \makeatother
+
   \setcounter{tocdepth}{2}
   \tableofcontents
 }
