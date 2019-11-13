@@ -44,7 +44,7 @@ Da es aufwändig und fehleranfällig ist selbst korrekte Typdeklarationen für f
 
 \subsection{Performance der Typüberprüfungen}
 
-Ein weiterer Aspekt, der durch den Wechsel zu TypeScript verbessert werden soll, ist die Performance, das heißt die Schnelligkeit, der Typüberprüfungen. Üblicherweise wird der Flow- bzw. TypeScript-Sprachserver, der das gesamte Projekt und insbesondere offene Dateien im Hintergrund kontinuierlich auf Typverletzungen überprüft, durch den Editor oder die integrierte Entwicklungsumgebung gestartet. Es ist entscheidend, dass die Ergebnisse dieser Berechnung der Typkorrektheit möglichst schnell vorliegen, damit etwaige Fehler unmittelbar im Editor angezeigt werden können. Falls diese stark verzögert, erst nach einigen Sekunden, ausgegeben werden, so verlangsamt dies den Workflow des Programmierers und beeinträchtigt dessen effizientes Arbeiten. Neben diesen inkrementellen Überprüfungen ist auch die Laufzeit der vollständige Berechnung der Typkorrektheit zu untersuchen, da derartige Tests beispielsweise im Zuge der kontinuierlichen Software-Integration ausgeführt werden. Ein weiteres Erfolgskriterium der Migration zu TypeScript ist damit die Erzielung einer mindestens gleichwertigen Performance.
+Ein weiterer Aspekt, der durch die Migration zu TypeScript verbessert werden soll, ist die Performance, das heißt die Schnelligkeit, der Typüberprüfungen. Üblicherweise wird der Flow- bzw. TypeScript-Sprachserver, der das gesamte Projekt und insbesondere offene Dateien im Hintergrund kontinuierlich auf Typverletzungen überprüft, durch den Editor oder die integrierte Entwicklungsumgebung gestartet. Es ist entscheidend, dass die Ergebnisse dieser Berechnung der Typkorrektheit möglichst schnell vorliegen, damit etwaige Fehler unmittelbar im Editor angezeigt werden können. Falls diese stark verzögert, erst nach einigen Sekunden, ausgegeben werden, so verlangsamt dies den Workflow des Programmierers und beeinträchtigt dessen effizientes Arbeiten. Neben diesen inkrementellen Überprüfungen ist auch die Laufzeit der vollständige Berechnung der Typkorrektheit zu untersuchen, da derartige Tests beispielsweise im Zuge der kontinuierlichen Software-Integration ausgeführt werden. Ein weiteres Erfolgskriterium des Wechsels zu TypeScript ist damit die Erzielung einer mindestens gleichwertigen Performance der Typüberprüfungen.
 
 \subsection{Zukunftssicherheit und Transparenz der Technologie}
 \label{sec:goal:transparency}
@@ -56,7 +56,7 @@ All diesen Fragen gemein ist das Bedürfnis der Benutzer nach Stabilität, Trans
 \section{Technische Anforderungen an den Transpiler}
 \label{sec:requirements}
 
-Neben den ausgeführten Zielvorgaben wurden weiterhin einige technische Anforderungen an den Transpiler erarbeitet, welche die Grundlage für die spätere Bewertung der Implementierung bilden. Um Sicherzustellen, dass das Werkzeug möglichst generisch einsetzbar ist, wurden die Anforderungen nur wo nötig speziell auf die konkreten Gegebenheiten bei TeamShirts zugeschnitten.
+Neben den ausgeführten Zielen wurden weiterhin fünf technische Anforderungen an den Transpiler erarbeitet, welche die Grundlage für die spätere Bewertung der Implementierung bilden. Um Sicherzustellen, dass das Werkzeug möglichst generisch einsetzbar ist, wurden die Anforderungen nur wo nötig speziell auf die Gegebenheiten bei TeamShirts zugeschnitten.
 
 \subsection{Äquivalente und vollständige Übersetzung der Flow-Typen}
 \label{sec:requirement:completeness}

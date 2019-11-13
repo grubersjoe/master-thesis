@@ -1,30 +1,30 @@
 % TODO sync with chapter 2, maybe line breaks
 \begin{longtabuenv}
-\begin{longtabu} to \textwidth {@{}lCCX@{}}
+\begin{longtabu} to \textwidth {@{}lKK@{}}
   \captionlistentry{Übersicht über komplexe Transformationen der Basistypen von Flow.} \\
   \midrule
-  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} & {} \\
+  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
   \midrule
 \endfirsthead
   \midrule
-  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} & {} \\
+  \libertineSB{Basistyp} & \libertineSB{Flow} & \libertineSB{TypeScript} \\
   \midrule
 \endhead
   \midrule
   \caption[]{Übersicht über komplexe Transformationen der Basistypen von Flow.}
 \endfoot
-  Exact object type          & \{| prop: any |\}                &   \{ prop: any \}                      & {} \\
-  Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     & {} \\
-  Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  & {} \\
-  Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  & {} \\
-  Interface type             & interface I \{ +prop: number \}  &   interface I \{ readonly: number \}   & {} \\
-  Nullable type (Maybe type) & ?number                          &   number | null | undefined            & {} \\
-  Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      & {} \\
-  \textit{Opaque type}       & opaque type Opaque = number      &   type Opaque = number                 & {} \\
-  Type cast expresssion      & (variable: string)               &   (variable as string)                 & {} \\
-  Type export                & export type T = number | null    &   export T = number | null             & {} \\
-  Type import                & import type T from \str{./types} &   import T from \str{./types}          & {} \\
-  Typeof type                & typeof undefined                 &   undefined                            & {}
+  Exact object type          & \{| prop: any |\}                &   \{ prop: any \}                      \\
+  Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     \\
+  Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  \\
+  Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  \\
+  Interface type             & interface I \{ +prop: number \}  &   interface I \{ readonly: number \}   \\
+  Nullable type (Maybe type) & ?number                          &   number | null | undefined            \\
+  Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      \\
+  \textit{Opaque type}       & opaque type Opaque = number      &   type Opaque = number                 \\
+  Type cast expresssion      & (variable: string)               &   (variable as string)                 \\
+  Type export                & export type T = number | null    &   export T = number | null             \\
+  Type import                & import type T from \str{./types} &   import T from \str{./types}          \\
+  Typeof type                & typeof undefined                 &   undefined
   \label{tab:transformation-base-types-complex}
 \end{longtabu}
 \end{longtabuenv}
