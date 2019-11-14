@@ -51,7 +51,6 @@ tests/fixtures
 \end{lstlisting}
 
 Während der Entwicklung des Transpilers wurden nach und nach Modultests für alle Funktionen des Programms angelegt. Überprüft wird dabei die korrekte Übersetzung aller Flow-Typen, die Richtigkeit weiterer Optimierungen und die Formatierung der Ausgabe. Weiterhin wurden Tests zur Erprobung des Kommandozeilenprogramms und der allgemeinen Hilfsfunktionen geschrieben. Damit Regression während der fortlaufenden Entwicklung unmittelbar festgestellt werden, werden die Tests nach Einspielung von Änderungen in das Versionverwaltungssystem automatisch ausgeführt (\textit{kontinuierliche Integration}). Insgesamt sind \numberOfTests Testfälle\footnote{Anmerkung: Diese hohe Zahl ist darin begründet, dass größtenteils Fixture-Tests umgesetzt wurden und jeder Vergleich einer nicht-leeren Zeile hierbei als ein Test betrachtet wird.} entstanden und es wurde eine Testabdeckung von 93\% erreicht.
-% TODO: check those numbers at the end
 
 \subsection{Statische Typisierung von Babel}
 
