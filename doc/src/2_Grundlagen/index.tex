@@ -21,7 +21,8 @@ Eine Möglichkeit Typsysteme zu klassifizieren, ist deren Verwendung von \textit
 
 \begin{lstlisting}[
   label={code:type-equivalence},
-  caption={Beispiel zur Differenzierung von nominalen und strukturellen Typen.}
+  caption={Beispiel zur Differenzierung von nominalen und strukturellen Typen.},
+  emph={string,A},
 ]
 class A { prop: string; }
 class B { prop: string; }
@@ -295,7 +296,8 @@ Der konkrete Aufbau von Babel-Plugins soll durch ein Minimalbeispiel gezeigt wer
   % float,
   % floatplacement=H,
   label={code:babel-plugin-definition},
-  caption={[Minimalbeispiel eines Babel-Plugins]Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\code{Identifier}) werden in Großbuchstaben umgewandelt.}
+  caption={[Minimalbeispiel eines Babel-Plugins]Minimalbeispiel eines Babel-Plugins: Die Namen aller Bezeichner (\code{Identifier}) werden in Großbuchstaben umgewandelt.},
+  keywords={function,return},
 ]
 // var foo => var FOO
 module.exports = function() {

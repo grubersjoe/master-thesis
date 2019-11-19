@@ -205,8 +205,9 @@ In Zeile~4 wird ein weiteres wichtiges Konzept innerhalb des Transpilers exempla
   % float,
   % floatplacement=htb,
   label={code:convert-flow-type},
-  keywords={function,switch,case,return},
   caption={Universelle Transpilierung beliebiger Flow-Typen nach TypeScript durch zentrale Umwandlungsfunktion.}
+  emph={FlowType,TSType},
+  keywords={function,switch,case,return},
 ]
 function convertFlowType(node: FlowType): TSType {
   switch (node.type) {
@@ -350,7 +351,7 @@ Die von TeamShirts eingesetzte Bibliothek React stellt ähnlich wie Babel Typdek
 
 \begin{lstlisting}[
   label={code:react-imports},
-  caption={Import und Benutzung des durch die Bibliothek \textit{React} extern definierten Typs \enquote{Node}.}
+  caption={Import und Benutzung des durch die Bibliothek \textit{React} extern definierten Typs \enquote{Node}.},
 ]
 // @flow                                     // TypeScript
 import React, { type Node } from 'react';    import React, { ReactNode } from 'react';

@@ -6,4 +6,3 @@
 - Ergebnisse überprüfen und Bezugnahme darauf
 - Übersetzungstabellen schöner
 - kursive Texte
-- highlighting listings korrekt?
