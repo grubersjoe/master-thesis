@@ -117,7 +117,7 @@ Der Einfluss der Parallelisierung auf die Laufzeit der Berechnungen soll im Folg
     Einfluss der zur Verfügung stehenden Rechenkerne auf durchschnittliche Laufzeit der Typüberprüfung von Flow 0.96 und TypeScript 3.5 der Projekte Components und Helios.
   }
 
-  \vspace{\baselineskip}
+  \vspace{0.75\baselineskip}
   \caption*{
     \small
     Gemessen mit Intel Core i7-6700 CPU mit 3,4~GHz (System D).
@@ -227,7 +227,6 @@ Durch die Fixture-Tests können sowohl die Korrektheit, als auch die Vollständi
 
 Eine weitere wichtige Anforderung an den Transpiler ist, dass die Semantik des ursprünglichen JavaScript-Programms durch die Übersetzung nicht verändert werden darf, damit keine neuen Programmfehler in den Quelltext eingeschleust werden. Die korrekte Übersetzung der Semantik der Flow-Typen wurde bereits im vorherigen Abschnitt behandelt. Hierbei ist anzumerken, dass die statische Typisierung aber ohnehin keinen Einfluss auf die Semantik des Programms zur \emph{Laufzeit} hat, weil die Typen vor der Auslieferung vollständig entfernt werden. Dies setzt vorraus, dass die Programm-Transformation tatsächlich nur die Typisierung adressiert und keine unbeabsichtigte Nebenwirkung, wie zum Beispiel das Einfügen neuer Anweisungen in das Programm, hat. Ein weiterer Aspekt des umgesetzten Transcompilers, der zu abweichender Semantik führen könnte sind die in Abschnitt~\ref{sec:optimizations} beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option \enquote{\code{replace-decorators}} werden beispielsweise Dekoratoren in bedeutungsgleiche verschachtelte Funktionsaufrufe umgewandelt. Die Einhaltung dieser Einschränkungen wird wie ausgeführt durch die Fixture-Tests überprüft.
 
-% TODO: check numbers about coverage
 Ein formaler Beweis der semantischen Äquivalenz ist aufgrund des Umfangs der zwei migrierten Projekte nicht durchführbar. Jedoch kann durch Betrachtung der bestehenden Modultests die Beibehaltung der Programmwirkung nach der Übersetzung zumindest approximativ verifiziert werden. Kritisch anzumerken ist, dass dieser Ansatz nur bei einer entsprechend hohen Testabdeckung aussagekräftig ist. Während diese bei Components bei 90,5\% liegt, wird bei Helios nur ein Anteil von 18,0\% erreicht.
 Nachdem alle nicht-strikten Typfehler in beiden Projekten korrigiert worden sind, wurden die Modultests beider Projekte ausgeführt. Keiner der 373 Tests von Components und 326 Tests von Helios schlug dabei fehl, sodass die semantisch korrekten Überführung des ursprünglichen Quelltexts nach TypeScript zumindest für das Projekt Components wahrscheinlich ist. Bei der praktischen Erprobung der zwei Projekte wurde allerdings in vier Fällen ein fehlerhaftes Verhalten der Webanwendung festgestellt. Jedoch konnte jedes dieser Probleme auf eine fehlerhafte händische Korrektur neuer Typfehler zurückgeführt werden. Es wird somit angenommen, dass der Transpiler die Semantik durch die Übersetzung tatsächlich beibehält und nur wo nötig, zum Beispiel bei nicht unterstützten Flow-Typen, modifiziert.
 
@@ -252,7 +251,7 @@ Von den zwei zum Vergleich betrachteten Ansätzen, ermöglicht lediglich der Flo
 
 Die letzte technische Anforderung an den Transpiler ist die möglichst originalgetreue Formatierung der Ausgabe. Weil diese bei Verwendung des Babel-Codegenerators aus den dargelegten Gründen nicht ohne Weiteres umsetzbar ist, wurde eine Formatierungsroutine auf Basis des Werkzeugs Prettier~\autocite{SOFTWARE:PRETTIER} implementiert. Mittels händischer Überprüfung des erzeugten TypeScript-Codes der zwei Projekte von TeamShirts, wurden inkorrekt formatierte Dateien ermittelt. Hierunter werden Dateien verstanden in denen Ausdrücke, mit Ausnahme von Objektliteralen, anders als im ursprünglichen Quelltext umgebrochen oder Leerzeilen und Kommentare falsch platziert werden. Sobald eines dieser Kriterien vorliegt, wird die Formatierung als fehlerhaft betrachtet.
 
-Tabelle~\ref{tab:results-formatting} zeigt die Ergebnisse dieser manuellen Überprüfung. Dabei werden die erreichten Werte der vorliegende Implementierung (\textit{Reflow}) dem Ansatz von Barabash~\autocite{BARABASH:FLOW_TO_TS} gegenüber gestellt, um die Zahlen besser einordnen zu können. Das Babel-Plugin von Kikura~\autocite{KIKURA:FLOW_TO_TS} bietet keine Möglichkeit die Ausgabe zu formatieren und wird daher nicht in den Vergleich miteinbezogen.
+Tabelle~\ref{tab:results-formatting} zeigt die Ergebnisse dieser manuellen Überprüfung. Dabei werden die erreichten Werte der vorliegende Implementierung dem Ansatz von Barabash~\autocite{BARABASH:FLOW_TO_TS} gegenüber gestellt, um die Zahlen besser einordnen zu können. Das Babel-Plugin von Kikura~\autocite{KIKURA:FLOW_TO_TS} bietet keine Möglichkeit die Ausgabe zu formatieren und wird daher nicht in den Vergleich miteinbezogen.
 Wie die Tabelle zeigt, schlägt das Verfahren sowohl in der vorliegenden Umsetzung, als auch bei Barabash in einigen Fällen fehl. Jedoch erzielt die in dieser Arbeit implementierte Formatierungsroutine insgesamt bessere Ergebnisse: Während hier in Summe 32 Dateien~(4,7\%) fehlerhaft formatiert werden, liegt der Anteil bei Barabash bei 48 Dateien~(7,0\%).
 
 \tablespace
