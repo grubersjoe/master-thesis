@@ -1,7 +1,9 @@
 \begin{table}[p]
+  \caption{Fehlerhafte Übersetzung von Flow-Typen bei Kikura~\autocite{KIKURA:FLOW_TO_TS} und Barabash~\autocite{BARABASH:FLOW_TO_TS} im Vergleich zur vorliegenden Implementierung (\Lightning~=~Programmabsturz).}
   \footnotesize
   \begin{tabu} to \textwidth {@{}lr|rr|rrX@{}}
     \midrule
+    \multicolumn{2}{l|}{} & \multicolumn{2}{l|}{\large\textsc{kikura}} & \multicolumn{2}{l}{\large\textsc{barabash}} & {} \\
     \rowfont[l]{\libertineSB} Typ & Testfälle & Fehler & rel. Anteil & Fehler & rel. Anteil & {} \\
     \midrule
     Any type              &   8 & 0          & 0      &  0         & 0        & {} \\
@@ -37,9 +39,6 @@
     Shape                 &  11 & 3          & 22,3\% &  0         & 0        & {} \\
     \libertineSB{Insgesamt} & \libertineSB{637} & \libertineSB{12} & \libertineSB{1,9\%} & \libertineSB{70} & \libertineSB{11,0\%} & {} \\
     \midrule
-    \multicolumn{2}{l}{} & \multicolumn{2}{c}{\large\textsc{kikura}} & \multicolumn{2}{c}{\large\textsc{barabash}} & {} \\
-    \midrule
+    \label{tab:correctness-comparison}
   \end{tabu}
-  \caption{Fehlerhafte Übersetzung von Flow-Typen bei Kikura~\autocite{KIKURA:FLOW_TO_TS} und Barabash~\autocite{BARABASH:FLOW_TO_TS} (\Lightning~=~Programmabsturz).}
-  \label{tab:correctness-comparison}
 \end{table}

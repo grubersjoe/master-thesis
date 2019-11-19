@@ -206,6 +206,10 @@
   justification=raggedright,
   singlelinecheck=off
 }
+\captionsetup[table]{
+  aboveskip=0pt,
+  belowskip=8pt,
+}
 \usepackage{subcaption}
 
 % Quotes
@@ -236,9 +240,9 @@
 
 % Commands and environments
 \newcommand{\code}[1]{{\texttt{#1}}}
-\newcommand{\danger}[1]{{\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}}
 \newcommand{\numberOfTests}{1022 }
 \newcommand{\str}[1]{\textquotesingle#1\textquotesingle}
+\newcommand{\tablespace}{\vspace{6pt plus 2pt}}
 \newcommand{\type}[1]{\textit{#1}}
 
 \newenvironment{longtabuenv}{

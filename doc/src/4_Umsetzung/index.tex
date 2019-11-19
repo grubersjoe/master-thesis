@@ -114,7 +114,7 @@ Die Mehrheit der in Tabelle~\ref{tab:flow-base-types} vorgestellten Basistypen v
 
 Tabelle~\ref{tab:transformation-base-types-simple} listet die 18 Flow-Typen auf, die simpel übersetzt werden können und zeigt beispielhaft deren Entsprechung in TypeScript. Abgesehen von den zwei kursiv hervorgehobenen Zeilen ist die Syntax in TypeScript identisch mit der ursprünglichen Notation der Typen in Flow. Dennoch müssen auch diese Elemente des abstrakten Syntaxbaums während der Transpilierung in ihr korrektes Gegenstück umgewandelt werden, da eine Kombination von Flow- und TypeScript-Knoten innerhalb des abstrakten Syntaxbaums gemäß der Spezifikation~\autocite{BABEL:PARSER_SPEC} von Babel verboten ist. Diese Einschränkung wird zur Laufzeit durch Babel mit Hilfe der Bibliothek \code{@babel/types}~\autocite{BABEL:TYPES} sicher gestellt. Aufgrund der Verwendung von TypeScript und der gegebenen Typisierung von Babel werden Typfehler dieser Art aber ohnehin bereits vor Ausführung des Transpilers statisch erkannt.
 
-% \medbreak
+\tablespace
 \input{src/4_Umsetzung/tables/types-simple}
 
 \begin{lstlisting}[
@@ -234,7 +234,7 @@ type FunctionType = (string, argName: number) => void;
 Während die Benennung der formalen Parameter in Flow optional ist, ist diese in TypeScript verpflichtend. Infolgedessen müssen Parameter während der Übersetzung von Funktionstypen nach TypeScript gegebenenfalls automatisch benannt werden, da andernfalls fehlerhafte Syntax entstünde\footnote{Vgl. Zeile~2 in Tabelle~\ref{tab:transformation-base-types-complex}.}.
 Der in der Tabelle kursiv hervorgehobene Typ \type{Opaque type} wird in TypeScript nicht unterstützt~\autocite{TS:GITHUB:NO_OPAQUE_TYPE} und wird deshalb wie gezeigt zu einem regulären Typalias umgeformt.
 
-% \medbreak
+\tablespace
 \input{src/4_Umsetzung/tables/types-complex}
 
 % \pagebreak
@@ -324,7 +324,7 @@ function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionTyp
 
 Auch die in Abschnitt~\ref{sec:flow:utility-types} eingeführten Hilfstypen von Flow können größtenteils äquivalent nach TypeScript überführt werden. Tabelle~\ref{tab:transformation-utility-types} gibt einen Überblick über alle Übersetzungen. Für einige der Einträge gibt es in TypeScript bedeutungsgleiche Hilfstypen, andere können leicht durch Verwendung von Typoperatoren abgebildet werden.
 
-% \medbreak
+\tablespace
 \input{src/4_Umsetzung/tables/types-utility}
 
 Die Transformation der drei Abbildungstypen \type{Object map}, \type{Object map with key} und \type{Tuple map} wurde nicht umgesetzt, weil kein TypeScript-Ausdruck gefunden werden konnte, der diesen exakt entspricht. Deshalb werden diese Typen bei der Transpilierung mit \type{any} ersetzt. Da die JavaScript-Projekte von TeamShirts diese Hilfstypen jedoch ohnehin nicht verwenden, stellt dies kein Hindernis für die Migration im vorliegenden Fall dar. Die zwei Typen \type{Subtype} und \type{Supertype} wurden wie ausgeführt von Flow als veraltet (\textit{deprecated}) markiert und werden deshalb ebenfalls nach \code{any} übersetzt. Auch der \type{Existential type} wurde als überholt gekennzeichnet, da er unsicher ist~\autocite{FLOW:LINT_RULE_REFERENCE}. Weil TypeScript einen derartigen Typ nicht unterstützt, wird auch dieser durch \code{any} ersetzt. Sollten in der Eingabe einer dieser sechs nicht unterstützen Hilfstypen auftreten, so wird während der Verarbeitung durch das Babel-Plugin wie gefordert eine detaillierte Warnung ausgegeben mit der Aufforderung den Ausgabequelltext an dieser Stelle manuell zu korrigieren\footnote{Vgl. Anforderung~\ref{sec:requirement:completeness}.}.
@@ -335,7 +335,7 @@ Zu beachten gilt darüber hinaus, dass die Typparameter der Hilfstypen (\code{F}
 
 Da der Transpiler Anspruch auf Vollständigkeit erhebt, müssen auch Typdeklarationen transformiert werden. Tabelle~\ref{tab:transformation-declarations} zeigt exemplarisch die verschiedenen Deklarationen und deren Gegenstück in TypeScript. Die Syntax ist hierbei ähnlich zu den simplen Basistypen oftmals identisch in Flow und TypeScript. Dennoch müssen die zugrunde liegenden Knoten des abstrakten Syntaxbaums übersetzt werden, da die entsprechenden Ausdrücke in TypeScript eigene Knotentypen besitzen. Interessant ist die Deklaration des Standard-Exports eines Moduls\footnote{Siehe \autocite[377]{ECMASCRIPT:2019}.} in der zweiten Zeile. Während Flow hier den Export von Funktionen unterstützt, kann dies nicht unmittelbar in TypeScript abgebildet werden. Deshalb muss die Deklaration umgeformt werden: Der Wert der ursprünglichen Deklaration wird dabei einer neu erstellten Variablen (\code{\_default}) zugewiesen und kann anschließend als Argument des Exports verwendet werden, sodass ein äquivalenter Ausdruck entsteht.
 
-% \medbreak
+\tablespace
 \input{src/4_Umsetzung/tables/types-declaration}
 
 \subsection{Weitere Optimierungen}
@@ -395,7 +395,7 @@ reflow [OPTIONEN]… <DATEIEN ODER VERZEICHNISSE…>
 Beispiel: reflow --dry-run --include-pattern "**/*.js" src/
 \end{lstlisting}
 
-\medbreak
+% \tablespace
 \input{src/4_Umsetzung/tables/cli}
 
 \begin{figure}[tbp]

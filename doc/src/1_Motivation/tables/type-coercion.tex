@@ -1,6 +1,7 @@
 \begingroup
 \setlength{\tabcolsep}{4pt}
 \begin{table}[htb]
+  \caption[Dynamische Typumwandlung verschiedener JavaScript-Ausdrücke im Vergleich zu Python und Ruby]{Demonstration der dynamischen Typumwandlung verschiedener Ausdrücke in JavaScript im Vergleich zu Python und Ruby (Node 12.6, Python 3.7, Ruby 2.6.).}
   \footnotesize
   \begin{tabu} to \textwidth {@{}p{5.4cm}XX@{}}
     \midrule
@@ -18,7 +19,6 @@
 \code{typeof null}~~$\Rightarrow$~~\code{'object'} & \code{type(None)}~~$\Rightarrow$~~\code{NoneType} & \code{nil.class}~~$\Rightarrow$~~\code{NilClass} \\
     \midrule
   \end{tabu}
-  \caption[Dynamische Typumwandlung verschiedener JavaScript-Ausdrücke im Vergleich zu Python und Ruby]{Demonstration der dynamischen Typumwandlung verschiedener Ausdrücke in JavaScript im Vergleich zu Python und Ruby (Node 12.6, Python 3.7, Ruby 2.6.).}
   \label{tab:js-type-coercion}
 \end{table}
 \endgroup

@@ -1,7 +1,7 @@
 \chapter{Auswertung und Diskussion}
 \label{chap:evaluation}
 
-Nachfolgend sollen nun die Ergebnisse der Migration der zwei Projekte Components und Helios, die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird zum einen die Erfüllung der Zielvorgaben aus Abschnitt~\ref{sec:goals}, zum anderen die Einhaltung der technischen Anforderungen an den Transcompiler aus Abschnitt~\ref{sec:requirements} beurteilt und kritisch diskutiert. Damit die erzielten Ergebnisse besser eingeordnet werden können, werden diese hierbei auch wo möglich mit den Ansätzen von \textit{Kikura}~\autocite{KIKURA:FLOW_TO_TS} und \textit{Barabash}~\autocite{BARABASH:FLOW_TO_TS} zur Transpilierung von Flow verglichen\footnote{Vgl. Abschnitt~\ref{sec:evaluation-other-transpilers}.}. Zunächst wird jedoch die Durchführung der Migration an sich beschrieben.
+Nachfolgend sollen nun die Ergebnisse der Migration der zwei Projekte \textit{Components} und \textit{Helios}, die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird zum einen die Erfüllung der Zielvorgaben aus Abschnitt~\ref{sec:goals}, zum anderen die Einhaltung der technischen Anforderungen an den Transcompiler aus Abschnitt~\ref{sec:requirements} beurteilt und kritisch diskutiert. Damit die erzielten Ergebnisse besser eingeordnet werden können, werden diese hierbei auch wo möglich mit den Ansätzen von \textit{Kikura}~\autocite{KIKURA:FLOW_TO_TS} und \textit{Barabash}~\autocite{BARABASH:FLOW_TO_TS} zur Transpilierung von Flow verglichen\footnote{Vgl. Abschnitt~\ref{sec:evaluation-other-transpilers}.}. Zunächst wird jedoch die Durchführung der Migration an sich beschrieben.
 
 \section{Durchführung der Migration}
 
@@ -22,14 +22,13 @@ Nachdem der Wechsel zu TypeScript vollzogen war konnten verschiedene Auswertunge
 
 Das primäre Ziel der Migration zu TypeScript war es weitere Typ- und Programmfehler im bestehenden und zukünftigen Quelltext der Projekte von TeamShirts aufzudecken. Nach der Übersetzung der Flow-Typisierung nach TypeScript wurden sowohl in Components, als auch in Helios zahlreiche neue Typfehler festgestellt. Wie bereits ausgeführt, bietet der TypeScript-Compiler die Option \enquote{\code{strict}} um die Strenge der Typüberprüfungen deutlich zu verschärfen, indem beispielsweise die implizite Zuweisung des dynamischen Typs \code{any} verboten wird~\autocite{TSC:OPTIONS}. Tabelle~\ref{tab:type-errors} auf Seite~\pageref{tab:type-errors} gibt einen Überblick über die Anzahl und die Art der zwölf häufigsten strikten und nicht-strikten Typfehler, die unmittelbar nach der Transpilierung der zwei Projekte erkannt wurden. Insgesamt wurden bei Components 608 bzw. 543 und bei Helios 697 bzw. 404 strikte bzw. nicht-strikte Typverletzungen offen gelegt. Im Folgenden soll näher beleuchtet werden welche Arten von neuen Typfehlern überwiegend aufgedeckt wurden.
 
-\medbreak
 \input{src/5_Auswertung/tables/results-type-errors}
 
 Bei beiden Projekten treten am häufigsten Typfehler auf, die sich darauf beziehen, dass Typen einander nicht zuweisbar sind oder dass Typen ein referenziertes Attribut nicht beinhalten (TS2322, TS2345 bzw. TS2339). Die Gründe für diese Fehler sind vielfältig: Wie dargelegt unterscheiden sich Flow und TypeScript in einigen Aspekten wie der Typinferenz und der Betrachtung von Subtypen grundlegend, sodass hierdurch neue Typverletzungen entstehen können. Darüber hinaus wurden nach Ausführung des Transpilers externe Typdefinitionen für die eingesetzten Bibliotheken hinzugefügt, um deren korrekte Verwendung zu überprüfen. Weil die bestehende Typisierung von Ausdrücken nicht überall mit diesen Typdeklarationen übereinstimmt, bilden sich auch so neue Typfehler. Bei Helios tritt die Typverletzung TS2307, also dass ein Modul nicht gefunden werden kann, am öftesten auf. Dieser Fehler resultiert daraus, dass in diesem Projekt neben regulären TypeScript-Modulen auch andere Dateitypen wie beispielsweise SVG-Dateien importiert werden, was bei TypeScript normalerweise nicht möglich ist. Um eine derartige Verarbeitung weiterer Dateitypen zu realisieren, wird spezielle Software wie \textit{Webpack}~\autocite{WEBPACK} eingesetzt, die eine solche Modulstruktur zu statischen Ausgabedateien transformiert. Durch Anlegen einer globalen Typdeklaration für \enquote{Module} derartiger Dateitypen kann diese Klasse von Typfehlern aber leicht behoben werden (vgl. Quelltext~\ref{code:fix-webpack-imports}). Ein weiterer häufiger Fehler ist, dass der Import von Typen aus Bibliotheken fehlschlägt, wenn sich zum Beispiel deren Name in TypeScript geändert hat (TS2305). Außerdem entstehen Typfehler, wenn in Flow globale Typen der Standardbibliothek eingesetzt werden, da diese in TypeScript vor deren Verwendung erst explizit importiert werden müssen (TS2304). Idealerweise sollte der Import dieser zuvor globalen Typen durch den Transpiler, ähnlich zu der in Abschnitt~\ref{sec:react-type-import-mapping} beschriebenen Übersetzung der React-Typimporte, automatisch durchgeführt werden, um den Aufwand manueller Korrekturen nach der Transpilierung zu reduzieren. Eine weitere Art von Fehler, die vor allem bei Components vermehrt auftritt, betrifft die inkorrekte Typisierung von React"=Komponenten~(TS2605).
 
 \begin{lstlisting}[
-  float,
-  floatplacement=H,
+  % float,
+  % floatplacement=htb,
   label={code:fix-webpack-imports},
   caption={Behebung des Fehlers TS2307 durch globale Deklarationen von SVG-Modulen.},
 ]
@@ -52,7 +51,7 @@ React-Komponenten werden ähnlich wie HTML-Elemente eingesetzt und sind in der R
 
 \vspace{-0.5\baselineskip}
 \paragraph{Falscher Argumenttyp bei Funktionsaufrufen}
-Zuletzt wurde festgestellt, dass der Typ mancher Funktionsargumente nicht mit dem erwarteten Typ übereinstimmt. Weil die Argumente im aufgetretenen Fall unmittelbar vor Weitergabe an die Funktion durch eine weitere Bibliotheksfunktion umgeformt werden und für diese zweite Funktion in Flow keine Typisierung vorliegt, wurde der Rückgabetyp hier implizit zu \code{any} umgeformt. Weil \code{any} jedem Typ zuweisbar ist, wurden die Rückgabewerte der Bibliotheksfunktion als Argument der ersten Funktion akzeptiert, obwohl die Typen in Wahrheit inkompatibel sind. Der Aufruf schläg zur Laufzeit nur deshalb nicht fehl, weil der Typ des Rückgabewert mittels der dynamischen Typumwandlung von JavaScript implizit angepasst wird. In TypeScript wird dieser Typfehler statisch erkannt, da für die beteiligte Bibliothek eine externe Typdefinition hinzugefügt wurde, sodass die Inkompatibilität der Typen aufgedeckt wird.
+Zuletzt wurde festgestellt, dass der Typ mancher Funktionsargumente nicht mit dem erwarteten Typ übereinstimmt. Weil die Argumente im aufgetretenen Fall unmittelbar vor Weitergabe an die Funktion durch eine weitere Bibliotheksfunktion umgeformt werden und für diese zweite Funktion in Flow keine Typisierung vorliegt, wurde der Rückgabetyp hier implizit zu \code{any} umgeformt. Weil \code{any} jedem Typ zuweisbar ist, wurden die Rückgabewerte der Bibliotheksfunktion als Argument der ersten Funktion akzeptiert, obwohl die Typen in Wahrheit inkompatibel sind. Der Aufruf schlägt zur Laufzeit nur deshalb nicht fehl, weil der Typ des Rückgabewert mittels der dynamischen Typumwandlung von JavaScript implizit angepasst wird. In TypeScript wird dieser Typfehler statisch erkannt, da für die beteiligte Bibliothek eine externe Typdefinition hinzugefügt wurde, sodass die Inkompatibilität der Typen aufgedeckt wird.
 
 \subsubsection{Fazit}
 
@@ -60,16 +59,16 @@ Es gilt hervorzuheben, dass die Typfehler nach der Migration größtenteils kein
 
 \subsection{Unterstützung externer Bibliotheken}
 
-Die Migration zu TypeScript wurde weiterhin angestrebt, weil vermutet wird, dass hier Typdeklarationen für eine insgesamt größere Zahl von JavaScript-Bibliotheken vorliegen und diese aktueller sind als bei Flow. Im Folgenden soll beleuchtet werden, ob dies tatsächlich zutrifft. Wie ausgeführt stellen einige Projekte selbst Definitionsdateien mit der Typisierung bereit, bei anderen kann auf separat gepflegte Typisierungen zurückgegriffen werden
+Die Migration zu TypeScript wurde weiterhin angestrebt, weil vermutet wird, dass hier Typdeklarationen für eine insgesamt größere Zahl von JavaScript-Bibliotheken vorliegen und diese aktueller sind als bei Flow. Im Folgenden soll beleuchtet werden, ob dies tatsächlich zutrifft. Wie ausgeführt stellen einige Projekte selbst Definitionsdateien mit der Typisierung bereit, bei anderen kann auf separat gepflegte Typisierungen zurückgegriffen werden.
 
 Für Flow und TypeScript existiert jeweils ein Projekt mit dem Ziel Typdeklarationen für die gängigsten JavaScript-Bibliotheken bereitzustellen. Während seit 2012 für TypeScript das Projekt \textit{DefinitelyTyped}~\autocite{DEFINITELY_TYPED} besteht, ist 2017 für Flow ein vergleichbarer Ansatz namens \textit{flow-typed}~\autocite{FLOW_TYPED} entstanden. Im Allgemeinen kann angenommen werden, dass Bibliotheken, die ihre eigenen Typdeklarationen mitliefern, aktueller und korrekter sind, weil im Zuge der Veröffentlichung neuer Versionen in der Regel auch die Typisierung durch den Autor entsprechend aktualisiert wird\footnote{Im Falle von TypeScript können die Definitionsdateien beispielsweise auch durch den TypeScript-Compiler automatisch erzeugt werden~\autocite{TSC:OPTIONS}.}. Bei der nachträglichen Erstellung von Typdeklarationen durch die Entwickler-Gemeinschaft besteht die Gefahr, dass die Typisierung das Verhalten der Bibliothek nicht richtig abbildet oder dass diese veralten. Deshalb sind Typdefinitionen, die von den Projekten selbst verwaltet werden, generell zu bevorzugen. Zunächst sollen \textit{DefinitelyTyped} und \textit{flow-typed} in Tabelle~\ref{tab:libdefs} mittels verschiedener Kennzahlen allgemein verglichen werden, um die Verfügbarkeit von gemeinschaftlich gepflegten Typdeklarationen zu untersuchen. Wie die Zahl der Git-Commits und der Beitragenden im Jahresmittel belegt, weist \textit{DefinitelyTyped} eine deutlich größere Aktivität als \textit{flow-typed} auf. Insgesamt werden bei TypeScript in etwa zehn mal mehr Bibliotheken unterstützt, als bei Flow, was trotz des Umstands, dass \textit{DefinitelyTyped} fünf Jahre älter ist, einen beachtlichen Faktor darstellt.
 
-\medbreak
+\tablespace
 \input{src/5_Auswertung/tables/libdefs}
 
 Nachfolgend wird nun die Unterstützung externer Bibliotheken anhand der 15 am häufigsten eingesetzten Pakete innerhalb der zwei Projekte von TeamShirts in Tabelle~\ref{tab:used-libraries} konkret betrachtet. Die Bibliotheken, die am öftesten verwendet werden, wurden durch statische Analyse des Quelltexts ermittelt, indem gezählt wurde, wie oft diese jeweils importiert werden. Für diese Auswahl wurde anschließend untersucht, ob einerseits für Flow und TypeScript generell Typdeklarationen bestehen, andererseits in welcher Form diese gegebenenfalls vorliegen (als Bestandteil der Bibliothek oder separat erstellt). Weiterhin wurde beleuchtet, ob die Typdefinitionen der aktuellen Version des Pakets entsprechen oder veraltet sind. Dabei wird nur die Haupt- und Nebenversionsnummer\footnote{Vgl. \textit{Semantic Versioning}~\autocite{SEMANTIC_VERSIONING}.} der Pakete betrachtet, weil die Revisionsnummer nur der Behebung von Programmfehlern dient und per Definition die Schnittstellen nicht verändern darf. Bei \textit{flow-typed} wird die Kompatibilität der Typdefinitionen allerdings nur für die Hauptversion angegeben, sodass unklar ist, inwieweit die Deklarationen tatsächlich alle Funktionen der aktuellen Nebenversion abbilden. \textit{DefinitelyTyped} differenziert hier stärker und gibt jeweils für alle Pakete exakte Versionsnummern an, wodurch die Aktualität besser eingeschätzt werden kann.
 
-\medbreak
+% \tablespace
 \input{src/5_Auswertung/tables/results-libraries}
 
 Während bei Flow für vier der 15 Bibliotheken keine Typdefinition vorliegt, existiert bei TypeScript lediglich in einem Fall keine Typisierung. Der Großteil der Deklarationen entstammt jeweils den Projekten \textit{flow-typed} bzw. \textit{DefinitelyTyped}. Nur in einem bzw. drei Fällen bei Flow bzw. TypeScript sind die Typdefinitionen direkt in die Pakete integriert.
@@ -92,7 +91,7 @@ Zur Bestimmung der Laufzeit der vollständigen Berechnung wurden in beiden Proje
 
 Die durch diese Methodik ermittelten Messwerte, deren Standardabweichung und die relative Veränderung der Laufzeiten werden in Tabelle~\ref{tab:performance-complete} für beide Projekte aufgelistet: Offensichtlich beschleunigen modernere, performante Prozessoren mit höherer Taktfrequenz und größeren Caches generell die Typüberprüfung durch Flow bzw. TypeScript. Die These, dass TypeScript schneller als Flow sei, lässt sich aber nur anhand des Projekts Helios für die Systeme B, C und D belegen (vgl. negative Werte für relative Veränderung der Laufzeit). Bei Components ist TypeScript dagegen stets deutlich langsamer als Flow.
 
-\medbreak
+\tablespace
 \input{src/5_Auswertung/tables/results-performance}
 
 Wie im Grundlagenteil bereits ausgeführt, wird die Berechnung der Typkorrektheit durch Flow stark parallelisiert, um deren Laufzeit zu verringern. TypeScript bietet keine Unterstützung für eine nebenläufige Typüberprüfung durch mehrere Threads~\autocite{TS:NO_MULTICORE}, sodass die Performance hier vorrangig von der Leistungsfähigkeit der einzelnen Prozessorkerne abzuhängen scheint. Diese These wird durch die gemessenen Daten unterstützt, denn je performanter die Rechenkerne sind, desto kleiner wird die Differenz zwischen den Laufzeiten von Flow und TypeScript bei Components bzw. desto größer wird diese bei Helios.
@@ -102,7 +101,7 @@ Für System D scheint jedoch die Parallelisierung von Flow aufgrund der hohen Za
 
 Der Einfluss der Parallelisierung auf die Laufzeit der Berechnungen soll im Folgenden näher beleuchtet werden. Hierfür wurde eine weitere Testreihe durchgeführt in welcher die Zahl der einsetzbaren Rechenkerne für die Berechnung durch das Linux-Programm \textit{taskset}~\autocite{TASKSET} eingeschränkt wird. Dabei wird dem Prozess durch den Scheduler des Betriebssystems zunächst lediglich ein Rechenkern, dann zwei usw. zugeordnet. Abbildung~\ref{fig:plot-cores} auf Seite~\pageref{fig:plot-cores} zeigt jeweils ein Diagramm für Components und Helios, welches die Beeinflussung des Laufzeitverhaltens durch diese Einschränkung grafisch darstellt. Die exakten Messwerte, deren Standardabweichung und die relative Veränderung wird darüber hinaus in Tabelle~\ref{tab:performance-cores} aufgelistet.
 
-\medbreak
+\tablespace
 \input{src/5_Auswertung/tables/results-performance-cores}
 
 \begin{figure}[p]
@@ -205,7 +204,7 @@ Die Erzielung der Korrektheit und Vollständigkeit der Transformationen wird dur
 Die zwei betrachteten Aspekte der Äquivalenz und Vollständigkeit der Transformationen sollen auch für die Ansätze von Kikura und Barabash beleuchtet werden, um das erzielte Ergebnis einzuordnen. Dabei wird untersucht, ob diese Plugins bei Anwendung auf die angelegten Fixture-Tests zur Erprobung der korrekten Übersetzung der Flow-Typisierung zu den gleichen Ergebnissen kommen.
 Tabelle~\ref{tab:correctness-comparison} auf Seite~\pageref{tab:correctness-comparison} zeigt bei welchen Testfälle hierbei eindeutig eine fehlerhafte Transformation vorgenommen wird. Darunter wird einerseits die semantisch inkorrekte Übersetzung eines Typs, andererseits unzulässige TypeScript-Syntax in der Ausgabe verstanden. Eine solche invalide Syntax entsteht beispielsweise dann, wenn Spezialfälle nicht richtig behandelt werden. Weil sich die Tabelle am Aufbau der Fixture-Tests orientiert, werden nicht alle einzelnen Typen wie in Kapitel~\ref{chap:basics} separat, sondern gruppiert, aufgelistet. Die Kategorie \enquote{\textit{Primitives}} enthält dabei zum Beispiel die Tests für alle primitiven Flow-Typen wie \type{Number type}, \type{String literal type} et cetera.
 
-\medbreak
+% \tablespace
 \input{src/5_Auswertung/tables/results-correctness-comparison}
 
 Die Übersetzung der Flow-Typen durch Kikura ist in 98,1\% der Fälle korrekt. Jedoch können dabei nur 17 der 31 Testfälle überhaupt betrachtet werden, weil die Transpilierung der verbleibenden 14 Eingabedateien gänzlich fehlschlägt, da hier jeweils Laufzeitfehler auftreten (Symbol~\Lightning). Somit ist nicht nachvollziehbar, ob eventuell weitere Fehler vorliegen. Auch bei Barabash stürzt das Programm bei drei der Fixture-Dateien ab, sodass diese Tests nicht bewertet werden können. In 89,0\% der anderen Fälle wird die Transformation hier aber korrekt umgesetzt. Die Gründe, warum die Übersetzungen bei Kikura und Barabash in einigen Fällen falsch sind, sind vielfältig. Im Folgenden werden einige der Ursachen aufgelistet:
@@ -256,7 +255,7 @@ Die letzte technische Anforderung an den Transpiler ist die möglichst originalg
 Tabelle~\ref{tab:results-formatting} zeigt die Ergebnisse dieser manuellen Überprüfung. Dabei werden die erreichten Werte der vorliegende Implementierung (\textit{Reflow}) dem Ansatz von Barabash~\autocite{BARABASH:FLOW_TO_TS} gegenüber gestellt, um die Zahlen besser einordnen zu können. Das Babel-Plugin von Kikura~\autocite{KIKURA:FLOW_TO_TS} bietet keine Möglichkeit die Ausgabe zu formatieren und wird daher nicht in den Vergleich miteinbezogen.
 Wie die Tabelle zeigt, schlägt das Verfahren sowohl in der vorliegenden Umsetzung, als auch bei Barabash in einigen Fällen fehl. Jedoch erzielt die in dieser Arbeit implementierte Formatierungsroutine insgesamt bessere Ergebnisse: Während hier in Summe 32 Dateien~(4,7\%) fehlerhaft formatiert werden, liegt der Anteil bei Barabash bei 48 Dateien~(7,0\%).
 
-\medbreak
+\tablespace
 \input{src/5_Auswertung/tables/results-formatting}
 
 \subsubsection{Fehleranalyse}

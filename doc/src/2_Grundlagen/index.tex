@@ -105,6 +105,7 @@ Typdeklarationen ermöglichen es schließlich, die Schnittstellen externer Bibli
 
 Tabelle~\ref{tab:flow-base-types} listet die Basistypen von Flow auf, beschreibt deren Zweck und zeigt ein Beispiel. Um die Nachvollziehbarkeit zur Online"=Dokumentation und der in Kapitel~\ref{chap:implementation} ausgeführten Implementierung zu erleichtern, werden die englischen Typbezeichnungen beibehalten und nicht ins Deutsche übersetzt. Die Beispiele und Erläuterungen versuchen den Großteil der Funktionalität von Flow zu veranschaulichen, jedoch können nicht alle Details ausführlich behandelt werden, da dies den Umfang der Arbeit überschreiten würde.
 
+\tablespace
 \input{src/2_Grundlagen/tables/base-types.tex}
 
 \subsubsection{Hilfstypen}
@@ -112,6 +113,7 @@ Tabelle~\ref{tab:flow-base-types} listet die Basistypen von Flow auf, beschreibt
 
 Die Hilfstypen von Flow werden analog zu den Basistypen in Tabelle~\ref{tab:flow-utility-types} beschrieben. Es gilt anzumerken, dass die drei kursiv markierten Typen \type{Existential type}, \type{Subtype} und \type{Supertype} in der Dokumentation von Flow als überholt (\textit{deprecated}) markiert wurden~\autocite{FLOW:UTILITY_TYPES}. Diese sollten daher nicht länger eingesetzt werden.
 
+\tablespace
 \input{src/2_Grundlagen/tables/utility-types.tex}
 
 \subsubsection{Typdeklarationen}
@@ -119,7 +121,7 @@ Die Hilfstypen von Flow werden analog zu den Basistypen in Tabelle~\ref{tab:flow
 
 Tabelle~\ref{tab:flow-type-declarations} zeigt schließlich exemplarisch die Syntax von Typdeklarationen. Für jede externe Bibliothek, die typisiert werden soll, wird hierbei eine eigene Datei angelegt, die das Modul annotiert. Standardmäßig liest Flow derartige Definitionsdateien aus dem Verzeichnis \code{flow-typed/} im Wurzelverzeichnis eines Projekts ein und bezieht diese bei der Typüberprüfung der gesamten Codebasis mit ein~\autocite{FLOW:LIBRARY_DEFINITIONS}.
 
-\medbreak
+\tablespace
 \input{src/2_Grundlagen/tables/declaration.tex}
 
 \subsection{TypeScript}
