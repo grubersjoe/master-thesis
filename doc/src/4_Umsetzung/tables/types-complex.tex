@@ -1,5 +1,6 @@
 % TODO sync with chapter 2, maybe line breaks
 \begin{longtabuenv}
+\setlength{\tabcolsep}{6pt} % reset to default
 \begin{longtabu} to \textwidth {@{}lKK@{}}
   \caption{Übersicht über komplexe Transformationen der Basistypen von Flow.} \\
   \midrule
@@ -13,14 +14,14 @@
 \endhead
   \midrule
 \endfoot
-  Exact object type          & \{| prop: any |\}                &   \{ prop: any \}                      \\
-  Function type              & (string, \{\}) => number         &   (p1: string, p2: \{\}) => number     \\
+  Exact object type          & \{| prop: boolean |\}            &   \{ prop: boolean \}                  \\
+  Function type              & (string, arg?: \{\}) => number   &   (p1: string, arg?: {}) => number;    \\
   Generic type annotation    & let v: <{}FlowType>{}            &   let v: <{}TSType>{}                  \\
   Generics                   & type Generic<{}T: Super> = T     &   type Generic<{}T extends Super> = T  \\
-  Interface type             & interface I \{ +prop: number \}  &   interface I \{ readonly: number \}   \\
+  Interface type             & interface I \{\newline\hspace*{1.25em}prop: mixed;\newline\hspace*{1.25em}+covariant: number[];\newline\} & interface I \{\newline\hspace*{1.25em}prop: unknown;\newline\hspace*{1.25em}readonly covariant: number[];\newline\}   \\
   Nullable type (Maybe type) & ?number                          &   number | null | undefined            \\
-  Object type                & \{ {[}string{]}: number \}       &   \{ {[}key: string{]}: number \}      \\
-  \textit{Opaque type}       & opaque type Opaque = number      &   type Opaque = number                 \\
+  Object type                & \{ {\newline\hspace*{1.25em}[}key: string{]}: number;\newline\hspace*{1.25em}prop: string;\newline\} & \{ {\newline\hspace*{1.25em}[}key: string{]}: number;\newline\hspace*{1.25em}prop: string;\newline\} \\
+  \textit{Opaque type}       & opaque type O = number           &   type O = number                      \\
   Type cast expresssion      & (variable: string)               &   (variable as string)                 \\
   Type export                & export type T = number | null    &   export T = number | null             \\
   Type import                & import type T from \str{./types} &   import T from \str{./types}          \\

@@ -19,7 +19,7 @@
   Boolean literal type    & true                           & true                             & {} \\
   Boolean type            & boolean                        & boolean                          & {} \\
   \textit{Empty type}     & empty                          & never                            & {} \\
-  Intersection type       & type Intersection = T1 \& T2   & type Intersection = T1 \& T2     & {} \\
+  Intersection type       & type Intersection = A \& B     & type Intersection = A \& B       & {} \\
   \textit{Mixed type}     & mixed                          & unknown                          & {} \\
   Null literal type       & null                           & null                             & {} \\
   Number literal type     & 42                             & 42                               & {} \\
@@ -29,7 +29,7 @@
   This type               & this                           & this                             & {} \\
   Tuple type              & {[}Date, number{]}             & {[}Date, number{]}               & {} \\
   Type alias              & type Type = <FlowType>         & type Type = <TSType>             & {} \\
-  Union type              & number | null                  & number | null                    & {} \\
+  Union type              & number | string | null         & number | string | null           & {} \\
   Void type               & void                           & void                             & {}
   \label{tab:transformation-base-types-simple}
 \end{longtabu}
