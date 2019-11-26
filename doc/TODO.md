@@ -6,4 +6,3 @@
 - Ergebnisse überprüfen und Bezugnahme darauf
 - kursive Texte
 - Abschn. 2.1 mehr Bezug zu Flow / TypeScript
-- Kapitel 6 in besser
