@@ -35,15 +35,6 @@ In den ersten beiden Zeilen werden zunächst zwei Klassen \code{A} und \code{B} 
 \section{Statische Typsysteme für JavaScript}
 \label{sec:static-typesystems-for-js}
 
-% Im Folgenden sollen einige bestehende Ansätze betrachtet werden, die eine statische Typisierung in JavaScript ermöglichen. Die Idee, die ausgeführten Schwachstellen des dynamischen Typsystems der Sprache so auszugleichen, ist nicht neu~\autocite[2]{FLOW:PAPER}: Innerhalb der letzten Jahre sind verschiedene Ansätze entstanden, die sich dieser Problematik widmen.
-% Ein Beispiel ist das 2009 erschienene Werkzeug \textit{Closure Compiler}~\autocite{CLOSURE:COMPILER}. Ziel dieses Transpilers ist es einerseits gängige Programmierfehler in JavaScript-Quelltexten mittels statischer Analyse aufzudecken, andererseits effizienteren Ausgabecode durch Anwendung verschiedener Optimierungen zu erzeugen~\autocite{CLOSURE:COMPILER}. Darüber hinaus ist es möglich Ausdrücke innerhalb des Quelltexts durch spezielle Annotationen in Kommentaren zu typisieren, sodass der Compiler daraufhin die Typkorrektheit statisch überprüfen kann~\autocite{CLOSURE:TYPES}. Zum Beispiel kann durch folgende Notation eine (schreibgeschützte) Konstante hergestellt werden:
-
-% \begin{lstlisting}[numbers=none]
-% /** @const */ var PI = 3.14;
-% \end{lstlisting}
-
-% Einen anderen Ansatz verfolgt die Programmiersprache \textit{Dart}~\autocite{DART:SPEC}. Dart bietet ein gemäß obiger Definition korrektes, statisches Typsystem, welches neben konventionellen Typdeklarationen auch Typinferenz unterstützt~\autocite{DART:TYPE_SYSTEM}. Anstatt JavaScript durch Typannotationen in Kommentaren zu erweitern, wird hier also auf eine andere Programmiersprache mit statischer Typisierung zurückgegriffen, die in äquivalenten JavaScript-Code übersetzt werden kann. Um eine solche Transpilierung umzusetzen, kann der Transcompiler \textit{dart2js}~\autocite{DART:DART2JS} verwendet werden.
-
 In den nachfolgenden Abschnitten sollen nun die charakteristischen Merkmale der zwei in dieser Arbeit behandelten statischen Typsysteme \textit{Flow}~\autocite{FLOW:PAPER} und \textit{TypeScript}~\autocite{TYPESCRIPT:SPEC} näher beleuchtet werden, um deren Unterschiede und Gemeinsamkeiten herauszuarbeiten.
 
 \subsection{Flow}
