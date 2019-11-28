@@ -130,7 +130,7 @@ type Alias = mixed;                  type Alias = unknown;
 
 Nachfolgend soll das grundsätzliche Vorgehen bei der Implementierung der Typ"=Transformationen anhand des Ablaufs einer solchen einfachen Übersetzung erläutert werden. Quelltext~\ref{code:example-simple} zeigt links das mit Flow typisierte Ursprungsprogramm und rechts den äquivalenten TypeScript-Code. In der zweiten Zeile wird dabei ein Typalias definiert, welcher auf den Typ \code{mixed} verweist. Wie Tabelle~\ref{tab:transformation-base-types-simple} angibt, ist der korrespondierende TypeScript-Typ \code{unknown}. Um die notwendigen Schritte einer entsprechenden Transformation zu erkennen, ist es hilfreich, die abstrakten Syntaxbäume des ursprünglichen und des angestrebten Quelltexts zu vergleichen. Die jeweiligen Syntaxbäume werden in Abbildung~\ref{ast:example-simple} für Flow (links) und TypeScript (rechts) dargestellt\footnote{Anmerkung: Zur Vereinfachung der Nachvollziehbarkeit wurde der Syntaxbaum auf seine wesentlichen Teile reduziert. Tatsächlich besitzen alle Knoten weitere Attribute, die hier jedoch irrelevant sind.}. In den Knoten des Baums steht dabei jeweils der Typ des eingelesenen Tokens, die Kanten repräsentieren dessen Attribute. Konkrete Werte wie beispielsweise der Name von Bezeichnern werden in Anführungszeichen abgedruckt.
 
-\bigbreak
+\treespace
 \begin{figure}[htb]
   \centering
   \footnotesize
@@ -229,6 +229,7 @@ function convertFlowType(node: FlowType): TSType {
 
 Die Übersetzung der zwölf komplexen Flow"=Datentypen wird in Tabelle~\ref{tab:transformation-base-types-complex} exemplarisch gezeigt. Im Gegensatz zu den simplen Transformationen unterscheidet sich die Syntax des Ausgabequelltexts hier zum Teil deutlich und es müssen bei der Transpilierung vermehrt Spezial- und Grenzfälle beachtet werden, um korrekten TypeScript-Code zu erzeugen. Zum Beispiel erlaubt Flow den Typ einer Funktion, die eine Zeichenkette und eine Zahl als Argument entgegen nimmt, wie folgt zu deklarieren:
 
+\vspace{-0.25\baselineskip}
 \begin{lstlisting}[numbers=none]
 type FunctionType = (string, argName: number) => void;
 \end{lstlisting}
@@ -239,7 +240,6 @@ Der in der Tabelle kursiv hervorgehobene Typ \type{Opaque type} wird in TypeScri
 \tablespace
 \input{src/4_Umsetzung/tables/types-complex}
 
-% \pagebreak
 Anhand des Typs \type{Nullable} soll im Folgenden das Vorgehen bei der Transformation eines komplizierteren Knoten erläutert werden\footnote{Anmerkung: Es wurde ein verhältnismäßig unkompliziertes Beispiel ausgewählt, weil die Ausführung anderer deutlich komplexerer Fälle nicht in prägnanter Form erfolgen kann.}. Dieser Typ wird in der Flow-Dokumentation auch als \enquote{\type{Maybe type}} bezeichnet und für die Typisierung optionaler, möglicherweise undefinierter Werte verwendet~\autocite{FLOW:MAYBE_TYPES}. Konkret stellt der Typ die Vereinigung aus dem angegebenen Typ, \code{null} und \code{undefined} dar. In TypeScript existiert keine direkte Entsprechung, aber es kann trivial ein äquivalenter Vereinigungstyps angegeben werden. Quelltext~\ref{code:example-complex} zeigt die jeweilige Deklaration eines Typalias in Flow (links) und TypeScript (rechts), das auf diesen Datentyp verweist.
 
 \begin{lstlisting}[
@@ -256,7 +256,7 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
 
 Wie bei der vorherigen Betrachtung einer simplen Übersetzung (\code{MixedTypeAnnotation}) sollen auch hier zunächst die abstrakten Syntaxbäume der Ein- und Ausgabe für den Typ \type{Nullable} verglichen werden, um die Einzelschritte der Transpilierung aufzuzeigen. Das Typalias ist dabei analog zum vorherigen Beispiel und dient lediglich der Herstellung korrekter Syntax. Entscheidend ist der zugewiesene Typ des Alias im rechten Teilbaum: Bei Flow liegt hier das Element \code{NullableTypeAnnotation} vor, das den Typ für Zahlen (\code{NumberTypeAnnotation}) als Argument erhält. Auf Seite von TypeScript steht dagegen der Knoten des Vereinigungstyps (\code{TSUnionType}). Diesem ist eine Menge von Typen zugeordnet, die den äquivalenten Ausdruck bilden, indem der Zahlentyp mit den Typen für \code{null} und \code{undefined} kombiniert wird.
 
-\bigbreak
+\treespace
 \begin{figure}[htb]
   \footnotesize
   \ttfamily
@@ -331,7 +331,7 @@ Auch die in Abschnitt~\ref{sec:flow:utility-types} eingeführten Hilfstypen von 
 
 Die Transformation der drei Abbildungstypen \type{Object map}, \type{Object map with key} und \type{Tuple map} wurde nicht umgesetzt, weil kein TypeScript-Ausdruck gefunden werden konnte, der diesen exakt entspricht. Deshalb werden diese Typen bei der Transpilierung mit \type{any} ersetzt. Da die JavaScript-Projekte von TeamShirts diese Hilfstypen jedoch ohnehin nicht verwenden, stellt dies kein Hindernis für die Migration im vorliegenden Fall dar. Die zwei Typen \type{Subtype} und \type{Supertype} wurden wie ausgeführt von Flow als veraltet (\textit{deprecated}) markiert und werden deshalb ebenfalls nach \code{any} übersetzt. Auch der \type{Existential type} wurde als überholt gekennzeichnet, da er unsicher ist~\autocite{FLOW:LINT_RULE_REFERENCE}. Weil TypeScript einen derartigen Typ nicht unterstützt, wird auch dieser durch \code{any} ersetzt. Sollten in der Eingabe einer dieser sechs nicht unterstützen Hilfstypen auftreten, so wird während der Verarbeitung durch das Babel-Plugin wie gefordert eine detaillierte Warnung ausgegeben mit der Aufforderung, den Ausgabequelltext an dieser Stelle manuell zu korrigieren\footnote{Vgl. Anforderung~\ref{sec:requirement:completeness}.}.
 
-Zu beachten gilt darüber hinaus, dass die Typparameter der Hilfstypen (\code{F}, \code{T}, \code{O} usw.) für beliebige kompatible Flow-Typen stehen. Deshalb ruft die Implementierung auch hier intern die universelle Konvertierungsfunktion \code{convertFlowType()} auf, um alle Fälle korrekt zu übersetzen.
+Zu beachten ist darüber hinaus, dass die Typparameter der Hilfstypen (\code{F}, \code{T}, \code{O} usw.) für beliebige kompatible Flow-Typen stehen. Deshalb ruft die Implementierung auch hier intern die universelle Konvertierungsfunktion \code{convertFlowType()} auf, um alle Fälle korrekt zu übersetzen.
 
 \subsubsection{Transpilierung der Typdeklarationen}
 
@@ -392,7 +392,7 @@ Die Anwendung wurde als ausführbares Node.js-Skript umgesetzt und \textit{Reflo
   label={code:reflow},
   % caption={Aufruf des Kommandozeilenprogramms des Transpilers (\textit{Reflow}).},
   numbers=none,
-  emph={},
+  emph={Beispiel},
 ]
 reflow [OPTIONEN]… <DATEIEN ODER VERZEICHNISSE…>
 Beispiel: reflow --dry-run --include-pattern "**/*.js" src/
