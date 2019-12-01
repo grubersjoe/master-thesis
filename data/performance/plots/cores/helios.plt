@@ -20,7 +20,7 @@ set style histogram cluster gap 1.5
 set style fill solid
 set boxwidth 0.8
 
-flow = '#888888';
+flow = '#999999';
 ts = '#333333';
 
 plot 'cores.dat' using 4:xtic(1) title '\small Flow' linecolor rgb flow, \
