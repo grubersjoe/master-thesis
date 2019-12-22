@@ -1,7 +1,7 @@
 # motivation
 - js typsystem ist eher nich so gut
 - statische typsysteme lösen das
-- ziel:t ranspiler für flow nach ts
+- ziel: transpiler für flow nach ts
 - grund: annahme, dass ts geiler sei
 
 # analyse
@@ -26,7 +26,7 @@
 - fünf techn. anforderungen
     - äquivalenz / vollständigkeit der transpileirung ERREICHT MIT EINSCHRÄNKUNGEN
         - anhand fixture tests
-        - volllständigkeit jawoll
+        - vollständigkeit jawoll
         - äquivalenz jawoll mit beschriebenen einschränkungen
         - kikura / barabash: verkackens oft bei testfällen
     - beibehaltung semantik VERMUTLICH ERREICHT
