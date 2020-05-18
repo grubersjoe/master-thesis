@@ -25,11 +25,12 @@
       <p>
         Masterarbeit <a href="https://jogruber.de">Jonathan Gruber</a><br />
         <a href="https://www.htwk-leipzig.de">Hochschule für Technik, Wirtschaft und Kultur Leipzig</a><br />
+        <a href="https://www.spreadshirt.de">sprd.net AG (Spreadshirt)</a><br />
         1. Dezember 2019<br />
       </p>
       <p>Diese Arbeit kann auch im <a href="thesis.pdf">Originalformat (PDF)</a> gelesen werden.</p>
     </header>
-    <section id="zusammenfassung">
+    <article id="zusammenfassung">
       <h2>Zusammenfassung</h2>
       <p>
         Die vorliegende Masterarbeit behandelt die Systeme Flow <a class="citation" href="#ref-FLOW:PAPER">[1]</a> und
@@ -45,7 +46,7 @@
         hervor, dass TypeScript transparenter als Flow entwickelt wird. Schließlich kann in einigen Fällen bei
         TypeScript ein besseres Laufzeitverhalten der Typüberprüfungen gegenüber Flow nachgewiesen werden.
       </p>
-    </section>
+    </article>
     <nav id="TOC" role="doc-toc">
       <h2>Inhalt</h2>
       <ul>
@@ -218,21 +219,24 @@
     </nav>
     <main>
       <section>
-        <h1 id="chap:motiviation">Motivation</h1>
-        <h2 id="historischer-abriss-von-javascript">Historischer Abriss von JavaScript</h2>
+        <h1 id="chap:motiviation"><span class="chap-number">1</span>Motivation</h1>
+        <h2 id="historischer-abriss-von-javascript">
+          <span class="chap-number">1.1</span>Historischer Abriss von JavaScript
+        </h2>
         <p>
           Als JavaScript 1995 von Brendan Eich in nur zehn Tagen als Bestandteil des Webbrowsers
           <em>Netscape Communicator</em> entworfen wurde <a class="citation" href="#ref-SEVERANCE:2012">[4]</a>, war
           nicht abzusehen, welche Relevanz die Sprache über 20 Jahre später besitzen würde: Heute wird JavaScript oft
           als die am weitesten verbreitete Programmiersprache der Welt angesehen
-          <span class="citation" data-cites="PAULSON:2007 CROCKFORD:JS_POPULAR">[5], [6]</span>. Dies belegt
-          beispielsweise die alljährliche Umfrage “<em>Stack Overflow Developer Survey</em>” der Programmierer-Plattform
-          <em>Stack Overflow</em>, welche die Ergebnisse der weltweiten Befragung von circa 90.000 Softwareentwicklern
-          auswertet <a class="citation" href="#ref-STACKOVERFLOW:SURVEY">[7]</a>. Bereits das siebte Jahr in Folge führt
+          <a class="citation" href="#ref-PAULSON:2007">[5]</a>,
+          <a class="citation" href="#ref-CROCKFORD:JS_POPULAR">[6]</a>. Dies belegt beispielsweise die alljährliche
+          Umfrage „<em>Stack Overflow Developer Survey</em>“ der Programmierer-Plattform <em>Stack Overflow</em>, welche
+          die Ergebnisse der weltweiten Befragung von circa 90.000 Softwareentwicklern auswertet
+          <a class="citation" href="#ref-STACKOVERFLOW:SURVEY">[7]</a>. Bereits das siebte Jahr in Folge führt
           JavaScript dort die Rangliste der populärsten Programmiersprachen an. Der seit vielen Jahren anhaltende Trend,
           dass zunehmend mehr Software als Webanwendung statt konventioneller Desktop-Anwendung realisiert wird, hat die
-          Bedeutung von JavaScript stark erhöht
-          <span class="citation" data-cites="TAIVALSAARI:2017 CASTELEYN:2014">[8], [9]</span>.
+          Bedeutung von JavaScript stark erhöht <a class="citation" href="#ref-TAIVALSAARI:2017">[8]</a>,
+          <a class="citation" href="#ref-CASTELEYN:2014">[9]</a>.
         </p>
         <p>
           Die heutige große Beliebtheit der Sprache steht in starkem Kontrast zu ihren Anfängen. Zunächst besaß
@@ -242,27 +246,28 @@
           Implementierung in den frühen Webbrowsern und der Mangel an Entwicklungswerkzeugen wie Debuggern erschwerte
           die Programmierung von JavaScript-Anwendungen enorm
           <a class="citation" href="#ref-OREILLY:JS_HOW_DID_WE_GET_THERE">[10]</a>. Darüber hinaus behinderte die
-          anfängliche Unbeständigkeit der Sprache und die “schlechte Qualität”
+          anfängliche Unbeständigkeit der Sprache und die „schlechte Qualität“
           <a class="citation" href="#ref-CROCKFORD:JS_MISUNDERSTOOD">[11]</a> der ersten Versionen der
           ECMAScript-Spezifikation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>
           <a class="citation" href="#ref-ECMASCRIPT:1997">[12]</a> eine breite Akzeptanz der Sprache in der damaligen
           Entwickler-Szene. Ein weiterer Aspekt von JavaScript, der bis heute kritisch betrachtet wird, ist die
           dynamische Typisierung der Sprache, weil diese die Entwicklung sicherer und korrekter Software erschwert
-          <span class="citation" data-cites="NIKHIL:2014 PRADEL:2015">[13], [14]</span>. Im Folgenden soll dieser
-          Gesichtspunkt näher beleuchtet werden, um die Problematik zu verdeutlichen.
+          <a class="citation" href="#ref-NIKHIL:2014">[13]</a>, <a class="citation" href="#ref-PRADEL:2015">[14]</a>. Im
+          Folgenden soll dieser Gesichtspunkt näher beleuchtet werden, um die Problematik zu verdeutlichen.
         </p>
-        <h2 id="javascripts-dynamische-typisierung">JavaScripts dynamische Typisierung</h2>
+        <h2 id="javascripts-dynamische-typisierung">
+          <span class="chap-number">1.2</span>JavaScripts dynamische Typisierung
+        </h2>
         <p>
           Eine dynamische Typisierung ist dadurch charakterisiert, dass jedem Wert der Programmiersprache zur
           <em>Laufzeit</em> ein Typ zugewiesen wird und sich dieser je nach Striktheit des Typsystems zu einem späteren
-          Zeitpunkt implizit oder explizit ändern kann
-          <span class="citation" data-cites="WALDMANN:PPS">[15, S. 45]</span>. Typfehler werden dabei durch dynamische
-          Überprüfungen der Laufzeitumgebung erkannt
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 37]</span>. JavaScript besitzt die folgenden
-          sieben Datentypen <span class="citation" data-cites="ECMASCRIPT:2019">[17, S. 25]</span>. Diese legen fest,
-          wie Werte des Programms zur Laufzeit interpretiert werden, welchen Wertebereich sie umfassen und welche
-          Operationen mit ihnen möglich sind. Alle Datentypen außer <code>Object</code> sind dabei primitiv, das heißt
-          nicht weiter zerlegbar (atomar) <span class="citation" data-cites="ECMASCRIPT:2019">[17, S. 8]</span>.
+          Zeitpunkt implizit oder explizit ändern kann <a class="citation" href="#ref-WALDMANN:PPS">[15, S. 45]</a>.
+          Typfehler werden dabei durch dynamische Überprüfungen der Laufzeitumgebung erkannt
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 37]</a>. JavaScript besitzt die folgenden sieben
+          Datentypen <a class="citation" href="#ref-ECMASCRIPT:2019">[17, S. 25]</a>. Diese legen fest, wie Werte des
+          Programms zur Laufzeit interpretiert werden, welchen Wertebereich sie umfassen und welche Operationen mit
+          ihnen möglich sind. Alle Datentypen außer <code>Object</code> sind dabei primitiv, das heißt nicht weiter
+          zerlegbar (atomar) <a class="citation" href="#ref-ECMASCRIPT:2019">[17, S. 8]</a>.
         </p>
         <ul>
           <li>
@@ -298,7 +303,7 @@
           Der Typ von Werten wird in JavaScript während der Programmausführung bei Bedarf automatisch implizit
           umgewandelt (<em>type coercion</em>) <a class="citation" href="#ref-RICHARDS:2010">[18]</a>. Einerseits kann
           argumentiert werden, dass eine derartige Flexibilität den Entwicklungsprozess beschleunigt
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 1]</span>, andererseits birgt dies das Risiko von
+          <a class="citation" href="#ref-FLOW:PAPER">[1, S. 1]</a>, andererseits birgt dies das Risiko von
           Programmfehlern, da Typverletzungen erst zur Laufzeit festgestellt werden können
           <a class="citation" href="#ref-ANDERSON:2005">[19]</a>. Weil eine Typisierung von Ausdrücken syntaktisch nicht
           möglich ist, ist nicht immer offensichtlich, welche Datentypen in JavaScript-Quelltexten vorliegen. Deshalb
@@ -309,23 +314,25 @@
           Typverletzung verursacht. Infolgedessen ist es möglich, dass inkorrektes Programmverhalten zunächst unentdeckt
           bleibt, weil nicht unmittelbar ein fataler Fehler auftritt.
         </p>
-        <h2 id="motivation-für-den-einsatz-statischer-typsysteme">Motivation für den Einsatz statischer Typsysteme</h2>
+        <h2 id="motivation-für-den-einsatz-statischer-typsysteme">
+          <span class="chap-number">1.3</span>Motivation für den Einsatz statischer Typsysteme
+        </h2>
         <p>
           Viele der anfänglichen Unzulänglichkeiten von JavaScript konnten durch Erweiterungen der Spezifikation und
           zunehmend konsistenter Implementierungen nach und nach behoben werden. Swamy et al. führen aber aus, dass die
           dynamische Typisierung der Sprache weiterhin ein Hindernis für die Entwicklung sicherer und korrekter
           Anwendungen darstellen kann <a class="citation" href="#ref-NIKHIL:2014">[13]</a>. Auch Bierman et al.
           vertreten die These, dass JavaScript nach wie vor ungeeignet sei für die Entwicklung und Wartung umfangreicher
-          Software <span class="citation" data-cites="BIERMAN:2014">[20, S. 1]</span>. Über die Jahre sind verschiedene
-          Ansätze entstanden, um diese Problematik zu überwinden, indem JavaScript um ein <em>statisches</em> Typsystem
+          Software <a class="citation" href="#ref-BIERMAN:2014">[20, S. 1]</a>. Über die Jahre sind verschiedene Ansätze
+          entstanden, um diese Problematik zu überwinden, indem JavaScript um ein <em>statisches</em> Typsystem
           erweitert wird. Der wesentliche Zweck statischer Typsysteme ist die Vermeidung von Programmfehlern
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 1]</span>. Dies wird durch die statische
-          Analyse des Quelltexts realisiert, sodass Typverletzungen bereits vor der Programmausführung festgestellt
-          werden können. Im Gegensatz zu einer dynamischen Typisierung wird der Typ von Ausdrücken in statischen
-          Systemen explizit deklariert oder kann selbstständig inferiert (abgeleitet) werden
-          <span class="citation" data-cites="WALDMANN:PPS">[15, S. 45]</span>. Eine <em>explizite</em> Typisierung
-          bedeutet, dass Typdeklarationen Bestandteil der Syntax der Programmiersprache bzw. des Systems sind
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 2]</span>.
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 1]</a>. Dies wird durch die statische Analyse
+          des Quelltexts realisiert, sodass Typverletzungen bereits vor der Programmausführung festgestellt werden
+          können. Im Gegensatz zu einer dynamischen Typisierung wird der Typ von Ausdrücken in statischen Systemen
+          explizit deklariert oder kann selbstständig inferiert (abgeleitet) werden
+          <a class="citation" href="#ref-WALDMANN:PPS">[15, S. 45]</a>. Eine <em>explizite</em> Typisierung bedeutet,
+          dass Typdeklarationen Bestandteil der Syntax der Programmiersprache bzw. des Systems sind
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 2]</a>.
         </p>
         <p>
           Ein statisches Typsystem bietet verschiedene Vorteile für den Softwareentwicklungsprozess: Da Typen als ein
@@ -335,13 +342,13 @@
           Ausdrücken und Anweisungen Typverletzungen auftreten, können semantische Probleme wie Logik- und
           Flüchtigkeitsfehler aufgedeckt und korrigiert werden. Sofern alle Schnittstellen und Datenstrukturen typisiert
           sind, wird deren inkorrekte Verwendung unmittelbar erkannt
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 6]</span>. Weiterhin ist es möglich, die
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 6]</a>. Weiterhin ist es möglich, die
           Einschränkungen und Regeln der gegebenen Anwendungsdomäne durch das Typsystem präzise zu modellieren und deren
           Einhaltung mit Hilfe des System zu erzwingen. Auch erfordert die Deklaration expliziter Typen, dass der
           Entwickler die Absicht seines Programms klar formuliert, wodurch sich die Ausdruckskraft und Lesbarkeit des
-          Codes erhöht <span class="citation" data-cites="WALDMANN:PPS">[15, S. 96]</span>. Durch eine Typisierung wird
-          das Verhalten und die Struktur der Software darüber hinaus bereits grundlegend dokumentiert
-          <span class="citation" data-cites="MITCHELL:CONCEPTS">[22, Abschn. 6.1.1]</span>.
+          Codes erhöht <a class="citation" href="#ref-WALDMANN:PPS">[15, S. 96]</a>. Durch eine Typisierung wird das
+          Verhalten und die Struktur der Software darüber hinaus bereits grundlegend dokumentiert
+          <a class="citation" href="#ref-MITCHELL:CONCEPTS">[22, Abschn. 6.1.1]</a>.
         </p>
         <p>
           Derzeit existieren zwei populäre Technologien, die eine statische Typisierung in JavaScript ermöglichen und so
@@ -353,7 +360,9 @@
           realisieren. Die händische Übertragung umfangreicher Projekte ist impraktikabel, weil dies sehr zeitaufwändig
           und fehleranfällig wäre.
         </p>
-        <h2 id="zielsetzung-und-aufbau-der-arbeit">Zielsetzung und Aufbau der Arbeit</h2>
+        <h2 id="zielsetzung-und-aufbau-der-arbeit">
+          <span class="chap-number">1.4</span>Zielsetzung und Aufbau der Arbeit
+        </h2>
         <p>
           Die vorliegende Masterarbeit beschäftigt sich mit der Lösung dieser aufgeworfenen Problemstellung, der
           automatischen Migration von Flow nach TypeScript, und ist in Zusammenarbeit mit dem Unternehmen
@@ -388,15 +397,17 @@
         </p>
       </section>
       <section>
-        <h1 id="chap:basics">Grundlagen</h1>
+        <h1 id="chap:basics"><span class="chap-number">2</span>Grundlagen</h1>
         <p>
           Bevor die Ziele der Migration von Flow zu TypeScript im nächsten Kapitel detailliert dargelegt werden, sollen
           zunächst die nötigen theoretischen Grundlagen dargestellt werden, um die Nachvollziehbarkeit der weiteren
           Ausführungen zu erleichtern. Dazu werden im Folgenden drei Konzepte aus der Theorie der Typensysteme
           erläutert, die relevant für die Differenzierung von Flow gegenüber TypeScript sind.
         </p>
-        <h2 id="konzepte-und-begriffe-der-typentheorie">Konzepte und Begriffe der Typentheorie</h2>
-        <h3 id="korrektheit-von-typsystemen">Korrektheit von Typsystemen</h3>
+        <h2 id="konzepte-und-begriffe-der-typentheorie">
+          <span class="chap-number">2.1</span>Konzepte und Begriffe der Typentheorie
+        </h2>
+        <h3 id="korrektheit-von-typsystemen"><span class="chap-number">2.1.1</span>Korrektheit von Typsystemen</h3>
         <p>
           Ein wichtige Eigenschaft von Typsystemen ist deren logische <em>Korrektheit</em
           ><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a
@@ -405,7 +416,7 @@
           <a class="citation" href="#ref-WRIGHT:1994">[24]</a>. In einem solchen System stimmt also der Typ eines zur
           Laufzeit ausgewerteten Ausdrucks stets mit dem statischen Typ überein
           <a class="citation" href="#ref-DART:TYPE_SYSTEM">[25]</a>. Durch mathematische Formalisierung kann diese
-          Eigenschaft bewiesen werden <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 7]</span>. Das
+          Eigenschaft bewiesen werden <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 7]</a>. Das
           Gegenstück von Korrektheit ist <em>Vollständigkeit</em>. Während ein korrektes System alle Fehler
           identifiziert, die zur Laufzeit auftreten können, findet ein vollständiges System nur diejenigen Fehler, die
           tatsächlich während der Ausführung eintreten
@@ -417,20 +428,19 @@
         <p>
           Das Typsystem mancher Programmiersprachen ist nicht korrekt. So ist die Semantik bestimmter Operationen in C
           wie beispielsweise die Dereferenzierung des Nullzeigers in der Sprachspezikation undefiniert
-          <span class="citation" data-cites="ISO:C99">[27, S. 79]</span>. Obwohl ein solches Programm durch den Compiler
+          <a class="citation" href="#ref-ISO:C99">[27, S. 79]</a>. Obwohl ein solches Programm durch den Compiler
           akzeptiert wird, also keine Typverletzungen aufweist, können hier Laufzeitfehler auftreten.
         </p>
-        <h3 id="subtyping">Subtyping</h3>
+        <h3 id="subtyping"><span class="chap-number">2.1.2</span>Subtyping</h3>
         <p>
-          Die zwei in dieser Arbeit betrachteten Typsysteme Flow
-          <a class="citation" href="#ref-FLOW:PAPER">[1]</a> und TypeScript
-          <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2]</a> setzen <em>Subtyping</em> ein, um die Beziehung
-          zwischen Super- und Subtypen abzubilden
-          <span class="citation" data-cites="FLOW:PAPER BIERMAN:2014">[1], [20]</span>. Grundsätzlich kann ein Typ als
-          eine Menge von Werten betrachtet werden, die eine gemeinsame Struktur oder Form besitzen
-          <span class="citation" data-cites="AMADIO:1993">[28, S. 3]</span>. Subtyping stellt die reflexive und
-          transitive Relation dar, die aussagt, ob ein Typ T Untertyp eines anderen Typen S ist
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 27]</span>. Hierfür muss das Kriterium der
+          Die zwei in dieser Arbeit betrachteten Typsysteme Flow <a class="citation" href="#ref-FLOW:PAPER">[1]</a> und
+          TypeScript <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2]</a> setzen <em>Subtyping</em> ein, um die
+          Beziehung zwischen Super- und Subtypen abzubilden <a class="citation" href="#ref-FLOW:PAPER">[1]</a>,
+          <a class="citation" href="#ref-BIERMAN:2014">[20]</a>. Grundsätzlich kann ein Typ als eine Menge von Werten
+          betrachtet werden, die eine gemeinsame Struktur oder Form besitzen
+          <a class="citation" href="#ref-AMADIO:1993">[28, S. 3]</a>. Subtyping stellt die reflexive und transitive
+          Relation dar, die aussagt, ob ein Typ T Untertyp eines anderen Typen S ist
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 27]</a>. Hierfür muss das Kriterium der
           <em>Subsumtion</em> erfüllt sein. Diese besteht, wenn die Menge, die S darstellt, jeden Wert von T beinhaltet.
           Folglich kann der Typ T überall dort eingesetzt werden, wo S erwartet wird (<em
             >Liskovsches Substitutionsprinzip</em
@@ -445,24 +455,21 @@
           Supertypen akzeptiert, bei Kontravarianz hingegen nur Supertypen, aber keine Subtypen
           <a class="citation" href="#ref-FLOW:VARIANCE">[30]</a>.
         </p>
-        <h3 id="nominale-und-strukturelle-typen">Nominale und strukturelle Typen</h3>
+        <h3 id="nominale-und-strukturelle-typen">
+          <span class="chap-number">2.1.3</span>Nominale und strukturelle Typen
+        </h3>
         <p>
           Eine Möglichkeit, Typsysteme zu klassifizieren, ist die Verwendung von <em>nominalen</em> bzw.
           <em>strukturellen</em> Typen. Da sich Flow und TypeScript in diesem Aspekt unterscheiden, soll auch diese
           Differenzierung dargelegt werden. Entscheidend ist hierbei, ob unabhängige Typen durch das Typsystem als
-          äquivalent angesehen werden oder nicht
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 9]</span>. Auch die Subtyp-Relation wird
-          hierdurch beeinflusst: Bei strukturellen Typen liegt ein Subtyp vor, wenn dessen Attribute eine Obermenge des
-          anderen Typs sind <a class="citation" href="#ref-MALAYERI:2008">[31]</a>. Liegt hingegen ein nominaler Typ
-          vor, so besteht eine solche Beziehung nur genau dann, wenn sie explizit syntaktisch deklariert wird<a
-            href="#fn3"
-            class="footnote-ref"
-            id="fnref3"
-            role="doc-noteref"
-            ><sup>3</sup></a
+          äquivalent angesehen werden oder nicht <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 9]</a>.
+          Auch die Subtyp-Relation wird hierdurch beeinflusst: Bei strukturellen Typen liegt ein Subtyp vor, wenn dessen
+          Attribute eine Obermenge des anderen Typs sind <a class="citation" href="#ref-MALAYERI:2008">[31]</a>. Liegt
+          hingegen ein nominaler Typ vor, so besteht eine solche Beziehung nur genau dann, wenn sie explizit syntaktisch
+          deklariert wird<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a
           >. Die Typsysteme der meisten Programmiersprachen setzen sowohl nominale als auch strukturelle Typen ein
-          <span class="citation" data-cites="CARDELLI:TYPE_SYSTEMS">[16, S. 9]</span>. Anhand eines Beispiels in
-          Pseudocode (Quelltext
+          <a class="citation" href="#ref-CARDELLI:TYPE_SYSTEMS">[16, S. 9]</a>. Anhand eines Beispiels in Pseudocode
+          (Quelltext
           <a href="#code:type-equivalence" data-reference-type="ref" data-reference="code:type-equivalence"
             >[code:type-equivalence]</a
           >) soll der Unterschied verdeutlicht werden.
@@ -486,14 +493,16 @@ f(new B()); // &lt;&lt; Typfehler?</code></pre>
           <span><code>prop</code></span> mit demselben Typ <span><code>string</code></span
           >.
         </p>
-        <h2 id="sec:static-typesystems-for-js">Statische Typsysteme für JavaScript</h2>
+        <h2 id="sec:static-typesystems-for-js">
+          <span class="chap-number">2.2</span>Statische Typsysteme für JavaScript
+        </h2>
         <p>
           In den nachfolgenden Abschnitten sollen nun die charakteristischen Merkmale der zwei in dieser Arbeit
           behandelten statischen Typsysteme <em>Flow</em> <a class="citation" href="#ref-FLOW:PAPER">[1]</a> und
           <em>TypeScript</em> <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2]</a> näher beleuchtet werden, um deren
           Unterschiede und Gemeinsamkeiten herauszuarbeiten.
         </p>
-        <h3 id="sec:flow">Flow</h3>
+        <h3 id="sec:flow"><span class="chap-number">2.2.1</span>Flow</h3>
         <h4 id="charakterisierung">Charakterisierung</h4>
         <p>
           Flow <a class="citation" href="#ref-FLOW:PAPER">[1]</a> ist ein durch das US-amerikanische Unternehmen
@@ -502,11 +511,11 @@ f(new B()); // &lt;&lt; Typfehler?</code></pre>
           Erweiterung, die vor Auslieferung des Codes mittels eines geeigneten Werkzeugs wie beispielsweise Babel
           <a class="citation" href="#ref-BABEL">[3]</a> entfernt werden muss, damit wieder regulärer JavaScript-Code
           entsteht <a class="citation" href="#ref-FLOW:INSTALLATION">[32]</a>. Flow ist seit 2014 frei und quelloffen
-          unter der MIT-Lizenz verfügbar <span class="citation" data-cites="LICENSE:MIT FLOW:GITHUB">[33], [34]</span>.
-          Das Typsystem von Flow wird in der akademischen Arbeit “<em>Fast and Precise Type Checking for JavaScript</em
-          >” <a class="citation" href="#ref-FLOW:PAPER">[1]</a> von
-          <span class="citation" data-cites="FLOW:PAPER">1</span> ausführlich beschrieben. Die nachfolgenden
-          Erläuterungen beziehen sich vorrangig auf den Inhalt dieser Veröffentlichung.
+          unter der MIT-Lizenz verfügbar <a class="citation" href="#ref-LICENSE:MIT">[33]</a>,
+          <a class="citation" href="#ref-FLOW:GITHUB">[34]</a>. Das Typsystem von Flow wird in der akademischen Arbeit
+          „<em>Fast and Precise Type Checking for JavaScript</em>“
+          <a class="citation" href="#ref-FLOW:PAPER">[1]</a> von Chaudhuri et al. ausführlich beschrieben. Die
+          nachfolgenden Erläuterungen beziehen sich vorrangig auf den Inhalt dieser Veröffentlichung.
         </p>
         <p>
           Flow verfolgt zwei primäre Ziele <a class="citation" href="#ref-FLOW:TYPE_SYSTEM">[35]</a>: Erstens soll eine
@@ -521,33 +530,32 @@ f(new B()); // &lt;&lt; Typfehler?</code></pre>
           Datenflussanalyse kann das Laufzeitverhalten von Software präzise modelliert und so der Typ von Ausdrücken
           durch Einbeziehung der Programmverzweigungen (der Pfade) auf speziellere Untertypen abgebildet werden (<em
             >type refinement</em
-          >) <span class="citation" data-cites="WINTER:2013 FLOW:PAPER">[1, S. 2], [36]</span>. Um die Korrektheit des
-          Typsystems sicherzustellen, berücksichtigt Flow während der Typüberprüfung von Ausdrücken alle theoretisch
-          möglichen Fälle <a class="citation" href="#ref-FLOW:TYPES_AND_EXPRESSIONS">[26]</a>. Wie ausgeführt birgt
-          diese Präferenz von Korrektheit über Vollständigkeit den Nachteil, dass unter Umständen Typfehler angezeigt
-          werden, die zur Laufzeit tatsächlich gar nicht auftreten. Gleichzeitig steigt aber durch diesen Ansatz die
-          Sicherheit, weil damit die Wahrscheinlichkeit sinkt, dass Laufzeitfehler durch das Typsystem unentdeckt
-          bleiben.
+          >) <a class="citation" href="#ref-FLOW:PAPER">[1, S. 2]</a>,
+          <a class="citation" href="#ref-WINTER:2013">[36]</a>. Um die Korrektheit des Typsystems sicherzustellen,
+          berücksichtigt Flow während der Typüberprüfung von Ausdrücken alle theoretisch möglichen Fälle
+          <a class="citation" href="#ref-FLOW:TYPES_AND_EXPRESSIONS">[26]</a>. Wie ausgeführt birgt diese Präferenz von
+          Korrektheit über Vollständigkeit den Nachteil, dass unter Umständen Typfehler angezeigt werden, die zur
+          Laufzeit tatsächlich gar nicht auftreten. Gleichzeitig steigt aber durch diesen Ansatz die Sicherheit, weil
+          damit die Wahrscheinlichkeit sinkt, dass Laufzeitfehler durch das Typsystem unentdeckt bleiben.
         </p>
         <p>
           Die zweite Zielvorgabe, die Steigerung der Geschwindigkeit der Typüberprüfungen, wird durch eine
           Modularisierung des Verfahrens erreicht, sodass die Berechnung anhand mehrerer Threads stark parallelisiert
-          werden kann (<em>Multithreading</em>) <span class="citation" data-cites="FLOW:PAPER">[1, S. 4]</span>. Flow
-          nutzt den Umstand, dass in modernen JavaScript-Projekten üblicherweise genau eine Datei pro Modul vorliegt.
-          Unabhängige Module können somit auf verschiedenen Prozessorkernen gleichzeitig überprüft werden. Daraufhin
-          werden die Ergebnisse der einzelnen Berechnungen durch einen MapReduce-Algorithmus, der auf einer geteilten
+          werden kann (<em>Multithreading</em>) <a class="citation" href="#ref-FLOW:PAPER">[1, S. 4]</a>. Flow nutzt den
+          Umstand, dass in modernen JavaScript-Projekten üblicherweise genau eine Datei pro Modul vorliegt. Unabhängige
+          Module können somit auf verschiedenen Prozessorkernen gleichzeitig überprüft werden. Daraufhin werden die
+          Ergebnisse der einzelnen Berechnungen durch einen MapReduce-Algorithmus, der auf einer geteilten
           Heap-Datenstruktur arbeitet, zum Gesamtergebnis der Typüberprüfung rekombiniert
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 22]</span>.
+          <a class="citation" href="#ref-FLOW:PAPER">[1, S. 22]</a>.
         </p>
         <p>
           Flow ist in der Lage Typen global zu inferieren
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 25]</span>. Das heißt, der Typ vieler Ausdrücke muss
-          nicht explizit angegeben werden, sondern kann durch das Typsystem selbstständig abgeleitet werden. Deshalb
-          kann bereits mit wenigen expliziten Annotationen eine hohe Abdeckung des gesamten Quelltexts durch das
-          Typsystem erzielt werden. So führen <span class="citation" data-cites="FLOW:PAPER">1</span> aus, dass in einer
-          circa 13 Millionen Zeilen umfassenden Codebasis von Facebook im Median nur 29% aller Stellen, an denen
-          Typannotationen möglich sind, nötig waren, um eine vollständige Abdeckung durch Flow zu erzielen
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 24]</span>.
+          <a class="citation" href="#ref-FLOW:PAPER">[1, S. 25]</a>. Das heißt, der Typ vieler Ausdrücke muss nicht
+          explizit angegeben werden, sondern kann durch das Typsystem selbstständig abgeleitet werden. Deshalb kann
+          bereits mit wenigen expliziten Annotationen eine hohe Abdeckung des gesamten Quelltexts durch das Typsystem
+          erzielt werden. So führen Chaudhuri et al. aus, dass in einer circa 13 Millionen Zeilen umfassenden Codebasis
+          von Facebook im Median nur 29% aller Stellen, an denen Typannotationen möglich sind, nötig waren, um eine
+          vollständige Abdeckung durch Flow zu erzielen <a class="citation" href="#ref-FLOW:PAPER">[1, S. 24]</a>.
         </p>
         <p>
           Eine weitere Eigenschaft von Typsystemen ist deren Verwendung von nominalen und strukturellen Typen. Flow
@@ -561,7 +569,7 @@ f(new B()); // &lt;&lt; Typfehler?</code></pre>
         <h4 id="architektur">Architektur</h4>
         <p>
           Die Architektur von Flow gliedert sich in einen Server, einen Client und einen Dateisystemüberwacher
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 22]</span>. Der Server liest zunächst den Quelltext des
+          <a class="citation" href="#ref-FLOW:PAPER">[1, S. 22]</a>. Der Server liest zunächst den Quelltext des
           gesamten Projekts ein und überprüft diesen hinsichtlich Typverletzungen. Daraufhin läuft der Prozess im
           Hintergrund weiter und ist bereit, Anfragen des Clients entgegen zu nehmen. Der Client – zum Beispiel die
           integrierte Entwicklungsumgebung – kann nun durch Kommandos einerseits den generellen Status der
@@ -580,8 +588,7 @@ f(new B()); // &lt;&lt; Typfehler?</code></pre>
             >[code:example-flow]</a
           >
           die Typisierung eines einfachen JavaScript-Programms anhand des Algorithmus der linearen Suche gezeigt werden.
-          In diesem und allen weiteren Quelltexten werden dabei die Schlüsselworte von JavaScript bzw. TypeScript
-          <span><code>fett</code></span> und Typannotationen <span><code>kursiv</code></span> abgedruckt.
+          <!-- In diesem und allen weiteren Quelltexten werden dabei die Schlüsselworte von JavaScript bzw. TypeScript <span><b><code>fett</code></b></span> und Typannotationen <span><i><code>kursiv</code></i></span> abgedruckt. -->
         </p>
         <pre><code>// @flow
 function linearSearch&lt;T&gt;(list: Array&lt;T&gt;, searchValue: T): number | empty {
@@ -671,7 +678,7 @@ linearSearch&lt;string&gt;([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  /
           <a class="citation" href="#ref-FLOW:LIBRARY_DEFINITIONS">[40]</a>.
         </p>
         <p>TODO: declaration.tex</p>
-        <h3 id="sec:typescript">TypeScript</h3>
+        <h3 id="sec:typescript"><span class="chap-number">2.2.2</span>TypeScript</h3>
         <p>
           Nachdem das Typsystem von Flow charakterisiert wurde, sollen im Folgenden auch die Prinzipien und der Aufbau
           von TypeScript erklärt werden, um die Unterschiede der Ansätze zu verdeutlichen. Durch die Gegenüberstellung
@@ -682,33 +689,33 @@ linearSearch&lt;string&gt;([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  /
         <p>
           TypeScript <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2]</a> ist eine frei verfügbare, quelloffene
           Programmiersprache, deren primäres Ziel die Bereitstellung einer statischen Typisierung für JavaScript ist
-          <span class="citation" data-cites="BIERMAN:2014">[20, S. 2]</span>. Die Sprache wird von der
+          <a class="citation" href="#ref-BIERMAN:2014">[20, S. 2]</a>. Die Sprache wird von der
           <em>Microsoft Corporation</em> entwickelt und wurde 2012 unter der <em>Apache License 2.0</em>
           <a class="citation" href="#ref-LICENSE:APACHE20">[41]</a> veröffentlicht
           <a class="citation" href="#ref-TYPESCRIPT:GITHUB">[42]</a>. Die Architektur von TypeScript wurde maßgeblich
           durch den dänischen Programmierer Anders Hejlsberg entworfen, der bereits unter anderem C# konzipiert hat
           <a class="citation" href="#ref-GITHUB:HEJLSBERG">[43]</a>. Eine formale Spezifikation
           <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2]</a> beschreibt die Grammatik und das Verhalten der
-          Sprache. In der Publikation “<em>Understanding TypeScript</em>”
+          Sprache. In der Publikation „<em>Understanding TypeScript</em>“
           <a class="citation" href="#ref-BIERMAN:2014">[20]</a> werden darüber hinaus die theoretischen Konzepte und das
           Typsystem von TypeScript dargelegt.
         </p>
         <p>
           Obwohl TypeScript eine unabhängige, vollständige Programmiersprache ist, wurde diese klar mit der Intension
           entwickelt, möglichst zugänglich für JavaScript-Programmierer zu sein. So stellt die Syntax beispielsweise
-          eine strikte Obermenge von ECMAScript dar <span class="citation" data-cites="FLOW:PAPER">[1, S. 25]</span>.
-          Folglich ist jedes JavaScript-Programm auch ein syntaktisch korrektes TypeScript-Programm. Der Funktionsumfang
-          von TypeScript orientiert sich an der fortlaufenden Weiterentwicklung von ECMAScript
-          <span class="citation" data-cites="BIERMAN:2014">[20, S. 1]</span>. Erweiterungen von JavaScript werden in der
-          Regel auch in TypeScript integriert. Somit können JavaScript-Entwickler mit Hilfe von TypeScript eine bereits
+          eine strikte Obermenge von ECMAScript dar <a class="citation" href="#ref-FLOW:PAPER">[1, S. 25]</a>. Folglich
+          ist jedes JavaScript-Programm auch ein syntaktisch korrektes TypeScript-Programm. Der Funktionsumfang von
+          TypeScript orientiert sich an der fortlaufenden Weiterentwicklung von ECMAScript
+          <a class="citation" href="#ref-BIERMAN:2014">[20, S. 1]</a>. Erweiterungen von JavaScript werden in der Regel
+          auch in TypeScript integriert. Somit können JavaScript-Entwickler mit Hilfe von TypeScript eine bereits
           größtenteils bekannte Syntax einsetzen, um Anwendungen statisch zu typisieren.
         </p>
         <p>
           Durch den TypeScript-Compiler (TSC) wird die Übersetzung von TypeScript-Quelltexten in standardkonformes
           JavaScript ermöglicht<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a
           >. Dabei werden alle Spuren der statischen Typisierung entfernt, nachdem die Typkorrektheit verifiziert wurde
-          <span class="citation" data-cites="BIERMAN:2014">[20, S. 3]</span>. Das Laufzeitverhalten des Programms wird
-          also nicht durch TypeScript beeinflusst, weil die Typen ausschließlich statisch überprüft werden. Der
+          <a class="citation" href="#ref-BIERMAN:2014">[20, S. 3]</a>. Das Laufzeitverhalten des Programms wird also
+          nicht durch TypeScript beeinflusst, weil die Typen ausschließlich statisch überprüft werden. Der
           TypeScript-Compiler besitzt eine Vielzahl von Optionen, die unter anderem den Umfang der statischen Analyse,
           die Einbindung von Standardbibliotheken und die Generierung der JavaScript-Ausgabe beeinflussen
           <a class="citation" href="#ref-TSC:OPTIONS">[45]</a>. Insbesondere kann hier auch die Striktheit der
@@ -716,37 +723,36 @@ linearSearch&lt;string&gt;([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  /
           Einführung von TypeScript in bestehende Projekten zu erleichtern. Standardmäßig können beispielsweise die
           Werte <span><code>null</code></span> und <span><code>undefined</code></span> jedem Typ fehlerfrei zugewiesen
           werden <a class="citation" href="#ref-TSC:OPTIONS">[45]</a>. Da dies oftmals nicht das erwünschte Verhalten
-          des Typsystems ist, kann eine solche Operation durch Setzen der Option “<code>strictNullChecks</code>” als
+          des Typsystems ist, kann eine solche Operation durch Setzen der Option „<code>strictNullChecks</code>“ als
           Typfehler deklariert werden.
         </p>
         <p>
           Wie ausgeführt legen die Autoren von Flow großen Wert auf die Korrektheit des Typsystems. TypeScript verfolgt
           hier bewusst einen anderen Ansatz: Es ist ausdrücklich nicht Ziel, ein beweisbares, absolut korrektes System
-          zu entwickeln, sondern es soll eine “Balance zwischen Korrektheit und Produktivität”
+          zu entwickeln, sondern es soll eine „Balance zwischen Korrektheit und Produktivität“
           <a class="citation" href="#ref-TYPESCRIPT:DESIGN_GOALS">[46]</a> gefunden werden. Bierman et al. führen aus,
           dass auch ein Typsystem, das nicht vollständig korrekt ist, in der Praxis nützlich sein kann, um
-          Programmfehler aufzudecken <span class="citation" data-cites="BIERMAN:2014">[20, S. 3]</span>. Ein weiterer
+          Programmfehler aufzudecken <a class="citation" href="#ref-BIERMAN:2014">[20, S. 3]</a>. Ein weiterer
           Unterschied zu Flow besteht darin, dass TypeScript sämtliche Typen strukturell behandelt
-          <span class="citation" data-cites="TYPESCRIPT:SPEC">[2, S. 38]</span>. Die Autoren begründen diese
-          Entscheidung damit, dass nur eine strukturelle Typisierung der dynamischen Natur von JavaScript gerecht würde.
-          So werden zum Beispiel häufig Lambda-Funktionen in JavaScript eingesetzt und Objekte im Allgemeinen nicht
-          durch Klassen, sondern bei Bedarf durch Literale erzeugt
-          <span class="citation" data-cites="BIERMAN:2014">[20, S. 3]</span>. Deren Benutzung hängt deshalb nur von
-          ihrem konkreten Aufbau ab, sodass eine strukturelle Betrachtung Sinn ergibt.
+          <a class="citation" href="#ref-TYPESCRIPT:SPEC">[2, S. 38]</a>. Die Autoren begründen diese Entscheidung
+          damit, dass nur eine strukturelle Typisierung der dynamischen Natur von JavaScript gerecht würde. So werden
+          zum Beispiel häufig Lambda-Funktionen in JavaScript eingesetzt und Objekte im Allgemeinen nicht durch Klassen,
+          sondern bei Bedarf durch Literale erzeugt <a class="citation" href="#ref-BIERMAN:2014">[20, S. 3]</a>. Deren
+          Benutzung hängt deshalb nur von ihrem konkreten Aufbau ab, sodass eine strukturelle Betrachtung Sinn ergibt.
         </p>
         <p>
           Ferner unterstützt TypeScript eine graduelle Typisierung (<em>gradual typing</em>), wie sie durch
-          <span class="citation" data-cites="SIEK:2007">47</span>
+          <a class="citation" href="#ref-SIEK:2007">47</a>
           <a class="citation" href="#ref-SIEK:2007">[47]</a> beschrieben wurde. Hierdurch ist es möglich, nur bestimmte
           Teilstücke eines Programms zu typisieren, sodass die übrigen Ausdrücke, deren Typ nicht automatisch ermittelt
           werden kann, implizit den dynamischen Typ <em>any</em> erhalten
           <a class="citation" href="#ref-TYPESCRIPT:DESIGN_GOALS">[46]</a>. Wie Flow setzt auch TypeScript Typinferenz
           ein, um Typen automatisch abzuleiten, wodurch sich die Zahl benötigter Typannotationen reduziert
-          <span class="citation" data-cites="BIERMAN:2014">[20, S. 4]</span>.
-          <span class="citation" data-cites="FLOW:PAPER">1</span> weisen darauf hin, dass die Typinferenz von TypeScript
-          aber im Gegensatz zu Flow nicht global, sondern nur lokal und an einigen Stellen kontextuell ist
-          <span class="citation" data-cites="FLOW:PAPER">[1, S. 24]</span>. Deshalb seien im Allgemeinen bei TypeScript
-          mehr Typannotationen notwendig als bei Flow.
+          <a class="citation" href="#ref-BIERMAN:2014">[20, S. 4]</a>.
+          <a class="citation" href="#ref-FLOW:PAPER">1</a> weisen darauf hin, dass die Typinferenz von TypeScript aber
+          im Gegensatz zu Flow nicht global, sondern nur lokal und an einigen Stellen kontextuell ist
+          <a class="citation" href="#ref-FLOW:PAPER">[1, S. 24]</a>. Deshalb seien im Allgemeinen bei TypeScript mehr
+          Typannotationen notwendig als bei Flow.
         </p>
         <h4 id="architektur-1">Architektur</h4>
         <figure>
@@ -770,7 +776,7 @@ linearSearch&lt;string&gt;([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  /
           Compiler innerhalb der semantischen Analyse durchgeführt. Zwei Softwarekomponenten liegen über dem Compiler
           und greifen auf diesen zu: Einerseits kann die Übersetzung von Quelltexten durch ein Kommandozeilenprogramm
           (<em>Standalone TypeScript Compiler</em>), das die zentrale Benutzerschnittstelle darstellt, angestoßen
-          werden, andererseits wird der “Sprachservice” (<em>Language Service</em>) als Schnittstelle für Editoren
+          werden, andererseits wird der „Sprachservice“ (<em>Language Service</em>) als Schnittstelle für Editoren
           bereit gestellt. Durch den Sprachservice werden Editoren und integrierten Entwicklungsumgebungen Operationen
           wie Autovervollständigung von Anweisungen, Anzeige von Signaturen oder inferierten Typen, grundlegende
           Refactoring-Funktionen et cetera ermöglicht <a class="citation" href="#ref-TYPESCRIPT:ARCHITECTURE">[48]</a>.
@@ -819,7 +825,7 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           werden müssen <a class="citation" href="#ref-FLOW:GENERICS">[50]</a>. Die Syntax und Benutzung der
           Typannotationen im Beispiel ist ansonsten analog zu Flow.
         </p>
-        <h2 id="sec:transpilers">Transpilierung von Quelltexten</h2>
+        <h2 id="sec:transpilers"><span class="chap-number">2.3</span>Transpilierung von Quelltexten</h2>
         <p>
           Um die Problemstellung dieser Arbeit, die Übersetzung von Flow nach TypeScript, praktisch zu lösen, soll ein
           Transpiler umgesetzt werden, welcher die Flow-Typisierung eines Eingabequelltexts in entsprechenden
@@ -828,14 +834,14 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           ausführlich dargelegt wird, werden zunächst die grundlegenden Konzepte und der Aufbau von Transcompilern
           betrachtet.
         </p>
-        <h3 id="sec:transpiler-concepts">Konzepte und Aufbau von Transpilern</h3>
+        <h3 id="sec:transpiler-concepts"><span class="chap-number">2.3.1</span>Konzepte und Aufbau von Transpilern</h3>
         <p>
           Ein Transpiler oder Transcompiler ist ein spezieller Compiler, der den Quelltext einer höheren
           Programmiersprache in eine andere höhere Programmiersprache übersetzt
-          <span class="citation" data-cites="AHO:COMPILERS">[51, S. 3]</span>. Anders als bei konventionellen Compilern
-          wird also kein unmittelbar ausführbarer architekturspezifischer Maschinencode erzeugt, sondern der
-          ursprüngliche Quelltext in eine andere Sprache überführt. Auch möglich als Ziel der Transpilierung ist die
-          gleiche Programmiersprache, wenn beispielsweise das Eingabeprogramm entsprechend eines neueren oder älteren
+          <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 3]</a>. Anders als bei konventionellen Compilern wird
+          also kein unmittelbar ausführbarer architekturspezifischer Maschinencode erzeugt, sondern der ursprüngliche
+          Quelltext in eine andere Sprache überführt. Auch möglich als Ziel der Transpilierung ist die gleiche
+          Programmiersprache, wenn beispielsweise das Eingabeprogramm entsprechend eines neueren oder älteren
           Sprachstandards umgeformt werden soll <a class="citation" href="#ref-EVGENIY:2016">[23]</a>. Abbildung
           <a href="#fig:transpiler-architecture" data-reference-type="ref" data-reference="fig:transpiler-architecture"
             >2.2</a
@@ -843,31 +849,32 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           zeigt den typischen Aufbau eines Transcompilers. Die Architektur lässt sich wie bei Compilern in zwei Phasen
           mit mehreren Unterpunkten gliedern: Während die Eingabe im <em>Frontend</em> syntaktisch und semantisch
           analysiert wird, wird das Programm im <em>Backend</em> optimiert und der Ausgabequelltext generiert
-          <span class="citation" data-cites="APPEL:2003">[52, S. 136]</span>.
+          <a class="citation" href="#ref-APPEL:2003">[52, S. 136]</a>.
         </p>
         <figure>
           <embed src="src/2_Grundlagen/fig/transpiler-architecture.pdf" id="fig:transpiler-architecture" />
           <figcaption>
             Architektur eines typischen Transpilers nach
             <a class="citation" href="#ref-EVGENIY:2016">[23]</a> und
-            <span class="citation" data-cites="TORCZON:2007">[53, S. 8]</span>.
+            <a class="citation" href="#ref-TORCZON:2007">[53, S. 8]</a>.
           </figcaption>
         </figure>
         <p>
           Zunächst wird der Eingabequelltext innerhalb der Analysephase durch den Lexer oder Tokenizer Zeichen für
           Zeichen eingelesen, um diesen in lexikalisch bedeutungsvolle Zeichenketten, sogenannte <em>Lexeme</em>, zu
-          zerlegen <span class="citation" data-cites="AHO:COMPILERS">[51, S. 43]</span>. Daraufhin werden
+          zerlegen <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 43]</a>. Daraufhin werden
           <em>Tokens</em> gebildet, indem jedes dieser Wörter einer syntaktischen Klasse zugeordnet wird. Diese geben
           die Bedeutung eines Tokens an (zum Beispiel <span><code>3</code></span> <span class="math inline">↦</span>
           <span><code>INT(3)</code></span> oder <span><code>!=</code></span> <span class="math inline">↦</span>
           <span><code>NEQ</code></span
-          >) <span class="citation" data-cites="TORCZON:2007">[53, S. 26]</span>. Die Tokens entsprechen dabei den
+          >) <a class="citation" href="#ref-TORCZON:2007">[53, S. 26]</a>. Die Tokens entsprechen dabei den
           Terminalsymbolen der formalen Grammatik der Programmiersprache
-          <span class="citation" data-cites="AHO:COMPILERS">[51, S. 43]</span>.
+          <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 43]</a>.
         </p>
-        <pre data-numbers="none" data-aboveskip="0pt" data-belowskip="0pt"><code>function square(x) {
-      return x ** 2;
-    }</code></pre>
+        <pre><code>function square(x) {
+  return x ** 2;
+}</code></pre>
+        <!-- TODO -->
         <p>
           ] [Identifier<span>[]</span>, edge label=<span>node[edge]<span>params</span></span> [x, edge label=<span
             >node[edge]<span>name</span></span
@@ -890,17 +897,17 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           die syntaktische Struktur eines Programms gemäß der zugehörigen Grammatik hierarchisch modelliert. Abbildung
           <a href="#fig:ast" data-reference-type="ref" data-reference="fig:ast">[fig:ast]</a> zeigt exemplarisch den
           <em>abstrakten</em> Syntaxbaum (AST) einer simplen JavaScript-Funktion. Ein abstrakter Syntaxbaum ist eine
-          kompaktere Form des konkreten Baums und zeigt lediglich “wesentliche Teile”
-          <span class="citation" data-cites="WALDMANN:PPS">[15, S. 21]</span> davon. Falls der Ableitungsbaum nicht
-          erstellt werden kann, so liegt ein Syntaxfehler in der Eingabe vor.
+          kompaktere Form des konkreten Baums und zeigt lediglich „wesentliche Teile“
+          <a class="citation" href="#ref-WALDMANN:PPS">[15, S. 21]</a> davon. Falls der Ableitungsbaum nicht erstellt
+          werden kann, so liegt ein Syntaxfehler in der Eingabe vor.
         </p>
         <p>
           Danach prüft der Transpiler, ob ein gültiges Programm der Eingabesprache vorliegt, indem die statische
-          Semantik analysiert wird <span class="citation" data-cites="AHO:COMPILERS">[51, S. 8]</span>. Hierunter fällt
+          Semantik analysiert wird <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 8]</a>. Hierunter fällt
           beispielsweise, dass Variablen in vielen Programmiersprachen vor deren Benutzung zunächst deklariert werden
           müssen. Um ein solches kontextuelles Programmverhalten zu untersuchen, können Attributgrammatiken verwendet
-          werden <span class="citation" data-cites="TORCZON:2007">[53, S. 161]</span>. Während dieser Phase wird auch
-          die Typkorrektheit überprüft, sofern ein statisches Typsystem vorliegt
+          werden <a class="citation" href="#ref-TORCZON:2007">[53, S. 161]</a>. Während dieser Phase wird auch die
+          Typkorrektheit überprüft, sofern ein statisches Typsystem vorliegt
           <a class="citation" href="#ref-SCHOEPP:COMPILER">[54]</a>. Es ist hervorzuheben, dass nicht alle Transcompiler
           eine semantische Analyse durchführen, sondern manche unmittelbar zum nächsten Schritt übergehen. Folglich
           werden hier semantische Programmfehler nicht erkannt und einfach übernommen. Zuletzt wird durch das Frontend
@@ -908,7 +915,7 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           ><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> des Programms erzeugt,
           der an das Backend übergeben wird. Ein Zwischencode ist im Allgemeinen eine von der Quellsprache und
           Zielarchitektur unabhängige Datenstruktur innerhalb von Compilern, die das betrachtete Programm modelliert
-          <span class="citation" data-cites="TORCZON:2007">[53, S. 6]</span>. Wie Abschnitt
+          <a class="citation" href="#ref-TORCZON:2007">[53, S. 6]</a>. Wie Abschnitt
           <a href="#sec:js-transpilers" data-reference-type="ref" data-reference="sec:js-transpilers">2.3.2</a> zeigen
           wird, verwenden viele Transpiler im JavaScript-Umfeld den abstrakten Syntaxbaum als Zwischencode.
         </p>
@@ -917,20 +924,23 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           transformieren, um gewünschte Programmeigenschaften herzustellen. Zum Beispiel könnte hier veraltete Syntax
           durch modernere Notationen ersetzt werden. Als nächstes wird das Programm sprachunabhängig optimiert, das
           heißt, die Laufzeit oder der Speicherplatzbedarf werden auf Basis einer Programmanalyse reduziert
-          <span class="citation" data-cites="TORCZON:2007">[53, S. 405]</span>. Hierbei können eine Vielzahl
-          unterschiedlicher Transformationen angewandt werden. Möglich ist zum Beispiel die Entfernung nicht
-          erreichbarer Programmstücke (<em>dead code elimination</em>) oder die Inline-Ersetzung von Konstanten und
-          Schleifen <span class="citation" data-cites="TORCZON:2007 SCHOEPP:COMPILER">[53], [54]</span>. Auch hier gilt
-          es zu betonen, dass nicht alle Transcompiler eine derartige Optimierungsphase besitzen.
+          <a class="citation" href="#ref-TORCZON:2007">[53, S. 405]</a>. Hierbei können eine Vielzahl unterschiedlicher
+          Transformationen angewandt werden. Möglich ist zum Beispiel die Entfernung nicht erreichbarer Programmstücke
+          (<em>dead code elimination</em>) oder die Inline-Ersetzung von Konstanten und Schleifen
+          <a class="citation" href="#ref-TORCZON:2007">[53]</a>,
+          <a class="citation" href="#ref-SCHOEPP:COMPILER">[54]</a>. Auch hier gilt es zu betonen, dass nicht alle
+          Transcompiler eine derartige Optimierungsphase besitzen.
         </p>
         <p>
           Schließlich kann im letzten Schritt der endgültige Quelltext in der Zielsprache durch den modifizierten
-          Zwischencode generiert werden <span class="citation" data-cites="AHO:COMPILERS">[51, S. 505]</span>. Die
-          erzeugte Ausgabe kann dabei dem ursprünglichen Programm ähneln oder völlig andersartig aufgebaut sein, wenn
+          Zwischencode generiert werden <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 505]</a>. Die erzeugte
+          Ausgabe kann dabei dem ursprünglichen Programm ähneln oder völlig andersartig aufgebaut sein, wenn
           beispielsweise die Namen aller Bezeichner im Quelltext gekürzt wurden, um ein kleineres Programm zu erzeugen
           (<em>minification</em>) <a class="citation" href="#ref-FOWLER:TRANSPARENT">[55]</a>.
         </p>
-        <h3 id="sec:js-transpilers">Evaluation bestehender Werkzeuge zur Quelltexttransformation</h3>
+        <h3 id="sec:js-transpilers">
+          <span class="chap-number">2.3.2</span>Evaluation bestehender Werkzeuge zur Quelltexttransformation
+        </h3>
         <p>
           Im Umfeld von JavaScript sind im Lauf der Jahre eine Vielzahl von Parsern, Codegeneratoren und Transpilern
           entstanden, welche die Entwicklung weiterer Software wie die des angestrebten Flow-Transcompilers stark
@@ -1004,7 +1014,7 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           <a class="citation" href="#ref-BABEL:DOCS">[63]</a>. Aufgrund dieser Vorteile und Alleinstellungsmerkmale wird
           Babel als Grundlage für die Implementierung gewählt.
         </p>
-        <h3 id="sec:babel">Babel</h3>
+        <h3 id="sec:babel"><span class="chap-number">2.3.3</span>Babel</h3>
         <h4 id="funktionsweise">Funktionsweise</h4>
         <p>
           Zur Erleichterung des Verständnisses der Ausführung des umgesetzten Flow-Transpilers in Kapitel
@@ -1015,32 +1025,38 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
         </p>
         <ol>
           <li>
-            Zunächst wird der Eingabequelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum des Programms
-            zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Lexers in Tokens
-            zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt, die den
-            zugehörigen abstrakten Syntaxbaum repräsentiert. Jedem Knoten des Baums wird dabei ein eindeutiger Tokentyp
-            zugewiesen, der dessen syntaktische Bedeutung widerspiegelt.
+            <p>
+              Zunächst wird der Eingabequelltext in zwei Schritten eingelesen, um den abstrakten Syntaxbaum des
+              Programms zu erzeugen: Als Erstes wird der Code während der lexikalischen Analyse mittels des Lexers in
+              Tokens zerlegt. Anschließend werden diese in der syntaktischen Analyse zu einer Datenstruktur umgeformt,
+              die den zugehörigen abstrakten Syntaxbaum repräsentiert. Jedem Knoten des Baums wird dabei ein eindeutiger
+              Tokentyp zugewiesen, der dessen syntaktische Bedeutung widerspiegelt.
+            </p>
           </li>
           <li>
-            Während der zweiten Phase wird daraufhin die Kernfunktionalität von Babel, die Programmtransformation
-            umgesetzt: Dabei wird der abstrakte Syntaxbaum durch das <em>Besucher</em>-Entwurfsmuster<a
-              href="#fn11"
-              class="footnote-ref"
-              id="fnref11"
-              role="doc-noteref"
-              ><sup>11</sup></a
-            >
-            rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente
-            eingefügt. Das Entwurfsmuster beschreibt, wie ein Algorithmus auf einer komplexen Objektdatenstruktur,
-            unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden kann
-            <span class="citation" data-cites="FREEMAN:2004">[65, S. 634]</span>. Im vorliegenden Fall ermöglicht die
-            Anwendung die individuelle Adressierung einer bestimmten Untermenge der Knoten des Syntaxbaums, sodass dort
-            die gewünschte Transformation des Programms durchgeführt werden kann.
+            <p>
+              Während der zweiten Phase wird daraufhin die Kernfunktionalität von Babel, die Programmtransformation
+              umgesetzt: Dabei wird der abstrakte Syntaxbaum durch das <em>Besucher</em>-Entwurfsmuster<a
+                href="#fn11"
+                class="footnote-ref"
+                id="fnref11"
+                role="doc-noteref"
+                ><sup>11</sup></a
+              >
+              rekursiv traversiert und die Knoten des Baums sukzessive modifiziert, gelöscht bzw. neu erstellte Elemente
+              eingefügt. Das Entwurfsmuster beschreibt, wie ein Algorithmus auf einer komplexen Objektdatenstruktur,
+              unabhängig von der konkreten Implementierung der zugrunde liegenden Klassen, ausgeführt werden kann
+              <a class="citation" href="#ref-FREEMAN:2004">[65, S. 634]</a>. Im vorliegenden Fall ermöglicht die
+              Anwendung die individuelle Adressierung einer bestimmten Untermenge der Knoten des Syntaxbaums, sodass
+              dort die gewünschte Transformation des Programms durchgeführt werden kann.
+            </p>
           </li>
           <li>
-            Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums
-            durch Anwendung einer Tiefensuche durchlaufen und eine Zeichenkette aufgebaut, die den endgültigen,
-            modifizierten Quelltext darstellt.
+            <p>
+              Schließlich kann der Ausgabecode generiert werden: Hierbei werden alle Knoten des abstrakten Syntaxbaums
+              durch Anwendung einer Tiefensuche durchlaufen und eine Zeichenkette aufgebaut, die den endgültigen,
+              modifizierten Quelltext darstellt.
+            </p>
           </li>
         </ol>
         <p>
@@ -1101,25 +1117,28 @@ module.exports = function() {
         </p>
         <p>
           Alle Knotentypen des abstrakten Syntaxbaums von Babel werden einerseits in der Spezifikation des Parsers
-          <span class="citation" data-cites="BABEL:PARSER_SPEC BABEL:PARSER">[60], [66]</span>, andererseits in der
-          Dokumentation der Bibliothek <span><code>@babel/types</code></span>
-          <a class="citation" href="#ref-BABEL:TYPES">[67]</a> beschrieben. Der Aufbau des von Babel eingesetzten
-          abstrakten Syntaxbaums liegt in einem eigenen Format vor, das auf dem ESTree-Standard
-          <a class="citation" href="#ref-ESTREE_SPEC">[59]</a> basiert. Mit der sechsten Version von Babel wurde
-          entschieden, von der ESTree-Spezifikation abzuweichen, damit auch vorläufige JavaScript-Erweiterungen
-          unterstützen werden können <a class="citation" href="#ref-BABEL:STATE_OF_BABEL">[68]</a>.
+          <a class="citation" href="#ref-BABEL:PARSER_SPEC">[60]</a>,
+          <a class="citation" href="#ref-BABEL:PARSER">[66]</a>, andererseits in der Dokumentation der Bibliothek
+          <span><code>@babel/types</code></span> <a class="citation" href="#ref-BABEL:TYPES">[67]</a> beschrieben. Der
+          Aufbau des von Babel eingesetzten abstrakten Syntaxbaums liegt in einem eigenen Format vor, das auf dem
+          ESTree-Standard <a class="citation" href="#ref-ESTREE_SPEC">[59]</a> basiert. Mit der sechsten Version von
+          Babel wurde entschieden, von der ESTree-Spezifikation abzuweichen, damit auch vorläufige
+          JavaScript-Erweiterungen unterstützen werden können
+          <a class="citation" href="#ref-BABEL:STATE_OF_BABEL">[68]</a>.
         </p>
       </section>
       <section>
-        <h1 id="chap:analysis">Ziel- und Anforderungsanalyse</h1>
+        <h1 id="chap:analysis">3<span class="chap-number">3</span>Ziel- und Anforderungsanalyse</h1>
         <p>
           Nachdem die Grundlagen der Thematik erörtert wurden, werden nachfolgend die Ziele der Migration von Flow nach
           TypeScript innerhalb des Unternehmens Spreadshirt und die Anforderung an die Implementierung des Transpilers
           definiert. Zunächst soll jedoch die Ausgangslage zu Beginn dieser Arbeit beschrieben werden, um die
           Rahmenbedingungen zu verdeutlichen.
         </p>
-        <h2 id="sec:status-quo">Ausgangslage und Rahmenbedingungen</h2>
-        <h3 id="sec:teamshirts-projects">Kurzvorstellung der Projekte von TeamShirts</h3>
+        <h2 id="sec:status-quo"><span class="chap-number">3.1</span>Ausgangslage und Rahmenbedingungen</h2>
+        <h3 id="sec:teamshirts-projects">
+          <span class="chap-number">3.1.1</span>Kurzvorstellung der Projekte von TeamShirts
+        </h3>
         <p>
           Das Leipziger Unternehmen <em>sprd.net AG</em> (<em>Spreadshirt</em>) ist ein seit 2002 bestehender Anbieter
           verschiedener eCommerce-Plattformen, welche die individuelle On-Demand-Bedruckung von Kleidung und Accessoires
@@ -1136,7 +1155,7 @@ module.exports = function() {
           Projekte umgesetzt. Um die Nachvollziehbarkeit der weiteren Ausführungen zu erleichtern, sollen diese kurz
           vorgestellt werden.
         </p>
-        <h5 id="components">Components</h5>
+        <h4 id="components">Components</h4>
         <p>
           Alle Frontend-Projekte von TeamShirts bauen auf der Softwarebibliothek <em>React</em>
           <a class="citation" href="#ref-SOFTWARE:REACT">[71]</a> auf, welche die Programmierung von Benutzeroberflächen
@@ -1148,7 +1167,7 @@ module.exports = function() {
           derartiger React-Komponenten dar, die abteilungsintern in verschiedenen anderen Softwaremodulen eingesetzt
           wird.
         </p>
-        <h5 id="helios">Helios</h5>
+        <h4 id="helios">Helios</h4>
         <p>
           <em>Helios</em> ist ein Service für <em>Server-Side Rendering</em> (SSR). Unter
           <em>Server-Side Rendering</em> versteht man die Generierung des gesamten Quelltexts einer Webseite durch einen
@@ -1165,7 +1184,9 @@ module.exports = function() {
           <a class="citation" href="#ref-GOOGLE:RENDERING_ON_THE_WEB">[75]</a>. TeamShirts verwendet Helios, um Seiten,
           die durch verschiedene React-Komponenten aufgebaut sind, serverseitig zu erstellen und auszuliefern.
         </p>
-        <h3 id="sec:evaluation-other-transpilers">Evaluation bestehender Ansätze zur Transpilierung von Flow</h3>
+        <h3 id="sec:evaluation-other-transpilers">
+          <span class="chap-number">3.1.2</span>Evaluation bestehender Ansätze zur Transpilierung von Flow
+        </h3>
         <p>
           Vor Beginn der Arbeit wurde evaluiert, ob bereits Lösungsansätze für die gegebene Problemstellung, die
           Transpilierung von Flow-Typen nach TypeScript, bestehen. Tatsächlich existierten zum damaligen Zeitpunkt im
@@ -1194,14 +1215,16 @@ module.exports = function() {
           konkurrierenden Ansätzen bezüglich verschiedener Aspekte gegenüber gestellt, sodass die erreichten Ergebnisse
           durch den Vergleich besser eingeordnet werden können.
         </p>
-        <h2 id="sec:goals">Ziele der Migration zu TypeScript</h2>
+        <h2 id="sec:goals"><span class="chap-number">3.2</span>Ziele der Migration zu TypeScript</h2>
         <p>
           In Zusammenarbeit mit den Softwareentwicklern bei TeamShirts wurden die folgenden vier Ziele der Migration von
           Flow nach TypeScript definiert. Diese und die im darauffolgenden Abschnitt dargelegten Anforderungen an den
           Transpiler bilden die Grundlage für die kritische Bewertung der Ergebnisse in Kapitel
           <a href="#chap:evaluation" data-reference-type="ref" data-reference="chap:evaluation">5</a>.
         </p>
-        <h3 id="erkennung-weiterer-typ--und-programmfehler">Erkennung weiterer Typ- und Programmfehler</h3>
+        <h3 id="erkennung-weiterer-typ--und-programmfehler">
+          <span class="chap-number">3.2.1</span>Erkennung weiterer Typ- und Programmfehler
+        </h3>
         <p>
           Die Hauptmotivation für den Wechsel des Typsystems bei TeamShirts ist die Erkennung weiterer Typ- und
           Programmfehler im bestehenden und zukünftigen Code der Frontend-Projekte. Es wird angenommen, dass TypeScript
@@ -1216,7 +1239,9 @@ module.exports = function() {
           vermieden werden. Es gilt daher in der Auswertung zu zeigen, dass TypeScript in der Lage ist, tatsächliche
           Programmfehler im bestehenden Quelltext durch Typverletzungen aufzudecken.
         </p>
-        <h3 id="unterstützung-externer-bibliotheken">Unterstützung externer Bibliotheken</h3>
+        <h3 id="unterstützung-externer-bibliotheken">
+          <span class="chap-number">3.2.2</span>Unterstützung externer Bibliotheken
+        </h3>
         <p>
           Da alle Projekte von TeamShirts auf einer Vielzahl externer Softwarebibliotheken wie React
           <a class="citation" href="#ref-SOFTWARE:REACT">[71]</a> et cetera aufbauen, ist die umfassende Unterstützung
@@ -1239,7 +1264,9 @@ module.exports = function() {
           gleichwertiger Qualität vorliegen. Falls sich diese These als tatsächlich haltbar erweist, ist das Ziel
           erreicht.
         </p>
-        <h3 id="performance-der-typüberprüfungen">Performance der Typüberprüfungen</h3>
+        <h3 id="performance-der-typüberprüfungen">
+          <span class="chap-number">3.2.3</span>Performance der Typüberprüfungen
+        </h3>
         <p>
           Ein weiterer Aspekt, der durch die Migration zu TypeScript verbessert werden soll, ist die Performance, das
           heißt, die Schnelligkeit der Typüberprüfungen. Üblicherweise wird der Flow- bzw. TypeScript-Sprachserver, der
@@ -1253,7 +1280,9 @@ module.exports = function() {
           werden. Ein weiteres Erfolgskriterium des Wechsels zu TypeScript ist damit die Erzielung einer mindestens
           gleichwertigen Performance der Typüberprüfungen.
         </p>
-        <h3 id="sec:goal:transparency">Zukunftssicherheit und Transparenz der Technologie</h3>
+        <h3 id="sec:goal:transparency">
+          <span class="chap-number">3.2.4</span>Zukunftssicherheit und Transparenz der Technologie
+        </h3>
         <p>
           Zuletzt ist einerseits die Zukunftssicherheit, andererseits die Transparenz der eingesetzten Technologie von
           Bedeutung. Hierunter werden innerhalb dieser Arbeit verschiedene Fragestellungen verstanden: Existiert ein
@@ -1279,14 +1308,16 @@ module.exports = function() {
           eingesetzten Typsystems von großer Bedeutung für das Unternehmen. Das letzte Ziel der Migration ist deshalb
           die Steigerung der Zukunftssicherheit und Transparenz durch den Wechsel zu TypeScript.
         </p>
-        <h2 id="sec:requirements">Technische Anforderungen an den Transpiler</h2>
+        <h2 id="sec:requirements"><span class="chap-number">3.3</span>Technische Anforderungen an den Transpiler</h2>
         <p>
           Neben den ausgeführten Zielen wurden weiterhin fünf technische Anforderungen an den Transpiler erarbeitet,
           welche die Grundlage für die spätere Bewertung der Implementierung bilden. Um sicherzustellen, dass das
           Werkzeug möglichst generisch einsetzbar ist, wurden die Anforderungen nur wo nötig speziell auf die
           Gegebenheiten bei TeamShirts zugeschnitten.
         </p>
-        <h3 id="sec:requirement:completeness">Äquivalente und vollständige Übersetzung der Flow-Typen</h3>
+        <h3 id="sec:requirement:completeness">
+          <span class="chap-number">3.3.1</span>Äquivalente und vollständige Übersetzung der Flow-Typen
+        </h3>
         <p>
           Die bedeutsamste Anforderung an den Transpiler ist die äquivalente Übersetzung sämtlicher Flow-Sprachelemente
           nach TypeScript. Durch die Forderung der Vollständigkeit wird erreicht, dass jedes beliebige
@@ -1299,7 +1330,9 @@ module.exports = function() {
           akzeptiert, allerdings soll der Benutzer bei Auftreten dieser Fälle durch eine aussagekräftige Warnung
           benachrichtigt werden.
         </p>
-        <h3 id="sec:requirement:semantic-equivalence">Semantisch äquivalente Transpilierung des Quelltexts</h3>
+        <h3 id="sec:requirement:semantic-equivalence">
+          <span class="chap-number">3.3.2</span>Semantisch äquivalente Transpilierung des Quelltexts
+        </h3>
         <p>
           Darüber hinaus muss gewährleistet werden, dass die Semantik des ursprünglichen JavaScript-Programms durch den
           Transpilierungsprozess nicht verändert wird, um sicherzustellen, dass keine subtilen semantischen Fehler in
@@ -1308,19 +1341,20 @@ module.exports = function() {
           Abschnitt angeführten Flow-Typen, die von TypeScript nicht unterstützt werden und daher nicht vollkommen
           äquivalent übersetzt werden können.
         </p>
-        <h3 id="sec:requirement:syntax">Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax</h3>
+        <h3 id="sec:requirement:syntax">
+          <span class="chap-number">3.3.3</span>Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax
+        </h3>
         <p>
           Aufgrund der kontinuierlichen Weiterentwicklung JavaScripts ist die Syntax der Sprache in den letzten Jahren
           wiederholt um neue Elemente erweitert worden. Beispielsweise wurden 2017 die Schlüsselworte
           <span><code>async</code></span> und <span><code>await</code></span> eingeführt, welche die asynchrone
-          Programmierung in JavaScript erleichtern
-          <span class="citation" data-cites="ECMASCRIPT:2017">[82, S. 430]</span>. Damit eine universelle Übersetzung
-          beliebiger Eingaben umsetzbar ist, ist es entscheidend, dass der Transpiler jegliche standardkonforme
-          JavaScript-Syntax gemäß der aktuellen ECMAScript-Spezifikation 2019
+          Programmierung in JavaScript erleichtern <a class="citation" href="#ref-ECMASCRIPT:2017">[82, S. 430]</a>.
+          Damit eine universelle Übersetzung beliebiger Eingaben umsetzbar ist, ist es entscheidend, dass der Transpiler
+          jegliche standardkonforme JavaScript-Syntax gemäß der aktuellen ECMAScript-Spezifikation 2019
           <a class="citation" href="#ref-ECMASCRIPT:2019">[17]</a> verarbeiten kann. Auch die Unterstützung vorläufiger,
           noch nicht endgültig standardisierter Spracherweiterungen stellt eine wesentliche Anforderung dar, weil diese
           im Umfeld einiger populärer Bibliotheken bereits heute verwendet werden. So wird zum Beispiel die Erweiterung
-          “<em>Class field declarations for JavaScript</em>”
+          „<em>Class field declarations for JavaScript</em>“
           <a class="citation" href="#ref-ES_PROPOSAL:CLASS_FIELDS">[83]</a> häufig von React-Programmierern benutzt, da
           deren Syntax die Verwendung mancher Funktionen der Bibliothek vereinfacht
           <a class="citation" href="#ref-REACT:HANDLING_EVENTS">[84]</a>. Weil alle Frontend-Projekte von TeamShirts,
@@ -1330,7 +1364,9 @@ module.exports = function() {
           >) ist eine von React eingeführte syntaktische Erweiterung von JavaScript, die dazu verwendet wird den
           HTML-Aufbau von Komponenten anzugeben.
         </p>
-        <h3 id="sec:requirement:batch-processing">Verarbeitung gesamter Projektverzeichnisse</h3>
+        <h3 id="sec:requirement:batch-processing">
+          <span class="chap-number">3.3.4</span>Verarbeitung gesamter Projektverzeichnisse
+        </h3>
         <p>
           Eine umfangreiche Codebasis besteht im Normalfall aus Hunderten von Einzeldateien. Tabelle
           <a href="#tab:projects-loc" data-reference-type="ref" data-reference="tab:projects-loc">[tab:projects-loc]</a>
@@ -1346,12 +1382,14 @@ module.exports = function() {
           Helios &amp; 353 &amp; 4.814 &amp; 495 &amp; 40.127<br />
         </p>
         <p><span id="tab:projects-loc" label="tab:projects-loc">[tab:projects-loc]</span></p>
-        <h3 id="sec:requirement:format">Beibehaltung der Quelltextformatierung</h3>
+        <h3 id="sec:requirement:format">
+          <span class="chap-number">3.3.5</span>Beibehaltung der Quelltextformatierung
+        </h3>
         <p>
           Als letzte Anforderung wurde schließlich definiert, dass die Quelltextformatierung der Projekte nach
           Ausführung des Transpilers so originalgetreu wie möglich beibehalten werden muss, weil der Programmierstil
           bedeutsam für die Wartbarkeit und Verständlichkeit von Software ist
-          <span class="citation" data-cites="KERNIGHAN:1982">[85, S. 146]</span>. Darüber hinaus bestehen teaminterne
+          <a class="citation" href="#ref-KERNIGHAN:1982">[85, S. 146]</a>. Darüber hinaus bestehen teaminterne
           Absprachen bezüglich des Aufbaus und der Formatierung des Codes, welche durch die Migration nicht verworfen
           werden dürfen. Unter der Formatierung wird nachfolgend die Einrückung des Codes, Zeilenumbrüche und die
           Position der Leerzeichen und -zeilen verstanden. Auch Block- und Zeilenkommentare müssen korrekt in die
@@ -1366,7 +1404,7 @@ module.exports = function() {
         </p>
       </section>
       <section>
-        <h1 id="chap:implementation">Umsetzung</h1>
+        <h1 id="chap:implementation"><span class="chap-number">4</span>Umsetzung</h1>
         <p>
           Nachdem die Ziele der angestrebten TypeScript-Migration charakterisiert und die Anforderungen an den geplanten
           Transpiler zur Übersetzung von Flow nach TypeScript ausgeführt wurden, soll im Folgenden der Entwurf und die
@@ -1375,7 +1413,7 @@ module.exports = function() {
           <a href="#sec:js-transpilers" data-reference-type="ref" data-reference="sec:js-transpilers">2.3.2</a> wurde
           Babel <a class="citation" href="#ref-BABEL">[3]</a> als Grundlage der vorliegenden Umsetzung gewählt.
         </p>
-        <h2 id="sec:software-architecture">Softwarearchitektur</h2>
+        <h2 id="sec:software-architecture"><span class="chap-number">4.1</span>Softwarearchitektur</h2>
         <p>
           Mit der Entscheidung, den Übersetzer als Babel-Plugin zu implementieren, ist dessen Grundarchitektur bereits
           in Teilen festgelegt, da alle Plugins die vorgegebenen Programmschnittstellen von Babel erfüllen müssen. Bevor
@@ -1422,21 +1460,24 @@ module.exports = function() {
           umzusetzen. Zuletzt enthält das Plugin eine Vielzahl von Modultests (<em>Unit tests</em>), welche die korrekte
           Funktionalität aller Komponenten überprüfen.
         </p>
-        <h2 id="entwicklungsprozess">Entwicklungsprozess</h2>
+        <h2 id="entwicklungsprozess"><span class="chap-number">4.2</span>Entwicklungsprozess</h2>
         <p>
           Bevor die Implementierung der Programmtransformation im Detail betrachtet wird, sollen zunächst zwei Aspekte
           des Entwicklungsprozesses dargelegt werden, die diesen wesentlich unterstützt haben.
         </p>
-        <h3 id="sec:tdd">Testgetriebene Entwicklung</h3>
+        <h3 id="sec:tdd"><span class="chap-number">4.2.1</span>Testgetriebene Entwicklung</h3>
         <p>
           Die korrekte Übersetzung der Flow-Typen nach TypeScript ist, wie ausgeführt, die wichtigste Anforderung an den
           Transpiler<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a
           >. Essentiell ist daher die Bereitstellung zuverlässiger Testmechanismen, um Softwareregressionen während der
           Entwicklungphase frühzeitig festzustellen. Unter Regressionen werden Programmfehler verstanden, die nach
           bestimmten Ereignissen wie der Implementierung weiterer Funktionen oder Software-Upgrades unvorhergesehen in
-          bereits getesteten Modulen auftreten
-          <span class="citation" data-cites="DOR:SOFTWARE_TEST">[87, S. 218]</span>. Zur Erfüllung der Anforderung wurde
-          der Ansatz der testgetriebenen Entwicklung<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"
+          bereits getesteten Modulen auftreten <a class="citation" href="#ref-DOR:SOFTWARE_TEST">[87, S. 218]</a>. Zur
+          Erfüllung der Anforderung wurde der Ansatz der testgetriebenen Entwicklung<a
+            href="#fn19"
+            class="footnote-ref"
+            id="fnref19"
+            role="doc-noteref"
             ><sup>19</sup></a
           >
           gewählt, um die korrekte Funktionalität und Wechselwirkung aller Bestandteile des Transpilers kontinuierlich
@@ -1446,12 +1487,11 @@ module.exports = function() {
           Wasserfall-Modell vor, dass sämtliche Testfälle einer Funktionalität bereits <em>vor</em> dessen Umsetzung
           geschrieben werden müssen <a class="citation" href="#ref-BECK:EXTREME_PROGRAMMING">[89]</a>. Die Vorteile
           dieser Methodik ist die Gewährleistung einer hohen Testabdeckung
-          <span class="citation" data-cites="BECK:TDD">[90, S. 90]</span> und die Erzielung einer Implementierung,
-          welche die Anforderungen vollständig erfüllt, sofern die Testfälle sorgfältig konstruiert werden
-          <span class="citation" data-cites="BECK:TDD">[90, S. 214]</span>. Wenn die Testfälle erst nach der
-          Programmierung angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten
-          Funktionen betrachten, jedoch nicht den ursprünglichen, möglicherweise abweichenden Anforderungen gerecht
-          werden.
+          <a class="citation" href="#ref-BECK:TDD">[90, S. 90]</a> und die Erzielung einer Implementierung, welche die
+          Anforderungen vollständig erfüllt, sofern die Testfälle sorgfältig konstruiert werden
+          <a class="citation" href="#ref-BECK:TDD">[90, S. 214]</a>. Wenn die Testfälle erst nach der Programmierung
+          angelegt werden, besteht die Gefahr, dass diese lediglich die tatsächlich umgesetzten Funktionen betrachten,
+          jedoch nicht den ursprünglichen, möglicherweise abweichenden Anforderungen gerecht werden.
         </p>
         <p>
           Der Testaufbau wurde im konkreten Fall wie folgt konzipiert: Pro Modul wird ein Verzeichnis mit einer Eingabe-
@@ -1459,7 +1499,7 @@ module.exports = function() {
           die Ausgabe den äquivalenten, manuell übersetzten TypeScript-Code. In den Dateien können beliebig viele
           Testfälle einer Kategorie spezifiziert werden, um eine bestimmte Funktionalität des Transpilers zu erproben.
           Derartige Dateien oder Objekte, die der Initialisierung von Modultests dienen, werden oft als
-          “<em>Fixtures</em>” bezeichnet
+          „<em>Fixtures</em>“ bezeichnet
           <a class="citation" href="#ref-OLAN:2003">[91]</a>. Durch die bewusste Aufteilung auf zwei unabhängige Dateien
           kann die inhärente Validität der jeweiligen Quelltexte besser gewährleistet werden, da diese jeweils mittels
           Flow bzw. TypeScript auf Fehler überprüft werden können. Hierdurch wird vermieden, dass bereits die Testfälle
@@ -1480,7 +1520,7 @@ module.exports = function() {
           >
           veranschaulicht, beliebig tief verschachtelte Unterverzeichnisse mit Fixture-Dateien enthalten.
         </p>
-        <pre><code>tests/fixtures
+        <pre style="line-height: 1;"><code style="line-height: 1;">tests/fixtures
 └── types
     ├── any
     │     ├── input.js
@@ -1500,7 +1540,9 @@ module.exports = function() {
           1022 Testfälle<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>
           entstanden und es wurde eine Testabdeckung von 93% erreicht.
         </p>
-        <h3 id="statische-typisierung-von-babel">Statische Typisierung von Babel</h3>
+        <h3 id="statische-typisierung-von-babel">
+          <span class="chap-number">4.2.2</span>Statische Typisierung von Babel
+        </h3>
         <p>
           Der gesamte Transpiler, also sowohl das Babel-Plugin, als auch das zugehörige Kommandozeilenprogramm, wurde in
           TypeScript implementiert. Neben den allgemeinen, bereits ausgeführten Vorteilen statischer Typsysteme ist der
@@ -1540,12 +1582,14 @@ module.exports = function() {
           vorliegen, ist die Transformation des Flow-Typs nach TypeScript erfahrungsgemäß mit hoher Wahrscheinlichkeit
           korrekt.
         </p>
-        <h2 id="sec:implementation">Implementierung als Babel-Plugin</h2>
+        <h2 id="sec:implementation"><span class="chap-number">4.3</span>Implementierung als Babel-Plugin</h2>
         <p>
           Nachfolgend soll nun der Aufbau und die konkrete Umsetzung des Babel-Plugins, das die Übersetzung der
           Flow-Typen nach TypeScript realisiert, erläutert werden.
         </p>
-        <h3 id="überblick-über-ablauf-der-transpilierung">Überblick über Ablauf der Transpilierung</h3>
+        <h3 id="überblick-über-ablauf-der-transpilierung">
+          <span class="chap-number">4.3.1</span>Überblick über Ablauf der Transpilierung
+        </h3>
         <p>
           Abbildung
           <a href="#fig:activity-diagram-plugin" data-reference-type="ref" data-reference="fig:activity-diagram-plugin"
@@ -1594,7 +1638,7 @@ module.exports = function() {
         <p>
           Nach der Initialisierung beginnt die rekursive Traversierung des abstrakten Syntaxbaums der Eingabe, um diese
           umzuformen. Die Datenstruktur des Syntaxbaums wird von Babel durch Parsen des Flow-Programms aufgebaut. Jeder
-          Knoten des Baums wird dabei zunächst “betreten” und daraufhin wieder “verlassen”
+          Knoten des Baums wird dabei zunächst „betreten” und daraufhin wieder “verlassen“
           <a class="citation" href="#ref-BABEL:HANDBOOK">[62]</a>. Knoten werden verlassen, wenn bei der Beschreitung
           eines Pfads ein Blatt des Baums erreicht wird und die Traversierung daraufhin auf der höherliegenden Ebene
           fortgesetzt wird.
@@ -1614,7 +1658,7 @@ module.exports = function() {
           gesamte Programm und damit sämtliche Flow-Typen übersetzt wurden, kann die TypeScript-Ausgabe mittels des
           Codegenerators von Babel <a class="citation" href="#ref-BABEL:GENERATOR">[96]</a> erzeugt werden.
         </p>
-        <h3 id="sec:flow-transpilation">Transpilierung der Flow-Typen</h3>
+        <h3 id="sec:flow-transpilation"><span class="chap-number">4.3.2</span>Transpilierung der Flow-Typen</h3>
         <p>
           Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Diese
           realisieren die Übersetzung der einzelnen Flow-Typen nach TypeScript. Aufgrund der großen Zahl von Typen kann
@@ -1697,7 +1741,7 @@ type Alias = mixed;                  type Alias = unknown;</code></pre>
           for tree = <span>l=1.6cm, s sep=0.5cm</span> [Program [TypeAlias, edge label=<span
             >node[edge]<span>body</span></span
           >
-          [Identifier, edge label=<span>node[edge]<span>id</span></span> [“Alias”, edge label=<span
+          [Identifier, edge label=<span>node[edge]<span>id</span></span> [„Alias“, edge label=<span
             >node[edge]<span>name</span></span
           >] ] [MixedTypeAnnotation, edge label=<span>node[edge]<span>right</span></span
           >] ] ]
@@ -1706,7 +1750,7 @@ type Alias = mixed;                  type Alias = unknown;</code></pre>
           for tree = <span>l=1.6cm, s sep=1cm</span> [Program [TSTypeAliasDeclaration, edge label=<span
             >node[edge]<span>body</span></span
           >
-          [Identifier, edge label=<span>node[edge]<span>id</span></span> [“Alias”, edge label=<span
+          [Identifier, edge label=<span>node[edge]<span>id</span></span> [„Alias“, edge label=<span
             >node[edge]<span>name</span></span
           >] ] [TSUnknownKeyword, edge label=<span>node[edge]<span>typeAnnotation</span></span
           >] ] ]
@@ -1834,7 +1878,7 @@ type Alias = mixed;                  type Alias = unknown;</code></pre>
         <p>
           Anhand des Typs <em>Nullable</em> soll im Folgenden das Vorgehen bei der Transformation eines komplizierteren
           Knoten erläutert werden<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a
-          >. Dieser Typ wird in der Flow-Dokumentation auch als “<em>Maybe type</em>” bezeichnet und für die Typisierung
+          >. Dieser Typ wird in der Flow-Dokumentation auch als „<em>Maybe type</em>“ bezeichnet und für die Typisierung
           optionaler, möglicherweise undefinierter Werte verwendet
           <a class="citation" href="#ref-FLOW:MAYBE_TYPES">[98]</a>. Konkret stellt der Typ die Vereinigung aus dem
           angegebenen Typ, <span><code>null</code></span> und <span><code>undefined</code></span> dar. In TypeScript
@@ -1867,7 +1911,7 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
           for tree = <span>l=1.6cm, s sep=0.5cm</span> [Program [TypeAlias, edge label=<span
             >node[edge]<span>body</span></span
           >
-          [Identifier, edge label=<span>node[edge]<span>id</span></span> [“MaybeNumber”, edge label=<span
+          [Identifier, edge label=<span>node[edge]<span>id</span></span> [„MaybeNumber“, edge label=<span
             >node[edge]<span>name</span></span
           >] ] [NullableTypeAnnotation, edge label=<span>node[edge]<span>right</span></span> [NumberTypeAnnotation, edge
           label=<span>node[edge]<span>typeAnnotation</span></span
@@ -1877,7 +1921,7 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
           for tree = <span>l=1.6cm, s sep=1.25cm</span> [Program [TSTypeAliasDeclaration, edge label=<span
             >node[edge]<span>body</span></span
           >
-          [Identifier, edge label=<span>node[edge]<span>id</span></span> [“MaybeNumber”, tier=last, edge label=<span
+          [Identifier, edge label=<span>node[edge]<span>id</span></span> [„MaybeNumber“, tier=last, edge label=<span
             >node[edge]<span>name</span></span
           >] ] [TSUnionType, edge label=<span>node[edge]<span>typeAnnotation</span></span> [TSNumberKeyword, tier=last,
           edge label=<span>node[edge]<span>types[]</span></span
@@ -1981,7 +2025,7 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
           Ausdruck entsteht.
         </p>
         <p>TODO: types-declaration.tex</p>
-        <h3 id="sec:optimizations">Weitere Optimierungen</h3>
+        <h3 id="sec:optimizations"><span class="chap-number">4.3.3</span>Weitere Optimierungen</h3>
         <p>
           Bei der Erprobung des Transpilers mit den zwei JavaScript-Projekten von TeamShirts wurde die Erfahrung
           gewonnen, dass neben der Transformation der Flow-Typen auch andere Änderungen des Quelltexts nötig sind, um
@@ -2038,7 +2082,7 @@ type FunctionType = () =&gt; Node;              type FunctionType = () =&gt; Rea
             >[code:class-decorators]</a
           >
           wird eine derartige Transpilierung veranschaulicht. Die Transformation der Klassendekoratoren kann durch
-          Setzen der Option “<code>replace-decorators</code>”<a
+          Setzen der Option „<code>replace-decorators</code>“<a
             href="#fn27"
             class="footnote-ref"
             id="fnref27"
@@ -2052,7 +2096,7 @@ type FunctionType = () =&gt; Node;              type FunctionType = () =&gt; Rea
 @d2
 class C {}                                      class C {}
 export default C;                               export default d1(arg)(d2(C));</code></pre>
-        <h2 id="sec:cli-program">Erweiterung als Kommandozeilenprogramm</h2>
+        <h2 id="sec:cli-program"><span class="chap-number">4.4</span>Erweiterung als Kommandozeilenprogramm</h2>
         <p>
           Zur Erfüllung der in Abschnitt
           <a
@@ -2098,14 +2142,14 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
               data-reference="fig:activity-diagram-plugin"
               >4.2</a
             >
-            “Eingabe transpilieren” und
+            „Eingabe transpilieren“ und
             <a
               href="#fig:activity-diagram-formatting"
               data-reference-type="ref"
               data-reference="fig:activity-diagram-formatting"
               >4.4</a
             >
-            “Ausgabe formatieren”.
+            „Ausgabe formatieren“.
           </figcaption>
         </figure>
         <p>
@@ -2118,7 +2162,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           korrekt ist. Erlaubt sind lediglich JavaScript- und JSX-Dateien. Sofern diese Validierung fehlschlägt, wird
           die Anwendung mit einer Fehlermeldung beendet. Andernfalls wird daraufhin eine Liste der zu übersetzenden
           Flow-Dateien erstellt. Falls Verzeichnisse als Argument angegeben worden sind, so werden alle Dateien
-          innerhalb dieser, die dem Wildcard-Muster für Eingabedateien (Option “<code>include-pattern</code>”)
+          innerhalb dieser, die dem Wildcard-Muster für Eingabedateien (Option „<code>include-pattern</code>“)
           entsprechen, der Liste hinzugefügt. Anschließend wird eine Schleife betreten, die alle auf diese Weise
           ermittelten Dateien nach und nach verarbeitet. Da invalide Wildcard-Muster durch Benutzereingabe möglich sind,
           wird erneut überprüft, ob die aktuelle Eingabedatei zulässig ist. Sollte dies nicht der Fall sein, so wird
@@ -2133,7 +2177,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           formatiert. Dabei wird eine selbst implementierte Funktion ausgeführt, die eine möglichst originalgetreuen
           Formatierung der Ausgabe umsetzt. Sollten unerwartete Fehler auftreten wird auch hier die Datei gegebenenfalls
           übersprungen. Zuletzt kann der so erzeugte TypeScript-Quelltext ausgegeben werden. Dabei gibt es je nach
-          Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Wenn der Parameter “<code>dry-run</code>” gesetzt
+          Verwendung der Kommandozeilenoptionen drei Möglichkeiten: Wenn der Parameter „<code>dry-run</code>“ gesetzt
           ist, wird das Resultat auf die Standardausgabe geschrieben. Andernfalls werden neue TypeScript-Dateien im
           Verzeichnis der Eingabedateien erstellt und die Originaldateien anschließend gelöscht, sofern die Option zum
           Ersetzen dieser angegeben wurde.
@@ -2149,7 +2193,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           Originaldateien auf den korrekten Ausgabetyp darstellt. Das Kommandozeilenprogramm fragt diese Information
           schließlich beim Schreiben der TypeScript-Dateien ab und reagiert entsprechend.
         </p>
-        <h2 id="sec:formatting">Formatierung des Ausgabequelltexts</h2>
+        <h2 id="sec:formatting"><span class="chap-number">4.5</span>Formatierung des Ausgabequelltexts</h2>
         <p>
           Ein Aspekt, der sich während der Entwicklung des Transpilers als problematisch herausgestellt hat und deshalb
           einer gesonderten Betrachtung bedarf, ist die Formatierung des generierten Ausgabecodes. Weil Babel auf
@@ -2160,7 +2204,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           sie ohnehin teilweise falsch übernommen werden.
         </p>
         <p>
-          Versuche mit der Option “<code>retainLines</code>”
+          Versuche mit der Option „<code>retainLines</code>“
           <a class="citation" href="#ref-BABEL:GENERATOR">[96]</a> des Babel-Codegenerators, welche eine Beibehaltung
           der Zeilen in der Ausgabe bewirken soll, erzielten leider nicht das gewünschte Ergebnis. Auch nach Setzen
           dieser Eigenschaft unterscheidet sich das Format des generierten Quelltexts erheblich von der Eingabe. Da die
@@ -2233,7 +2277,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
         </p>
       </section>
       <section>
-        <h1 id="chap:evaluation">Auswertung und Diskussion</h1>
+        <h1 id="chap:evaluation"><span class="chap-number">5</span>Auswertung und Diskussion</h1>
         <p>
           Nachfolgend sollen nun die Ergebnisse der Migration der zwei Projekte <em>Components</em> und <em>Helios</em>,
           die mit Hilfe des umgesetzten Flow-Transpilers durchgeführt wurde, dargelegt werden. Dabei wird zum einen die
@@ -2252,7 +2296,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
             ><sup>31</sup></a
           >. Zunächst wird jedoch die Durchführung der Migration an sich beschrieben.
         </p>
-        <h2 id="durchführung-der-migration">Durchführung der Migration</h2>
+        <h2 id="durchführung-der-migration"><span class="chap-number">5.1</span>Durchführung der Migration</h2>
         <p>
           Bereits während der Entwicklungsphase des Flow-Transpilers wurde dieser immer wieder mit dem Quelltext der
           vorliegenden Projekte von TeamShirts erprobt, um dessen Praxistauglichkeit anhand einer realen Codebasis zu
@@ -2273,7 +2317,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           TypeScript anders umgesetzt als bei Flow.
         </p>
         <h2 id="bewertung-der-ergebnisse-hinsichtlich-der-zielvorgabe">
-          Bewertung der Ergebnisse hinsichtlich der Zielvorgabe
+          <span class="chap-number">5.2</span>Bewertung der Ergebnisse hinsichtlich der Zielvorgabe
         </h2>
         <p>
           Nachdem der Wechsel zu TypeScript vollzogen war, konnten verschiedene Auswertungen durchgeführt werden, um die
@@ -2281,13 +2325,15 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           <a href="#chap:analysis" data-reference-type="ref" data-reference="chap:analysis">3</a> dargelegten Vorgaben
           hinsichtlich ihrer Erfüllung untersucht werden.
         </p>
-        <h3 id="goal:new-type-errors">Erkennung weiterer Typ- und Programmfehler</h3>
+        <h3 id="goal:new-type-errors">
+          <span class="chap-number">5.2.1</span>Erkennung weiterer Typ- und Programmfehler
+        </h3>
         <h4 id="neu-aufgetretene-typfehler">Neu aufgetretene Typfehler</h4>
         <p>
           Das primäre Ziel der Migration zu TypeScript war es, weitere Typ- und Programmfehler im bestehenden und
           zukünftigen Quelltext der Projekte von TeamShirts aufzudecken. Nach der Übersetzung der Flow-Typisierung nach
           TypeScript wurden sowohl in Components als auch in Helios zahlreiche neue Typfehler festgestellt. Wie bereits
-          ausgeführt bietet der TypeScript-Compiler die Option “<code>strict</code>”, um die Strenge der
+          ausgeführt bietet der TypeScript-Compiler die Option „<code>strict</code>“, um die Strenge der
           Typüberprüfungen deutlich zu verschärfen, indem beispielsweise die implizite Zuweisung des dynamischen Typs
           <span><code>any</code></span> verboten wird <a class="citation" href="#ref-TSC:OPTIONS">[45]</a>. Tabelle
           <a href="#tab:type-errors" data-reference-type="ref" data-reference="tab:type-errors">[tab:type-errors]</a>
@@ -2312,7 +2358,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           normalerweise nicht möglich ist. Um eine derartige Verarbeitung weiterer Dateitypen zu realisieren, wird
           spezielle Software wie <em>Webpack</em> <a class="citation" href="#ref-WEBPACK">[102]</a> eingesetzt, die eine
           solche Modulstruktur zu statischen Ausgabedateien transformiert. Durch Anlegen einer globalen Typdeklaration
-          für “Module” derartiger Dateitypen kann diese Klasse von Typfehlern aber leicht behoben werden (vgl. Quelltext
+          für „Module“ derartiger Dateitypen kann diese Klasse von Typfehlern aber leicht behoben werden (vgl. Quelltext
           <a href="#code:fix-webpack-imports" data-reference-type="ref" data-reference="code:fix-webpack-imports"
             >[code:fix-webpack-imports]</a
           >). Ein weiterer häufiger Fehler ist, dass der Import von Typen aus Bibliotheken fehlschlägt, wenn sich zum
@@ -2391,7 +2437,9 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           allgemeine Schwächen der bisherigen Typisierung offengelegt werden. Deshalb kann die Zielsetzung insgesamt als
           erfüllt betrachtet werden.
         </p>
-        <h3 id="unterstützung-externer-bibliotheken-1">Unterstützung externer Bibliotheken</h3>
+        <h3 id="unterstützung-externer-bibliotheken-1">
+          <span class="chap-number">5.2.2</span>Unterstützung externer Bibliotheken
+        </h3>
         <p>
           Die Migration zu TypeScript wurde weiterhin angestrebt, weil vermutet wird, dass hier Typdeklarationen für
           eine insgesamt größere Zahl von JavaScript-Bibliotheken vorliegen und diese aktueller sind als bei Flow. Im
@@ -2455,7 +2503,9 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           anzumerken ist aber, dass bei TypeScript für fünf Bibliotheken keine vollständig aktuelle Version vorliegt.
           Jedoch ist dies auch bei Flow nicht gesichert.
         </p>
-        <h3 id="performance-der-typüberprüfungen-1">Performance der Typüberprüfungen</h3>
+        <h3 id="performance-der-typüberprüfungen-1">
+          <span class="chap-number">5.2.3</span>Performance der Typüberprüfungen
+        </h3>
         <h4 id="messung-der-laufzeit-der-typüberprüfungen">Messung der Laufzeit der Typüberprüfungen</h4>
         <p>
           Eine weitere Zielsetzung des Wechsels zu TypeScript war es, die Performance der Typüberprüfungen zu
@@ -2472,7 +2522,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           Zur Bestimmung der Laufzeit der vollständigen Berechnung wurden in beiden Projekten für Flow und TypeScript
           jeweils 100 Proben (<em>Samples</em>) mit Hilfe des GNU-Programms <em>time</em>
           <a class="citation" href="#ref-GNU_TIME">[108]</a> gemessen und die zehn kleinsten und größten Werte daraufhin
-          verworfen, um den Einfluss von “Ausreißern” zu minimieren. Aus den verbleibenden 80 Werten wurde anschließend
+          verworfen, um den Einfluss von „Ausreißern“ zu minimieren. Aus den verbleibenden 80 Werten wurde anschließend
           der Mittelwert gebildet und die Standardabweichung berechnet. Dabei wurde in allen Messungen die zum damaligen
           Zeitpunkt aktuelle Version 3.5 von TypeScript und die von TeamShirts eingesetzte Version 0.96 von Flow
           verwendet. Um auch den Einfluss von unterschiedlich leistungsfähiger Hardware miteinzubeziehen, wurden die
@@ -2576,7 +2626,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           <a class="citation" href="#ref-TS:MULTICORE">[112]</a>.
         </p>
         <h3 id="zukunftssicherheit-und-transparenz-der-technologie">
-          Zukunftssicherheit und Transparenz der Technologie
+          <span class="chap-number">5.2.4</span>Zukunftssicherheit und Transparenz der Technologie
         </h3>
         <p>
           Das letzte Ziel der Migration zu TypeScript war schließlich die Zukunftssicherheit zu steigern, da angenommen
@@ -2635,12 +2685,16 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           ist. Auch Fehlerberichte auf GitHub werden bei TypeScript insgesamt schneller bearbeitet. Die langfristige
           Unterstützung der Systeme durch die ursprünglichen Autoren ist in beiden Fällen anzunehmen.
         </p>
-        <h2 id="erfüllung-der-technischen-anforderungen">Erfüllung der technischen Anforderungen</h2>
+        <h2 id="erfüllung-der-technischen-anforderungen">
+          <span class="chap-number">5.3</span>Erfüllung der technischen Anforderungen
+        </h2>
         <p>
           Nachdem die Erfüllung der Zielvorgaben durch den Wechsel zu TypeScript geprüft wurden, soll im Folgenden auch
           die Einhaltung der technischen Anforderungen an den Flow-Transpiler untersucht werden.
         </p>
-        <h3 id="sec:interpretation:equivalent-translation">Äquivalente und vollständige Übersetzung der Flow-Typen</h3>
+        <h3 id="sec:interpretation:equivalent-translation">
+          <span class="chap-number">5.3.1</span>Äquivalente und vollständige Übersetzung der Flow-Typen
+        </h3>
         <h4 id="äquivalenz-der-übersetzungen">Äquivalenz der Übersetzungen</h4>
         <p>
           Als erste und wichtigste technische Anforderung an den Transpiler wurde die äquivalente und vollständige
@@ -2789,7 +2843,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           behandelt werden. Weil sich die Tabelle am Aufbau der Fixture-Tests orientiert, werden nicht alle einzelnen
           Typen wie in Kapitel
           <a href="#chap:basics" data-reference-type="ref" data-reference="chap:basics">2</a> separat, sondern
-          gruppiert, aufgelistet. Die Kategorie “<em>Primitives</em>” enthält dabei zum Beispiel die Tests für alle
+          gruppiert, aufgelistet. Die Kategorie „<em>Primitives</em>“ enthält dabei zum Beispiel die Tests für alle
           primitiven Flow-Typen wie <em>Number type</em>, <em>String literal type</em> et cetera.
         </p>
         <p>TODO: results-correctness-comparison</p>
@@ -2852,7 +2906,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           gegeben.
         </p>
         <h3 id="semantisch-äquivalente-transpilierung-des-quelltexts">
-          Semantisch äquivalente Transpilierung des Quelltexts
+          <span class="chap-number">5.3.2</span>Semantisch äquivalente Transpilierung des Quelltexts
         </h3>
         <p>
           Eine weitere wichtige Anforderung an den Transpiler ist, dass die Semantik des ursprünglichen
@@ -2865,7 +2919,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           in das Programm, hat. Ein weiterer Aspekt des umgesetzten Transcompilers, der zu abweichender Semantik führen
           könnte, sind die in Abschnitt
           <a href="#sec:optimizations" data-reference-type="ref" data-reference="sec:optimizations">4.3.3</a>
-          beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option “<code>replace-decorators</code>” werden
+          beschriebenen optionalen Optimierungen der Ausgabe. Durch die Option „<code>replace-decorators</code>“ werden
           beispielsweise Dekoratoren in bedeutungsgleiche verschachtelte Funktionsaufrufe umgewandelt. Die Einhaltung
           dieser Einschränkungen wurde wie ausgeführt durch die Fixture-Tests überprüft.
         </p>
@@ -2885,7 +2939,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           modifiziert.
         </p>
         <h3 id="unterstützung-aktueller-und-vorläufiger-javascript--sowie-jsx-syntax">
-          Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax
+          <span class="chap-number">5.3.3</span>Unterstützung aktueller und vorläufiger JavaScript- sowie JSX-Syntax
         </h3>
         <p>
           Die Anforderung aktuelle und vorläufige JavaScript- sowie JSX-Syntax zu unterstützen war eines der
@@ -2914,7 +2968,9 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           Typumwandlung vereinzelt Syntaxfehler auf. Die vollständige Verarbeitung der Codebasis der zwei Projekte von
           TeamShirts wäre somit mit den Ansätzen von Kikura und Barabash nicht möglich.
         </p>
-        <h3 id="verarbeitung-gesamter-projektverzeichnisse">Verarbeitung gesamter Projektverzeichnisse</h3>
+        <h3 id="verarbeitung-gesamter-projektverzeichnisse">
+          <span class="chap-number">5.3.4</span>Verarbeitung gesamter Projektverzeichnisse
+        </h3>
         <p>
           Wie in Abschnitt
           <a href="#sec:cli-program" data-reference-type="ref" data-reference="sec:cli-program">4.4</a> bereits
@@ -2943,7 +2999,9 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           <a class="citation" href="#ref-BARABASH:FLOW_TO_TS">[79]</a>. Das Babel-Plugin von Kikura bietet eine solche
           Funktionalität nicht.
         </p>
-        <h3 id="sec:results-formatting">Beibehaltung der Quelltextformatierung</h3>
+        <h3 id="sec:results-formatting">
+          <span class="chap-number">5.3.5</span>Beibehaltung der Quelltextformatierung
+        </h3>
         <h4 id="ergebnisse">Ergebnisse</h4>
         <p>
           Die letzte technische Anforderung an den Transpiler ist die möglichst originalgetreue Formatierung der
@@ -3020,8 +3078,8 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
         </p>
       </section>
       <section>
-        <h1 id="chap:conclusion">Schlussbetrachtung</h1>
-        <h2 id="zusammenfassung-der-ergebnisse">Zusammenfassung der Ergebnisse</h2>
+        <h1 id="chap:conclusion"><span class="chap-number">6</span>Schlussbetrachtung</h1>
+        <h2 id="zusammenfassung-der-ergebnisse"><span class="chap-number">6.1</span>Zusammenfassung der Ergebnisse</h2>
         <p>
           In der vorliegenden Masterarbeit wurde die Fragestellung behandelt, wie das statische Typsystem Flow
           <a class="citation" href="#ref-FLOW:PAPER">[1]</a> nach TypeScript
@@ -3095,7 +3153,9 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           Einsatz. Auch das Entwicklerteam von TeamShirts ist laut eigener Aussage sehr zufrieden mit dem vollzogenen
           Wechsel zu TypeScript.
         </p>
-        <h2 id="mögliche-erweiterungen-des-projekts">Mögliche Erweiterungen des Projekts</h2>
+        <h2 id="mögliche-erweiterungen-des-projekts">
+          <span class="chap-number">6.2</span>Mögliche Erweiterungen des Projekts
+        </h2>
         <p>
           Zuletzt soll auf zwei Aspekte dieser Arbeit eingegangen werden, die zukünftig optimiert werden könnten: So
           treten bei der originalgetreuen Formatierung der Ausgabe durch den Transpiler wie gezeigt teilweise noch
@@ -3124,6 +3184,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           aktiviert und die resultierenden Typfehler daraufhin korrigiert werden.
         </p>
       </section>
+      <hr />
       <section>
         <h2>Quellenverzeichnis</h2>
         <ol id="refs" class="references" role="doc-bibliography">
@@ -3743,13 +3804,13 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
         </ol>
       </section>
       <section class="footnotes" role="doc-endnotes">
-        <h2>Anmerkungen</h2>
+        <h2>Fußnoten</h2>
         <ol>
           <li id="fn1" role="doc-endnote">
             <p>
-              “ECMAScript” ist der Name der formalen Spezifikation von JavaScript und geht auf die Normungsorganisation
+              „ECMAScript“ ist der Name der formalen Spezifikation von JavaScript und geht auf die Normungsorganisation
               <em>Ecma International</em> zurück. <em>Netscape Communications</em> beauftragte diese im November 1996
-              mit der Erstellung des Standards, welcher im Jahr darauf unter der Bezeichnung “ECMA-262” veröffentlicht
+              mit der Erstellung des Standards, welcher im Jahr darauf unter der Bezeichnung „ECMA-262“ veröffentlicht
               wurde <a class="citation" href="#ref-ECMASCRIPT:1997">[12]</a>.<a
                 href="#fnref1"
                 class="footnote-back"
@@ -3763,7 +3824,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           </li>
           <li id="fn3" role="doc-endnote">
             <p>
-              Zum Beispiel in Java durch das Schlüsselwort “<code>extends</code>”.<a
+              Zum Beispiel in Java durch das Schlüsselwort „<code>extends</code>“.<a
                 href="#fnref3"
                 class="footnote-back"
                 role="doc-backlink"
@@ -3843,8 +3904,8 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           <li id="fn11" role="doc-endnote">
             <p>
               Das Besucher-Entwurfsmustern (engl. <em>visitor pattern</em>) gehört zu den 23 Entwurfsmustern, die im
-              Standardwerk “” der “<em>Gang of Four</em>” (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben
-              werden <span class="citation" data-cites="GAMMA:1994">[64, S. 306]</span>.<a
+              Standardwerk „” der “<em>Gang of Four</em>“ (E. Gamma, R. Helm, R. Johnson und J. Vlissides) beschrieben
+              werden <a class="citation" href="#ref-GAMMA:1994">[64, S. 306]</a>.<a
                 href="#fnref11"
                 class="footnote-back"
                 role="doc-backlink"
@@ -3864,7 +3925,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           </li>
           <li id="fn13" role="doc-endnote">
             <p>
-              Engl. “<em>time to interactive</em>” (TTI).<a href="#fnref13" class="footnote-back" role="doc-backlink"
+              Engl. „<em>time to interactive</em>“ (TTI).<a href="#fnref13" class="footnote-back" role="doc-backlink"
                 >↩︎</a
               >
             </p>
@@ -3989,7 +4050,7 @@ Beispiel: reflow --dry-run --include-pattern &quot;**/*.js&quot; src/</code></pr
           </li>
           <li id="fn26" role="doc-endnote">
             <p>
-              Siehe <span class="citation" data-cites="ECMASCRIPT:2019">[17, S. 377]</span>.<a
+              Siehe <a class="citation" href="#ref-ECMASCRIPT:2019">[17, S. 377]</a>.<a
                 href="#fnref26"
                 class="footnote-back"
                 role="doc-backlink"

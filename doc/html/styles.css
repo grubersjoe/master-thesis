@@ -1,29 +1,34 @@
+/* https://www.modularscale.com/?20&px&1.2 */
+html {
+  font-size: 18px;
+}
+
 body {
   max-width: 42em;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 3rem 1.5rem;
   font-family: 'PT Serif', serif;
-  font-size: 16px;
-  line-height: 1.55;
+  font-variant-ligatures: common-ligatures;
+  line-height: 1.4;
   color: #111;
 }
 
 @media (min-width: 768px) {
-  body {
+  html {
     font-size: 20px;
+  }
+
+  body {
+    line-height: 1.55;
   }
 }
 
 section {
-  margin: 4em 0;
-}
-
-section :last-child {
-  margin-bottom: 0;
+  margin: 6rem 0;
 }
 
 nav ul {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5em;
   padding-left: 1.75rem;
   list-style: none;
 }
@@ -42,34 +47,33 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 1.75em 0 1.25em 0;
-  line-height: 1.25;
+  margin: 1.75em 0 1em;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 2.074em;
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: 1.728em;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.44em;
 }
 
 h4 {
-  font-size: 1.25rem;
+  font-size: 1.2em;
 }
 
 h5 {
-  font-size: 1.125rem;
+  font-size: 1em;
 }
 
-h6 {
-  font-size: 0.9rem;
-  font-style: italic;
-  font-weight: normal;
+small {
+  font-size: 0.833em;
 }
 
 p,
@@ -78,7 +82,8 @@ ol,
 blockquote,
 pre,
 img table {
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.5rem;
+  /* margin: 0 0 1.15rem; */
 }
 
 a {
@@ -87,11 +92,11 @@ a {
 }
 
 a:visited {
-  color: hsl(222, 80%, 20%);
+  color: hsl(222, 80%, 24%);
 }
 
 a.citation {
-  font-size: 90%;
+  font-size: 0.833em;
 }
 
 pre,
@@ -106,6 +111,7 @@ pre {
 }
 
 pre code {
+  padding: 0;
   background: transparent;
 }
 
@@ -130,7 +136,7 @@ main ul li:before {
 }
 
 main li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.64em;
 }
 
 body > header {
@@ -138,32 +144,38 @@ body > header {
 }
 
 .title {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .title h1 {
-  margin: 0.5em 0;
-  font-size: 3rem;
+  margin: 0.5rem 0;
+  font-size: 2.5em;
 }
 
 .subtitle {
-  font-size: 1.5rem;
-  line-height: 1.25;
+  font-size: 1.44em;
+  line-height: 1.2;
 }
 
 @media (min-width: 1024px) {
   .title h1 {
-    font-size: 3.75rem;
-    margin-bottom: 1em;
-  }
-
-  .subtitle {
-    font-size: 1.75rem;
+    font-size: 3em;
+    margin-bottom: 2.25rem;
   }
 }
 
 .title p:first-of-type {
-  margin-top: 5rem;
+  margin-top: 3rem;
+}
+
+.references,
+.footnotes {
+  font-size: 0.833em;
+}
+
+.references p,
+.footnotes p {
+  margin: 0;
 }
 
 .references {
@@ -181,4 +193,9 @@ body > header {
   left: -3.25rem;
   content: '[' counter(item, decimal) ']';
   counter-increment: item;
+}
+
+.chap-number {
+  display: inline-block;
+  margin-right: 0.5em;
 }
