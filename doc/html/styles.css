@@ -19,7 +19,7 @@ body {
   }
 
   body {
-    line-height: 1.55;
+    line-height: 1.5;
   }
 }
 
@@ -47,28 +47,33 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 1.75em 0 1em;
+  margin: 1.728em 0 1.2em;
   font-weight: 700;
   line-height: 1.2;
 }
 
-h1 {
+h1,
+.h1 {
   font-size: 2.074em;
 }
 
-h2 {
+h2,
+.h2 {
   font-size: 1.728em;
 }
 
-h3 {
+h3,
+.h3 {
   font-size: 1.44em;
 }
 
-h4 {
+h4,
+.h4 {
   font-size: 1.2em;
 }
 
-h5 {
+h5,
+.h5 {
   font-size: 1em;
 }
 
@@ -148,8 +153,9 @@ body > header {
 }
 
 .title h1 {
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   font-size: 2.5em;
+  line-height: 1.1;
 }
 
 .subtitle {
@@ -159,8 +165,9 @@ body > header {
 
 @media (min-width: 1024px) {
   .title h1 {
-    font-size: 3em;
     margin-bottom: 2.25rem;
+    font-size: 2.75em;
+    line-height: 1.2;
   }
 }
 
