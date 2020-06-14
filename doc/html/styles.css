@@ -81,14 +81,32 @@ small {
   font-size: 0.833em;
 }
 
-p,
-ul,
-ol,
 blockquote,
+img,
+ol,
+p,
 pre,
-img table {
+table
+ul {
   margin: 0 0 1.5rem;
   /* margin: 0 0 1.15rem; */
+}
+
+img {
+ max-width: 100%;
+}
+
+figure {
+  margin: 2rem 0;
+}
+
+figure img {
+  margin: 0 0 0.75rem;
+}
+
+figcaption {
+  font-size: 0.833em;
+  max-width: 600px;
 }
 
 a {

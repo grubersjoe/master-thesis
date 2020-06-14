@@ -756,9 +756,9 @@ linearSearch&lt;string&gt;([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  /
         </p>
         <h4 id="architektur-1">Architektur</h4>
         <figure>
-          <embed src="src/2_Grundlagen/fig/ts-architecture.pdf" id="fig:ts-architecture" />
+          <img src="figures/ts-architecture.svg" alt="Überblick über die Komponenten des Transpilers." style="max-width: 700px">
           <figcaption>
-            Überblick über die Architektur von TypeScript nach
+            Abbildung 2.1: Überblick über die Architektur von TypeScript nach
             <a class="citation" href="#ref-TYPESCRIPT:ARCHITECTURE">[48]</a>.
           </figcaption>
         </figure>
@@ -852,9 +852,10 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           <a class="citation" href="#ref-APPEL:2003">[52, S. 136]</a>.
         </p>
         <figure>
-          <embed src="src/2_Grundlagen/fig/transpiler-architecture.pdf" id="fig:transpiler-architecture" />
+          <img src="figures/transpiler-architecture.svg" alt="Architektur eines typischen Transpilers.">
           <figcaption>
-            Architektur eines typischen Transpilers nach
+            IR: engl. „<i>intermediate representation</i>“, also die Transpiler-interne Repräsentation des Programms.<br /><br />
+            Abbildung 2.2: Architektur eines typischen Transpilers nach
             <a class="citation" href="#ref-EVGENIY:2016">[23]</a> und
             <a class="citation" href="#ref-TORCZON:2007">[53, S. 8]</a>.
           </figcaption>
@@ -871,24 +872,20 @@ linearSearch([&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;], 3);  // Typfehler (3
           Terminalsymbolen der formalen Grammatik der Programmiersprache
           <a class="citation" href="#ref-AHO:COMPILERS">[51, S. 43]</a>.
         </p>
-        <pre><code>function square(x) {
+
+        <figure>
+          <pre style="background: transparent; margin: 0; padding: 0;"><code>function square(x) {
   return x ** 2;
 }</code></pre>
-        <!-- TODO -->
-        <p>
-          ] [Identifier<span>[]</span>, edge label=<span>node[edge]<span>params</span></span> [x, edge label=<span
-            >node[edge]<span>name</span></span
-          >] ] [BlockStatement, for tree = <span>s sep=1.3cm</span>, edge label=<span>node[edge]<span>body</span></span>
-          [ReturnStatement, edge label=<span>node[edge]<span>body</span></span> [BinaryExpression, edge label=<span
-            >node[edge]<span>argument</span></span
-          >
-          [Identifier, edge label=<span>node[edge]<span>left</span></span> [x, tier=last, edge label=<span
-            >node[edge]<span>name</span></span
-          >] ] [**, tier=last, edge label=<span>node[edge]<span>operator</span></span
-          >] [Literal, edge label=<span>node[edge]<span>right</span></span> [2, tier=last, edge label=<span
-            >node[edge]<span>value</span></span
-          >] ] ] ] ] ]
-        </p>
+
+          <img src="figures/ast-example.png" alt="Abstrakter Syntaxbaum der obigen JavaScript-Funktion gemäß der
+Spezifikation ESTree." style="max-width: 580px">
+          <figcaption>
+            Abbildung 2.3: Abstrakter Syntaxbaum der obigen JavaScript-Funktion gemäß der
+Spezifikation ESTree <a class="citation" href="#ref-GOOGLE:RENDERING_ON_THE_WEB">[75]</a>.
+          </figcaption>
+        </figure>
+
         <p>
           Im zweiten Schritt, der syntaktischen Analyse oder dem <em>Parsen</em>, wird anschließend überprüft, ob die
           Tokenfolge eine Ableitung der kontextfreien Grammatik der Quellsprache darstellen, indem versucht wird, einen
@@ -1425,12 +1422,8 @@ module.exports = function() {
           verschafft einen Überblick über die verschiedenen Komponenten des Systems und deren Beziehung zueinander.
         </p>
         <figure>
-          <embed
-            src="src/4_Umsetzung/fig/architecture-overview.pdf"
-            id="fig:architecture-overview"
-            style="width: 92%;"
-          />
-          <figcaption>Überblick über die Komponenten des Transpilers.</figcaption>
+          <img src="figures/architecture-overview.svg" alt="Überblick über die Komponenten des Transpilers.">
+          <figcaption>Abbildung 4.1: Überblick über die Komponenten des Transpilers.</figcaption>
         </figure>
         <p>
           Die Architektur gliedert sich in zwei Teile: Ein Kommandozeilenprogramm stellt die Benutzerschnittstelle dar,
@@ -1658,6 +1651,14 @@ module.exports = function() {
           gesamte Programm und damit sämtliche Flow-Typen übersetzt wurden, kann die TypeScript-Ausgabe mittels des
           Codegenerators von Babel <a class="citation" href="#ref-BABEL:GENERATOR">[96]</a> erzeugt werden.
         </p>
+
+        <figure>
+          <img src="figures/flow-chart-plugin.svg" alt="Überblick über die Komponenten des Transpilers.">
+          <figcaption>
+           Abbildung 4.2: Aktivitätsdiagramm des Transpilers (Babel-Plugin).
+          </figcaption>
+        </figure>
+
         <h3 id="sec:flow-transpilation"><span class="chap-number">4.3.2</span>Transpilierung der Flow-Typen</h3>
         <p>
           Im Folgenden soll nun genauer auf den Kern des Transpilers, die Konverterfunktionen, eingegangen werden. Diese
@@ -1946,6 +1947,15 @@ type MaybeNumber = ?number;           type MaybeNumber = number | null | undefin
           TypeScript-Vereinigungstyp durch Aufruf der entsprechenden Bibliotheksfunktion von Babel mit der Typliste als
           Argument erzeugt und zurückgeliefert werden.
         </p>
+
+  <figure>
+          <img src="figures/ast-comparison-maybe-type.png" alt="Abstrakter Syntaxbaum für die Deklaration eines „Maybe type“ in Flow und TypeScript.">
+          <figcaption>
+          Abbildung 4.4: Abstrakter Syntaxbaum für die Deklaration eines „<i>Maybe type</i>“ in Flow (links)
+und TypeScript (rechts).
+          </figcaption>
+        </figure>
+
         <pre><code>function convertNullableTypeAnnotation(node: NullableTypeAnnotation): TSUnionType {
   const tsType = convertFlowType(node.typeAnnotation);
   const types = [
